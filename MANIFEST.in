@@ -1,0 +1,2 @@
+recursive-include ipychart/static *.*
+include ipychart.json
