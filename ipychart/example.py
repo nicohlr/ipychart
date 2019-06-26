@@ -1,8 +1,9 @@
 import ipywidgets as widgets
 from traitlets import Unicode
 
+
 @widgets.register
-class HelloWorld(widgets.DOMWidget):
+class HelloWidget(widgets.DOMWidget):
     """An example widget."""
     _view_name = Unicode('HelloView').tag(sync=True)
     _model_name = Unicode('HelloModel').tag(sync=True)
