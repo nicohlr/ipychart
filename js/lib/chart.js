@@ -1,8 +1,8 @@
-var widgets = require('@jupyter-widgets/base');
-var _ = require('lodash');
-var Chart = require('chart.js');
+const widgets = require('@jupyter-widgets/base');
+const _ = require('lodash');
+const Chart = require('chart.js');
 
-var BarChartModel = widgets.DOMWidgetModel.extend({
+const ChartModel = widgets.DOMWidgetModel.extend({
     defaults: _.extend(widgets.DOMWidgetModel.prototype.defaults(), {
         _model_name : 'BarChartModel',
         _view_name : 'BarChartView',
@@ -13,20 +13,24 @@ var BarChartModel = widgets.DOMWidgetModel.extend({
     })
 });
 
-var BarChartView = widgets.DOMWidgetView.extend({
+const ChartView = widgets.DOMWidgetView.extend({
     render: function() {
-        var data = this.model.get("_model_data");
+
+        // Get data and type from python
+        let data = this.model.get("_model_data");
+        let type = this.model.get("_type");
 
         // Check if data are passed from python to js
         console.log(data);
+        console.log(type);
 
         // Create Chart.js HTML element
-        let canvas = document.createElement("canvas");
-        var ctx = canvas.getContext('2d');
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext('2d');
 
         // Create chart
         new Chart(ctx, {
-            type: 'bar',
+            type: type,
             data: {
                 labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
                 datasets: [{
@@ -64,10 +68,11 @@ var BarChartView = widgets.DOMWidgetView.extend({
 
         // Add element to output
         this.el.appendChild(canvas);
+        console.log('end ipychart render');
     }
 });
 
 module.exports = {
-    BarChartModel: BarChartModel,
-    BarChartView: BarChartView
+    ChartModel: ChartModel,
+    ChartView: ChartView
 };
