@@ -5,7 +5,14 @@ var version = require('./package.json').version;
 // stored in a separate local variable.
 var rules = [
     { test: /\.css$/, use: ['style-loader', 'css-loader']}
-]
+];
+
+var loaders = [
+    { test: /\.css$/, loader: "style-loader!css-loader" },
+    { test: /\.less$/, loader: "style-loader!css-loader!less-loader" },
+    { test: /\.json$/, loader: 'json-loader' },
+    { test: /\.js$/, loader: 'babel-loader', query: {presets: ['env', 'stage-0']}, exclude: /node_modules/ }
+];
 
 
 module.exports = [

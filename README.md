@@ -21,7 +21,7 @@ For a development installation (requires npm),
     $ jupyter nbextension enable --py --sys-prefix ipychart
 
 References
+------------
 
 - https://ipywidgets.readthedocs.io/en/latest/examples/Widget%20Custom.html
 - https://blog.jupyter.org/authoring-custom-jupyter-widgets-2884a462e724
-- 
