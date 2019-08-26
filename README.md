@@ -1,6 +1,8 @@
 ipychart
 ===============================
 
+![logo](https://user-images.githubusercontent.com/25349465/63715966-2de82d00-c845-11e9-8f87-30f046cfa04d.png)
+
 Wrapping the great Chart.js library into an ipywidget
 
 Installation
