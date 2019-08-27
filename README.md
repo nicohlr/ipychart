@@ -1,9 +1,9 @@
 ipychart
 ===============================
 
-![logo](https://user-images.githubusercontent.com/25349465/63715966-2de82d00-c845-11e9-8f87-30f046cfa04d.png)
+![logo](https://user-images.githubusercontent.com/25349465/63794668-bc6eb400-c902-11e9-89c2-9d0069f9efaa.png)
 
-Wrapping the great Chart.js library into an ipywidget
+*Wrapping the great [**Chart.js**](https://www.chartjs.org/) library into a jupyter [**ipywidget**](https://github.com/jupyter-widgets/ipywidgets)*
 
 Installation
 ------------
