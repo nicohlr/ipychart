@@ -24,7 +24,7 @@ const ChartView = widgets.DOMWidgetView.extend({
         // Add options according to type
         let xaxis_display = true;
         let yaxis_display = true;
-        if (['radar', 'doughnut', 'polarArea'].indexOf(str) >= 0) {
+        if (['radar', 'doughnut', 'polarArea', 'pie'].indexOf(str) >= 0) {
             xaxis_display = false;
             yaxis_display = false;
         }
@@ -65,6 +65,11 @@ const ChartView = widgets.DOMWidgetView.extend({
                 }]
             },
             options: {
+                legend: {
+                    display: true,
+                    position: 'top'
+                },
+                tooltips: {}, // todo: handle tooltips
                 scales: {
                     xAxes: [{
                         display: xaxis_display,

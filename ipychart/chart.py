@@ -19,7 +19,7 @@ class Chart(widgets.DOMWidget):
     def __init__(self, data, kind):
         super().__init__()
         assert kind in ['line', 'bar', 'horizontalBar', 'radar', 'doughnut', 'polarArea',
-                        'bubble'], 'Type must be one of : line, bar, radar, doughnut, polarArea, bubble'
+                        'bubble', 'pie'], 'Type must be one of : line, bar, radar, doughnut, polarArea, bubble'
         assert isinstance(data, (list, dict)), 'Please enter data as dict of list'
 
         if isinstance(data, list):
@@ -27,6 +27,10 @@ class Chart(widgets.DOMWidget):
             self._label = [str(i + 1) for i in range(len(self._data))]
 
         else:
+            assert 'data' in data, 'Please input data using the key "data" in the dict'
+            if 'labels' in data:
+                assert len(data['labels']) == len(data['data'])
+
             self._data = data['data'] if 'data' in data else None
             self._label = data['labels'] if 'labels' in data else [str(i + 1) for i in range(len(self._data))]
 
