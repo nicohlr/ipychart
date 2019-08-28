@@ -17,9 +17,17 @@ const ChartView = widgets.DOMWidgetView.extend({
     render: function() {
 
         // Get data and type from python
-        var data = this.model.get("_data");
-        var label = this.model.get("_label");
+        let data = this.model.get("_data");
+        let label = this.model.get("_label");
         let type = this.model.get("_type");
+
+        // Add options according to type
+        let xaxis_display = true;
+        let yaxis_display = true;
+        if (['radar', 'doughnut', 'polarArea'].indexOf(str) >= 0) {
+            xaxis_display = false;
+            yaxis_display = false;
+        }
 
         // Check if data are passed from python to js
         console.log(data);
@@ -58,9 +66,17 @@ const ChartView = widgets.DOMWidgetView.extend({
             },
             options: {
                 scales: {
-                    yAxes: [{
+                    xAxes: [{
+                        display: xaxis_display,
                         ticks: {
-                            beginAtZero: true
+                            display: xaxis_display
+                        }
+                    }],
+                    yAxes: [{
+                        display: yaxis_display,
+                        ticks: {
+                            beginAtZero: true,
+                            display: yaxis_display
                         }
                     }]
                 }
