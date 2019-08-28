@@ -17,7 +17,8 @@ const ChartView = widgets.DOMWidgetView.extend({
     render: function() {
 
         // Get data and type from python
-        let data = this.model.get("_model_data");
+        var data = this.model.get("_data");
+        var label = this.model.get("_label");
         let type = this.model.get("_type");
 
         // Check if data are passed from python to js
@@ -32,7 +33,7 @@ const ChartView = widgets.DOMWidgetView.extend({
         new Chart(ctx, {
             type: type,
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: label,
                 datasets: [{
                     label: '# of Votes',
                     data: data,

@@ -10,16 +10,26 @@ class Chart(widgets.DOMWidget):
     _model_module = Unicode('ipychart').tag(sync=True)
     _view_module_version = Unicode('^0.1.0').tag(sync=True)
     _model_module_version = Unicode('^0.1.0').tag(sync=True)
-    _model_data = List([]).tag(sync=True)
+
+    _data = List([]).tag(sync=True)
+    _label = List([]).tag(sync=True)
+
     _type = Unicode().tag(sync=True)
 
     def __init__(self, data, kind):
         super().__init__()
-        assert kind in ['line', 'bar', 'radar', 'doughnut', 'polarArea',
+        assert kind in ['line', 'bar', 'horizontalBar', 'radar', 'doughnut', 'polarArea',
                         'bubble'], 'Type must be one of : line, bar, radar, doughnut, polarArea, bubble'
         assert isinstance(data, (list, dict)), 'Please enter data as dict of list'
 
-        self._model_data = data
+        if isinstance(data, list):
+            self._data = data
+            self._label = [str(i + 1) for i in range(len(self._data))]
+
+        else:
+            self._data = data['data'] if 'data' in data else None
+            self._label = data['labels'] if 'labels' in data else [str(i + 1) for i in range(len(self._data))]
+
         self._type = kind
 
     @default('layout')
