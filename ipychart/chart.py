@@ -18,13 +18,11 @@ class Chart(widgets.DOMWidget):
     def __init__(self, data, kind, options=None):
         super().__init__()
 
-        if not options:
-            self._options = self._create_default_options(data=data, kind=kind)
-        else:
-            self._options = options
-
-        self._data = data
+        self._options = self._create_default_chart_options(options, kind)
+        self._data = self._add_datasets_default_style(data, kind)
         self._type = kind
+
+        print(self._data)
 
     @default('layout')
     def _default_layout(self):
@@ -48,7 +46,7 @@ class Chart(widgets.DOMWidget):
             assert isinstance(options, dict), msg_options
 
     @staticmethod
-    def _create_default_options(data, kind):
+    def _create_default_chart_options(options, kind):
 
         x_axis_display = True
         y_axis_display = True
@@ -56,35 +54,39 @@ class Chart(widgets.DOMWidget):
             x_axis_display = False
             y_axis_display = False
 
+        if options:
+            return options
+        else:
+            #  Override default options from chartjs
+            if kind != 'radar':
+                default_options = {'scales': [
+                    {'yAxes': [{'display': y_axis_display, 'ticks': {'beginAtZero': True, 'display': y_axis_display}}]},
+                    {'xAxes': [{'display': x_axis_display, 'ticks': {'beginAtZero': True, 'display': x_axis_display}}]}
+                ]}
+            else:
+                default_options = {'scale': {'ticks': {'beginAtZero': True}}}
+
+        return default_options
+
+    @staticmethod
+    def _add_datasets_default_style(data, kind):
+
         for ds in data['datasets']:
             if 'backgroundColor' not in ds:
-                ds['backgroundColor'] = ['rgba(255, 99, 132, 0.2)'] * len(ds['data'])
+                if kind == 'radar':
+                    ds['backgroundColor'] = ['rgba(255, 99, 132, 0.2)']
+                else:
+                    ds['backgroundColor'] = ['rgba(255, 99, 132, 0.2)'] * len(ds['data'])
             if 'borderColor' not in ds:
-                ds['borderColor'] = ['rgba(255, 99, 132, 1)'] * len(ds['data'])
+                if kind == 'radar':
+                    ds['borderColor'] = ['rgba(255, 99, 132, 1)']
+                else:
+                    ds['borderColor'] = ['rgba(255, 99, 132, 1)'] * len(ds['data'])
+            if 'pointBorderColor' not in ds and kind == 'radar':
+                ds['pointBorderColor'] = ['rgba(255, 99, 132, 1)'] * len(ds['data'])
+            if 'pointBackgroundColor' not in ds and kind == 'radar':
+                ds['pointBackgroundColor'] = ['rgba(255, 99, 132, 0.2)'] * len(ds['data'])
             if 'borderWidth' not in ds:
                 ds['borderWidth'] = 1
 
-        default_options = {
-            'legend': {
-                'display': True,
-                'position': 'top'
-            },
-            'tooltips': {},  # todo: handle tooltips
-            'scales': {
-                'xAxes': [{
-                    'display': x_axis_display,
-                    'ticks': {
-                        'display': x_axis_display
-                    }
-                }],
-                'yAxes': [{
-                    'display': y_axis_display,
-                    'ticks': {
-                        'beginAtZero': True,
-                        'display': y_axis_display
-                    }
-                }]
-            }
-        }
-
-        return default_options
+        return data
