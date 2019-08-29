@@ -22,7 +22,7 @@ class Chart(widgets.DOMWidget):
         self._data = self._add_datasets_default_style(data, kind)
         self._type = kind
 
-        print(self._data)
+        print(self._options)
 
     @default('layout')
     def _default_layout(self):
@@ -32,10 +32,11 @@ class Chart(widgets.DOMWidget):
     def _validate_input(data, kind, options):
 
         assert kind in ['line', 'bar', 'horizontalBar', 'radar', 'doughnut', 'polarArea',
-                        'bubble', 'pie'], 'Type must be one of : line, bar, radar, doughnut, polarArea, bubble, horizontalBar, pie'
+                        'bubble', 'pie'], \
+            'Type must be one of : line, bar, radar, doughnut, polarArea, bubble, horizontalBar, pie'
 
-        msg_data = 'wrong input format for data argument see https:// for more details'
-        msg_options = 'wrong input format for options argument see https:// for more details'
+        msg_data = 'wrong input format for data argument see https:// for more details'  # todo: link to the doc
+        msg_options = 'wrong input format for options argument see https:// for more details'  # todo: link to the doc
 
         assert isinstance(data, dict), msg_data
         assert 'datasets' in data, msg_data
@@ -54,17 +55,20 @@ class Chart(widgets.DOMWidget):
             x_axis_display = False
             y_axis_display = False
 
+        default_options = {}
+
         if options:
-            return options
+            default_options = options
+
+        #  Override default options from Chart.js
+        if kind != 'radar':
+            default_options.update({'scales': [
+                {'yAxes': [{'display': y_axis_display, 'ticks': {'beginAtZero': True, 'min': 0, 'max': 2000, 'display': y_axis_display}}]},
+                {'xAxes': [{'display': x_axis_display, 'ticks': {'beginAtZero': True, 'min': 0, 'max': 200, 'display': x_axis_display}}]}
+            ]})
+            default_options.update({'beginAtZero': True})
         else:
-            #  Override default options from chartjs
-            if kind != 'radar':
-                default_options = {'scales': [
-                    {'yAxes': [{'display': y_axis_display, 'ticks': {'beginAtZero': True, 'display': y_axis_display}}]},
-                    {'xAxes': [{'display': x_axis_display, 'ticks': {'beginAtZero': True, 'display': x_axis_display}}]}
-                ]}
-            else:
-                default_options = {'scale': {'ticks': {'beginAtZero': True}}}
+            default_options.update({'scale': {'ticks': {'beginAtZero': True}}})
 
         return default_options
 
@@ -72,20 +76,25 @@ class Chart(widgets.DOMWidget):
     def _add_datasets_default_style(data, kind):
 
         for ds in data['datasets']:
+
             if 'backgroundColor' not in ds:
                 if kind == 'radar':
                     ds['backgroundColor'] = ['rgba(255, 99, 132, 0.2)']
                 else:
                     ds['backgroundColor'] = ['rgba(255, 99, 132, 0.2)'] * len(ds['data'])
+
             if 'borderColor' not in ds:
                 if kind == 'radar':
                     ds['borderColor'] = ['rgba(255, 99, 132, 1)']
                 else:
                     ds['borderColor'] = ['rgba(255, 99, 132, 1)'] * len(ds['data'])
+
             if 'pointBorderColor' not in ds and kind == 'radar':
                 ds['pointBorderColor'] = ['rgba(255, 99, 132, 1)'] * len(ds['data'])
+
             if 'pointBackgroundColor' not in ds and kind == 'radar':
                 ds['pointBackgroundColor'] = ['rgba(255, 99, 132, 0.2)'] * len(ds['data'])
+
             if 'borderWidth' not in ds:
                 ds['borderWidth'] = 1
 
