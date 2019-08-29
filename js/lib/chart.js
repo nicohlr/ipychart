@@ -4,8 +4,8 @@ const Chart = require('chart.js');
 
 const ChartModel = widgets.DOMWidgetModel.extend({
     defaults: _.extend(widgets.DOMWidgetModel.prototype.defaults(), {
-        _model_name : 'BarChartModel',
-        _view_name : 'BarChartView',
+        _model_name : 'ChartModel',
+        _view_name : 'ChartView',
         _model_module : 'ipychart',
         _view_module : 'ipychart',
         _model_module_version : '^0.1.0',
@@ -15,7 +15,6 @@ const ChartModel = widgets.DOMWidgetModel.extend({
 
 const ChartView = widgets.DOMWidgetView.extend({
     render: function() {
-
         // Get data and type from python
         let data = this.model.get("_data");
         let options = this.model.get("_options");
