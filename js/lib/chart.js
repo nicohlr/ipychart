@@ -18,20 +18,8 @@ const ChartView = widgets.DOMWidgetView.extend({
 
         // Get data and type from python
         let data = this.model.get("_data");
-        let label = this.model.get("_label");
+        let options = this.model.get("_options");
         let type = this.model.get("_type");
-
-        // Add options according to type
-        let xaxis_display = true;
-        let yaxis_display = true;
-        if (['radar', 'doughnut', 'polarArea', 'pie'].indexOf(str) >= 0) {
-            xaxis_display = false;
-            yaxis_display = false;
-        }
-
-        // Check if data are passed from python to js
-        console.log(data);
-        console.log(type);
 
         // Create Chart.js HTML element
         const canvas = document.createElement("canvas");
@@ -40,52 +28,8 @@ const ChartView = widgets.DOMWidgetView.extend({
         // Create chart
         new Chart(ctx, {
             type: type,
-            data: {
-                labels: label,
-                datasets: [{
-                    label: '# of Votes',
-                    data: data,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                legend: {
-                    display: true,
-                    position: 'top'
-                },
-                tooltips: {}, // todo: handle tooltips
-                scales: {
-                    xAxes: [{
-                        display: xaxis_display,
-                        ticks: {
-                            display: xaxis_display
-                        }
-                    }],
-                    yAxes: [{
-                        display: yaxis_display,
-                        ticks: {
-                            beginAtZero: true,
-                            display: yaxis_display
-                        }
-                    }]
-                }
-            }
+            data: data,
+            options: options
         });
 
         // Add element to output
