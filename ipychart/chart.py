@@ -1,5 +1,8 @@
 import ipywidgets as widgets
 from traitlets import Unicode, default, Dict
+import numpy as np
+import random
+import colorsys
 
 
 class Chart(widgets.DOMWidget):
@@ -75,25 +78,42 @@ class Chart(widgets.DOMWidget):
     @staticmethod
     def _add_datasets_default_style(data, kind):
 
-        for ds in data['datasets']:
+        # todo: handle the case of more than 1 dataset separately
+
+        background_colors = [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(74, 242, 242, 0.2)',
+                'rgba(137, 252, 0, 0.2)',
+                'rgba(255, 138, 222, 0.2)',
+                'rgba(255,252,49, 0.2)'
+        ]
+
+        border_colors = [c.replace('0.2', '1') for c in background_colors]
+
+        for idx, ds in enumerate(data['datasets']):
 
             if 'backgroundColor' not in ds:
-                if kind == 'radar':
-                    ds['backgroundColor'] = ['rgba(255, 99, 132, 0.2)']
+                if kind in ['radar', 'line']:
+                    ds['backgroundColor'] = background_colors[:1]
                 else:
-                    ds['backgroundColor'] = ['rgba(255, 99, 132, 0.2)'] * len(ds['data'])
+                    ds['backgroundColor'] = background_colors[:len(ds['data'])]
 
             if 'borderColor' not in ds:
-                if kind == 'radar':
-                    ds['borderColor'] = ['rgba(255, 99, 132, 1)']
+                if kind in ['radar', 'line']:
+                    ds['borderColor'] = border_colors[:1]
                 else:
-                    ds['borderColor'] = ['rgba(255, 99, 132, 1)'] * len(ds['data'])
+                    ds['borderColor'] = border_colors[:len(ds['data'])]
 
-            if 'pointBorderColor' not in ds and kind == 'radar':
-                ds['pointBorderColor'] = ['rgba(255, 99, 132, 1)'] * len(ds['data'])
+            if 'pointBorderColor' not in ds and kind in ['radar', 'line']:
+                ds['pointBorderColor'] = border_colors[:1] * len(ds['data'])
 
-            if 'pointBackgroundColor' not in ds and kind == 'radar':
-                ds['pointBackgroundColor'] = ['rgba(255, 99, 132, 0.2)'] * len(ds['data'])
+            if 'pointBackgroundColor' not in ds and kind in ['radar', 'line']:
+                ds['pointBackgroundColor'] = background_colors[:1] * len(ds['data'])
 
             if 'borderWidth' not in ds:
                 ds['borderWidth'] = 1
