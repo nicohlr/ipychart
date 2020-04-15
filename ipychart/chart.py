@@ -25,7 +25,7 @@ class Chart(widgets.DOMWidget):
         self._data = self._add_datasets_default_style(data, kind)
         self._type = kind
 
-        print(self._options)
+        #print(self._options)
 
     @default('layout')
     def _default_layout(self):
@@ -90,7 +90,7 @@ class Chart(widgets.DOMWidget):
                 'rgba(74, 242, 242, 0.2)',
                 'rgba(137, 252, 0, 0.2)',
                 'rgba(255, 138, 222, 0.2)',
-                'rgba(255,252,49, 0.2)'
+                'rgba(255, 252, 49, 0.2)'
         ]
 
         border_colors = [c.replace('0.2', '1') for c in background_colors]
@@ -100,12 +100,16 @@ class Chart(widgets.DOMWidget):
             if 'backgroundColor' not in ds:
                 if kind in ['radar', 'line']:
                     ds['backgroundColor'] = background_colors[:1]
+                elif kind == 'bar':
+                    ds['backgroundColor'] = background_colors[idx]
                 else:
                     ds['backgroundColor'] = background_colors[:len(ds['data'])]
 
             if 'borderColor' not in ds:
                 if kind in ['radar', 'line']:
                     ds['borderColor'] = border_colors[:1]
+                elif kind == 'bar':
+                    ds['borderColor'] = border_colors[idx]
                 else:
                     ds['borderColor'] = border_colors[:len(ds['data'])]
 
