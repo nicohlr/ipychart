@@ -18,6 +18,10 @@ For a development installation (requires npm),
 
     $ git clone https://github.com/nicohlr/ipychart.git
     $ cd ipychart
+    $ conda install jupyterlab nodejs -c conda-forge
+    $ cd ipychart/js
+    $ npm install 
+    $ cd .. 
     $ pip install -e .
     $ jupyter nbextension install --py --symlink --sys-prefix ipychart
     $ jupyter nbextension enable --py --sys-prefix ipychart
