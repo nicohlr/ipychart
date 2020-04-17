@@ -87,8 +87,10 @@ class Chart(widgets.DOMWidget):
         if options:
             default_options = options
 
-        # Override default options from Chart.js if option is not setted by the user
         # bug: beginAtzero does not work 
+        # todo : when fill  arg is false in dataset, legend color must be the border color instead of background color
+
+        # Override default options from Chart.js if option is not setted by the user
         if 'scales' not in default_options:
             if kind != 'radar':
                 default_options.update({'scales': [
@@ -124,31 +126,19 @@ class Chart(widgets.DOMWidget):
 
         border_colors = [c.replace('0.2', '1') for c in background_colors]
 
-        #todo: replace borderColor, pointBorderColor and pointBackgroundColor by the same color as backgroundColor but with max opacity
-
         for idx, ds in enumerate(data['datasets']):
 
             if 'backgroundColor' not in ds:
-                if kind in ['radar', 'line']:
-                    ds['backgroundColor'] = background_colors[:1]
-                elif kind == 'bar':
+                if kind in ['bar', 'line', 'radar']:
                     ds['backgroundColor'] = background_colors[idx]
                 else:
                     ds['backgroundColor'] = background_colors[:len(ds['data'])]
 
             if 'borderColor' not in ds:
-                if kind  == 'radar':
-                    ds['borderColor'] = border_colors[:1]
-                elif kind in ['bar', 'line']:
-                    ds['borderColor'] = border_colors[idx]
+                if isinstance(ds['backgroundColor'], str):
+                    ds['borderColor'] = ds['backgroundColor'].replace('0.2', '1')
                 else:
-                    ds['borderColor'] = border_colors[:len(ds['data'])]
-
-            if 'pointBorderColor' not in ds and kind in ['radar']:
-                ds['pointBorderColor'] = border_colors[:1] * len(ds['data'])
-
-            if 'pointBackgroundColor' not in ds and kind in ['radar']:
-                ds['pointBackgroundColor'] = background_colors[:1] * len(ds['data'])
+                    ds['borderColor'] = [c.replace('0.2', '1') for c in ds['backgroundColor']]
 
             if 'borderWidth' not in ds:
                 ds['borderWidth'] = 1
