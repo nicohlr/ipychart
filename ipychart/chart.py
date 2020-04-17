@@ -3,6 +3,8 @@ from traitlets import Unicode, default, Dict
 import numpy as np
 import random
 import colorsys
+import logging
+import pandas as pd
 
 
 class Chart(widgets.DOMWidget):
@@ -18,14 +20,27 @@ class Chart(widgets.DOMWidget):
     _options = Dict().tag(sync=True)
     _type = Unicode().tag(sync=True)
 
-    def __init__(self, data, kind, options=None):
+    def __init__(self, data, kind, options=None, x=None, y=None):
         super().__init__()
 
-        self._options = self._create_default_chart_options(options, kind)
-        self._data = self._add_datasets_default_style(data, kind)
+        self._validate_input(data, kind, options)
+
+        self.data = data
+        self.kind = kind
+        self.options = options
+        self.x = x
+        self.y = y
+    
+        if isinstance(data, pd.DataFrame):
+            self.data = self._pandas_df_to_dataset(self.data, self.x, self.y)
+
+        self.data = self._add_datasets_default_style(self.data, self.kind)
+        self.options = self._create_default_chart_options(self.data, self.options, self.kind)
+
+        self._options = self.options
+        self._data = self.data
         self._type = kind
 
-        #print(self._options)
 
     @default('layout')
     def _default_layout(self):
@@ -41,19 +56,21 @@ class Chart(widgets.DOMWidget):
         msg_data = 'wrong input format for data argument see https:// for more details'  # todo: link to the doc
         msg_options = 'wrong input format for options argument see https:// for more details'  # todo: link to the doc
 
-        assert isinstance(data, dict), msg_data
-        assert 'datasets' in data, msg_data
-        assert len(data['datasets']), msg_data
-        assert ['data' in ds for ds in data['datasets']] == [True]*len(data['datasets']), msg_data
+        assert isinstance(data, dict) or isinstance(data, pd.DataFrame), msg_data
+        if isinstance(data, dict):
+            assert 'datasets' in data, msg_data
+            assert len(data['datasets']), msg_data
+            assert ['data' in ds for ds in data['datasets']] == [True]*len(data['datasets']), msg_data
 
         if options:
             assert isinstance(options, dict), msg_options
 
     @staticmethod
-    def _create_default_chart_options(options, kind):
+    def _create_default_chart_options(data, options, kind):
 
         x_axis_display = True
         y_axis_display = True
+
         if kind in ['radar', 'doughnut', 'polarArea', 'pie']:
             x_axis_display = False
             y_axis_display = False
@@ -73,12 +90,13 @@ class Chart(widgets.DOMWidget):
         else:
             default_options.update({'scale': {'ticks': {'beginAtZero': True}}})
 
+        if len(data['datasets']) == 1 and kind in ['bar', 'line', 'horizontalBar', 'bubble']:
+            default_options.update({'legend': False})
+
         return default_options
 
     @staticmethod
     def _add_datasets_default_style(data, kind):
-
-        # todo: handle the case of more than 1 dataset separately
 
         background_colors = [
                 'rgba(255, 99, 132, 0.2)',
@@ -94,6 +112,8 @@ class Chart(widgets.DOMWidget):
         ]
 
         border_colors = [c.replace('0.2', '1') for c in background_colors]
+
+        #todo : handle case of only 1 dataset
 
         for idx, ds in enumerate(data['datasets']):
 
@@ -123,3 +143,13 @@ class Chart(widgets.DOMWidget):
                 ds['borderWidth'] = 1
 
         return data
+
+    @staticmethod
+    def _pandas_df_to_dataset(data, x, y):
+
+        # convert dataframe into dict dataset
+        labels = data[x].tolist()
+        data = data[y].tolist()
+        dataset = {'labels': labels, 'datasets': [{'data': data}]}
+
+        return dataset
