@@ -8,7 +8,9 @@ import pandas as pd
 
 
 class Chart(widgets.DOMWidget):
-    """An example widget."""
+
+    """Wrap Chart.js into an ipywidget"""
+
     _view_name = Unicode('ChartView').tag(sync=True)
     _model_name = Unicode('ChartModel').tag(sync=True)
     _view_module = Unicode('ipychart').tag(sync=True)
@@ -85,7 +87,8 @@ class Chart(widgets.DOMWidget):
         if options:
             default_options = options
 
-        #  Override default options from Chart.js if option is not setted by the user
+        # Override default options from Chart.js if option is not setted by the user
+        # bug: beginAtzero does not work 
         if kind != 'radar':
             if 'scales' not in default_options:
                 default_options.update({'scales': [
@@ -155,7 +158,7 @@ class Chart(widgets.DOMWidget):
 
     @staticmethod
     def _pandas_df_to_dataset(data, x, y):
-
+        # todo: handle the case of multiple columns passed to y and trasform it to multiple datasets
         # convert dataframe into dict dataset
         labels = data[x].tolist()
         data = data[y].tolist()
