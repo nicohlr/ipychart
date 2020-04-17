@@ -35,11 +35,11 @@ Create charts with python in a very similar way to creating charts using Chart.j
     mychart = chart.Chart(dataset,  'bar',  options=options)
     mychart
 
-The charts created are fully configurable, interactive and modular and are displayed in the output of the the cells of your jupyter notebook environment:
+The charts created are fully configurable, interactive and modular and are displayed directly in the output of the the cells of your jupyter notebook environment:
 
 ![](./images/ipychart.gif)
 
-All the types of charts present in chart.js are exposed:
+All the 8 types of charts present in Chart.js are exposed:
 
 - Line
 - Bar
