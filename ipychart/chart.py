@@ -53,14 +53,19 @@ class Chart(widgets.DOMWidget):
                         'bubble', 'pie'], \
             'Type must be one of : line, bar, radar, doughnut, polarArea, bubble, horizontalBar, pie'
 
-        msg_data = 'wrong input format for data argument see https:// for more details'  # todo: link to the doc
-        msg_options = 'wrong input format for options argument see https:// for more details'  # todo: link to the doc
+        msg_data = 'Wrong input format for data argument see https:// for more details'  # todo: link to the doc
+        msg_options = 'Wrong input format for options argument see https:// for more details'  # todo: link to the doc
 
         assert isinstance(data, dict) or isinstance(data, pd.DataFrame), msg_data
         if isinstance(data, dict):
             assert 'datasets' in data, msg_data
             assert len(data['datasets']), msg_data
             assert ['data' in ds for ds in data['datasets']] == [True]*len(data['datasets']), msg_data
+            if 'kind' == 'bubble':
+                for d in data['datasets']:
+                    assert all(isinstance(x, dict) for x in d['data']), "Data must contains dict with coordinates (x,y) and radius (r) for charts of type 'bubble'. Example --> data: [{'x': 5, 'y': 10, 'r': 10}, {'x': 15, 'y': 3, 'r': 15}]"
+                    assert all(k in p for k in ('x', 'y', 'r') for p in data), "Data must contains dict with coordinates (x,y) and radius (r) for charts of type 'bubble'. Example --> data: [{'x': 5, 'y': 10, 'r': 10}, {'x': 15, 'y': 3, 'r': 15}]"
+ 
 
         if options:
             assert isinstance(options, dict), msg_options
