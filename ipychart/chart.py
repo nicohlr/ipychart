@@ -129,7 +129,7 @@ class Chart(widgets.DOMWidget):
         for idx, ds in enumerate(data['datasets']):
 
             if 'backgroundColor' not in ds:
-                if kind in ['bar', 'line', 'radar']:
+                if kind in ['bar', 'horizontalBar', 'line', 'radar']:
                     ds['backgroundColor'] = background_colors[idx]
                 else:
                     ds['backgroundColor'] = background_colors[:len(ds['data'])]
