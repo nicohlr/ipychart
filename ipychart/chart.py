@@ -89,20 +89,19 @@ class Chart(widgets.DOMWidget):
 
         # Override default options from Chart.js if option is not setted by the user
         # bug: beginAtzero does not work 
-        if kind != 'radar':
-            if 'scales' not in default_options:
+        if 'scales' not in default_options:
+            if kind != 'radar':
                 default_options.update({'scales': [
                     {'yAxes': [{'display': y_axis_display, 'ticks': {'beginAtZero': True, 'min': 0, 'max': 2000, 'display': y_axis_display}}]},
                     {'xAxes': [{'display': x_axis_display, 'ticks': {'beginAtZero': True, 'min': 0, 'max': 200, 'display': x_axis_display}}]}
                 ]})
-            if 'beginAtZero' not in default_options:
-                default_options.update({'beginAtZero': True})
-        else:
-            if 'scales' not in default_options:
-                default_options.update({'scale': {'ticks': {'beginAtZero': True}}})
+                if 'beginAtZero' not in default_options:
+                    default_options.update({'beginAtZero': True})
+            else:
+                    default_options.update({'scale': {'ticks': {'beginAtZero': True}}})
 
-        if len(data['datasets']) == 1 and kind in ['bar', 'line', 'horizontalBar', 'bubble', 'radar']:
-            if 'legend' not in default_options:
+        if 'legend' not in default_options:
+            if len(data['datasets']) == 1 and kind in ['bar', 'line', 'horizontalBar', 'bubble', 'radar']:
                 default_options.update({'legend': False})
 
         return default_options
@@ -125,7 +124,7 @@ class Chart(widgets.DOMWidget):
 
         border_colors = [c.replace('0.2', '1') for c in background_colors]
 
-        #todo : handle case of only 1 dataset
+        #todo: replace borderColor, pointBorderColor and pointBackgroundColor by the same color as backgroundColor but with max opacity
 
         for idx, ds in enumerate(data['datasets']):
 
@@ -138,17 +137,17 @@ class Chart(widgets.DOMWidget):
                     ds['backgroundColor'] = background_colors[:len(ds['data'])]
 
             if 'borderColor' not in ds:
-                if kind in ['radar', 'line']:
+                if kind  == 'radar':
                     ds['borderColor'] = border_colors[:1]
-                elif kind == 'bar':
+                elif kind in ['bar', 'line']:
                     ds['borderColor'] = border_colors[idx]
                 else:
                     ds['borderColor'] = border_colors[:len(ds['data'])]
 
-            if 'pointBorderColor' not in ds and kind in ['radar', 'line']:
+            if 'pointBorderColor' not in ds and kind in ['radar']:
                 ds['pointBorderColor'] = border_colors[:1] * len(ds['data'])
 
-            if 'pointBackgroundColor' not in ds and kind in ['radar', 'line']:
+            if 'pointBackgroundColor' not in ds and kind in ['radar']:
                 ds['pointBackgroundColor'] = background_colors[:1] * len(ds['data'])
 
             if 'borderWidth' not in ds:
