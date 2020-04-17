@@ -88,7 +88,7 @@ class Chart(widgets.DOMWidget):
             default_options = options
 
         # bug: beginAtzero does not work 
-        # todo : when fill  arg is false in dataset, legend color must be the border color instead of background color
+        # todo : when fill  arg is false in dataset, legend color must be the background color instead of border color
 
         # Override default options from Chart.js if option is not setted by the user
         if 'scales' not in default_options:
