@@ -80,18 +80,22 @@ class Chart(widgets.DOMWidget):
         if options:
             default_options = options
 
-        #  Override default options from Chart.js
+        #  Override default options from Chart.js if option is not setted by the user
         if kind != 'radar':
-            default_options.update({'scales': [
-                {'yAxes': [{'display': y_axis_display, 'ticks': {'beginAtZero': True, 'min': 0, 'max': 2000, 'display': y_axis_display}}]},
-                {'xAxes': [{'display': x_axis_display, 'ticks': {'beginAtZero': True, 'min': 0, 'max': 200, 'display': x_axis_display}}]}
-            ]})
-            default_options.update({'beginAtZero': True})
+            if 'scales' not in default_options:
+                default_options.update({'scales': [
+                    {'yAxes': [{'display': y_axis_display, 'ticks': {'beginAtZero': True, 'min': 0, 'max': 2000, 'display': y_axis_display}}]},
+                    {'xAxes': [{'display': x_axis_display, 'ticks': {'beginAtZero': True, 'min': 0, 'max': 200, 'display': x_axis_display}}]}
+                ]})
+            if 'beginAtZero' not in default_options:
+                default_options.update({'beginAtZero': True})
         else:
-            default_options.update({'scale': {'ticks': {'beginAtZero': True}}})
+            if 'scales' not in default_options:
+                default_options.update({'scale': {'ticks': {'beginAtZero': True}}})
 
-        if len(data['datasets']) == 1 and kind in ['bar', 'line', 'horizontalBar', 'bubble']:
-            default_options.update({'legend': False})
+        if len(data['datasets']) == 1 and kind in ['bar', 'line', 'horizontalBar', 'bubble', 'radar']:
+            if 'legend' not in default_options:
+                default_options.update({'legend': False})
 
         return default_options
 
