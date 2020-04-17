@@ -34,6 +34,8 @@ class Chart(widgets.DOMWidget):
         self.y = y
     
         if isinstance(data, pd.DataFrame):
+            assert isinstance(self.x, str()), 'You must pass the column name to use as x if you are working with a pandas dataframe'
+            assert isinstance(self.y, str()), 'You must pass the column name to use as y if you are working with a pandas dataframe'
             self.data = self._pandas_df_to_dataset(self.data, self.x, self.y)
 
         self.data = self._add_datasets_default_style(self.data, self.kind)
@@ -75,12 +77,10 @@ class Chart(widgets.DOMWidget):
     @staticmethod
     def _create_default_chart_options(data, options, kind):
 
-        x_axis_display = True
-        y_axis_display = True
+        x_axis_display, y_axis_display = (True, True)
 
         if kind in ['radar', 'doughnut', 'polarArea', 'pie']:
-            x_axis_display = False
-            y_axis_display = False
+            x_axis_display, y_axis_display = (False, False)
 
         default_options = {}
 
@@ -94,8 +94,8 @@ class Chart(widgets.DOMWidget):
         if 'scales' not in default_options:
             if kind != 'radar':
                 default_options.update({'scales': [
-                    {'yAxes': [{'display': y_axis_display, 'ticks': {'beginAtZero': True, 'min': 0, 'max': 2000, 'display': y_axis_display}}]},
-                    {'xAxes': [{'display': x_axis_display, 'ticks': {'beginAtZero': True, 'min': 0, 'max': 200, 'display': x_axis_display}}]}
+                    {'yAxes': [{'display': y_axis_display, 'ticks': {'beginAtZero': True, 'min': 0, 'max': 2000, 'display': y_axis_display}, 'scaleLabel': {'display': y_axis_display, 'labelString': 'probability'}}]},
+                    {'xAxes': [{'display': x_axis_display, 'ticks': {'beginAtZero': True, 'min': 0, 'max': 200, 'display': x_axis_display}, 'scaleLabel': {'display': y_axis_display, 'labelString': 'probability'}}]}
                 ]})
                 if 'beginAtZero' not in default_options:
                     default_options.update({'beginAtZero': True})
