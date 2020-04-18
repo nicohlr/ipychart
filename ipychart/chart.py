@@ -34,8 +34,8 @@ class Chart(widgets.DOMWidget):
         self.y = y
     
         if isinstance(data, pd.DataFrame):
-            assert isinstance(self.x, str()), 'You must pass the column name to use as x if you are working with a pandas dataframe'
-            assert isinstance(self.y, str()), 'You must pass the column name to use as y if you are working with a pandas dataframe'
+            assert isinstance(self.x, str), 'You must pass the column name to use as x if you are working with a pandas dataframe'
+            assert isinstance(self.y, str), 'You must pass the column name to use as y if you are working with a pandas dataframe'
             self.data = self._pandas_df_to_dataset(self.data, self.x, self.y)
 
         self.data = self._add_datasets_default_style(self.data, self.kind)
