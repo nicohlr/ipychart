@@ -94,8 +94,8 @@ class Chart(widgets.DOMWidget):
         if 'scales' not in default_options:
             if kind != 'radar':
                 default_options.update({'scales': [
-                    {'yAxes': [{'display': y_axis_display, 'ticks': {'beginAtZero': True, 'min': 0, 'max': 2000, 'display': y_axis_display}, 'scaleLabel': {'display': y_axis_display, 'labelString': 'probability'}}]},
-                    {'xAxes': [{'display': x_axis_display, 'ticks': {'beginAtZero': True, 'min': 0, 'max': 200, 'display': x_axis_display}, 'scaleLabel': {'display': y_axis_display, 'labelString': 'probability'}}]}
+                    {'yAxes': [{'display': y_axis_display, 'ticks': {'beginAtZero': True, 'display': y_axis_display}}]},
+                    {'xAxes': [{'display': x_axis_display, 'ticks': {'beginAtZero': True, 'display': x_axis_display}}]}
                 ]})
                 if 'beginAtZero' not in default_options:
                     default_options.update({'beginAtZero': True})
