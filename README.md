@@ -1,9 +1,11 @@
 ipychart
 ===============================
 
-![logo](https://user-images.githubusercontent.com/25349465/63794668-bc6eb400-c902-11e9-89c2-9d0069f9efaa.png)
+<p align="center">
+  <img src="./images/hero.png">
+</p>
 
-*Wrapping the great [**Chart.js**](https://www.chartjs.org/) library into a jupyter [**ipywidget**](https://github.com/jupyter-widgets/ipywidgets): harness the power of Chart.js in the famous python jupyter notebook environment !*
+A Jupyter / Chart.js bridge enabling interactive data visualization in the Jupyter notebook.
 
 Installation
 ------------
