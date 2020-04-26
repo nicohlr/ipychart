@@ -2,7 +2,7 @@ ipychart
 ===============================
 
 <p align="center">
-  <img src="./images/hero.png">
+  <img src="./images/hero.png" width="70%">
 </p>
 
 A Jupyter / Chart.js bridge enabling interactive data visualization in the Jupyter notebook.
