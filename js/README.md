@@ -1,4 +1,4 @@
-Wrapping the great Chart.js library into an ipywidget
+A Jupyter / Chart.js bridge enabling interactive data visualization in the Jupyter notebook.
 
 Package Install
 ---------------

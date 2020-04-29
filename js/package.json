@@ -1,7 +1,7 @@
 {
   "name": "ipychart",
   "version": "0.1.0",
-  "description": "Wrapping the great Chart.js library into an ipywidget",
+  "description": "A Jupyter / Chart.js bridge enabling interactive data visualization in the Jupyter notebook.",
   "author": "Nicolas Houlier",
   "main": "lib/index.js",
   "repository": {
@@ -30,13 +30,14 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.25.0",
     "babel-loader": "^8.0.6",
-    "babel-preset-stage-0": "^6.24.1",
     "babel-preset-env": "^1.7.0",
-    "style-loader": "^1.0.0",
+    "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^3.2.0",
     "json-loader": "^0.5.4",
-    "webpack": "^3.5.5",
-    "rimraf": "^2.6.1"
+    "rimraf": "^2.6.1",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
   },
   "dependencies": {
     "@jupyter-widgets/base": "^1.0.0",
