@@ -1,7 +1,5 @@
 # Introduction
 
-<Bit/>
-
 Ipychart is a python package for datavizualisation. 
 
 ## How It Works
