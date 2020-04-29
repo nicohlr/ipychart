@@ -43,6 +43,7 @@ module.exports = ctx => ({
                 children: [
                     '/dev_guide/dev_install',
                     '/dev_guide/doc',
+                    '/dev_guide/deploy',
                 ],
             },
         ],

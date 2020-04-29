@@ -24,3 +24,4 @@ ipychart/static/
 .idea/
 .vscode/
 
+.pypirc
