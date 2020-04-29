@@ -25,7 +25,7 @@ version_js_info = (0, 1, 0)
 __version_js__ = _get_version(version_js_info)
 
 
-__description__ = 'A Jupyter / Chart.js bridge enabling interactive data visualization in the Jupyter notebook.'
+__description__ = 'A Jupyter - Chart.js bridge enabling interactive data visualization in the Jupyter notebook.'
 __long_description__ = 'See repo README'
 __author__ = 'nicohlr'
 __author_email__ = 'nicolas.houlier@gmail.com'

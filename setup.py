@@ -22,7 +22,7 @@ log.set_verbosity(log.DEBUG)
 log.info('setup.py entered')
 log.info('$PATH=%s' % os.environ['PATH'])
 
-LONG_DESCRIPTION = 'A Jupyter / Chart.js bridge enabling interactive data visualization in the Jupyter notebook.'
+LONG_DESCRIPTION = 'A Jupyter - Chart.js bridge enabling interactive data visualization in the Jupyter notebook.'
 
 def js_prerelease(command, strict=False):
     """decorator for building minified js/css prior to another command"""
@@ -127,7 +127,7 @@ with open(os.path.join(here, 'ipychart', '_version.py')) as f:
 setup_args = {
     'name': 'ipychart',
     'version': version_ns['__version__'],
-    'description': 'A Jupyter / Chart.js bridge enabling interactive data visualization in the Jupyter notebook.',
+    'description': 'A Jupyter - Chart.js bridge enabling interactive data visualization in the Jupyter notebook.',
     'long_description': LONG_DESCRIPTION,
     'include_package_data': True,
     'data_files': [

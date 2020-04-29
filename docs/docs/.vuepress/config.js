@@ -1,7 +1,7 @@
 module.exports = ctx => ({
 
     title: 'ipychart',
-    description: 'A Jupyter / Chart.js bridge enabling interactive data visualization in the Jupyter notebook.',
+    description: 'A Jupyter - Chart.js bridge enabling interactive data visualization in the Jupyter notebook.',
     //base: '/<REPO>/', 
     head: [
         ['link', { rel: 'icon', href: '/favicon.ico' }]

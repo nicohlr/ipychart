@@ -9,7 +9,7 @@ import pandas as pd
 
 class Chart(widgets.DOMWidget):
 
-    """Wrap Chart.js into an ipywidget"""
+    """A Jupyter - Chart.js bridge enabling interactive data visualization in the Jupyter notebook."""
 
     _view_name = Unicode('ChartView').tag(sync=True)
     _model_name = Unicode('ChartModel').tag(sync=True)
@@ -22,7 +22,7 @@ class Chart(widgets.DOMWidget):
     _options = Dict().tag(sync=True)
     _type = Unicode().tag(sync=True)
 
-    def __init__(self, data, kind, options=None, x=None, y=None):
+    def __init__(self, data, kind, options=None):
         super().__init__()
 
         self._validate_input(data, kind, options)
@@ -30,13 +30,14 @@ class Chart(widgets.DOMWidget):
         self.data = data
         self.kind = kind
         self.options = options
-        self.x = x
-        self.y = y
-    
-        if isinstance(data, pd.DataFrame):
-            assert isinstance(self.x, str), 'You must pass the column name to use as x if you are working with a pandas dataframe'
-            assert isinstance(self.y, str), 'You must pass the column name to use as y if you are working with a pandas dataframe'
-            self.data = self._pandas_df_to_dataset(self.data, self.x, self.y)
+
+        for d in self.data['datasets']:   
+            d['data'] = d['data'].tolist() if isinstance(d['data'], pd.Series) else d['data']
+
+        self.data['labels'] = self.data['labels'].tolist() if isinstance(self.data['labels'], pd.Series) else self.data['labels']
+   
+        if isinstance(data, pd.Series):
+            data['data'] = data['data'].tolist()
 
         self.data = self._add_datasets_default_style(self.data, self.kind)
         self.options = self._create_default_chart_options(self.data, self.options, self.kind)
@@ -60,15 +61,15 @@ class Chart(widgets.DOMWidget):
         msg_data = 'Wrong input format for data argument see https:// for more details'  # todo: link to the doc
         msg_options = 'Wrong input format for options argument see https:// for more details'  # todo: link to the doc
 
-        assert isinstance(data, dict) or isinstance(data, pd.DataFrame), msg_data
-        if isinstance(data, dict):
-            assert 'datasets' in data, msg_data
-            assert len(data['datasets']), msg_data
-            assert ['data' in ds for ds in data['datasets']] == [True]*len(data['datasets']), msg_data
-            if 'kind' == 'bubble':
-                for d in data['datasets']:
-                    assert all(isinstance(x, dict) for x in d['data']), "Data must contains dict with coordinates (x,y) and radius (r) for charts of type 'bubble'. Example --> data: [{'x': 5, 'y': 10, 'r': 10}, {'x': 15, 'y': 3, 'r': 15}]"
-                    assert all(k in p for k in ('x', 'y', 'r') for p in data), "Data must contains dict with coordinates (x,y) and radius (r) for charts of type 'bubble'. Example --> data: [{'x': 5, 'y': 10, 'r': 10}, {'x': 15, 'y': 3, 'r': 15}]"
+        assert isinstance(data, dict), msg_data
+        
+        assert 'datasets' in data, msg_data
+        assert len(data['datasets']), msg_data
+        assert ['data' in ds for ds in data['datasets']] == [True]*len(data['datasets']), msg_data
+        if 'kind' == 'bubble':
+            for d in data['datasets']:
+                assert all(isinstance(x, dict) for x in d['data']), "Data must contains dict with coordinates (x,y) and radius (r) for charts of type 'bubble'. Example --> data: [{'x': 5, 'y': 10, 'r': 10}, {'x': 15, 'y': 3, 'r': 15}]"
+                assert all(k in p for k in ('x', 'y', 'r') for p in data), "Data must contains dict with coordinates (x,y) and radius (r) for charts of type 'bubble'. Example --> data: [{'x': 5, 'y': 10, 'r': 10}, {'x': 15, 'y': 3, 'r': 15}]"
  
 
         if options:
@@ -144,13 +145,3 @@ class Chart(widgets.DOMWidget):
                 ds['borderWidth'] = 1
 
         return data
-
-    @staticmethod
-    def _pandas_df_to_dataset(data, x, y):
-        # todo: handle the case of multiple columns passed to y and trasform it to multiple datasets
-        # convert dataframe into dict dataset
-        labels = data[x].tolist()
-        data = data[y].tolist()
-        dataset = {'labels': labels, 'datasets': [{'data': data}]}
-
-        return dataset

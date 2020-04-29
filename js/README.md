@@ -1,4 +1,4 @@
-A Jupyter / Chart.js bridge enabling interactive data visualization in the Jupyter notebook.
+A Jupyter - Chart.js bridge enabling interactive data visualization in the Jupyter notebook.
 
 Package Install
 ---------------
