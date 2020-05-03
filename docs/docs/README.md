@@ -19,11 +19,8 @@ pageClass: custom-home-page
 ### Install
 
 ``` bash
-# install
+# using pip
 $ pip install ipychart
-
-# activate jupyter notebook extension
-$ jupyter nbextension enable --py --sys-prefix ipychart
 ```
 
 ::: warning COMPATIBILITY NOTE

@@ -27,7 +27,7 @@ module.exports = ctx => ({
             },
             {
                 text: 'Developer Guide',
-                link: '/dev_guide/dev_install',
+                link: '/developer_guide/development_installation',
             },
         ],
         sidebarDepth: 5,
@@ -35,15 +35,16 @@ module.exports = ctx => ({
             {
                 title: 'User Guide',
                 collapsable: false,
-                children: ['/user_guide/introduction', '/user_guide/getting_started', '/user_guide/charts', '/user_guide/config', '/user_guide/advanced'],
+                children: ['/user_guide/introduction', '/user_guide/getting_started', '/user_guide/usage', '/user_guide/charts', '/user_guide/config', '/user_guide/advanced'],
             },
             {
                 title: 'Developer Guide',
                 collapsable: false,
+                sidebarDepth: 0,
                 children: [
-                    '/dev_guide/dev_install',
-                    '/dev_guide/doc',
-                    '/dev_guide/deploy',
+                    '/developer_guide/development_installation',
+                    '/developer_guide/documentation',
+                    '/developer_guide/publish',
                 ],
             },
         ],

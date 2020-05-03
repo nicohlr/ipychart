@@ -1,7 +1,7 @@
 # Usage
 
-## Chart attribute: data
+## Data
 
-## Chart attribute: kind
+## Kind
 
-## Chart attribute: options
+## Options

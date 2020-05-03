@@ -1,5 +1,7 @@
 # Advanced Features
 
-## Work with Pandas Dataframes and Numpy Arrays
+## Pandas integration
 
-## Advanced configuration with callback functions
+## Callback functions
+
+## Export & embedding

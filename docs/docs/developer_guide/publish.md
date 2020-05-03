@@ -1,18 +1,22 @@
- # Deploy
+# Publish
 
 ## Versions
 
 Set the **same** version number in all the following files.  
-_WARNING_: This is a **manual** sync.
 
 + `ipychart/js/package.json`
++ `ipychart/js/package-lock.json`
 + `ipychart/__meta__.py`
 + `ipychart/_version.py`
+
+::: warning
+This is a **manual** sync.
+:::
 
 ## Node
 
 Build the Javascript files and publish the node package to [npmjs.org](https://www.npmjs.com/).  
-For more info see th [official doc](https://docs.npmjs.com/getting-started/publishing-npm-packages).
+For more info see the [official doc](https://docs.npmjs.com/getting-started/publishing-npm-packages).
 
 ```bash
 # build notebook extension javascript
