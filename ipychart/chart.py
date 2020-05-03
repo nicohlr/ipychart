@@ -1,5 +1,6 @@
 import ipywidgets as widgets
 from traitlets import Unicode, default, Dict
+from ipywidgets.embed import embed_minimal_html, dependency_state
 import numpy as np
 import random
 import colorsys
@@ -89,7 +90,7 @@ class Chart(widgets.DOMWidget):
             default_options = options
 
         # bug: beginAtzero does not work 
-        # todo : when fill  arg is false in dataset, legend color must be the background color instead of border color
+        # todo: when fill  arg is false in dataset, legend color must be the background color instead of border color
 
         # Override default options from Chart.js if option is not setted by the user
         if 'scales' not in default_options:
@@ -145,3 +146,7 @@ class Chart(widgets.DOMWidget):
                 ds['borderWidth'] = 1
 
         return data
+
+    def to_html(self, path):
+        embed_minimal_html(path, views=[self], state=dependency_state([self]))
+        print('Chart saved at ' + path)
