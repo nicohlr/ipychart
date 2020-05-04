@@ -14,7 +14,7 @@ You can now start a notebook jupyter and start using ipychart !
 If you are working with a virtual environment, **please make sure to launch your jupyter notebook from this environment**. Otherwise, the charts will not be displayed.
 :::
 
-## Check Notebook Extension
+## Check Installation
 
 You may have to enable the jupyter notebook extension if it is not done already. You can check which extension is enabled using the folowing command:
 

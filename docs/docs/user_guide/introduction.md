@@ -1,10 +1,12 @@
 # Introduction
 
-Ipychart is a python package for datavizualisation. 
+This package is a python package made for datavizualisation. It allows to create dynamic, refined and customizable charts within the famous Jupyter Notebook environment. It is paticularly suitable for Data Sientists who are looking for a smart way of displaying and presenting their data directly from the output cells of their notebook.
 
 ## How It Works
 
-Ipychart is an [ipywidget](https://ipywidgets.readthedocs.io/en/stable/). More specifically, it wraps a javascript library called [Chart.js](https://www.chartjs.org/) into a custom ipywidget to make it usable in the python environment Jupyter notebook.
+Ipychart is an [ipywidget](https://ipywidgets.readthedocs.io/en/stable/). Ipywidgets are "objects" developed by the creators of Jupyter themself. It allows to use pure javascript code directly in the jupyter environment which is a Python environment. This bridge between javascript and Python is is made available in open source via the possibility for anyone to create a custom ipywidget. This package, which is therefore a custom ipywidget, takes advantage of the power of ipywidgets to make the [Chart.js](https://www.chartjs.org/) javascript library available to all jupyter notebooks users.
+
+The ipychart API is extremely similar - not to say identical - to the API of Chart.js. Is is made to make all features of Chart.js avaible in ipychart. As a lot of informations visible in the official Chart.js documentation can be transposed in ipychart, with an adaptation to the syntax of python, do not hesitate to refer to the documentaiton of chart.js if you cannot find what you are looking for in this documentation,
 
 ## Features
 
@@ -33,17 +35,3 @@ Ipychart is an [ipywidget](https://ipywidgets.readthedocs.io/en/stable/). More s
 
 * [Work with Pandas Dataframes and Numpy Arrays](../user_guide/advanced.md#Work\with\Pandas\Dataframes\and\Numpy\Arrays)
 * [Advanced configuration with callback functions](../user_guide/advanced.md#Advanced\configuration\with\callback\functions)
-
-## Why Not ...?
-
-**<span style="font-size:larger;">Matplotlib</span>**
-
-Nuxt is capable of doing what VuePress does, but it’s designed for building applications. VuePress is focused on content-centric static sites and provides features tailored for technical documentation out of the box.
-
-**<span style="font-size:larger;">Seaborn</span>**
-
-Both are great projects and also Vue-powered. Except they are both fully runtime-driven and therefore not SEO-friendly. If you don’t care for SEO and don’t want to mess with installing dependencies, these are still great choices.
-
-**<span style="font-size:larger;">Plotly</span>**
-
-Hexo has been serving the Vue docs well - in fact, we are probably still a long way to go from migrating away from it for our main site. The biggest problem is that its theming system is static and string-based - we want to take advantage of Vue for both the layout and the interactivity. Also, Hexo’s Markdown rendering isn’t the most flexible to configure.
