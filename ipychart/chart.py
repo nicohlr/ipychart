@@ -1,10 +1,6 @@
 import ipywidgets as widgets
 from traitlets import Unicode, default, Dict
 from ipywidgets.embed import embed_minimal_html, dependency_state
-import numpy as np
-import random
-import colorsys
-import logging
 import pandas as pd
 
 
@@ -32,11 +28,11 @@ class Chart(widgets.DOMWidget):
         self.kind = kind
         self.options = options
 
-        for d in self.data['datasets']:   
+        for d in self.data['datasets']:
             d['data'] = d['data'].tolist() if isinstance(d['data'], pd.Series) else d['data']
 
         self.data['labels'] = self.data['labels'].tolist() if isinstance(self.data['labels'], pd.Series) else self.data['labels']
-   
+
         if isinstance(data, pd.Series):
             data['data'] = data['data'].tolist()
 
@@ -46,7 +42,6 @@ class Chart(widgets.DOMWidget):
         self._options = self.options
         self._data = self.data
         self._type = kind
-
 
     @default('layout')
     def _default_layout(self):
@@ -63,15 +58,14 @@ class Chart(widgets.DOMWidget):
         msg_options = 'Wrong input format for options argument see https:// for more details'  # todo: link to the doc
 
         assert isinstance(data, dict), msg_data
-        
+
         assert 'datasets' in data, msg_data
         assert len(data['datasets']), msg_data
-        assert ['data' in ds for ds in data['datasets']] == [True]*len(data['datasets']), msg_data
+        assert ['data' in ds for ds in data['datasets']] == [True] * len(data['datasets']), msg_data
         if 'kind' == 'bubble':
             for d in data['datasets']:
                 assert all(isinstance(x, dict) for x in d['data']), "Data must contains dict with coordinates (x,y) and radius (r) for charts of type 'bubble'. Example --> data: [{'x': 5, 'y': 10, 'r': 10}, {'x': 15, 'y': 3, 'r': 15}]"
                 assert all(k in p for k in ('x', 'y', 'r') for p in data), "Data must contains dict with coordinates (x,y) and radius (r) for charts of type 'bubble'. Example --> data: [{'x': 5, 'y': 10, 'r': 10}, {'x': 15, 'y': 3, 'r': 15}]"
- 
 
         if options:
             assert isinstance(options, dict), msg_options
@@ -89,7 +83,7 @@ class Chart(widgets.DOMWidget):
         if options:
             default_options = options
 
-        # bug: beginAtzero does not work 
+        # bug: beginAtzero does not work
         # todo: when fill  arg is false in dataset, legend color must be the background color instead of border color
 
         # Override default options from Chart.js if option is not setted by the user
@@ -102,7 +96,7 @@ class Chart(widgets.DOMWidget):
                 if 'beginAtZero' not in default_options:
                     default_options.update({'beginAtZero': True})
             else:
-                    default_options.update({'scale': {'ticks': {'beginAtZero': True}}})
+                default_options.update({'scale': {'ticks': {'beginAtZero': True}}})
 
         if 'legend' not in default_options:
             if len(data['datasets']) == 1 and kind in ['bar', 'line', 'horizontalBar', 'bubble', 'radar']:
@@ -114,19 +108,17 @@ class Chart(widgets.DOMWidget):
     def _add_datasets_default_style(data, kind):
 
         background_colors = [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-                'rgba(74, 242, 242, 0.2)',
-                'rgba(137, 252, 0, 0.2)',
-                'rgba(255, 138, 222, 0.2)',
-                'rgba(255, 252, 49, 0.2)'
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(74, 242, 242, 0.2)',
+            'rgba(137, 252, 0, 0.2)',
+            'rgba(255, 138, 222, 0.2)',
+            'rgba(255, 252, 49, 0.2)'
         ]
-
-        border_colors = [c.replace('0.2', '1') for c in background_colors]
 
         for idx, ds in enumerate(data['datasets']):
 
@@ -149,4 +141,3 @@ class Chart(widgets.DOMWidget):
 
     def to_html(self, path):
         embed_minimal_html(path, views=[self], state=dependency_state([self]))
-        print('Chart saved at ' + path)

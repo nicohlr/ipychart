@@ -1,11 +1,8 @@
-ipychart
-===============================
-
-<p align="center">
-  <img src="./images/hero.png" width="70%">
-</p>
-
-A Jupyter - Chart.js bridge enabling interactive data visualization in the Jupyter notebook.
+<div align="center">
+    <img src="./images/ipychart-logo.svg" width="30%">
+    <p style="margin:1.8rem auto;font-size: 3rem;">ipychart</p>
+    <p style="max-width:35rem;font-size:1.6rem;line-height:1.3;color:#DCDCDC;">The power of Chart.js in Jupyter Notebooks</p>
+</div>
 
 Installation
 ------------
@@ -13,8 +10,6 @@ Installation
 To install use pip:
 
     $ pip install ipychart
-    $ jupyter nbextension enable --py --sys-prefix ipychart
-
 
 Usage
 ------------

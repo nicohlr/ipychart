@@ -12,7 +12,7 @@ module.exports = ctx => ({
         repo: 'https://github.com/nicohlr/ipychart',
         editLinks: false,
         docsDir: 'docs',
-        logo: '/favicon.ico',
+        logo: '/ipychart-logo.svg',
 
         algolia: ctx.isProd ? ({
             apiKey: '',

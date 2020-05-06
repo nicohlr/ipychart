@@ -2,6 +2,8 @@
 
 ## Pandas integration
 
+## Datalabels
+
 ## Callback functions
 
 ## Export & embedding
