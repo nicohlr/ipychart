@@ -1,13 +1,16 @@
+import random
+import json
+import numpy as np
+import pandas as pd
 import ipywidgets as widgets
 from traitlets import Unicode, default, Dict
-from ipywidgets.embed import embed_minimal_html, dependency_state
-import pandas as pd
+from ipywidgets.embed import embed_minimal_html, dependency_state, embed_data
 from .__meta__ import __version_js__
 
 
 class Chart(widgets.DOMWidget):
 
-    """A Jupyter - Chart.js bridge enabling interactive data visualization in the Jupyter notebook."""
+    '''A Jupyter - Chart.js bridge enabling interactive data visualization in the Jupyter notebook.'''
 
     _view_name = Unicode('ChartView').tag(sync=True)
     _model_name = Unicode('ChartModel').tag(sync=True)
@@ -70,7 +73,6 @@ class Chart(widgets.DOMWidget):
         if self.options:
             assert isinstance(self.options, dict), msg_options
             for key in self.options:
-                print(key)
                 assert key in ['legend', 'title', 'tooltips', 'scales', 'layout', 'animation', 'responsive', 'hover'], msg_options
 
         # Pandas series handling
@@ -110,45 +112,95 @@ class Chart(widgets.DOMWidget):
 
     def _set_default_style(self):
         '''
-        This function set some syle for the chart.
+        This function set a default style for the chart.
         It allows to get a good looking chart with ipychart without having to input some styling options.
         To see more details about styling in ipychart, please check the documentation: https://
         '''
 
-        default_background_colors = [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-            'rgba(74, 242, 242, 0.2)',
-            'rgba(137, 252, 0, 0.2)',
-            'rgba(255, 138, 222, 0.2)',
-            'rgba(255, 252, 49, 0.2)'
-        ]
+        random_colors = ['rgba({}, {}, {}, 0.2)'.format(*random.sample(
+            list(np.random.choice(range(256), size=2)) + list(
+                np.random.choice(range(200, 256), size=1)), 3)) for i in range(100)]
+
+        # Chart.js main colors for one dataset
+        default_colors_one = ['rgba(54, 163, 235, 0.2)', 'rgba(254, 119, 124, 0.2)', 'rgba(255, 206, 87, 0.2)']
+
+        # Chosen colors for the six fist datasets then random colors
+        default_colors_all = ['rgba(54, 163, 235, 0.2)', 'rgba(254, 119, 124, 0.2)', 'rgba(255, 206, 87, 0.2)',
+                              'rgba(11, 255, 238, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)',
+                              'rgba(5, 169, 69, 0.2)', 'rgba(230, 120, 199, 0.2)', 'rgba(35, 120, 206, 0.2)',
+                              'rgba(211, 216, 214, 0.2)'] + random_colors
 
         # Override default style options from Chart.js if not setted by the user
-        for idx, ds in enumerate(self.data['datasets']):
-
-            if 'backgroundColor' not in ds:
-                if self.kind in ['bar', 'horizontalBar', 'line', 'radar']:
-                    ds['backgroundColor'] = default_background_colors[idx]
+        if len(self.data['datasets']) == 1:
+            if 'backgroundColor' not in self.data['datasets'][0]:
+                if self.kind in ['line', 'radar']:
+                    self.data['datasets'][0]['backgroundColor'] = default_colors_one[0]
+                elif self.kind in ['bar', 'horizontalBar']:
+                    print(len(self.data['datasets'][0]['data']))
+                    print(len(default_colors_one[:len(self.data['datasets'][0]['data'])]))
+                    self.data['datasets'][0]['backgroundColor'] = default_colors_one * (int(len(self.data['datasets'][0]['data'])) + 1)
                 else:
-                    ds['backgroundColor'] = default_background_colors[:len(ds['data'])]
-
-            if 'borderColor' not in ds:
-                if isinstance(ds['backgroundColor'], str):
-                    ds['borderColor'] = ds['backgroundColor'].replace('0.2', '1')
+                    self.data['datasets'][0]['backgroundColor'] = default_colors_all[:len(self.data['datasets'][0]['data'])]
+            if 'borderColor' not in self.data['datasets'][0]:
+                if self.kind in ['line', 'radar']:
+                    self.data['datasets'][0]['borderColor'] = self.data['datasets'][0]['backgroundColor'].replace('0.2', '1')
                 else:
-                    ds['borderColor'] = [c.replace('0.2', '1') for c in ds['backgroundColor']]
+                    self.data['datasets'][0]['borderColor'] = [c.replace('0.2', '1') for c in self.data['datasets'][0]['backgroundColor']]
+            if 'borderWidth' not in self.data['datasets'][0]:
+                self.data['datasets'][0]['borderWidth'] = 1
 
-            if 'borderWidth' not in ds:
-                ds['borderWidth'] = 1
+        else:
+            for idx, ds in enumerate(self.data['datasets']):
+                if 'backgroundColor' not in ds:
+                    if self.kind in ['bar', 'horizontalBar', 'line', 'radar']:
+                        ds['backgroundColor'] = default_colors_all[idx]
+                    else:
+                        ds['backgroundColor'] = default_colors_all[:len(ds['data'])]
+                if 'borderColor' not in ds:
+                    if self.kind in ['bar', 'horizontalBar', 'line', 'radar']:
+                        ds['borderColor'] = ds['backgroundColor'].replace('0.2', '1')
+                    else:
+                        ds['borderColor'] = [c.replace('0.2', '1') for c in ds['backgroundColor']]
+                if 'borderWidth' not in ds:
+                    ds['borderWidth'] = 1
 
     def to_html(self, path):
         '''
-        This function set embed the chart widget into an HTML file dumped at the inputed path location.
+        This function embed the chart widget into an HTML file dumped at the inputed path location.
         To see more details about embeding an ipywidget see: https://ipywidgets.readthedocs.io/en/latest/embedding.html
         '''
+
         embed_minimal_html(path, views=[self], state=dependency_state([self]))
+
+    def get_html_template(self):
+        '''
+        This function gives HTML code to embed the chart widget.
+        To see more details about embeding an ipywidget see: https://ipywidgets.readthedocs.io/en/latest/embedding.html
+
+        Returns:
+            widget_html (str): HTML code to embed the chart.
+        '''
+
+        html_template = """
+                <!-- Load require.js. Delete this if your page already loads require.js -->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" crossorigin="anonymous"></script>
+                <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+                <script type="application/vnd.jupyter.widget-state+json">
+                    {manager_state}
+                </script>
+
+                <script type="application/vnd.jupyter.widget-state+json">
+
+                </script>
+                <script type="application/vnd.jupyter.widget-view+json">
+                    {widget_views[0]}
+                </script>
+            """
+
+        data = embed_data(views=[self])
+        manager_state = json.dumps(data['manager_state'])
+        widget_views = [json.dumps(view) for view in data['view_specs']]
+        rendered_template = html_template.format(manager_state=manager_state, widget_views=widget_views)
+
+        return rendered_template
