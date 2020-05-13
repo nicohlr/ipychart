@@ -2,6 +2,7 @@ import ipywidgets as widgets
 from traitlets import Unicode, default, Dict
 from ipywidgets.embed import embed_minimal_html, dependency_state
 import pandas as pd
+from .__meta__ import __version_js__
 
 
 class Chart(widgets.DOMWidget):
@@ -12,102 +13,109 @@ class Chart(widgets.DOMWidget):
     _model_name = Unicode('ChartModel').tag(sync=True)
     _view_module = Unicode('ipychart').tag(sync=True)
     _model_module = Unicode('ipychart').tag(sync=True)
-    _view_module_version = Unicode('^0.1.0').tag(sync=True)
-    _model_module_version = Unicode('^0.1.0').tag(sync=True)
+    _view_module_version = Unicode('^' + __version_js__).tag(sync=True)
+    _model_module_version = Unicode('^' + __version_js__).tag(sync=True)
 
     _data = Dict().tag(sync=True)
     _options = Dict().tag(sync=True)
     _type = Unicode().tag(sync=True)
 
-    def __init__(self, data, kind, options=None):
+    def __init__(self, data: dict, kind: str, options: dict = None):
+
         super().__init__()
-
-        self._validate_input(data, kind, options)
-
         self.data = data
         self.kind = kind
-        self.options = options
+        self.options = options if options else {}
 
-        for d in self.data['datasets']:
-            d['data'] = d['data'].tolist() if isinstance(d['data'], pd.Series) else d['data']
+        # Check user input
+        self._validate_input()
 
-        self.data['labels'] = self.data['labels'].tolist() if isinstance(self.data['labels'], pd.Series) else self.data['labels']
+        # Set default style and options
+        self._set_default_style()
+        self._set_default_options()
 
-        if isinstance(data, pd.Series):
-            data['data'] = data['data'].tolist()
-
-        self.data = self._add_datasets_default_style(self.data, self.kind)
-        self.options = self._create_default_chart_options(self.data, self.options, self.kind)
-
+        # Set synced arguments
         self._options = self.options
         self._data = self.data
-        self._type = kind
+        self._type = self.kind
 
     @default('layout')
     def _default_layout(self):
         return widgets.Layout(height='auto', align_self='stretch')
 
-    @staticmethod
-    def _validate_input(data, kind, options):
+    def _validate_input(self):
+        '''
+        This function checks all arguments passed when the user create an instance of the Chart class.
+        To match Chart.js format, arguments must have a very specific structure.
+        To see more details about this structure, please check the documentation: https://
+        '''
 
-        assert kind in ['line', 'bar', 'horizontalBar', 'radar', 'doughnut', 'polarArea',
-                        'bubble', 'pie'], \
-            'Type must be one of : line, bar, radar, doughnut, polarArea, bubble, horizontalBar, pie'
+        msg_data = 'Wrong input format for data argument. See https:// for more details'  # todo: link to the doc
+        msg_kind = 'Chart kind must be one of : line, bar, radar, doughnut, polarArea, bubble, horizontalBar, pie. See https:// for more details'  # todo: link to the doc
+        msg_options = 'Wrong input format for options argument. See https:// for more details'  # todo: link to the doc
 
-        msg_data = 'Wrong input format for data argument see https:// for more details'  # todo: link to the doc
-        msg_options = 'Wrong input format for options argument see https:// for more details'  # todo: link to the doc
-
-        assert isinstance(data, dict), msg_data
-
-        assert 'datasets' in data, msg_data
-        assert len(data['datasets']), msg_data
-        assert ['data' in ds for ds in data['datasets']] == [True] * len(data['datasets']), msg_data
+        # Check data argument
+        assert 'datasets' in self.data, msg_data
+        assert len(self.data['datasets']), msg_data
+        assert ['data' in ds for ds in self.data['datasets']] == [True] * len(self.data['datasets']), msg_data
         if 'kind' == 'bubble':
-            for d in data['datasets']:
-                assert all(isinstance(x, dict) for x in d['data']), "Data must contains dict with coordinates (x,y) and radius (r) for charts of type 'bubble'. Example --> data: [{'x': 5, 'y': 10, 'r': 10}, {'x': 15, 'y': 3, 'r': 15}]"
-                assert all(k in p for k in ('x', 'y', 'r') for p in data), "Data must contains dict with coordinates (x,y) and radius (r) for charts of type 'bubble'. Example --> data: [{'x': 5, 'y': 10, 'r': 10}, {'x': 15, 'y': 3, 'r': 15}]"
+            for d in self.data['datasets']:
+                assert all(isinstance(x, dict) for x in d['data']), msg_data
+                assert all(k in p for k in ('x', 'y', 'r') for p in self.data), msg_data
 
-        if options:
-            assert isinstance(options, dict), msg_options
+        # Check kind argument
+        assert self.kind in ['line', 'bar', 'horizontalBar', 'radar', 'doughnut', 'polarArea', 'bubble', 'pie'], msg_kind
 
-    @staticmethod
-    def _create_default_chart_options(data, options, kind):
+        # Check options argument
+        if self.options:
+            assert isinstance(self.options, dict), msg_options
+            for key in self.options:
+                print(key)
+                assert key in ['legend', 'title', 'tooltips', 'scales', 'layout', 'animation', 'responsive', 'hover'], msg_options
 
+        # Pandas series handling
+        for d in self.data['datasets']:
+            d['data'] = d['data'].tolist() if isinstance(d['data'], pd.Series) else d['data']
+
+        if 'labels' in self.data:
+            self.data['labels'] = self.data['labels'].tolist() if isinstance(self.data['labels'], pd.Series) else self.data['labels']
+
+    def _set_default_options(self):
+        '''
+        This function set some default options for the chart.
+        To see more details about options in ipychart, please check the documentation: https://
+        '''
+
+        # Display axis by default only for certain types of chart
         x_axis_display, y_axis_display = (True, True)
-
-        if kind in ['radar', 'doughnut', 'polarArea', 'pie']:
+        if self.kind in ['radar', 'doughnut', 'polarArea', 'pie']:
             x_axis_display, y_axis_display = (False, False)
 
-        default_options = {}
+        # TODO: when fill arg is false in dataset, legend color must be the background color instead of border color (for line chart)
 
-        if options:
-            default_options = options
-
-        # bug: beginAtzero does not work
-        # todo: when fill  arg is false in dataset, legend color must be the background color instead of border color
-
-        # Override default options from Chart.js if option is not setted by the user
-        if 'scales' not in default_options:
-            if kind != 'radar':
-                default_options.update({'scales': [
-                    {'yAxes': [{'display': y_axis_display, 'ticks': {'beginAtZero': True, 'display': y_axis_display}}]},
-                    {'xAxes': [{'display': x_axis_display, 'ticks': {'beginAtZero': True, 'display': x_axis_display}}]}
-                ]})
-                if 'beginAtZero' not in default_options:
-                    default_options.update({'beginAtZero': True})
+        # Override default scales options from Chart.js if not setted by the user
+        if 'scales' not in self.options:
+            if self.kind != 'radar':
+                self.options.update({'scales': {
+                    'yAxes': [{'display': y_axis_display, 'ticks': {'beginAtZero': True, 'display': y_axis_display}}],
+                    'xAxes': [{'display': x_axis_display, 'ticks': {'beginAtZero': True, 'display': x_axis_display}}]
+                }})
             else:
-                default_options.update({'scale': {'ticks': {'beginAtZero': True}}})
+                self.options.update({'scale': {'ticks': {'beginAtZero': True}}})
 
-        if 'legend' not in default_options:
-            if len(data['datasets']) == 1 and kind in ['bar', 'line', 'horizontalBar', 'bubble', 'radar']:
-                default_options.update({'legend': False})
+        # Override default legend options from Chart.js if not setted by the user
+        if 'legend' not in self.options:
+            if len(self.data['datasets']) == 1 and self.kind in ['bar', 'line', 'horizontalBar', 'bubble', 'radar']:
+                self.options.update({'legend': False})
 
-        return default_options
+    def _set_default_style(self):
+        '''
+        This function set some syle for the chart.
+        It allows to get a good looking chart with ipychart without having to input some styling options.
+        To see more details about styling in ipychart, please check the documentation: https://
+        '''
 
-    @staticmethod
-    def _add_datasets_default_style(data, kind):
-
-        background_colors = [
+        default_background_colors = [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
             'rgba(255, 206, 86, 0.2)',
@@ -120,13 +128,14 @@ class Chart(widgets.DOMWidget):
             'rgba(255, 252, 49, 0.2)'
         ]
 
-        for idx, ds in enumerate(data['datasets']):
+        # Override default style options from Chart.js if not setted by the user
+        for idx, ds in enumerate(self.data['datasets']):
 
             if 'backgroundColor' not in ds:
-                if kind in ['bar', 'horizontalBar', 'line', 'radar']:
-                    ds['backgroundColor'] = background_colors[idx]
+                if self.kind in ['bar', 'horizontalBar', 'line', 'radar']:
+                    ds['backgroundColor'] = default_background_colors[idx]
                 else:
-                    ds['backgroundColor'] = background_colors[:len(ds['data'])]
+                    ds['backgroundColor'] = default_background_colors[:len(ds['data'])]
 
             if 'borderColor' not in ds:
                 if isinstance(ds['backgroundColor'], str):
@@ -137,7 +146,9 @@ class Chart(widgets.DOMWidget):
             if 'borderWidth' not in ds:
                 ds['borderWidth'] = 1
 
-        return data
-
     def to_html(self, path):
+        '''
+        This function set embed the chart widget into an HTML file dumped at the inputed path location.
+        To see more details about embeding an ipywidget see: https://ipywidgets.readthedocs.io/en/latest/embedding.html
+        '''
         embed_minimal_html(path, views=[self], state=dependency_state([self]))
