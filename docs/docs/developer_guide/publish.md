@@ -5,8 +5,6 @@
 Set the **same** version number in all the following files.  
 
 + `ipychart/js/package.json`
-+ `ipychart/js/package-lock.json`
-+ `ipychart/__meta__.py`
 + `ipychart/_version.py`
 
 ::: warning

@@ -6,6 +6,7 @@ build/
 *.py[cod]
 **/node_modules/
 */package-lock.json
+package-lock.json
 */static/
 js/dist/
 */*.tgz

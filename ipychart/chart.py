@@ -5,7 +5,7 @@ import pandas as pd
 import ipywidgets as widgets
 from traitlets import Unicode, default, Dict
 from ipywidgets.embed import embed_minimal_html, dependency_state, embed_data
-from .__meta__ import __version_js__
+from ._version import __version__
 
 
 class Chart(widgets.DOMWidget):
@@ -16,8 +16,8 @@ class Chart(widgets.DOMWidget):
     _model_name = Unicode('ChartModel').tag(sync=True)
     _view_module = Unicode('ipychart').tag(sync=True)
     _model_module = Unicode('ipychart').tag(sync=True)
-    _view_module_version = Unicode('^' + __version_js__).tag(sync=True)
-    _model_module_version = Unicode('^' + __version_js__).tag(sync=True)
+    _view_module_version = Unicode('^' + __version__).tag(sync=True)
+    _model_module_version = Unicode('^' + __version__).tag(sync=True)
 
     _data = Dict().tag(sync=True)
     _options = Dict().tag(sync=True)
@@ -65,6 +65,9 @@ class Chart(widgets.DOMWidget):
             for d in self.data['datasets']:
                 assert all(isinstance(x, dict) for x in d['data']), msg_data
                 assert all(k in p for k in ('x', 'y', 'r') for p in self.data), msg_data
+        for d in self.data['datasets']:
+            if 'datalabels' in d:
+                assert isinstance(d['datalabels'], dict), msg_data
 
         # Check kind argument
         assert self.kind in ['line', 'bar', 'horizontalBar', 'radar', 'doughnut', 'polarArea', 'bubble', 'pie'], msg_kind
@@ -73,12 +76,11 @@ class Chart(widgets.DOMWidget):
         if self.options:
             assert isinstance(self.options, dict), msg_options
             for key in self.options:
-                assert key in ['legend', 'title', 'tooltips', 'scales', 'layout', 'animation', 'responsive', 'hover'], msg_options
+                assert key in ['legend', 'title', 'tooltips', 'scales', 'layout', 'animation', 'hover'], msg_options
 
         # Pandas series handling
         for d in self.data['datasets']:
             d['data'] = d['data'].tolist() if isinstance(d['data'], pd.Series) else d['data']
-
         if 'labels' in self.data:
             self.data['labels'] = self.data['labels'].tolist() if isinstance(self.data['labels'], pd.Series) else self.data['labels']
 
@@ -110,6 +112,11 @@ class Chart(widgets.DOMWidget):
             if len(self.data['datasets']) == 1 and self.kind in ['bar', 'line', 'horizontalBar', 'bubble', 'radar']:
                 self.options.update({'legend': False})
 
+        # Do not display datalabels by default
+        for d in self.data['datasets']:
+            if 'datalabels' not in d:
+                d['datalabels'] = {'display': False}
+
     def _set_default_style(self):
         '''
         This function set a default style for the chart.
@@ -136,8 +143,6 @@ class Chart(widgets.DOMWidget):
                 if self.kind in ['line', 'radar']:
                     self.data['datasets'][0]['backgroundColor'] = default_colors_one[0]
                 elif self.kind in ['bar', 'horizontalBar']:
-                    print(len(self.data['datasets'][0]['data']))
-                    print(len(default_colors_one[:len(self.data['datasets'][0]['data'])]))
                     self.data['datasets'][0]['backgroundColor'] = default_colors_one * (int(len(self.data['datasets'][0]['data'])) + 1)
                 else:
                     self.data['datasets'][0]['backgroundColor'] = default_colors_all[:len(self.data['datasets'][0]['data'])]
@@ -148,6 +153,12 @@ class Chart(widgets.DOMWidget):
                     self.data['datasets'][0]['borderColor'] = [c.replace('0.2', '1') for c in self.data['datasets'][0]['backgroundColor']]
             if 'borderWidth' not in self.data['datasets'][0]:
                 self.data['datasets'][0]['borderWidth'] = 1
+            if 'datalabels' in self.data['datasets'][0]:
+                if 'borderWidth' in self.data['datasets'][0]['datalabels']:
+                    if 'backgroundColor' not in self.data['datasets'][0]['datalabels']:
+                        self.data['datasets'][0]['datalabels']['backgroundColor'] = self.data['datasets'][0]['backgroundColor']
+                    if 'borderColor' not in self.data['datasets'][0]['datalabels']:
+                        self.data['datasets'][0]['datalabels']['borderColor'] = self.data['datasets'][0]['borderColor']
 
         else:
             for idx, ds in enumerate(self.data['datasets']):
@@ -163,6 +174,12 @@ class Chart(widgets.DOMWidget):
                         ds['borderColor'] = [c.replace('0.2', '1') for c in ds['backgroundColor']]
                 if 'borderWidth' not in ds:
                     ds['borderWidth'] = 1
+                if 'datalabels' in ds:
+                    if 'borderWidth' in ds['datalabels']:
+                        if 'backgroundColor' not in ds['datalabels']:
+                            ds['datalabels']['backgroundColor'] = ds['backgroundColor']
+                        if 'borderColor' not in ds['datalabels']:
+                            ds['datalabels']['borderColor'] = ds['borderColor']
 
     def to_html(self, path):
         '''

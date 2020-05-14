@@ -49,6 +49,9 @@ data = {
         'pointRadius': int # Radius of the point (0: point not rendered) | Default: 3
         'pointRotation': int # Rotation of the point in degrees | Default: 0 
         'pointStyle': str # Style of the point | Default: 'circle'
+
+        # datalabels options (see datalabels documentation section)
+        'datalabels': dict # Datalabels options | Default: None
     }]
 }
 ```
@@ -126,6 +129,9 @@ data = {
         'barThickness': str # See below | Default: None
         'maxBarThickness': str # Maximum bars thickness in pixels | Default: None
         'minBarLength': int # Minimum bars length in pixels | Default: None
+
+        # datalabels options (see datalabels documentation section)
+        'datalabels': dict # Datalabels options | Default: None
     }]
 }
 ```

@@ -1,7 +1,9 @@
-import { DOMWidgetModel, DOMWidgetView } from '@jupyter-widgets/base';
-import { extend } from 'lodash';
-import { version } from '../package.json';
-import Chart from 'chart.js';
+const widgets = require('@jupyter-widgets/base');
+const _ = require('lodash');
+const Chart = require('chart.js');
+const ChartDataLabels = require('chartjs-plugin-datalabels');
+var version = require('../package.json')['version'];
+
 
 // USEFUL FUNCTIONS
 function checkNested(obj /*, level1, level2, ... levelN*/) {
@@ -16,8 +18,8 @@ function checkNested(obj /*, level1, level2, ... levelN*/) {
 }
   
 // CREATE CHART
-const ChartModel = DOMWidgetModel.extend({
-    defaults: extend(DOMWidgetModel.prototype.defaults(), {
+const ChartModel = widgets.DOMWidgetModel.extend({
+    defaults: _.extend(widgets.DOMWidgetModel.prototype.defaults(), {
         _model_name : 'ChartModel',
         _view_name : 'ChartView',
         _model_module : 'ipychart',
@@ -27,7 +29,7 @@ const ChartModel = DOMWidgetModel.extend({
     })
 });
 
-const ChartView = DOMWidgetView.extend({
+const ChartView = widgets.DOMWidgetView.extend({
 
     render: function() {
 
@@ -264,6 +266,7 @@ const ChartView = DOMWidgetView.extend({
 
         // Create chart
         new Chart(ctx, {
+            plugins: [ChartDataLabels],
             type: type,
             data: data,
             options: options
@@ -271,9 +274,12 @@ const ChartView = DOMWidgetView.extend({
 
         // Add element to output
         this.el.appendChild(canvas);
+        console.log(version)
         console.log('end ipychart render');
     }
 });
 
-export const ChartModel = ChartModel;
-export const ChartView = ChartView;
+module.exports = {
+    ChartModel: ChartModel,
+    ChartView: ChartView
+};
