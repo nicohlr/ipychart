@@ -1,4 +1,4 @@
-# Building the documentation
+# Build the documentation
 
 The documentation of ipychart is made using [Vuepress](https://vuepress.vuejs.org/). You can find the files used to build it in the [docs folder of the project on GitHub](https://github.com/nicohlr/ipychart/tree/master/docs).
 

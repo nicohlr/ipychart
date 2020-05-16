@@ -120,12 +120,12 @@ options = {
 ```
 Below are the use of each of these dict. Of course, these five dict have numerous sub arguments. This is why a whole section of this documentation is dedicated for each one of them. 
 
-- **legend :** you can configure the legend of your chart with this dict. In ipychart, legend is dynamic and allow you to display or hide some of your inputed datasets ! To find out how you can customize the legend of your chart, please check the [legend documentation page]().
-- **title :** you can configure the title of your chart with this dict. To find out how, please check the [title documentation page]().
-- **tooltips :** you can configure the tooltips of your chart with this dict. In ipychart, hovering a chart display some information, these popus are called "tooltips". You can configure these tooltips in many ways. To find out how, please check the [tooltips documentation page](). You can even inject some javascript code do display your own text around your data on hover a chart. The procedure for doing this is described in the [callback functions section of the documentation]().
-- **scales :** you can configure the scales of your chart with this dict. To find out how, please check the [scales documentation page]().
-- **layout :** you can configure the layout of your chart with this dict. To find out how, please check the [layout documentation page]().
-- **hover :** you can configure the hovering options of your chart with this dict. To find out how, please check the [hover documentation page]().
-- **animation :** you can configure the animations of your chart with this dict. To find out how, please check the [animation documentation page]().
+- **legend:** you can configure the legend of your chart with this dict. In ipychart, legend is dynamic and allow you to display or hide some of your inputed datasets ! To find out how you can customize the legend of your chart, please check the [legend documentation page]().
+- **title:** you can configure the title of your chart with this dict. To find out how, please check the [title documentation page]().
+- **tooltips:** you can configure the tooltips of your chart with this dict. In ipychart, hovering a chart display some information, these popus are called "tooltips". You can configure these tooltips in many ways. To find out how, please check the [tooltips documentation page](). You can even inject some javascript code do display your own text around your data on hover a chart. The procedure for doing this is described in the [callback functions section of the documentation]().
+- **scales:** you can configure the scales of your chart with this dict. To find out how, please check the [scales documentation page]().
+- **layout:** you can configure the layout of your chart with this dict. To find out how, please check the [layout documentation page]().
+- **hover:** you can configure the hovering options of your chart with this dict. To find out how, please check the [hover documentation page]().
+- **animation:** you can configure the animations of your chart with this dict. To find out how, please check the [animation documentation page]().
 
 Now that you are familiar with the structure of each argument, you can head to the next section to learn about the different types of charts.

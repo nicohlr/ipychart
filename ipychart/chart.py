@@ -95,8 +95,6 @@ class Chart(widgets.DOMWidget):
         if self.kind in ['radar', 'doughnut', 'polarArea', 'pie']:
             x_axis_display, y_axis_display = (False, False)
 
-        # TODO: when fill arg is false in dataset, legend color must be the background color instead of border color (for line chart)
-
         # Override default scales options from Chart.js if not setted by the user
         if 'scales' not in self.options:
             if self.kind != 'radar':

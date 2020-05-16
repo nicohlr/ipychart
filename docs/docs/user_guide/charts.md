@@ -20,39 +20,39 @@ For each dataset, the following properties ar configurable:
 
 ``` py
 data = {
-    'datasets': [{
-        'data': list or pd.Series # check data structure below 
+  'datasets': [{
+    'data': list or pd.Series # check data structure below 
 
-        # dataset general options
-        'fill': bool or str # How to fill the area under the line. | Default: True
-        'label': bool or str # Label of the dataset | Default: ''
-        'lineTension': int # Bezier curve tension of the line. | Default: 0.4
-        'order': int # Drawing order of dataset | Default: 0
-        'showLine': bool # Draw the line for this dataset | Default: True
-        'spanGaps': bool or int # Draw lines between points with no data | Default: False
-        'stepped': bool or string # See below | Default: False
-        'clip': int or dict # See below | Default: borderWidth / 2
-        'cubicInterpolationMode': str # See below | Default: 'default'
+    # dataset general options
+    'fill': bool or str # How to fill the area under the line. | Default: True
+    'label': bool or str # Label of the dataset | Default: ''
+    'lineTension': int # Bezier curve tension of the line. | Default: 0.4
+    'order': int # Drawing order of dataset | Default: 0
+    'showLine': bool # Draw the line for this dataset | Default: True
+    'spanGaps': bool or int # Draw lines between points with no data | Default: False
+    'stepped': bool or string # See below | Default: False
+    'clip': int or dict # See below | Default: borderWidth / 2
+    'cubicInterpolationMode': str # See below | Default: 'default'
 
-        # points and lines styling options
-        'backgroundColor': str # Line fill color | Default: 'rgba(255, 99, 132, 0.2)'
-        'borderCapStyle': str # Cap style of the line | Default: 'butt'
-        'borderColor': str # Line color | Default: 'rgba(255, 99, 132, 1)'
-        'borderDash': list # Length and spacing of dashes | Default: []
-        'borderDashOffset': float # Offset for line dashes | Default: 0.0
-        'borderJoinStyle': str # Line joint style | Default: 'miter'
-        'borderWidth': int # Line width (in pixels) | Default: 3
-        'pointBackgroundColor': str # Point fill color | Default: 'rgba(255, 99, 132, 0.2)'
-        'pointBorderColor': str # Point border color | Default: 'rgba(255, 99, 132, 1)'
-        'pointBorderWidth': int # Width of the point border in pixels | Default: 1
-        'pointHitRadius': int # Size of the point (mouse events) | Default: 1
-        'pointRadius': int # Radius of the point (0: point not rendered) | Default: 3
-        'pointRotation': int # Rotation of the point in degrees | Default: 0 
-        'pointStyle': str # Style of the point | Default: 'circle'
+    # points and lines styling options
+    'backgroundColor': str # Line fill color | Default: 'rgba(255, 99, 132, 0.2)'
+    'borderCapStyle': str # Cap style of the line | Default: 'butt'
+    'borderColor': str # Line color | Default: 'rgba(255, 99, 132, 1)'
+    'borderDash': list # Length and spacing of dashes | Default: []
+    'borderDashOffset': float # Offset for line dashes | Default: 0.0
+    'borderJoinStyle': str # Line joint style | Default: 'miter'
+    'borderWidth': int # Line width (in pixels) | Default: 3
+    'pointBackgroundColor': str # Point fill color | Default: 'rgba(255, 99, 132, 0.2)'
+    'pointBorderColor': str # Point border color | Default: 'rgba(255, 99, 132, 1)'
+    'pointBorderWidth': int # Width of the point border in pixels | Default: 1
+    'pointHitRadius': int # Size of the point (mouse events) | Default: 1
+    'pointRadius': int # Radius of the point (0: point not rendered) | Default: 3
+    'pointRotation': int # Rotation of the point in degrees | Default: 0 
+    'pointStyle': str # Style of the point | Default: 'circle'
 
-        # datalabels options (see datalabels documentation section)
-        'datalabels': dict # Datalabels options | Default: None
-    }]
+    # datalabels options (see datalabels documentation section)
+    'datalabels': dict # Datalabels options | Default: None
+  }]
 }
 ```
 
@@ -78,7 +78,7 @@ How to clip relative to chartArea. Positive value allows overflow, negative valu
 
 ### Data structure
 
-You can input your data in the data argument of the dataset using two formats :
+You can input your data in the data argument of the dataset using two different formats :
 
 #### Number
 
@@ -114,25 +114,25 @@ For each dataset, the following properties ar configurable:
 
 ``` py
 data = {
-    'datasets': [{   
-        'data': list or pd.Series # check data structure below 
+  'datasets': [{   
+    'data': list or pd.Series # check data structure below 
 
-        # dataset general options
-        'label': bool or str # Label of the dataset | Default: ''
-        'order': int # Drawing order of dataset | Default: 0
+    # dataset general options
+    'label': bool or str # Label of the dataset | Default: ''
+    'order': int # Drawing order of dataset | Default: 0
 
-        # bars styling options
-        'backgroundColor': str # Line fill color | Default: 'rgba(255, 99, 132, 0.2)'
-        'borderColor': str # Line color | Default: 'rgba(255, 99, 132, 1)'
-        'borderSkipped': str # See below | Default: 'bottom'
-        'borderWidth': int # Line width (in pixels) | Default: 3
-        'barThickness': str # See below | Default: None
-        'maxBarThickness': str # Maximum bars thickness in pixels | Default: None
-        'minBarLength': int # Minimum bars length in pixels | Default: None
+    # bars styling options
+    'backgroundColor': str # Line fill color | Default: 'rgba(255, 99, 132, 0.2)'
+    'borderColor': str # Line color | Default: 'rgba(255, 99, 132, 1)'
+    'borderSkipped': str # See below | Default: 'bottom'
+    'borderWidth': int # Line width (in pixels) | Default: 3
+    'barThickness': str # See below | Default: None
+    'maxBarThickness': str # Maximum bars thickness in pixels | Default: None
+    'minBarLength': int # Minimum bars length in pixels | Default: None
 
-        # datalabels options (see datalabels documentation section)
-        'datalabels': dict # Datalabels options | Default: None
-    }]
+    # datalabels options (see datalabels documentation section)
+    'datalabels': dict # Datalabels options | Default: None
+  }]
 }
 ```
 
@@ -161,15 +161,7 @@ If not set (default), the base sample widths are calculated using the smallest i
 
 ### Data structure
 
-
-You can also specify the dataset as x/y coordinates when using the time scale.
-
-data: [{x:'2016-12-25', y:20}, {x:'2016-12-26', y:10}]
-You can also specify the dataset for a bar chart as arrays of two numbers. This will force rendering of bars with gaps between them (floating-bars). First and second numbers in array will correspond the start and the end point of a bar respectively.
-
-data: [[5,6], [-3,-6]]
-
-You can input your data in the data argument of the dataset using two formats :
+You can input your data in the data argument of the dataset using three different formats :
 
 #### Number
 
@@ -180,6 +172,8 @@ data = {
 ```
 
 #### Coordinates
+
+You can specify the dataset as x/y coordinates when using the time scale.
 
 ``` py
 data = {
@@ -203,9 +197,9 @@ You can also give a **pandas series** to the data argument. For exemple by givin
 
 ### Horizontal Bar chart
 
-You can transpose your bar chart by setting the **kind** argument of your chart to **'horizontalBar'**:
+You can rotate your bar chart by setting the **kind** argument of your chart to **'horizontalBar'**:
 
-<charts-bar/>
+<charts-horizontalbar/>
 
 ## Radar
 
