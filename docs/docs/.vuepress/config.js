@@ -36,7 +36,15 @@ module.exports = ctx => ({
                 title: 'User Guide',
                 collapsable: false,
                 sidebarDepth: 1,
-                children: ['/user_guide/introduction', '/user_guide/getting_started', '/user_guide/usage', '/user_guide/charts', '/user_guide/config', '/user_guide/advanced'],
+                children: [
+                    '/user_guide/introduction', 
+                    '/user_guide/getting_started', 
+                    '/user_guide/usage', 
+                    '/user_guide/charts', 
+                    '/user_guide/config', 
+                    '/user_guide/scales', 
+                    '/user_guide/advanced'
+                ],
             },
             {
                 title: 'Developer Guide',

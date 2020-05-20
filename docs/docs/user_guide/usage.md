@@ -11,7 +11,8 @@ If you are already familiar with Chart.js, you can skip this part.
 Before looking at ipychart, lets take a look at what it looks like to create a chart with Chart.js. It will allow us to better understand how ipychart works:
 
 ``` js
-// This is to gather the html container of the chart, don't pay too much attention to it
+// This is to gather the html container of the chart
+// Don't pay too much attention to this line of code
 var ctx = document.getElementById('myChart').getContext('2d');
 
 // The creation of the chart begins here
@@ -79,7 +80,7 @@ The datasets argument will hold your data, it **must be a list of dict, each dic
 
 The labels argument **must be a list**. If only one dataset is passed (i.e. if len(data['datasets] is 1)), the labels list will represent the labels of each datapoint of the only dataset passed. However, if more than one dataset is passed, the label list will represent the labels of each dataset.
 
-::: danger
+::: warning
 The data dict must have these two elements, otherwise you can expect dysfunction or unexpected behavior.
 :::
 
@@ -123,7 +124,7 @@ Below are the use of each of these dict. Of course, these five dict have numerou
 - **legend:** you can configure the legend of your chart with this dict. In ipychart, legend is dynamic and allow you to display or hide some of your inputed datasets ! To find out how you can customize the legend of your chart, please check the [legend documentation page]().
 - **title:** you can configure the title of your chart with this dict. To find out how, please check the [title documentation page]().
 - **tooltips:** you can configure the tooltips of your chart with this dict. In ipychart, hovering a chart display some information, these popus are called "tooltips". You can configure these tooltips in many ways. To find out how, please check the [tooltips documentation page](). You can even inject some javascript code do display your own text around your data on hover a chart. The procedure for doing this is described in the [callback functions section of the documentation]().
-- **scales:** you can configure the scales of your chart with this dict. To find out how, please check the [scales documentation page]().
+- **scales:** you can configure the scales of your chart with this dict. To find out how, please check the [scales section]().
 - **layout:** you can configure the layout of your chart with this dict. To find out how, please check the [layout documentation page]().
 - **hover:** you can configure the hovering options of your chart with this dict. To find out how, please check the [hover documentation page]().
 - **animation:** you can configure the animations of your chart with this dict. To find out how, please check the [animation documentation page]().

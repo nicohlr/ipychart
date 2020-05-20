@@ -10,8 +10,13 @@ $ pip install ipychart
 
 You can now start a notebook jupyter and start using ipychart !
 
-::: warning
-If you are working with a virtual environment, **please make sure to launch your jupyter notebook from this environment**. Otherwise, the charts will not be displayed.
+::: danger
+If you are working with a virtual environment, **please be sure to launch the notebook from the same environment where you installed ipychart**:
+```bash
+$ source activate myenv # or conda activate myenv
+(myenv) $ jupyter notebook # notebook is launched from myenv environment
+```
+Otherwise, the charts will not be displayed.
 :::
 
 ## Check Installation
@@ -48,7 +53,8 @@ Concretely, we can do that very easily in one cell of our notebook in the follow
 
 ``` python
 dataset = {
-    'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 'Poland', 'Portugal'],
+    'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 
+               'Poland', 'Portugal'],
     'datasets': [{'data': [114, 106, 106, 107, 111, 133, 109, 109]}]
     }
 

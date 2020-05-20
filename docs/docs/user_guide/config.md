@@ -2,53 +2,15 @@
 
 The options argument of the chart allows you to configure the chart as you want. In this section, we will go through each arguments of the options dict that you'll pass to your chart instance. Each of them allows you to configure a specific aspect of your chart.
 
-## Scales
-
-### Scales options
-
-With this argument, you can configure the scales of your chart. For example, you can add titles to each axis, choose the scale range, hide the scales ... To do that, you'll have to feed a dict to the scales argument of the options dict. This dict can have many properties, detailed below:
-
-``` py
-options = {
-  'scales': {
-
-    'xAxes': {
-      ##############################TODO######################################
-      'display': bool # Show the legend | Default: True (if multiple datasets)
-      'position': str # Position ('top', 'left', 'right', 'bottom') | Default: 'top'
-      'align': str # Alignment ('start', 'center', 'end') | Default: 'center'
-      'fullWidth': bool # Use full width of container | Default: True
-      'onClick': str # Callback function (see below) | Default: ''
-      'onHover': str # Callback function (see below) | Default: ''
-      'onLeave': str # Callback function (see below) | Default: ''
-      'reverse': bool #  Show datasets in reverse order | Default: False
-      'rtl': bool # Rendering the legends from right to left | Default: True
-    }
-
-    'yAxes': {
-      # You can use te same arguments than above to configure the y axis.
-    }
-  }
-}
-```
-
-### Example of a chart with custom scales
-
-Here is a example of what you can do to with the scales options (not exhaustive):
-
-``` py
-
-```
-
-And the output:
-
-<options-scales/>
+:::tip Note
+The options relating to the modification of the scales are very complete and are therefore the subject of a separate section of the documentation. You can find this section [here]().
+:::
 
 ## Title
 
 ### Title options
 
-With this argument, you can configure the scales of your chart. For example, you can add titles to each axis, choose the scale range, hide the scales ... To do that, you'll have to feed a dict to the scales argument of the options dict. This dict can have many properties, detailed below:
+With this argument, you can add a title to your chart. There are some configuration available to modify your title:
 
 ``` py
 options = {
@@ -68,13 +30,9 @@ options = {
 }
 ```
 
-#### Callbacks functions
-
-Some of the arguments can be filled with callback functions. Callback function are javascript function inputed into the chart to do some specific actions. To learn how to use callback function in ipychart, you can read [the callback functions section of the documentation]().
-
 ### Example of a chart with a title
 
-Here is a example of what you can do to with the scales options (not exhaustive):
+Here is a example of what you can do to with the title options (not exhaustive):
 
 ``` py
 
@@ -92,7 +50,7 @@ Unlike Chart.js, ipychart will display a legend only for Charts containing more 
 
 ### Legend options
 
-With this argument, you can configure the scales of your chart. For example, you can add titles to each axis, choose the scale range, hide the scales ... To do that, you'll have to feed a dict to the scales argument of the options dict. This dict can have many properties, detailed below:
+With this argument, you can configure the legend of your chart.
 
 ``` py
 options = {
@@ -102,14 +60,16 @@ options = {
     'position': str # Position ('top', 'left', 'right', 'bottom') | Default: 'top'
     'align': str # Alignment ('start', 'center', 'end') | Default: 'center'
     'fullWidth': bool # Use full width of container | Default: True
-    'onClick': str # Callback function (see below) | Default: ''
-    'onHover': str # Callback function (see below) | Default: ''
-    'onLeave': str # Callback function (see below) | Default: ''
     'reverse': bool # Show datasets in reverse order | Default: False
     'rtl': bool # Rendering the legends from right to left | Default: True
     
     # Nested options
     'labels': dict # See below | Default: {}
+
+    # Callback functions (see below)
+    'onClick': str # Function triggered on click | Default: ''
+    'onHover': str # Function triggered on click | Default: ''
+    'onLeave': str # Function triggered on leave | Default: ''
 
   }
 }
@@ -121,7 +81,7 @@ Some of the arguments can be filled with callback functions. Callback function a
 
 #### Labels argument
 
-The legend label configuration is nested below the legend configuration using the labels key. It is a dict that can contains the followings arguments:
+The legend label configuration is nested below the legend configuration using the `'labels'` key. It is a dict which allows you to configure the appearance of the labels within the legent. It can contains the followings arguments:
 
 ``` py
 options = {
@@ -145,7 +105,7 @@ options = {
 
 ### Example of a chart with a legend
 
-Here is a example of what you can do to with the scales options (not exhaustive):
+Here is a example of what you can do to with the legend options (not exhaustive):
 
 ``` py
 
@@ -168,7 +128,7 @@ options = {
     # General options
     'enabled': bool # Are tooltips enabled | Default: True
     'mode': str # Which elements appear in the tooltip | Default: 'nearest'
-    'intersect': bool # If true, the tooltip mode applies only when the mouse
+    'intersect': bool # If True, the tooltip mode applies only when the mouse
                       # position intersects with an element | Default: True
     'position': str # See below) | Default: 'average'
     'backgroundColor': str # Background color | Default: 'rgba(0, 0, 0, 0.8)'
@@ -211,7 +171,7 @@ options = {
     'footerSpacing': int # Spacing on top and bottom of footer lines | Default: 2
     'footerMarginTop': int # Margin on bottom of footer section | Default: 6
     
-    # Callbacks options
+    # Callbacks functions (see below)
     'custom': str # Callback function (see below) | Default: ''
     'itemSort': str # Callback function (see below) | Default: ''
     'filter': str # Callback function (see below) | Default: ''
@@ -239,9 +199,9 @@ These options are only applied to text lines. Color boxes are always aligned to 
 
 #### Callbacks argument
 
-The tooltips can be customized with callback functions. Callback function are javascript function inputed into the chart to do some specific actions. To learn how to use callback function in ipychart, you can read [the callback functions section of the documentation]().
+The tooltips can be customized with callback functions. Callback functions are javascript functions inputed into the chart to do some specific actions. To learn how to use callback function in ipychart, you can read [the callback functions section of the documentation]().
 
-All tootltips functions are called with the same arguments: a `tooltip` item and the `data` object passed to the chart. Therefore, you can render tooltips using your data. All functions must return either a string or an array of strings. Arrays of strings are treated as multiple lines of text.
+All tooltips functions are called with the same arguments: a `tooltip` item and the `data` object passed to the chart. Therefore, you can render tooltips using your data. All functions must return either a string or an array of strings. Arrays of strings are treated as multiple lines of text.
 
 ``` py
 options = {
@@ -249,7 +209,7 @@ options = {
     'callbacks': {
 
       # All of the following arguments must be filled with 
-      # a callback functions (i.e. JS functions). The description
+      # a callback function (i.e. a JS function). The description
       # of each arg corresponds to what the function must return.
 
       'beforeTitle': str # Text to render before the title | Default: ''
@@ -258,9 +218,11 @@ options = {
       'beforeBody': str # Text to render before the body section | Default: ''
       'beforeLabel': str # Text to render before an individual label. | Default: ''
                          # This will be called for each item in the tooltip
-      'label': str # Text to render for an individual item in the tooltip | Default: ''
+      'label': str # Text to render for an individual item in the tooltip
+                   # Default: ''
       'labelColor': str # The colors to render for the tooltip item | Default: ''
-      'labelTextColor': str # The colors for the text of the label for the tooltip item | Default: ''
+      'labelTextColor': str # The colors for the text of the label for 
+                            # the tooltip item | Default: ''
       'afterLabel': str # Text to render after an individual label | Default: ''
       'afterBody': str # Text to render after the body section | Default: ''
       'beforeFooter': str # Text to render before the footer section | Default: ''
@@ -276,7 +238,7 @@ options = {
 
 #### Simple example
 
-Here is a example of what you can do to with the scales options (not exhaustive):
+Here is a example of what you can do to with the tooltips options (not exhaustive):
 
 ``` py
 
@@ -288,7 +250,7 @@ And the output:
 
 #### Example using callback functions
 
-Here is a example of what you can do to with the scales options (not exhaustive):
+Here is a example of what you can do to with the tooltips options and with callback functions (not exhaustive):
 
 ``` py
 
@@ -300,7 +262,7 @@ Here is a example of what you can do to with the scales options (not exhaustive)
 
 ### Layout options
 
-With this argument, you can configure the scales of your chart. For example, you can add titles to each axis, choose the scale range, hide the scales ... To do that, you'll have to feed a dict to the scales argument of the options dict. This dict can have many properties, detailed below:
+With this argument, you can configure the layout of your chart (i.e. the position of your chart in its HTML container, which is the output area of the cell of your jupyter notebook). The layout argument is a dict containing only one key, allowing you to move the chart within its container by modifying the padding around it.
 
 ``` py
 options = {
@@ -328,7 +290,7 @@ options = {
 
 ### Example of a chart with custom layout
 
-Here is a example of what you can do to with the scales options (not exhaustive):
+Here is a example of what you can do to with the layout padding option (not exhaustive):
 
 ``` py
 
@@ -342,7 +304,7 @@ And the output:
 
 ### Hover options
 
-With this argument, you can configure the scales of your chart. For example, you can add titles to each axis, choose the scale range, hide the scales ... To do that, you'll have to feed a dict to the scales argument of the options dict. This dict can have many properties, detailed below:
+With this argument, you can configure the the behaviour of your chart when it is hovered. Available options are:
 
 ``` py
 options = {
@@ -364,7 +326,7 @@ options = {
 
 ### Animations options
 
-With this argument, you can configure the scales of your chart. For example, you can add titles to each axis, choose the scale range, hide the scales ... To do that, you'll have to feed a dict to the scales argument of the options dict. This dict can have many properties, detailed below:
+With this argument, you can configure the animations of your chart. Available options are:
 
 ``` py
 options = {
@@ -372,8 +334,10 @@ options = {
 
     'duration': number # Number of milliseconds for animations | Default: 1000
     'easing': str # Easing function to use | Default: 'easeOutQuart'
-    'onProgress': str # Callback function (see below) | Default: ''
-    'onComplete': str # Callback function (see below) | Default: ''
+
+    # Callbacks functions (see below)
+    'onProgress': str # Called on each step of an animation | Default: ''
+    'onComplete': str # Called at the end of an animation | Default: ''
 
   }
 }
@@ -388,55 +352,35 @@ Some of the arguments can be filled with callback functions. Callback function a
 Available options are:
 
 ``` py
-options = {
-  'animations': {
-    'easing': {
-
-      'linear'
-      'easeInQuad'
-      'easeOutQuad'
-      'easeInOutQuad'
-      'easeInCubic'
-      'easeOutCubic'
-      'easeInOutCubic'
-      'easeInQuart'
-      'easeOutQuart'
-      'easeInOutQuart'
-      'easeInQuint'
-      'easeOutQuint'
-      'easeInOutQuint'
-      'easeInSine'
-      'easeOutSine'
-      'easeInOutSine'
-      'easeInExpo'
-      'easeOutExpo'
-      'easeInOutExpo'
-      'easeInCirc'
-      'easeOutCirc'
-      'easeInOutCirc'
-      'easeInElastic'
-      'easeOutElastic'
-      'easeInOutElastic'
-      'easeInBack'
-      'easeOutBack'
-      'easeInOutBack'
-      'easeInBounce'
-      'easeOutBounce'
-      'easeInOutBounce'
-
-    }
-  }
-}
+'linear'
+'easeInQuad'
+'easeOutQuad'
+'easeInOutQuad'
+'easeInCubic'
+'easeOutCubic'
+'easeInOutCubic'
+'easeInQuart'
+'easeOutQuart'
+'easeInOutQuart'
+'easeInQuint'
+'easeOutQuint'
+'easeInOutQuint'
+'easeInSine'
+'easeOutSine'
+'easeInOutSine'
+'easeInExpo'
+'easeOutExpo'
+'easeInOutExpo'
+'easeInCirc'
+'easeOutCirc'
+'easeInOutCirc'
+'easeInElastic'
+'easeOutElastic'
+'easeInOutElastic'
+'easeInBack'
+'easeOutBack'
+'easeInOutBack'
+'easeInBounce'
+'easeOutBounce'
+'easeInOutBounce'
 ```
-
-### Example of a chart with custom animations
-
-Here is a example of what you can do to with the scales options (not exhaustive):
-
-``` py
-
-```
-
-And the output:
-
-<options-animations/>

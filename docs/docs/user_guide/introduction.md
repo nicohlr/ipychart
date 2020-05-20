@@ -1,10 +1,10 @@
 # Introduction
 
-This package is a python package made for datavizualisation. It allows to create dynamic, refined and customizable charts within the famous Jupyter Notebook environment. It is paticularly suitable for Data Scientists who are looking for a smart way of displaying and presenting their data directly from the output cells of their notebook.
+This package is a python package made for datavizualisation. It allows to create dynamic, refined and customizable charts within the famous Jupyter Notebook environment. It is particularly suitable for Data Scientists who are looking for a smart way of displaying and presenting their data directly from the output cells of their notebook.
 
 ## How It Works
 
-Ipychart is an [ipywidget](https://ipywidgets.readthedocs.io/en/stable/). Ipywidgets are some tools developed by the creators of Jupyter themself. It allows to use pure Javascript code directly in the jupyter environment which is a Python environment. This bridge between Javascript and Python is is made available in open source via the possibility for anyone to create a custom ipywidget. This package, which is therefore a custom ipywidget, takes advantage of the power of ipywidgets to make the [Chart.js](https://www.chartjs.org/) Javascript library available to all jupyter notebooks users.
+Ipychart is an [ipywidget](https://ipywidgets.readthedocs.io/en/stable/). Ipywidgets are tools developed by the creators of Jupyter themselves. It allows to use pure Javascript code directly in the jupyter environment which is a Python environment. This bridge between Javascript and Python is is made available in open source via the possibility for anyone to create a custom ipywidget. This package, which is therefore a custom ipywidget, takes advantage of the power of ipywidgets to make the [Chart.js](https://www.chartjs.org/) Javascript library available to all jupyter notebooks users.
 
 The ipychart API is extremely similar - not to say identical - to the API of Chart.js. Is is made to make all features of Chart.js avaible in ipychart. As a lot of informations visible in the official Chart.js documentation can be transposed in ipychart, with an adaptation to the syntax of python, do not hesitate to refer to the documentaiton of chart.js if you cannot find what you are looking for in this documentation,
 
