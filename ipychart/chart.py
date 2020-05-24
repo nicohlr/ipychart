@@ -9,8 +9,16 @@ from ._version import __version__
 
 
 class Chart(widgets.DOMWidget):
+    '''
+    A Jupyter - Chart.js bridge enabling interactive data visualization in the Jupyter notebook.
 
-    '''A Jupyter - Chart.js bridge enabling interactive data visualization in the Jupyter notebook.'''
+    Official documentation : https://nicohlr.gitlab.io/ipychart/
+
+    Args:
+        data (dict): Data to draw. This dictionary corresponds to the "data" argument of Chart.js.
+        kind (str): Type of chart. This string corresponds to the "type" argument of Chart.js.
+        options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
+    '''
 
     _view_name = Unicode('ChartView').tag(sync=True)
     _model_name = Unicode('ChartModel').tag(sync=True)
@@ -61,7 +69,7 @@ class Chart(widgets.DOMWidget):
         assert 'datasets' in self.data, msg_data
         assert len(self.data['datasets']), msg_data
         assert ['data' in ds for ds in self.data['datasets']] == [True] * len(self.data['datasets']), msg_data
-        if 'kind' == 'bubble':
+        if 'kind' in ['bubble', 'scatter']:
             for d in self.data['datasets']:
                 assert all(isinstance(x, dict) for x in d['data']), msg_data
                 assert all(k in p for k in ('x', 'y', 'r') for p in self.data), msg_data
@@ -70,7 +78,7 @@ class Chart(widgets.DOMWidget):
                 assert isinstance(d['datalabels'], dict), msg_data
 
         # Check kind argument
-        assert self.kind in ['line', 'bar', 'horizontalBar', 'radar', 'doughnut', 'polarArea', 'bubble', 'pie'], msg_kind
+        assert self.kind in ['line', 'bar', 'horizontalBar', 'radar', 'doughnut', 'polarArea', 'bubble', 'pie', 'scatter'], msg_kind
 
         # Check options argument
         if self.options:

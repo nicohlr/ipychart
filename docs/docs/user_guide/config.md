@@ -18,10 +18,10 @@ options = {
     
     'text': str or list # Title text | Default: ''
                         # If list, text is written on multiple lines 
-    'display': bool # Show the legend | Default: True (if multiple datasets)
+    'display': bool # Show the title | Default: False
     'position': str # Position ('top', 'left', 'right', 'bottom') | Default: 'top'
     'fontSize': int # Font size of text | Default: 12'
-    'fontStyle': str # Font style of text (ex: 'bold') | Default: 'normal'
+    'fontStyle': str # Font style of text (ex: 'bold') | Default: 'bold'
     'fontColor': str # Font style of text | Default: '#666'
     'fontFamily': str # Font style of text (ex: 'Arial') | Default: 'Helvetica'
     'padding': int # Padding between rows of colored boxes | Default: 10
@@ -35,7 +35,34 @@ options = {
 Here is a example of what you can do to with the title options (not exhaustive):
 
 ``` py
+dataset = {
+  'labels': [1500, 1600, 1700, 1750, 1800, 1850, 1900, 1950, 1999, 2050], 
+  'datasets': [
+    {'data': [86, 114, 106, 106, 107, 111, 133, 221, 783, 2478], 
+    'label': "Africa"}, 
+    {'data': [282, 350, 411, 502, 635, 809, 947, 1402, 3700, 5267], 
+    'label': "Asia"}, 
+    {'data': [168, 170, 178, 190, 203, 276, 408, 547, 675, 734], 
+    'label': "Europe"}, 
+    {'data': [40, 20, 10, 16, 24, 38, 74, 167, 508, 784], 
+    'label': "Latin America"}, 
+    {'data': [6, 3, 2, 2, 7, 26, 82, 172, 312, 433], 
+    'label': "North America"}
+  ]
+}
 
+options = {
+  'title': {
+    'display': True, 
+    'text': 'This is a Bar Chart', 
+    'fontSize': 30, 
+    'fontStyle': 'normal'
+  }
+}
+
+
+mychart = chart.Chart(dataset, 'bar', options=options)
+mychart
 ```
 
 And the output:
@@ -108,18 +135,51 @@ options = {
 Here is a example of what you can do to with the legend options (not exhaustive):
 
 ``` py
+dataset = {
+  'labels': [1500, 1600, 1700, 1750, 1800, 1850, 1900, 1950, 1999, 2050], 
+  'datasets': [
+    {'data': [86, 114, 106, 106, 107, 111, 133, 221, 121, 142], 
+    'label': "Africa", 'fill': False}, 
+    {'data': [99, 130, 64, 100, 73, 22, 88, 198, 144, 64], 
+    'label': "Asia", 'fill': False}, 
+    {'data': [168, 170, 178, 190, 203, 200, 164, 100, 72, 85], 
+    'label': "Europe", 'fill': False}, 
+    {'data': [40, 20, 10, 16, 24, 38, 74, 167, 80, 150], 
+    'label': "Latin America", 'fill': False}, 
+    {'data': [56, 95, 44, 112, 215, 35, 95, 74, 64, 78], 
+    'label': "North America", 'fill': False}
+  ]
+}
 
+options = {
+  'legend': {   
+    'align': 'end',
+    'position': 'right',
+    'labels': {
+      'boxWidth': 80, 
+      'fontSize': 14
+    }
+  }
+}
+
+
+mychart = chart.Chart(dataset, 'radar', options=options)
+mychart
 ```
 
 And the output:
 
 <options-legend/>
 
+:::tip
+You can hide or show datasets by clicking on each element of the legend.
+:::
+
 ## Tooltips
 
 ### Tooltips options
 
-With this argument, you can configure the scales of your chart. For example, you can add titles to each axis, choose the scale range, hide the scales ... To do that, you'll have to feed a dict to the scales argument of the options dict. This dict can have many properties, detailed below:
+With this argument, you can customize the tooltips of your chart. Tooltips are the information displayed on your chart when you hover the datapoints. Here are the tooltips configuration options:
 
 ``` py
 options = {
@@ -236,27 +296,75 @@ options = {
 
 ### Example of a chart with custom tooltips
 
-#### Simple example
-
 Here is a example of what you can do to with the tooltips options (not exhaustive):
 
 ``` py
+dataset = {
+  'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 
+             'Poland', 'Portugal', 'Sweden', 'Ireland'],
+  'datasets': [ 
+    {'data': [86,114,106,106,107,111,133,221,121,142],
+    'label': 'First Dataset', 'fill': False, 'type': 'line', 
+              'pointRadius': 7, 'pointHoverRadius': 7},  
+    {'data': [99,130,64,100,73,22,88,198,144,64],
+    'label': 'Second Dataset'}, 
+    {'data': [40,20,10,16,24,38,74,167,80,150],
+    'label': 'Third Dataset'}, 
+    {'data': [56,95,44,112,215,35,95,74,64,78],
+    'label': 'Fourth Dataset'}
+  ]
+}
 
+options = {
+  'tooltips': {
+    'displayColors': False,
+    'titleFontSize': 14,
+    'bodyFontSize': 14,
+    'enabled': True,
+    'callbacks': {
+
+      'title': """function(tooltipItem, data) {
+        return "This is a custom tooltip !";};""",
+
+      'label': """function(tooltipItem, data) {
+        let flags = {'Germany': '🇩🇪', 'Spain': '🇪🇸', 'UK': '🇬🇧', 'Italy': '🇮🇹', 
+                     'Norway': '🇳🇴', 'France': '🇫🇷', 'Poland': '🇵🇱', 
+                     'Portugal': '🇵🇹', 'Sweden': '🇸🇪', 'Ireland': '🇮🇪'};
+        if (data.datasets[tooltipItem.datasetIndex].type == 'line') {
+          return ["This POINT corresponds to the country " + 
+                  data.labels[tooltipItem.index].toUpperCase() + ' ' + 
+                  flags[data.labels[tooltipItem.index]],
+                  "and the y axis value for this POINT is: " + 
+                  data.datasets[tooltipItem.datasetIndex].data[
+                    tooltipItem.index].toString()];
+        }
+        else {
+          return ["This BAR corresponds to the country " + 
+                  data.labels[tooltipItem.index].toUpperCase() + ' ' + 
+                  flags[data.labels[tooltipItem.index]],
+                  "and the y axis value for this BAR is: " + 
+                  data.datasets[tooltipItem.datasetIndex].data[
+                    tooltipItem.index].toString()];
+        }
+      };"""
+    }
+  }
+}
+
+
+mychart = chart.Chart(dataset, 'bar', options=options)
+mychart
 ```
 
 And the output:
 
-<options-tooltips-simple/>
+<options-tooltips/>
 
-#### Example using callback functions
+:::tip
+You can hover each element (bar or point) of the Chart to display the tooltips.
+:::
 
-Here is a example of what you can do to with the tooltips options and with callback functions (not exhaustive):
-
-``` py
-
-```
-
-<options-tooltips-callback/>
+In the above example, we used a callback function to modify the tooltip using javascript code.
 
 ## Layout
 
@@ -293,12 +401,28 @@ options = {
 Here is a example of what you can do to with the layout padding option (not exhaustive):
 
 ``` py
+dataset = {
+  'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 
+             'Poland', 'Portugal', 'Sweden', 'Ireland'],
+  'datasets': [{ 
+    'data': [14,106,16,107,45,133, 109, 109, 108, 107],
+    'backgroundColor': 'rgba(75, 192, 192, 0.2)', 'fill': False,
+    'datalabels': {'display': True, 'borderRadius': 4, 'borderWidth': 1, 
+                   'anchor': 'end', 'align': 'end'}
+}]}
 
+options = {'layout': {
+             'padding': {'left': 40, 'right': 40, 'top': 60, 'bottom': 60}}}
+
+mychart = chart.Chart(dataset, 'line', options=options)
+mychart
 ```
 
 And the output:
 
 <options-layout/>
+
+As you can see, the chart now takes up less space in its container.
 
 ## Hover
 
@@ -332,7 +456,7 @@ With this argument, you can configure the animations of your chart. Available op
 options = {
   'animations': {   
 
-    'duration': number # Number of milliseconds for animations | Default: 1000
+    'duration': int # Number of milliseconds for animations | Default: 1000
     'easing': str # Easing function to use | Default: 'easeOutQuart'
 
     # Callbacks functions (see below)
@@ -349,7 +473,7 @@ Some of the arguments can be filled with callback functions. Callback function a
 
 #### Easing
 
-Available options are:
+Possible values are:
 
 ``` py
 'linear'
@@ -384,3 +508,5 @@ Available options are:
 'easeOutBounce'
 'easeInOutBounce'
 ```
+
+Finally, we only have one option left to explore: the `'scales'` option. As it is very complete, the [next section]() is dedicated to it.
