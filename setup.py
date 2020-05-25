@@ -14,7 +14,7 @@ is_repo = os.path.exists(os.path.join(here, '.git'))
 
 npm_path = os.pathsep.join([
     os.path.join(node_root, 'node_modules', '.bin'),
-                os.environ.get('PATH', os.defpath),
+    os.environ.get('PATH', os.defpath),
 ])
 
 from distutils import log
@@ -23,6 +23,7 @@ log.info('setup.py entered')
 log.info('$PATH=%s' % os.environ['PATH'])
 
 LONG_DESCRIPTION = 'A Jupyter - Chart.js bridge enabling interactive data visualization in the Jupyter notebook.'
+
 
 def js_prerelease(command, strict=False):
     """decorator for building minified js/css prior to another command"""
@@ -49,6 +50,7 @@ def js_prerelease(command, strict=False):
             command.run(self)
             update_package_data(self.distribution)
     return DecoratedCommand
+
 
 def update_package_data(distribution):
     """update package_data to catch changes during setup"""
@@ -77,14 +79,14 @@ class NPM(Command):
         pass
 
     def get_npm_name(self):
-        npmName = 'npm';
+        npmName = 'npm'
         if platform.system() == 'Windows':
-            npmName = 'npm.cmd';
-            
-        return npmName;
-    
+            npmName = 'npm.cmd'
+
+        return npmName
+
     def has_npm(self):
-        npmName = self.get_npm_name();
+        npmName = self.get_npm_name()
         try:
             check_call([npmName, '--version'])
             return True
@@ -106,7 +108,7 @@ class NPM(Command):
 
         if self.should_run_npm_install():
             log.info("Installing build dependencies with npm.  This may take a while...")
-            npmName = self.get_npm_name();
+            npmName = self.get_npm_name()
             check_call([npmName, 'install'], cwd=node_root, stdout=sys.stdout, stderr=sys.stderr)
             os.utime(self.node_modules, None)
 
@@ -119,6 +121,7 @@ class NPM(Command):
 
         # update package data in case this created new files
         update_package_data(self.distribution)
+
 
 version_ns = {}
 with open(os.path.join(here, 'ipychart', '_version.py')) as f:
@@ -136,7 +139,7 @@ setup_args = {
             'ipychart/static/index.js',
             'ipychart/static/index.js.map',
         ],),
-        ('etc/jupyter/nbconfig/notebook.d' ,['ipychart.json'])
+        ('etc/jupyter/nbconfig/notebook.d', ['ipychart.json'])
     ],
     'install_requires': [
         'ipywidgets>=7.0.0',
