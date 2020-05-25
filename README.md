@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./images/ipychart.png" width="20%"><br/>
+    <img src="./images/ipychart.png" width="16%"><br/>
     The power of Chart.js in Jupyter Notebooks
 </p>
 
@@ -65,6 +65,6 @@ References
 - [**Chart.js**](https://www.chartjs.org/)
 - [**Vuepress**](https://vuepress.vuejs.org/)
 - [**GitLab Pages**](https://docs.gitlab.com/ee/user/project/pages/)
-- [**Ipywidgets**](https://ipywidgets.readthedocs.io/en/latest/examples/Widget%20Custom.html)
+- [**Ipywidgets**](https://ipywidgets.readthedocs.io/en/latest/index.html)
 - [**Ipywidgets cookiecutter template**](https://github.com/jupyter-widgets/widget-cookiecutter)
 - [**Article about custom ipywidgets**](https://blog.jupyter.org/authoring-custom-jupyter-widgets-2884a462e724)
