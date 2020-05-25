@@ -9,7 +9,7 @@ from ._version import __version__
 
 
 class Chart(widgets.DOMWidget):
-    '''
+    """
     A Jupyter - Chart.js bridge enabling interactive data visualization in the Jupyter notebook.
 
     Official documentation : https://nicohlr.gitlab.io/ipychart/
@@ -18,7 +18,7 @@ class Chart(widgets.DOMWidget):
         data (dict): Data to draw. This dictionary corresponds to the "data" argument of Chart.js.
         kind (str): Type of chart. This string corresponds to the "type" argument of Chart.js.
         options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
-    '''
+    """
 
     _view_name = Unicode('ChartView').tag(sync=True)
     _model_name = Unicode('ChartModel').tag(sync=True)
@@ -55,15 +55,15 @@ class Chart(widgets.DOMWidget):
         return widgets.Layout(height='auto', align_self='stretch')
 
     def _validate_input(self):
-        '''
+        """
         This function checks all arguments passed when the user create an instance of the Chart class.
         To match Chart.js format, arguments must have a very specific structure.
         To see more details about this structure, please check the documentation: https://
-        '''
+        """
 
-        msg_data = 'Wrong input format for data argument. See https:// for more details'  # todo: link to the doc
-        msg_kind = 'Chart kind must be one of : line, bar, radar, doughnut, polarArea, bubble, horizontalBar, pie. See https:// for more details'  # todo: link to the doc
-        msg_options = 'Wrong input format for options argument. See https:// for more details'  # todo: link to the doc
+        msg_data = 'Wrong input format for data argument. See https:// for more details'  # TODO: link to the doc
+        msg_kind = 'Chart kind must be one of : line, bar, radar, doughnut, polarArea, bubble, horizontalBar, pie. See https:// for more details'  # TODO: link to the doc
+        msg_options = 'Wrong input format for options argument. See https:// for more details'  # TODO: link to the doc
 
         # Check data argument
         assert 'datasets' in self.data, msg_data
@@ -93,10 +93,10 @@ class Chart(widgets.DOMWidget):
             self.data['labels'] = self.data['labels'].tolist() if isinstance(self.data['labels'], pd.Series) else self.data['labels']
 
     def _set_default_options(self):
-        '''
+        """
         This function set some default options for the chart.
-        To see more details about options in ipychart, please check the documentation: https://
-        '''
+        To see more details about options in ipychart, please check the documentation: https://  # TODO: link to the doc
+        """
 
         # Display axis by default only for certain types of chart
         x_axis_display, y_axis_display = (True, True)
@@ -124,15 +124,15 @@ class Chart(widgets.DOMWidget):
                 d['datalabels'] = {'display': False}
 
     def _set_default_style(self):
-        '''
+        """
         This function set a default style for the chart.
         It allows to get a good looking chart with ipychart without having to input some styling options.
-        To see more details about styling in ipychart, please check the documentation: https://
-        '''
+        To see more details about styling in ipychart, please check the documentation: https://  # TODO: link to the doc
+        """
 
         random_colors = ['rgba({}, {}, {}, 0.2)'.format(*random.sample(
             list(np.random.choice(range(256), size=2)) + list(
-                np.random.choice(range(200, 256), size=1)), 3)) for i in range(100)]
+                np.random.choice(range(200, 256), size=1)), 3)) for _ in range(100)]
 
         # Chart.js main colors for one dataset
         default_colors_one = ['rgba(54, 163, 235, 0.2)', 'rgba(254, 119, 124, 0.2)', 'rgba(255, 206, 87, 0.2)']
@@ -188,21 +188,21 @@ class Chart(widgets.DOMWidget):
                             ds['datalabels']['borderColor'] = ds['borderColor']
 
     def to_html(self, path):
-        '''
+        """
         This function embed the chart widget into an HTML file dumped at the inputed path location.
         To see more details about embeding an ipywidget see: https://ipywidgets.readthedocs.io/en/latest/embedding.html
-        '''
+        """
 
         embed_minimal_html(path, views=[self], state=dependency_state([self]))
 
     def get_html_template(self):
-        '''
+        """
         This function gives HTML code to embed the chart widget.
         To see more details about embeding an ipywidget see: https://ipywidgets.readthedocs.io/en/latest/embedding.html
 
         Returns:
             widget_html (str): HTML code to embed the chart.
-        '''
+        """
 
         html_template = """
                 <!-- Load require.js. Delete this if your page already loads require.js -->
