@@ -34,6 +34,9 @@ options = {
 
 Here is a example of what you can do to with the title options (not exhaustive):
 
+:::details Click to show the code used to generate the Chart.
+<br/>
+
 ``` py
 dataset = {
   'labels': [1500, 1600, 1700, 1750, 1800, 1850, 1900, 1950, 1999, 2050], 
@@ -64,8 +67,7 @@ options = {
 mychart = chart.Chart(dataset, 'bar', options=options)
 mychart
 ```
-
-And the output:
+:::
 
 <options-title/>
 
@@ -134,6 +136,9 @@ options = {
 
 Here is a example of what you can do to with the legend options (not exhaustive):
 
+:::details Click to show the code used to generate the Chart.
+<br/>
+
 ``` py
 dataset = {
   'labels': [1500, 1600, 1700, 1750, 1800, 1850, 1900, 1950, 1999, 2050], 
@@ -166,8 +171,7 @@ options = {
 mychart = chart.Chart(dataset, 'radar', options=options)
 mychart
 ```
-
-And the output:
+:::
 
 <options-legend/>
 
@@ -298,6 +302,9 @@ options = {
 
 Here is a example of what you can do to with the tooltips options (not exhaustive):
 
+:::details Click to show the code used to generate the Chart.
+<br/>
+
 ``` py
 dataset = {
   'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 
@@ -327,9 +334,10 @@ options = {
         return "This is a custom tooltip !";};""",
 
       'label': """function(tooltipItem, data) {
-        let flags = {'Germany': '🇩🇪', 'Spain': '🇪🇸', 'UK': '🇬🇧', 'Italy': '🇮🇹', 
+        let flags = {'Germany': '🇩🇪', 'Spain': '🇪🇸', 'UK': '🇬🇧', 
                      'Norway': '🇳🇴', 'France': '🇫🇷', 'Poland': '🇵🇱', 
-                     'Portugal': '🇵🇹', 'Sweden': '🇸🇪', 'Ireland': '🇮🇪'};
+                     'Portugal': '🇵🇹', 'Sweden': '🇸🇪', 
+                     'Ireland': '🇮🇪', 'Italy': '🇮🇹'};
         if (data.datasets[tooltipItem.datasetIndex].type == 'line') {
           return ["This POINT corresponds to the country " + 
                   data.labels[tooltipItem.index].toUpperCase() + ' ' + 
@@ -355,8 +363,7 @@ options = {
 mychart = chart.Chart(dataset, 'bar', options=options)
 mychart
 ```
-
-And the output:
+:::
 
 <options-tooltips/>
 
@@ -370,7 +377,7 @@ In the above example, we used a callback function to modify the tooltip using ja
 
 ### Layout options
 
-With this argument, you can configure the layout of your chart (i.e. the position of your chart in its HTML container, which is the output area of the cell of your jupyter notebook). The layout argument is a dict containing only one key, allowing you to move the chart within its container by modifying the padding around it.
+With this argument, you can configure the layout of your chart (i.e. the position of your chart in its HTML container, which is the output area of the cell of your Jupyter notebook). The layout argument is a dict containing only one key, allowing you to move the chart within its container by modifying the padding around it.
 
 ``` py
 options = {
@@ -400,6 +407,9 @@ options = {
 
 Here is a example of what you can do to with the layout padding option (not exhaustive):
 
+:::details Click to show the code used to generate the Chart.
+<br/>
+
 ``` py
 dataset = {
   'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 
@@ -417,8 +427,7 @@ options = {'layout': {
 mychart = chart.Chart(dataset, 'line', options=options)
 mychart
 ```
-
-And the output:
+:::
 
 <options-layout/>
 

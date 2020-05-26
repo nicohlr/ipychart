@@ -1,6 +1,8 @@
 # Usage
 
-The ipychart API is composed of only one **Chart** class which allow you to create all types of chart. This class takes 3 arguments as input : **data**, **kind** and **options**. This three arguments have a particular structure to match the backend Chart.js API. If you don't respect the structure of these arguments the package may not work. In this section, we will go through each argument to present its use and its structure. 
+The ipychart API is composed of only one **Chart** class which allow you to create all types of chart. This class takes 3 arguments as input : **data**, **kind** and **options**. This three arguments have a particular structure to match the backend Chart.js API. If you don't respect the structure of these arguments the package may not work. 
+
+In this section, we will go through each argument to present its use and its structure. But before that, let's start with a little aside to compare the APIs of Chart.js and ipychart.
 
 ## Chart.js vs ipychart
 
@@ -36,7 +38,7 @@ var chart = new Chart(ctx, {
 });
 ```
 
-This example is taken from [the getting-started page of the Chart.js documentation](https://www.chartjs.org/docs/latest/getting-started/). As you can see, there are also three main arguments in Chart.js : **data**, **type** and **options**. These are the same arguments in ipychart, exept for the **type** argument which as been renamed **"kind"** in ipychart because type is a reserved keyword in the Python language. Now, lets take a look of how we can create the same chart as above but using Python code and the ipychart library in our jupyter notebook environment :
+This example is taken from [the getting-started page of the Chart.js documentation](https://www.chartjs.org/docs/latest/getting-started/). As you can see, there are also three main arguments in Chart.js : **data**, **type** and **options**. These are the same arguments in ipychart, except for the `type` argument which as been renamed `kind` in ipychart because `type` is a reserved keyword in the Python language. Now, lets take a look of how we can create the same chart as above but using Python code and the ipychart library in our Jupyter Notebook environment:
 
 ``` py
 from ipychart import Chart
@@ -62,7 +64,7 @@ mychart = Chart(
 })
 ```
 
-As you can see, a Chart.js user will not be disoriented by switching to ipychart. Now we can take a look at the specificities of each of these three arguments.
+As you can see, a Chart.js user will not be disoriented by switching to ipychart. Now, let's take a look at the specificities of each of these three arguments.
 
 
 ## Data
