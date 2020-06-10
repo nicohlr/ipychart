@@ -31,19 +31,21 @@ class Chart(widgets.DOMWidget):
     _options = Dict().tag(sync=True)
     _type = Unicode().tag(sync=True)
 
-    def __init__(self, data: dict, kind: str, options: dict = None):
+    def __init__(self, data: dict, kind: str, options: dict = None, colorscheme: str = None):
 
         super().__init__()
         self.data = data
         self.kind = kind
         self.options = options if options else {}
+        self.colorscheme = colorscheme
 
         # Check user input
         self._validate_input()
 
         # Set default style and options
-        self._set_default_style()
         self._set_default_options()
+        if not colorscheme:
+            self._set_default_style()
 
         # Set synced arguments
         self._options = self.options
@@ -64,6 +66,7 @@ class Chart(widgets.DOMWidget):
         msg_data = 'Wrong input format for data argument. See https:// for more details'  # TODO: link to the doc
         msg_kind = 'Chart kind must be one of : line, bar, radar, doughnut, polarArea, bubble, horizontalBar, pie. See https:// for more details'  # TODO: link to the doc
         msg_options = 'Wrong input format for options argument. See https:// for more details'  # TODO: link to the doc
+        msg_colorscheme = 'Wrong input format for colorscheme argument. See https:// for more details'  # TODO: link to the doc
 
         # Check data argument
         assert 'datasets' in self.data, msg_data
@@ -85,6 +88,14 @@ class Chart(widgets.DOMWidget):
             assert isinstance(self.options, dict), msg_options
             for key in self.options:
                 assert key in ['legend', 'title', 'tooltips', 'scales', 'layout', 'animation', 'hover'], msg_options
+
+        # Check colorscheme argument
+        if self.colorscheme:
+            assert isinstance(self.colorscheme, str), msg_colorscheme
+            if self.options:
+                self.options.update({'plugins': {'colorschemes': {'scheme': self.colorscheme}}})
+            else:
+                self.options = {'plugins': {'colorschemes': {'scheme': self.colorscheme}}}
 
         # Pandas series handling
         for d in self.data['datasets']:

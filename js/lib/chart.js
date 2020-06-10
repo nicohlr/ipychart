@@ -2,6 +2,7 @@ const widgets = require('@jupyter-widgets/base');
 const _ = require('lodash');
 const Chart = require('chart.js');
 const ChartDataLabels = require('chartjs-plugin-datalabels');
+const ChartColorSchemes = require('chartjs-plugin-colorschemes');
 var version = require('../package.json')['version'];
 
 
@@ -266,7 +267,7 @@ const ChartView = widgets.DOMWidgetView.extend({
 
         // Create chart
         new Chart(ctx, {
-            plugins: [ChartDataLabels],
+            plugins: [ChartDataLabels, ChartColorSchemes],
             type: type,
             data: data,
             options: options
