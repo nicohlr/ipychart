@@ -1,6 +1,6 @@
 # Usage
 
-The ipychart API is composed of only one **Chart** class which allow you to create all types of chart. This class takes 3 arguments as input : **data**, **kind** and **options**. This three arguments have a particular structure to match the backend Chart.js API. If you don't respect the structure of these arguments the package may not work. 
+The ipychart API is composed of only one **Chart** class which allow you to create all types of chart. This class takes 4 arguments as input : **data**, **kind**, **options** and **colorscheme**. This arguments have a particular structure to match the backend Chart.js API. If you don't respect the structure of these arguments the package may not work. 
 
 In this section, we will go through each argument to present its use and its structure. But before that, let's start with a little aside to compare the APIs of Chart.js and ipychart.
 
@@ -67,9 +67,11 @@ mychart = Chart(
 As you can see, a Chart.js user will not be disoriented by switching to ipychart. Now, let's take a look at the specificities of each of these three arguments.
 
 
-## Data
+## Chart arguments
 
-The data argument is the most important of the Chart class. Without this argument, the chart cannot be displayed (it is logical, how do you want to display a chart without data ?). The data argument **must be a dict**. This constraint is imposed by Chart.js, which takes its arguments via a Javascript dict. This data dict must have the following structure : 
+### Data
+
+The `data` argument is the most important of the Chart class. Without this argument, the chart cannot be displayed (how to display a chart without data?). The `data` argument **must be a dict**. This constraint is imposed by Chart.js, which takes its arguments via a Javascript dict. This data dict must have the following structure : 
 
 ``` py
 data = {
@@ -78,17 +80,19 @@ data = {
 }
 ```
 
-The datasets argument will hold your data, it **must be a list of dict, each dict containing at least a key called 'data'**. It is a list because you can print more than one ensemble of data points in one chart. Each sub dict corresponds to an ensemble of data points, representing a dataset, and must also follow a specific structure. However, this structure may change according to the type of chart. Please refer to [the documentation of each chart type]() to have more detail about the dataset structure to adopt. 
+The value for `'datasets'` will hold your data, it **must be a list of dict, each dict containing at least a key named** `'data'`. It is a list because you can print more than one ensemble of data points in one chart. Each sub dict corresponds to an ensemble of data points, representing a dataset, and must also follow a specific structure. However, this structure may change according to the type of chart. 
 
-The labels argument **must be a list**. If only one dataset is passed (i.e. if len(data['datasets] is 1)), the labels list will represent the labels of each datapoint of the only dataset passed. However, if more than one dataset is passed, the label list will represent the labels of each dataset.
+Please refer to [the documentation of each chart type]() to have more details about the dataset structure to adopt. 
+
+The value for `'labels'` **must be a list**. If only one dataset is passed (i.e. if len(data['datasets] is 1)), the labels list will represent the labels of each datapoint of the only dataset passed. However, if more than one dataset is passed, the label list will represent the labels of each dataset.
 
 ::: warning
 The data dict must have these two elements, otherwise you can expect dysfunction or unexpected behavior.
 :::
 
-## Kind
+### Kind
 
-The kind argument allows you to choose the type of chart you wants to draw. It **must be a string**. You can choose a type of string in the following values :
+The `kind` argument allows you to choose the type of chart you wants to draw. It **must be a string**. You can choose a type of string in the following values :
 
 ``` py
 # Possible values for the kind argument
@@ -97,18 +101,19 @@ The kind argument allows you to choose the type of chart you wants to draw. It *
 'horizontalBar'
 'radar'
 'doughnut'
+'pie'
 'polarArea'
 'bubble'
-'pie'
+'scatter'
 ```
 
 ::: tip
-The "type" argument in Chart.js became "kind" argument in Python because, unlike Javascript, type is a reserved keyword in Python.
+The `type` argument in Chart.js became `kind` argument in Python because, unlike Javascript, type is a reserved keyword in Python.
 :::
 
-## Options
+### Options
 
-Fanally, the last argument of the Chart class is options. This argument must be a dict dans it allows you to completely configure your chart.
+Fanally, the last argument of the Chart class is `options`. This argument **must be a dict** dans it allows you to completely configure your chart.
 
 ``` py
 options = {
@@ -121,14 +126,33 @@ options = {
     'animation': dict,
 }
 ```
-Below are the use of each of these dict. Of course, these five dict have numerous sub arguments. This is why a whole section of this documentation is dedicated for each one of them. 
+Below are the use of each of these dict. Of course, these five dict have numerous sub arguments. This is why two whole sections of this documentation are dedicated them. 
 
 - **legend:** you can configure the legend of your chart with this dict. In ipychart, legend is dynamic and allow you to display or hide some of your inputed datasets ! To find out how you can customize the legend of your chart, please check the [legend documentation page]().
-- **title:** you can configure the title of your chart with this dict. To find out how, please check the [title documentation page]().
+- **title:** you can configure the title of your chart with this dict. To find out how, please check the [title documentation section]().
 - **tooltips:** you can configure the tooltips of your chart with this dict. In ipychart, hovering a chart display some information, these popus are called "tooltips". You can configure these tooltips in many ways. To find out how, please check the [tooltips documentation page](). You can even inject some javascript code do display your own text around your data on hover a chart. The procedure for doing this is described in the [callback functions section of the documentation]().
-- **scales:** you can configure the scales of your chart with this dict. To find out how, please check the [scales section]().
-- **layout:** you can configure the layout of your chart with this dict. To find out how, please check the [layout documentation page]().
-- **hover:** you can configure the hovering options of your chart with this dict. To find out how, please check the [hover documentation page]().
-- **animation:** you can configure the animations of your chart with this dict. To find out how, please check the [animation documentation page]().
+- **scales:** you can configure the scales of your chart with this dict. To find out how, please check the [scales page]().
+- **layout:** you can configure the layout of your chart with this dict. To find out how, please check the [layout documentation section]().
+- **hover:** you can configure the hovering options of your chart with this dict. To find out how, please check the [hover documentation section]().
+- **animation:** you can configure the animations of your chart with this dict. To find out how, please check the [animation documentation section]().
+
+### Colorscheme
+
+::: warning
+The `colorscheme` argument will be ignored if any color configuration is set in one of the datasets passed to the chart. In other words, **the argument will only work if no color configuration option is used in the chart**.
+:::
+
+The `colorscheme` arguments allows you to automatically set a predefined color scheme to your chart. This is a feature which is not present natively in Chart.js. It has been added in ipychart using an open-source implementation. 
+
+The `colorscheme` argument must be a string corresponding to the choosen color scheme (a list of all available color schemes can be found [**here**](https://nagix.github.io/chartjs-plugin-colorschemes/colorchart.html)). Color schemes are based on popular tools such as ColorBrewer, Microsoft Office and Tableau.
+
+Example of setting a colorscheme to a chart:
+
+``` py
+mychart = Chart(data=mydata, 'bar', options=myoptions, colorscheme='tableau.Blue20')
+```
+
+Please note that the chart will associate one color of the colorscheme to each dataset. Thus, if your chart contains only one dataset, this one will be drawn only in one color.
+
 
 Now that you are familiar with the structure of each argument, you can head to the next section to learn about the different types of charts.

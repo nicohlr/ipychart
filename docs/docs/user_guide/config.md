@@ -64,7 +64,7 @@ options = {
 }
 
 
-mychart = chart.Chart(dataset, 'bar', options=options)
+mychart = Chart(dataset, 'bar', options=options)
 mychart
 ```
 :::
@@ -168,7 +168,7 @@ options = {
 }
 
 
-mychart = chart.Chart(dataset, 'radar', options=options)
+mychart = Chart(dataset, 'radar', options=options)
 mychart
 ```
 :::
@@ -360,7 +360,7 @@ options = {
 }
 
 
-mychart = chart.Chart(dataset, 'bar', options=options)
+mychart = Chart(dataset, 'bar', options=options)
 mychart
 ```
 :::
@@ -424,7 +424,7 @@ dataset = {
 options = {'layout': {
              'padding': {'left': 40, 'right': 40, 'top': 60, 'bottom': 60}}}
 
-mychart = chart.Chart(dataset, 'line', options=options)
+mychart = Chart(dataset, 'line', options=options)
 mychart
 ```
 :::
@@ -482,40 +482,6 @@ Some of the arguments can be filled with callback functions. Callback function a
 
 #### Easing
 
-Possible values are:
-
-``` py
-'linear'
-'easeInQuad'
-'easeOutQuad'
-'easeInOutQuad'
-'easeInCubic'
-'easeOutCubic'
-'easeInOutCubic'
-'easeInQuart'
-'easeOutQuart'
-'easeInOutQuart'
-'easeInQuint'
-'easeOutQuint'
-'easeInOutQuint'
-'easeInSine'
-'easeOutSine'
-'easeInOutSine'
-'easeInExpo'
-'easeOutExpo'
-'easeInOutExpo'
-'easeInCirc'
-'easeOutCirc'
-'easeInOutCirc'
-'easeInElastic'
-'easeOutElastic'
-'easeInOutElastic'
-'easeInBack'
-'easeOutBack'
-'easeInOutBack'
-'easeInBounce'
-'easeOutBounce'
-'easeInOutBounce'
-```
+Possible values are: `'linear'`, `'easeInQuad'`, `'easeOutQuad'`, `'easeInOutQuad'`, `'easeInCubic'`, `'easeOutCubic'`, `'easeInOutCubic'`, `'easeInQuart'`, `'easeOutQuart'`, `'easeInOutQuart'`, `'easeInQuint'`, `'easeOutQuint'`, `'easeInOutQuint'`, `'easeInSine'`, `'easeOutSine'`, `'easeInOutSine'`, `'easeInExpo'`, `'easeOutExpo'`, `'easeInOutExpo'`, `'easeInCirc'`, `'easeOutCirc'`, `'easeInOutCirc'`, `'easeInElastic'`, `'easeOutElastic'`, `'easeInOutElastic'`, `'easeInBack'`, `'easeOutBack'`, `'easeInOutBack'`, `'easeInBounce'`, `'easeOutBounce'`, `'easeInOutBounce'`.
 
 Finally, we only have one option left to explore: the `'scales'` option. As it is very complete, the [next section]() is dedicated to it.
