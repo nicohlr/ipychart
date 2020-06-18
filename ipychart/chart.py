@@ -87,7 +87,7 @@ class Chart(widgets.DOMWidget):
         if self.options:
             assert isinstance(self.options, dict), msg_options
             for key in self.options:
-                assert key in ['legend', 'title', 'tooltips', 'scales', 'layout', 'animation', 'hover'], msg_options
+                assert key in ['legend', 'title', 'tooltips', 'scales', 'scale', 'layout', 'animation', 'hover'], msg_options
 
         # Check colorscheme argument
         if self.colorscheme:
@@ -115,8 +115,8 @@ class Chart(widgets.DOMWidget):
             x_axis_display, y_axis_display = (False, False)
 
         # Override default scales options from Chart.js if not setted by the user
-        if 'scales' not in self.options:
-            if self.kind != 'radar':
+        if 'scales' not in self.options and 'scale' not in self.options:
+            if self.kind not in ['radar', 'polarArea']:
                 self.options.update({'scales': {
                     'yAxes': [{'display': y_axis_display, 'ticks': {'beginAtZero': True, 'display': y_axis_display}}],
                     'xAxes': [{'display': x_axis_display, 'ticks': {'beginAtZero': True, 'display': x_axis_display}}]
@@ -176,6 +176,11 @@ class Chart(widgets.DOMWidget):
                         self.data['datasets'][0]['datalabels']['backgroundColor'] = self.data['datasets'][0]['backgroundColor']
                     if 'borderColor' not in self.data['datasets'][0]['datalabels']:
                         self.data['datasets'][0]['datalabels']['borderColor'] = self.data['datasets'][0]['borderColor']
+            if self.kind in ['line', 'radar']:
+                if 'pointBackgroundColor' not in self.data['datasets'][0]:
+                    self.data['datasets'][0]['pointBackgroundColor'] = self.data['datasets'][0]['backgroundColor']
+                if 'pointBorderColor' not in self.data['datasets'][0]:
+                    self.data['datasets'][0]['pointBorderColor'] = self.data['datasets'][0]['borderColor']
 
         else:
             for idx, ds in enumerate(self.data['datasets']):
@@ -197,6 +202,11 @@ class Chart(widgets.DOMWidget):
                             ds['datalabels']['backgroundColor'] = ds['backgroundColor']
                         if 'borderColor' not in ds['datalabels']:
                             ds['datalabels']['borderColor'] = ds['borderColor']
+                if self.kind in ['line', 'radar']:
+                    if 'pointBackgroundColor' not in ds:
+                        ds['pointBackgroundColor'] = ds['backgroundColor']
+                    if 'pointBorderColor' not in ds:
+                        ds['pointBorderColor'] = ds['borderColor']
 
     def to_html(self, path):
         """

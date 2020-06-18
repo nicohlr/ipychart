@@ -17,7 +17,7 @@ A line chart is a way of plotting data points on a line. Often, it is used to sh
 dataset = {
     'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 'Poland', 
                'Portugal', 'Sweden', 'Ireland'],
-    'datasets': [{ 'data': [14,106,16,107,45,133, 19, 109, 60, 107]}]}
+    'datasets': [{'data': [14,106,16,107,45,133, 19, 109, 60, 107]}]}
 
 mychart = Chart(dataset, 'line')
 mychart
@@ -125,7 +125,7 @@ A bar chart provides a way of showing data values represented as vertical bars. 
 dataset = {
     'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 'Poland', 
                'Portugal', 'Sweden', 'Ireland'],
-    'datasets': [{ 'data': [14,106,16,107,45,133, 19, 109, 60, 107]}]}
+    'datasets': [{'data': [14,106,16,107,45,133, 19, 109, 60, 107]}]}
 
 mychart = Chart(dataset, 'Bar')
 mychart
@@ -234,7 +234,7 @@ You can rotate your bar chart by setting the `kind` argument of your chart to `'
 dataset = {
     'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 'Poland', 
                'Portugal', 'Sweden', 'Ireland'],
-    'datasets': [{ 'data': [14,106,16,107,45,133, 19, 109, 60, 107]}]}
+    'datasets': [{'data': [14,106,16,107,45,133, 19, 109, 60, 107]}]}
 
 mychart = Chart(dataset, 'horizontalBar')
 mychart
