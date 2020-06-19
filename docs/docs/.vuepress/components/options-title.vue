@@ -6,7 +6,7 @@
 <script>
 export default {
 
-  name: 'options-title',
+  name: 'getting-started',
   data () {return {}},
 
   beforeCreate: function () {

@@ -103,7 +103,27 @@ Here is an example of a scale with labels:
 <br/>
 
 ``` py
+dataset = {
+    'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 'Poland', 
+               'Portugal', 'Sweden', 'Ireland'],
+    'datasets': [{'data': [14,106,16,107,45,133, 19, 109, 60, 107]}]}
 
+options = {
+  'scales': {
+    'xAxes': [{'scaleLabel': {
+      'display': True, 
+      'labelString': 'This is the x Axis', 
+      'fontSize': 20}}],
+    'yAxes': [{'scaleLabel': {
+      'display': True, 
+      'labelString': 'This is the y Axis', 
+      'fontSize': 20}}]
+  }
+}
+
+
+mychart = Chart(dataset, 'bar', options=options, colorscheme='office.Median6')
+mychart
 ```
 :::
 
@@ -214,7 +234,42 @@ Here is an example of a scale with custom ticks options:
 <br/>
 
 ``` py
+dataset = {
+    'labels': ['Dataset 1', 'Dataset 2', 'Dataset 3', 'Dataset 4',
+               'Dataset 5'],
+    'datasets': [{ 
+        'data': [500,114,106,420,107],
+        'label': "Africa",
+        'fill': False
+      }, { 
+        'data': [282,350,411,350,220],
+        'label': "Asia",
+        'fill': False
+      }, { 
+        'data': [168,170,250,380,480],
+        'label': "Europe",
+        'fill': False
+      }, { 
+        'data': [450,270,10,100,24],
+        'label': "Latin America",
+        'fill': False
+      }, { 
+        'data': [6,40,200,300,350],
+        'label': "North America",
+        'fill': False
+      }
+    ]
+  }
 
+options = {
+    'scales': {'xAxes': [{'ticks': {
+                   'min': 0, 'max': 500, 'fontSize': 15, 'fontStyle': 'italic', 'stepSize': 0.5,'maxTicksLimit': 100}}],
+               'yAxes': [{'ticks': {
+                   'min': 0, 'max': 500, 'fontSize': 15, 'fontStyle': 'italic', 'stepSize': 50, 'minRotation': 45, 'padding': 20,}}]}
+}
+
+mychart = chart.Chart(dataset, 'line', options=options)
+mychart
 ```
 :::
 
@@ -554,7 +609,7 @@ options = {
   # RADIAL AXIS
   'scale': {
     'gridLines': {
-	  # For radial axis, use the 'scale' option instead of 'scales'
+	  # For radial axis, use the 'scale' option instead of 'scales' to configure gridlines
     }
   }
 }

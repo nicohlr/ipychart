@@ -6,7 +6,7 @@
 <script>
 export default {
 
-  name: 'options-layout',
+  name: 'getting-started',
   data () {return {}},
 
   beforeCreate: function () {

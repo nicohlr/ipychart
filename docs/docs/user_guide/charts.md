@@ -127,7 +127,7 @@ dataset = {
                'Portugal', 'Sweden', 'Ireland'],
     'datasets': [{'data': [14,106,16,107,45,133, 19, 109, 60, 107]}]}
 
-mychart = Chart(dataset, 'Bar')
+mychart = Chart(dataset, 'bar')
 mychart
 ```
 :::
@@ -252,7 +252,7 @@ A radar chart is a way of showing multiple data points and the variation between
 
 ``` py
 dataset = {
-    'labels': ['Red','Blue', 'Yellow', 'Green', 'Purple'],
+    'labels': ['Top','TopRight', 'BottomRight', 'BottomLeft', 'TopLeft'],
     'datasets': [{'data': [140, 106, 160, 107, 45],
                   'label': 'Dataset1',
                   'borderWidth': 3
@@ -676,7 +676,7 @@ dataset = {
             'fill': True
 }]}
 
-mychart = Chart(dataset, 'line')
+mychart = Chart(dataset, 'line', colorscheme='brewer.PuOr3')
 mychart
 ```
 :::
@@ -716,7 +716,7 @@ dataset = {
     ]
   }
 
-mychart = Chart(dataset, 'bar') # Base type
+mychart = Chart(dataset, 'bar', colorscheme='tableau.ClassicLight10') # Base type
 mychart
 ```
 :::
