@@ -57,6 +57,8 @@ const ChartView = widgets.DOMWidgetView.extend({
 
         let check_callback_legend = checkNested(options, 'legendCallback');
         let check_callback_legend_onclick = checkNested(options, 'legend', 'onClick');
+        let check_callback_legend_generatelabels = checkNested(options, 'legend', 'labels', 'generateLabels');
+        let check_callback_legend_filter = checkNested(options, 'legend', 'labels', 'filter');
 
         let check_callback_animation_progress = checkNested(options, 'animation', 'onProgress');
         let check_callback_animation_complete = checkNested(options, 'animation', 'onComplete ');
@@ -146,6 +148,12 @@ const ChartView = widgets.DOMWidgetView.extend({
         }
         if (check_callback_legend_onclick){
             options.legend.onClick = new Function('return ' + options.legend.onClick)();
+        }
+        if (check_callback_legend_generatelabels){
+            options.legend.labels.generateLabels = new Function('return ' + options.legend.labels.generateLabels)();
+        }
+        if (check_callback_legend_filter){
+            options.legend.labels.filter = new Function('return ' + options.legend.labels.filter)();
         }
 
 
