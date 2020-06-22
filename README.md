@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./images/ipychart.png" width="16%"><br/>
+    <img src="./docs/docs/.vuepress/public/ipychart.png" width="16%"><br/>
     The power of Chart.js in Jupyter Notebooks
 </p>
 
@@ -42,7 +42,7 @@ mychart
 
 The charts created are fully configurable, interactive and modular and are displayed directly in the output of the the cells of your jupyter notebook environment:
 
-![](./images/ipychart.gif)
+![](./docs/docs/.vuepress/public/ipychart.gif)
 
 Development Installation 
 ------------
