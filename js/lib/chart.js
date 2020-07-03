@@ -29,6 +29,7 @@ const ChartView = widgets.DOMWidgetView.extend({
 
         // All paths of options dict with callback functions
         let callbacks_options_paths = [
+            ['legendCallback'],
             ['tooltips', 'custom'],
             ['tooltips', 'itemSort'],
             ['tooltips', 'filter'],

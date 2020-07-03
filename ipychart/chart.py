@@ -87,7 +87,7 @@ class Chart(widgets.DOMWidget):
         if self.options:
             assert isinstance(self.options, dict), msg_options
             for key in self.options:
-                assert key in ['legend', 'title', 'tooltips', 'scales', 'scale', 'layout', 'animation', 'hover'], msg_options
+                assert key in ['legend', 'title', 'tooltips', 'scales', 'scale', 'layout', 'animation', 'hover', 'plugins', 'legendCallback'], msg_options
 
         # Check colorscheme argument
         if self.colorscheme:
@@ -126,7 +126,7 @@ class Chart(widgets.DOMWidget):
 
         # Override default legend options from Chart.js if not setted by the user
         if 'legend' not in self.options:
-            if len(self.data['datasets']) == 1 and self.kind in ['bar', 'line', 'horizontalBar', 'bubble', 'radar']:
+            if len(self.data['datasets']) == 1 and self.kind in ['bar', 'line', 'horizontalBar', 'bubble', 'radar', 'scatter']:
                 self.options.update({'legend': False})
 
         # Do not display datalabels by default
@@ -157,14 +157,14 @@ class Chart(widgets.DOMWidget):
         # Override default style options from Chart.js if not setted by the user
         if len(self.data['datasets']) == 1:
             if 'backgroundColor' not in self.data['datasets'][0]:
-                if self.kind in ['line', 'radar']:
+                if self.kind in ['line', 'radar', 'scatter', 'bubble']:
                     self.data['datasets'][0]['backgroundColor'] = default_colors_one[0]
                 elif self.kind in ['bar', 'horizontalBar']:
                     self.data['datasets'][0]['backgroundColor'] = default_colors_one * (int(len(self.data['datasets'][0]['data'])) + 1)
                 else:
                     self.data['datasets'][0]['backgroundColor'] = default_colors_all[:len(self.data['datasets'][0]['data'])]
             if 'borderColor' not in self.data['datasets'][0]:
-                if self.kind in ['line', 'radar']:
+                if self.kind in ['line', 'radar', 'scatter', 'bubble']:
                     self.data['datasets'][0]['borderColor'] = self.data['datasets'][0]['backgroundColor'].replace('0.2', '1')
                 else:
                     self.data['datasets'][0]['borderColor'] = [c.replace('0.2', '1') for c in self.data['datasets'][0]['backgroundColor']]
@@ -176,7 +176,7 @@ class Chart(widgets.DOMWidget):
                         self.data['datasets'][0]['datalabels']['backgroundColor'] = self.data['datasets'][0]['backgroundColor']
                     if 'borderColor' not in self.data['datasets'][0]['datalabels']:
                         self.data['datasets'][0]['datalabels']['borderColor'] = self.data['datasets'][0]['borderColor']
-            if self.kind in ['line', 'radar']:
+            if self.kind in ['line', 'radar', 'scatter', 'bubble']:
                 if 'pointBackgroundColor' not in self.data['datasets'][0]:
                     self.data['datasets'][0]['pointBackgroundColor'] = self.data['datasets'][0]['backgroundColor']
                 if 'pointBorderColor' not in self.data['datasets'][0]:
@@ -185,12 +185,12 @@ class Chart(widgets.DOMWidget):
         else:
             for idx, ds in enumerate(self.data['datasets']):
                 if 'backgroundColor' not in ds:
-                    if self.kind in ['bar', 'horizontalBar', 'line', 'radar']:
+                    if self.kind in ['bar', 'horizontalBar', 'line', 'radar', 'scatter', 'bubble']:
                         ds['backgroundColor'] = default_colors_all[idx]
                     else:
                         ds['backgroundColor'] = default_colors_all[:len(ds['data'])]
                 if 'borderColor' not in ds:
-                    if self.kind in ['bar', 'horizontalBar', 'line', 'radar']:
+                    if self.kind in ['bar', 'horizontalBar', 'line', 'radar', 'scatter', 'bubble']:
                         ds['borderColor'] = ds['backgroundColor'].replace('0.2', '1')
                     else:
                         ds['borderColor'] = [c.replace('0.2', '1') for c in ds['backgroundColor']]
@@ -202,7 +202,7 @@ class Chart(widgets.DOMWidget):
                             ds['datalabels']['backgroundColor'] = ds['backgroundColor']
                         if 'borderColor' not in ds['datalabels']:
                             ds['datalabels']['borderColor'] = ds['borderColor']
-                if self.kind in ['line', 'radar']:
+                if self.kind in ['line', 'radar', 'scatter', 'bubble']:
                     if 'pointBackgroundColor' not in ds:
                         ds['pointBackgroundColor'] = ds['backgroundColor']
                     if 'pointBorderColor' not in ds:
@@ -248,3 +248,13 @@ class Chart(widgets.DOMWidget):
         rendered_template = html_template.format(manager_state=manager_state, widget_views=widget_views)
 
         return rendered_template
+
+    def print_python_template(self):
+        """
+        This function print the python code to copy in order to reproduce exactly the same chart.
+        """
+        python_template = f"data = {self._data}\n\noptions = {self._options}\n\nmychart = chart.Chart(data=data, kind='{self._type}', options=options"
+        end_template = f", colorscheme='{self.colorscheme}')" if self.colorscheme else ')'
+        python_template += end_template
+
+        print(python_template)

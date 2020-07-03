@@ -1,6 +1,7 @@
 from ._version import version_info, __version__
 
-from .chart import *
+from .chart import Chart
+from .chartdataframe import ChartDataFrame
 
 
 def _jupyter_nbextension_paths():
