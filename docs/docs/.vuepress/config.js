@@ -50,7 +50,8 @@ module.exports = ctx => ({
                     '/user_guide/usage', 
                     '/user_guide/charts', 
                     '/user_guide/config', 
-                    '/user_guide/scales', 
+                    '/user_guide/scales',
+                    '/user_guide/pandas',
                     '/user_guide/advanced'
                 ],
             },

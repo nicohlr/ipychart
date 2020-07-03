@@ -310,14 +310,14 @@ dataset = {
   'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 
              'Poland', 'Portugal', 'Sweden', 'Ireland'],
   'datasets': [ 
-    {'data': [86,114,106,106,107,111,133,221,121,142],
+    {'data': [86, 114, 106, 106, 107, 111, 133, 221, 121, 142],
     'label': 'First Dataset', 'fill': False, 'type': 'line', 
               'pointRadius': 7, 'pointHoverRadius': 7},  
-    {'data': [99,130,64,100,73,22,88,198,144,64],
+    {'data': [99, 130, 64, 100, 73, 22, 88, 198, 144, 64],
     'label': 'Second Dataset'}, 
-    {'data': [40,20,10,16,24,38,74,167,80,150],
+    {'data': [40, 20, 10, 16, 24, 38, 74, 167, 80, 150],
     'label': 'Third Dataset'}, 
-    {'data': [56,95,44,112,215,35,95,74,64,78],
+    {'data': [56, 95, 44, 112, 215, 35, 95, 74, 64, 78],
     'label': 'Fourth Dataset'}
   ]
 }
@@ -415,7 +415,7 @@ dataset = {
   'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 
              'Poland', 'Portugal', 'Sweden', 'Ireland'],
   'datasets': [{ 
-    'data': [14,106,16,107,45,133, 109, 109, 108, 107],
+    'data': [14, 106, 16, 107, 45, 133, 109, 109, 108, 107],
     'backgroundColor': 'rgba(75, 192, 192, 0.2)', 'fill': False,
     'datalabels': {'display': True, 'borderRadius': 4, 'borderWidth': 1, 
                    'anchor': 'end', 'align': 'end'}

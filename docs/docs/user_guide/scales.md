@@ -106,7 +106,7 @@ Here is an example of a scale with labels:
 dataset = {
     'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 'Poland', 
                'Portugal', 'Sweden', 'Ireland'],
-    'datasets': [{'data': [14,106,16,107,45,133, 19, 109, 60, 107]}]}
+    'datasets': [{'data': [14, 106, 16, 107, 45, 133, 19, 109, 60, 107]}]}
 
 options = {
   'scales': {
@@ -238,23 +238,23 @@ dataset = {
     'labels': ['Dataset 1', 'Dataset 2', 'Dataset 3', 'Dataset 4',
                'Dataset 5'],
     'datasets': [{ 
-        'data': [500,114,106,420,107],
+        'data': [500, 114, 106, 420, 107],
         'label': "Africa",
         'fill': False
       }, { 
-        'data': [282,350,411,350,220],
+        'data': [282, 350, 411, 350, 220],
         'label': "Asia",
         'fill': False
       }, { 
-        'data': [168,170,250,380,480],
+        'data': [168, 170, 250, 380, 480],
         'label': "Europe",
         'fill': False
       }, { 
-        'data': [450,270,10,100,24],
+        'data': [450, 270, 10, 100, 24],
         'label': "Latin America",
         'fill': False
       }, { 
-        'data': [6,40,200,300,350],
+        'data': [6, 40, 200, 300, 350],
         'label': "North America",
         'fill': False
       }

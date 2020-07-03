@@ -15,9 +15,10 @@ A line chart is a way of plotting data points on a line. Often, it is used to sh
 
 ``` py
 dataset = {
-    'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 'Poland', 
-               'Portugal', 'Sweden', 'Ireland'],
-    'datasets': [{'data': [14,106,16,107,45,133, 19, 109, 60, 107]}]}
+  'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 'Poland', 
+             'Portugal', 'Sweden', 'Ireland'],
+  'datasets': [{'data': [14, 106, 16, 107, 45, 133, 19, 109, 60, 107]}]
+}
 
 mychart = Chart(dataset, 'line')
 mychart
@@ -125,7 +126,7 @@ A bar chart provides a way of showing data values represented as vertical bars. 
 dataset = {
     'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 'Poland', 
                'Portugal', 'Sweden', 'Ireland'],
-    'datasets': [{'data': [14,106,16,107,45,133, 19, 109, 60, 107]}]}
+    'datasets': [{'data': [14, 106, 16, 107, 45, 133, 19, 109, 60, 107]}]}
 
 mychart = Chart(dataset, 'bar')
 mychart
@@ -215,7 +216,7 @@ You can also specify the dataset for a bar chart as arrays of two numbers. This 
 
 ``` py
 data = {
-  'datasets': [{'data': [[5,6], [-3,-6]]}]
+  'datasets': [{'data': [[5, 6], [-3, -6]]}]
 }
 ```
 
@@ -234,7 +235,7 @@ You can rotate your bar chart by setting the `kind` argument of your chart to `'
 dataset = {
     'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 'Poland', 
                'Portugal', 'Sweden', 'Ireland'],
-    'datasets': [{'data': [14,106,16,107,45,133, 19, 109, 60, 107]}]}
+    'datasets': [{'data': [14, 106, 16, 107, 45, 133, 19, 109, 60, 107]}]}
 
 mychart = Chart(dataset, 'horizontalBar')
 mychart
@@ -611,23 +612,23 @@ Here is an example of an stacked bar chart :
 dataset = {
     'labels': ['Dataset 1', 'Dataset 2', 'Dataset 3'],
     'datasets': [{ 
-        'data': [221,783,2478],
+        'data': [221, 783, 2478],
         'label': "Africa",
         'fill': False
       }, { 
-        'data': [1402,3700,5267],
+        'data': [1402, 3700, 5267],
         'label': "Asia",
         'fill': False
       }, { 
-        'data': [547,675,734],
+        'data': [547, 675, 734],
         'label': "Europe",
         'fill': False
       }, { 
-        'data': [167,508,784],
+        'data': [167, 508, 784],
         'label': "Latin America",
         'fill': False
       }, { 
-        'data': [172,312,433],
+        'data': [172, 312, 433],
         'label': "North America",
         'fill': False
       }
@@ -672,7 +673,7 @@ dataset = {
     'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 'Poland', 
                'Portugal', 'Sweden', 'Ireland'],
     'datasets': [{ 
-            'data': [14,106,16,107,45,133, 109, 109, 108, 107],
+            'data': [14, 106, 16, 107, 45, 133, 109, 109, 108, 107],
             'fill': True
 }]}
 
@@ -696,21 +697,21 @@ dataset = {
                'Dataset 5', 'Dataset 6', 'Dataset 7', 'Dataset 8',
                'Dataset 9','Dataset 10'],
     'datasets': [{ 
-        'data': [86,114,106,106,107,111,133,221,121,142],
+        'data': [86, 114, 106, 106, 107, 111, 133, 221, 121, 142],
         'label': "Africa", 'fill': False, 'type': 'line', # Change the type
         'pointRadius': 5, 'pointHoverRadius': 10
       }, { 
-        'data': [99,130,64,100,73,22,88,198,144,64],
+        'data': [99, 130, 64, 100, 73, 22, 88, 198, 144, 64],
         'label': "Asia",
       }, { 
-        'data': [168,170,178,190,203,200,164,100,72,85],
+        'data': [168, 170, 178, 190, 203, 200, 164, 100, 72, 85],
         'label': "Europe", 'fill': False, 'type': 'line', # Change the type
         'pointRadius': 5, 'pointHoverRadius': 10
-      }, { 
-        'data': [40,20,10,16,24,38,74,167,80,150],
+      }, 
+        'data': [40, 20, 10, 16, 24, 38, 74, 167, 80, 150],
         'label': "Latin America",
       }, { 
-        'data': [56,95,44,112,215,35,95,74,64,78],
+        'data': [56, 95, 44, 112, 215, 35, 95, 74, 64, 78],
         'label': "North America",
       }
     ]

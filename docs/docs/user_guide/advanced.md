@@ -1,8 +1,8 @@
 # Advanced Features
 
-## Pandas integration
-
 ## Datalabels
+
+## Ipywidgets compatibility
 
 ## Callback functions
 
