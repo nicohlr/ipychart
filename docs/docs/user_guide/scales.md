@@ -238,23 +238,23 @@ dataset = {
     'labels': ['Dataset 1', 'Dataset 2', 'Dataset 3', 'Dataset 4',
                'Dataset 5'],
     'datasets': [{ 
-        'data': [500, 114, 106, 420, 107],
+        'data': [500,114,106,420,107],
         'label': "Africa",
         'fill': False
       }, { 
-        'data': [282, 350, 411, 350, 220],
+        'data': [282,350,411,350,220],
         'label': "Asia",
         'fill': False
       }, { 
-        'data': [168, 170, 250, 380, 480],
+        'data': [168,170,250,380,480],
         'label': "Europe",
         'fill': False
       }, { 
-        'data': [450, 270, 10, 100, 24],
+        'data': [450,270,10,100,24],
         'label': "Latin America",
         'fill': False
       }, { 
-        'data': [6, 40, 200, 300, 350],
+        'data': [6,40,200,300,350],
         'label': "North America",
         'fill': False
       }
@@ -263,12 +263,14 @@ dataset = {
 
 options = {
     'scales': {'xAxes': [{'ticks': {
-                   'min': 0, 'max': 500, 'fontSize': 15, 'fontStyle': 'italic', 'stepSize': 0.5,'maxTicksLimit': 100}}],
+                   'min': 0, 'max': 500, 'fontSize': 15, 'fontStyle': 'italic', 
+                   'stepSize': 0.5,'maxTicksLimit': 100}}],
                'yAxes': [{'ticks': {
-                   'min': 0, 'max': 500, 'fontSize': 15, 'fontStyle': 'italic', 'stepSize': 50, 'minRotation': 45, 'padding': 20,}}]}
+                   'min': 0, 'max': 500, 'fontSize': 15, 'fontStyle': 'italic', 
+                   'stepSize': 50, 'minRotation': 45, 'padding': 20,}}]}
 }
 
-mychart = chart.Chart(dataset, 'line', options=options)
+mychart = Chart(dataset, 'line', options=options, colorscheme='office.Composite6')
 mychart
 ```
 :::
@@ -600,16 +602,16 @@ options = {
 
       }
     }],
-    'yAxes': {
+    'yAxes': [{
       'gridLines': {
         # You can use the same arguments than above to configure the y axis.
       }
-    }
+    }]
   }
   # RADIAL AXIS
   'scale': {
     'gridLines': {
-	  # For radial axis, use the 'scale' option instead of 'scales' to configure gridlines
+	  # For radial axis, use the 'scale' option instead of 'scales'
     }
   }
 }
@@ -659,7 +661,22 @@ options = {
 
         }
       }
+    }],
+    'yAxes': [{
+      'ticks': {
+        'minor': {
+          # You can use the same arguments than above to configure the y axis.
+        }
+      }
     }]
+  }
+  # RADIAL AXIS
+  'scale': {
+    'ticks': {
+      'minor': {
+	  # For radial axis, use the 'scale' option instead of 'scales'
+      }
+    }
   }
 }
 ```
@@ -692,7 +709,22 @@ options = {
 
         }
       }
+    }],
+    'yAxes': [{
+      'ticks': {
+        'major': {
+          # You can use the same arguments than above to configure the y axis.
+        }
+      }
     }]
+  }
+  # RADIAL AXIS
+  'scale': {
+    'ticks': {
+      'major': {
+	      # For radial axis, use the 'scale' option instead of 'scales'
+      }
+    }
   }
 }
 ```

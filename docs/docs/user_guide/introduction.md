@@ -33,7 +33,7 @@ The ipychart API is extremely similar - not to say identical - to the API of Cha
 
 **Advanced Features**
 
-* [Pandas integration](../user_guide/advanced.md#Work\with\Pandas\Dataframes\and\Numpy\Arrays)
 * [Datalabels](../user_guide/advanced.md#Advanced\configuration\with\callback\functions)
+* [Ipywidgets compatibility](../user_guide/advanced.html#ipywidgets-compatibility)
 * [Callback functions](../user_guide/advanced.md#Advanced\configuration\with\callback\functions)
 * [Export & embedding](../user_guide/advanced.md#Advanced\configuration\with\callback\functions)

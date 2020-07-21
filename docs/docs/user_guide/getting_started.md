@@ -41,7 +41,7 @@ $ jupyter nbextension enable --py --sys-prefix ipychart
 
 ## Quick start
 
-To create a chart, we first need to import the Chart class from ipychart:
+To create a chart, we first need to import the *Chart* class from ipychart:
 
 ``` python
 from ipychart import Chart

@@ -1,6 +1,6 @@
 # Create Charts
 
-In this section, we will go though each type of chart to see what possibilities it offers to display your data. We will also detail all the properties and the structure of the `'dataset'` sub dict that you'll build in the data argument ([see previous section]()) of the Chart class.
+In this section, we will go though each type of chart to see what possibilities it offers to display your data. We will also detail all the properties and the structure of the `'dataset'` sub dict that you'll build in the data argument ([see previous section]()) of the *Chart* class.
 
 ::: tip
 Logically, much of the content of this page is identical or very similar to that of the corresponding section of the documentation of Chart.js. You can consult it at any time by clicking [**here**](https://www.chartjs.org/docs/latest/charts/).
@@ -640,7 +640,7 @@ options = {
                'yAxes': [{'stacked': True}]}
 }
 
-mychart = Chart(dataset, 'bar', options=options)
+mychart = Chart(dataset, 'bar', options=options, colorscheme='tableau.Tableau20')
 mychart
 ```
 :::
