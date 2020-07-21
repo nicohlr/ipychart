@@ -198,7 +198,7 @@ class ChartDataFrame():
             x (str): Column of the dataframe used as datapoints for x Axis.
             dataset_options (dict, optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
             options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
-            colorscheme (str, optional): [description]. Defaults to None.
+            colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None. Defaults to None.
 
         Returns:
             [ipychart.Chart]: A chart which display the data using ipychart
@@ -227,7 +227,7 @@ class ChartDataFrame():
             gridsize (int, optional): Number of discrete points in the evaluation grid. Defaults to 1000.
             dataset_options (dict, optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
             options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
-            colorscheme (str, optional): [description]. Defaults to None.
+            colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None. Defaults to None.
 
         Returns:
             [ipychart.Chart]: A chart which display the data using ipychart
@@ -288,7 +288,7 @@ class ChartDataFrame():
             agg (str, optional): The aggregator used to gather data (ex: 'median' or 'mean'). Defaults to None.
             dataset_options ([dict, list], optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
             options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
-            colorscheme (str, optional): colorscheme to use when drawing the chart. Defaults to None.
+            colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None.
 
         Returns:
             [ipychart.Chart]: A chart which display the data using ipychart
@@ -311,7 +311,7 @@ class ChartDataFrame():
             agg (str, optional): The aggregator used to gather data (ex: 'median' or 'mean'). Defaults to None.
             dataset_options ([dict, list], optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
             options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
-            colorscheme (str, optional): colorscheme to use when drawing the chart. Defaults to None.
+            colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None.
             horizontal (bool): draw the bar chart horizontally. Defaults to False.
 
         Returns:
@@ -338,7 +338,7 @@ class ChartDataFrame():
             agg (str, optional): The aggregator used to gather data (ex: 'median' or 'mean'). Defaults to None.
             dataset_options ([dict, list], optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
             options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
-            colorscheme (str, optional): colorscheme to use when drawing the chart. Defaults to None.
+            colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None.
 
         Returns:
             [ipychart.Chart]: A chart which display the data using ipychart
@@ -360,7 +360,7 @@ class ChartDataFrame():
             agg (str, optional): The aggregator used to gather data (ex: 'median' or 'mean'). Defaults to None.
             dataset_options (dict, optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
             options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
-            colorscheme (str, optional): colorscheme to use when drawing the chart. Defaults to None.
+            colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None.
 
         Returns:
             [ipychart.Chart]: A chart which display the data using ipychart
@@ -383,7 +383,7 @@ class ChartDataFrame():
             agg (str, optional): The aggregator used to gather data (ex: 'median' or 'mean'). Defaults to None.
             dataset_options (dict, optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
             options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
-            colorscheme (str, optional): colorscheme to use when drawing the chart. Defaults to None.
+            colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None.
 
         Returns:
             [ipychart.Chart]: A chart which display the data using ipychart
@@ -407,7 +407,7 @@ class ChartDataFrame():
             agg (str, optional): The aggregator used to gather data (ex: 'median' or 'mean'). Defaults to None.
             dataset_options (dict, optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
             options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
-            colorscheme (str, optional): colorscheme to use when drawing the chart. Defaults to None.
+            colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None.
 
         Returns:
             [ipychart.Chart]: A chart which display the data using ipychart
@@ -418,6 +418,29 @@ class ChartDataFrame():
             data = self._create_chart_data_count(x=x, dataset_options=dataset_options)
 
         return Chart(data=data, kind='polarArea', options=options, colorscheme=colorscheme)
+
+    def scatter(self, x: str, y: str, hue: str = None, agg: str = 'mean', dataset_options: [dict, list] = {},
+                options: dict = None, colorscheme: str = None):
+        """
+        Scatter charts are based on basic line charts with the x axis changed to a linear axis.
+
+        Args:
+            x (str): Column of the dataframe used as datapoints for x Axis.
+            y (str): Column of the dataframe used as datapoints for y Axis.
+            hue (str, optional): Grouping variable that will produce points with different colors. Defaults to None.
+            agg (str, optional): The aggregator used to gather data (ex: 'median' or 'mean'). Defaults to None.
+            dataset_options ([dict, list], optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
+            options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
+            colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None.
+
+        Returns:
+            [ipychart.Chart]: A chart which display the data using ipychart
+        """
+
+        data = self._create_chart_data_agg(kind='scatter', x=x, y=y, hue=hue, agg=agg, dataset_options=dataset_options)
+        options = self._create_chart_options(kind='scatter', options=options, x=x, y=y, hue=hue)
+
+        return Chart(data=data, kind='scatter', options=options, colorscheme=colorscheme)
 
     def bubble(self, x: str, y: str, r: str, hue: str = None, agg: str = 'mean', dataset_options: [dict, list] = {},
                options: dict = None, colorscheme: str = None):
@@ -434,7 +457,7 @@ class ChartDataFrame():
             agg (str, optional): The aggregator used to gather data (ex: 'median' or 'mean'). Defaults to None.
             dataset_options ([dict, list], optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
             options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
-            colorscheme (str, optional): colorscheme to use when drawing the chart. Defaults to None.
+            colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None.
 
         Returns:
             [ipychart.Chart]: A chart which display the data using ipychart
@@ -444,26 +467,3 @@ class ChartDataFrame():
         options = self._create_chart_options(kind='bubble', options=options, x=x, y=y, hue=hue)
 
         return Chart(data=data, kind='bubble', options=options, colorscheme=colorscheme)
-
-    def scatter(self, x: str, y: str, hue: str = None, agg: str = 'mean', dataset_options: [dict, list] = {},
-                options: dict = None, colorscheme: str = None):
-        """
-        Scatter charts are based on basic line charts with the x axis changed to a linear axis.
-
-        Args:
-            x (str): Column of the dataframe used as datapoints for x Axis.
-            y (str): Column of the dataframe used as datapoints for y Axis.
-            hue (str, optional): Grouping variable that will produce points with different colors. Defaults to None.
-            agg (str, optional): The aggregator used to gather data (ex: 'median' or 'mean'). Defaults to None.
-            dataset_options ([dict, list], optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
-            options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
-            colorscheme (str, optional): colorscheme to use when drawing the chart. Defaults to None.
-
-        Returns:
-            [ipychart.Chart]: A chart which display the data using ipychart
-        """
-
-        data = self._create_chart_data_agg(kind='scatter', x=x, y=y, hue=hue, agg=agg, dataset_options=dataset_options)
-        options = self._create_chart_options(kind='scatter', options=options, x=x, y=y, hue=hue)
-
-        return Chart(data=data, kind='scatter', options=options, colorscheme=colorscheme)

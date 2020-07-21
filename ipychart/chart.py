@@ -251,9 +251,9 @@ class Chart(widgets.DOMWidget):
 
     def print_python_template(self):
         """
-        This function print the python code to copy in order to reproduce exactly the same chart.
+        This function print the python code to run in order to reproduce exactly the same chart.
         """
-        python_template = f"data = {self._data}\n\noptions = {self._options}\n\nmychart = chart.Chart(data=data, kind='{self._type}', options=options"
+        python_template = f"data = {self._data}\n\noptions = {self._options}\n\nmychart = Chart(data=data, kind='{self._type}', options=options"
         end_template = f", colorscheme='{self.colorscheme}')" if self.colorscheme else ')'
         python_template += end_template
 
