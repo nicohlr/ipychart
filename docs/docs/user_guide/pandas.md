@@ -16,7 +16,7 @@ import pandas as pd
 titanic = pd.read_csv('titanic.csv')
 titanic.head()
 ```
-<pandas-head.vue/>
+<pandas-head/>
 
 Concretely, to use ipychart's pandas interface, we will have to use the *ChartDataFrame* class (instead of using the *Chart* class that we saw previously). So let's start by creating an instance of this class, giving our pandas dataframe as an argument:
 
@@ -32,7 +32,7 @@ We are now ready to plot all kinds of visualizations on the dataset from this in
 titanic_chart.bar(x='Embarked', y='Age', hue='Survived')
 ```
 
-<pandas-example.vue/>
+<pandas-example/>
 
 ## Charts
 
@@ -67,7 +67,7 @@ Colorscheme to use when drawing the chart. List of available colorscheme: link.
 ```py
 titanic_chart.count(x='Embarked')
 ```
-<pandas-count.vue/>
+<pandas-count/>
 
 ### Dist
 
@@ -103,7 +103,7 @@ Other keyword arguments are passed to the *KernelDensity* class of scikit-learn.
 ```py
 titanic_chart.dist(x='Age')
 ```
-<pandas-dist.vue/>
+<pandas-dist/>
 
 ### Line
 
@@ -136,10 +136,12 @@ Colorscheme to use when drawing the chart. List of available colorscheme: link.
 datalabels_arguments = {'display': True, 'borderWidth': 1, 'anchor': 'end', 
                         'align': 'end', 'borderRadius': 5, 'color': '#fff'}
 
-titanic_chart.line(x='Pclass', y='Age', hue='Sex', dataset_options={'fill': False, 'datalabels': datalabels_arguments}, colorscheme='office.Parallax6')
+titanic_chart.line(x='Pclass', y='Age', hue='Sex', 
+                   dataset_options={'fill': False, 'datalabels': datalabels_arguments}, 
+                   colorscheme='office.Parallax6')
 ```
 
-<pandas-line.vue/>
+<pandas-line/>
 
 ### Bar
 
@@ -174,7 +176,7 @@ Draw the bar chart horizontally.
 titanic_chart.bar(x='Pclass', y='Fare', hue='Sex', colorscheme='office.Parallax6')
 ```
 
-<pandas-bar.vue/>
+<pandas-bar/>
 
 ### Radar
 
@@ -204,10 +206,10 @@ Colorscheme to use when drawing the chart. List of available colorscheme: link.
 **Example:**
 
 ```py
-titanic_chart.radar('')
+data_chart.radar(x='Title', y='Fare', colorscheme='office.Yellow6')
 ```
 
-<pandas-radar.vue/>
+<pandas-radar/>
 
 ### Pie, Doughnut & Polar Area
 
@@ -247,7 +249,7 @@ Colorscheme to use when drawing the chart. List of available colorscheme: link.
 titanic_chart.polararea(x='Title', y='Fare', colorscheme='brewer.SetThree5')
 ```
 
-<pandas-polararea.vue/>
+<pandas-polararea/>
 
 ### Scatter
 
@@ -277,10 +279,11 @@ Colorscheme to use when drawing the chart. List of available colorscheme: link.
 **Example:**
 
 ```py
-titanic_chart.scatter(x='Age', y='Fare', hue='Survived', colorscheme='tableau.ColorBlind10')
+titanic_chart.scatter(x='Age', y='Fare', hue='Survived', 
+                      colorscheme='tableau.ColorBlind10')
 ```
 
-<pandas-scatter.vue/>
+<pandas-scatter/>
 
 ### Bubble
 
@@ -312,7 +315,8 @@ Colorscheme to use when drawing the chart. List of available colorscheme: link.
 **Example:**
 
 ```py
-titanic_chart.bubble(x='Age', y='Fare', r='Pclass', hue='Survived', colorscheme='office.Headlines6')
+titanic_chart.bubble(x='Age', y='Fare', r='Pclass', hue='Survived', 
+                     colorscheme='office.Headlines6')
 ```
 
-<pandas-bubble.vue/>
+<pandas-bubble/>
