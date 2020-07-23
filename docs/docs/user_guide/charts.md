@@ -488,6 +488,47 @@ data = {
 }
 ```
 
+## Scatter
+
+Scatter charts are based on basic line charts with the x axis changed to a linear axis.
+
+:::details Click to show the code used to generate the Chart.
+<br/>
+
+``` py
+dataset = {
+  'datasets': [{'data': [{'x': random.randint(0, 100), 
+                          'y': random.randint(0, 100), 
+                          'r': random.randint(0, 100)} for _ in range(100)
+                        ]}]
+}
+
+mychart = Chart(dataset, 'scatter')
+mychart
+```
+:::
+
+<charts-scatter/>
+
+You can choose this type for your chart by setting the `kind` argument to `'scatter
+
+### Dataset properties
+
+The scatter chart supports all of the same properties as the [line chart]().
+
+### Data structure
+
+You can input your data in the data argument of the dataset using the **point** format:
+
+``` py
+data = {
+  'datasets': [{'data': [
+    {'x': 10, 'y': 20} # This is the data for one point
+    {'x': 15, 'y': 10} # This is the data for another point
+  ]}]
+}
+```
+
 ## Bubble
 
 A bubble chart is used to display three dimensions of data at the same time. The location of the bubble is determined by the first two dimensions and the corresponding horizontal and vertical axes. The third dimension is represented by the radius of the individual bubbles.
@@ -497,7 +538,6 @@ A bubble chart is used to display three dimensions of data at the same time. The
 
 ``` py
 dataset = {
-    'labels': ['Red','Blue', 'Yellow', 'Green', 'Purple'],
     'datasets': [{'data': [{'x': 20, 'y': 30, 'r': 20}, 
                            {'x': 10, 'y': 20, 'r': 40}, 
                            {'x': 15, 'y': 40, 'r': 90}, 
@@ -563,39 +603,6 @@ data = {
 }
 ```
 
-## Scatter
-
-Scatter charts are based on basic line charts with the x axis changed to a linear axis.
-
-:::details Click to show the code used to generate the Chart.
-<br/>
-
-``` py
-
-```
-:::
-
-<charts-scatter/>
-
-You can choose this type for your chart by setting the `kind` argument to `'scatter
-
-### Dataset properties
-
-The scatter chart supports all of the same properties as the [line chart]().
-
-### Data structure
-
-You can input your data in the data argument of the dataset using the **point** format:
-
-``` py
-data = {
-  'datasets': [{'data': [
-    {'x': 10, 'y': 20} # This is the data for one point
-    {'x': 15, 'y': 10} # This is the data for another point
-  ]}]
-}
-```
-
 ## Other
 
 ### Stacked
@@ -610,30 +617,20 @@ Here is an example of an stacked bar chart :
 
 ``` py
 dataset = {
-    'labels': ['Dataset 1', 'Dataset 2', 'Dataset 3'],
-    'datasets': [{ 
-        'data': [221, 783, 2478],
-        'label': "Africa",
-        'fill': False
-      }, { 
-        'data': [1402, 3700, 5267],
-        'label': "Asia",
-        'fill': False
-      }, { 
-        'data': [547, 675, 734],
-        'label': "Europe",
-        'fill': False
-      }, { 
-        'data': [167, 508, 784],
-        'label': "Latin America",
-        'fill': False
-      }, { 
-        'data': [172, 312, 433],
-        'label': "North America",
-        'fill': False
-      }
-    ]
-  }
+  'labels': ['Label 1', 'Label 2', 'Label 3'],
+  'datasets': [
+    { 'data': [221, 783, 2478], 'label': "Africa",
+    'fill': False}, 
+    {'data': [1402, 3700, 5267], 'label': "Asia",
+     'fill': False}, 
+    {'data': [547, 675, 734], 'label': "Europe",
+     'fill': False}, 
+    {'data': [167, 508, 784], 'label': "Latin America",
+     'fill': False}, 
+    {'data': [172, 312, 433], 'label': "North America",
+     'fill': False}
+  ]
+}
 
 options = {
     'scales': {'xAxes': [{'stacked': True}],
@@ -707,7 +704,7 @@ dataset = {
         'data': [168, 170, 178, 190, 203, 200, 164, 100, 72, 85],
         'label': "Europe", 'fill': False, 'type': 'line', # Change the type
         'pointRadius': 5, 'pointHoverRadius': 10
-      }, 
+      }, {
         'data': [40, 20, 10, 16, 24, 38, 74, 167, 80, 150],
         'label': "Latin America",
       }, { 

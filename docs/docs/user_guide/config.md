@@ -106,7 +106,7 @@ options = {
 
 #### Callbacks functions
 
-Some of the arguments can be filled with callback functions. Callback function are javascript function inputed into the chart to do some specific actions. To learn how to use callback function in ipychart, you can read [the callback functions section of the documentation]().
+Some of the arguments can be filled with callback functions. Callback function are Javascript function inputed into the chart to do some specific actions. To learn how to use callback function in ipychart, you can read [the callback functions section of the documentation]().
 
 #### Labels argument
 
@@ -263,7 +263,7 @@ These options are only applied to text lines. Color boxes are always aligned to 
 
 #### Callbacks argument
 
-The tooltips can be customized with callback functions. Callback functions are javascript functions inputed into the chart to do some specific actions. To learn how to use callback function in ipychart, you can read [the callback functions section of the documentation]().
+The tooltips can be customized with callback functions. Callback functions are Javascript functions inputed into the chart to do some specific actions. To learn how to use callback function in ipychart, you can read [the callback functions section of the documentation]().
 
 All tooltips functions are called with the same arguments: a `tooltip` item and the `data` object passed to the chart. Therefore, you can render tooltips using your data. All functions must return either a string or an array of strings. Arrays of strings are treated as multiple lines of text.
 
@@ -371,7 +371,7 @@ mychart
 You can hover each element (bar or point) of the Chart to display the tooltips.
 :::
 
-In the above example, we used a callback function to modify the tooltip using javascript code.
+In the above example, we used a callback function to modify the tooltip using Javascript code.
 
 ## Layout
 
@@ -478,7 +478,7 @@ options = {
 
 #### Callbacks functions
 
-Some of the arguments can be filled with callback functions. Callback function are javascript function inputed into the chart to do some specific actions. To learn how to use callback function in ipychart, you can read [the callback functions section of the documentation]().
+Some of the arguments can be filled with callback functions. Callback function are Javascript function inputed into the chart to do some specific actions. To learn how to use callback function in ipychart, you can read [the callback functions section of the documentation]().
 
 #### Easing
 

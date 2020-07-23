@@ -21,7 +21,7 @@ $ cd ipychart/js
 $ npm install 
 ```
 
-... followed by the ipychart python package:
+... followed by the ipychart Python package:
 
 ``` bash
 # from the root of the project

@@ -216,7 +216,7 @@ The minor and major tick configuration are nested under the ticks configuration 
 
 #### Callback subargument (`'ticks'` option)
 
-The ticks can be customized with a callback function. Callback function are javascript function inputed into the chart to do some specific actions. To learn how to use callback function in ipychart, you can read [the callback functions section of the documentation](https://github.com/nicohlr/ipychart/blob/master/docs/docs/user_guide). 
+The ticks can be customized with a callback function. Callback function are Javascript function inputed into the chart to do some specific actions. To learn how to use callback function in ipychart, you can read [the callback functions section of the documentation](https://github.com/nicohlr/ipychart/blob/master/docs/docs/user_guide). 
 
 #### Source subargument (`'ticks'` option, only for time scales)
 
@@ -545,7 +545,7 @@ The minor and major tick configuration are nested under the ticks configuration 
 
 #### Callback subargument (`'ticks'` option)
 
-The ticks can be customized with a callback function. Callback function are javascript function inputed into the chart to do some specific actions. To learn how to use callback function in ipychart, you can read [the callback functions section of the documentation](https://github.com/nicohlr/ipychart/blob/master/docs/docs/user_guide).
+The ticks can be customized with a callback function. Callback function are Javascript function inputed into the chart to do some specific actions. To learn how to use callback function in ipychart, you can read [the callback functions section of the documentation](https://github.com/nicohlr/ipychart/blob/master/docs/docs/user_guide).
 
 #### Example
 

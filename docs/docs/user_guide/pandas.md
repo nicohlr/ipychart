@@ -2,9 +2,9 @@
 
 ## Why ?
 
-Today, Python is one of the most popular languages ​​for data analysis and data science. One of the reasons for Python's success in processing and visualizing data is Pandas, the most famous data manipulation package. This package quickly became a must and is used by a very large number of people. 
+Today, Python is one of the most popular languages for data analysis and data science. One of the reasons for Python's success in these areas is Pandas, the leading package for data manipulation with Python. This package has quickly become a must and is used by a very large number of people around the world.
 
-Therefore, to facilitate the creation of complicated charts from the data, it is essential to be able to create visualizations directly from a pandas dataframe. This can be done for example with Seaborn, one of the most popular data visualization packages for python today. Thanks to the interface presented in this section, it is also possible to do the same with ipychart.
+It is therefore essential to be able to create visualizations directly from a pandas dataframe. This can be done for example with Seaborn, a famous Python package for data visualization. Thanks to the interface presented in this section, it is also possible to do the same thing with ipychart.
 
 ## Usage
 
@@ -16,7 +16,7 @@ import pandas as pd
 titanic = pd.read_csv('titanic.csv')
 titanic.head()
 ```
-<titanic-head.vue/>
+<pandas-head.vue/>
 
 Concretely, to use ipychart's pandas interface, we will have to use the *ChartDataFrame* class (instead of using the *Chart* class that we saw previously). So let's start by creating an instance of this class, giving our pandas dataframe as an argument:
 
@@ -29,14 +29,16 @@ titanic_chart = ChartDataFrame(titanic)
 We are now ready to plot all kinds of visualizations on the dataset from this instance. To do this, we need to call the methods of the *ChartDataFrame* class. Each method corresponds to a type of chart. To draw a bar chart, for example, you need to execute:
 
 ```py
-titanic_chart.bar('')
+titanic_chart.bar(x='Embarked', y='Age', hue='Survived')
 ```
 
-<pandas-bar-example.vue/>
+<pandas-example.vue/>
 
 ## Charts
 
 You can find here all the methods of the *ChartDataFrame* class, each one corresponding to a type of chart. Each method returns a *Chart* object, i.e. an instance of the *Chart* class of ipychart package.
+
+All methods have two parameters in common: `dataset_options` and `options`. The `dataset_options` parameter allows you to set the options for each dataset, as with the *Chart* class. If you don't use the `hue` parameter, the chart will have only one dataset and you will have to pass a dictionary. Otherwise, the Chart will have N datasets (each one corresponding to a distinct value of the column selected in the `hue` parameter) and you must pass a list of dict. In the same way, you can use the `options` parameter to customize the Chart, like when you use the *Chart* class.
 
 ### Count
 
@@ -63,11 +65,15 @@ Colorscheme to use when drawing the chart. List of available colorscheme: link.
 **Example:**
 
 ```py
-titanic_chart.count('')
+titanic_chart.count(x='Embarked')
 ```
 <pandas-count.vue/>
 
 ### Dist
+
+:::tip
+This chart can only be created from a single column of a pandas dataframe.
+:::
 
 Fit and plot a univariate kernel density estimate on a line chart. This chart is useful to have a representation of the distribution of the data. To draw it, you must call the *dist* method:
 
@@ -95,7 +101,7 @@ Other keyword arguments are passed to the *KernelDensity* class of scikit-learn.
 **Example:**
 
 ```py
-titanic_chart.dist('')
+titanic_chart.dist(x='Age')
 ```
 <pandas-dist.vue/>
 
@@ -127,8 +133,12 @@ Colorscheme to use when drawing the chart. List of available colorscheme: link.
 **Example:**
 
 ```py
-titanic_chart.line('')
+datalabels_arguments = {'display': True, 'borderWidth': 1, 'anchor': 'end', 
+                        'align': 'end', 'borderRadius': 5, 'color': '#fff'}
+
+titanic_chart.line(x='Pclass', y='Age', hue='Sex', dataset_options={'fill': False, 'datalabels': datalabels_arguments}, colorscheme='office.Parallax6')
 ```
+
 <pandas-line.vue/>
 
 ### Bar
@@ -161,8 +171,9 @@ Draw the bar chart horizontally.
 **Example:**
 
 ```py
-titanic_chart.bar('')
+titanic_chart.bar(x='Pclass', y='Fare', hue='Sex', colorscheme='office.Parallax6')
 ```
+
 <pandas-bar.vue/>
 
 ### Radar
@@ -195,6 +206,7 @@ Colorscheme to use when drawing the chart. List of available colorscheme: link.
 ```py
 titanic_chart.radar('')
 ```
+
 <pandas-radar.vue/>
 
 ### Pie, Doughnut & Polar Area
@@ -208,8 +220,8 @@ ChartDataFrame.doughnut(x: str, y: str, agg: str = 'mean',
                         options: dict = None, colorscheme: str = None):
                         
 ChartDataFrame.pie(x: str, y: str, agg: str = 'mean', 
-                        dataset_options: [dict, list] = {},
-                        options: dict = None, colorscheme: str = None):
+                   dataset_options: [dict, list] = {},
+                   options: dict = None, colorscheme: str = None):
                         
 ChartDataFrame.polararea(x: str, y: str, agg: str = 'mean', 
                          dataset_options: [dict, list] = {},
@@ -232,8 +244,9 @@ Colorscheme to use when drawing the chart. List of available colorscheme: link.
 **Example:**
 
 ```py
-titanic_chart.polararea('')
+titanic_chart.polararea(x='Title', y='Fare', colorscheme='brewer.SetThree5')
 ```
+
 <pandas-polararea.vue/>
 
 ### Scatter
@@ -264,8 +277,9 @@ Colorscheme to use when drawing the chart. List of available colorscheme: link.
 **Example:**
 
 ```py
-titanic_chart.scatter('')
+titanic_chart.scatter(x='Age', y='Fare', hue='Survived', colorscheme='tableau.ColorBlind10')
 ```
+
 <pandas-scatter.vue/>
 
 ### Bubble
@@ -298,6 +312,7 @@ Colorscheme to use when drawing the chart. List of available colorscheme: link.
 **Example:**
 
 ```py
-titanic_chart.bubble('')
+titanic_chart.bubble(x='Age', y='Fare', r='Pclass', hue='Survived', colorscheme='office.Headlines6')
 ```
+
 <pandas-bubble.vue/>

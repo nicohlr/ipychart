@@ -43,20 +43,19 @@ $ jupyter nbextension enable --py --sys-prefix ipychart
 
 To create a chart, we first need to import the *Chart* class from ipychart:
 
-``` python
+``` py
 from ipychart import Chart
 ```
 
-After that, we need to create an instance of that class. We'll have to create a python dict to format our data. We'll also specify with what type of chart we want to display our data using the **kind** argument. 
+After that, we need to create an instance of that class. We'll have to create a Python dict to format our data. We'll also specify with what type of chart we want to display our data using the **kind** argument. 
 
 Concretely, we can do that very easily in one cell of our notebook in the following way:
 
-``` python
+``` py
 dataset = {
-    'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 
-               'Poland', 'Portugal'],
-    'datasets': [{'data': [114, 106, 106, 107, 111, 133, 109, 109]}]
-    }
+  'labels': ['Data 1', 'Data 2', 'Data 3', 'Data 4', 'Data 5', 'Data 6', 'Data 7', 'Data 8'],
+  'datasets': [{'data': [14, 22, 36, 48, 60, 90, 28, 12]}]
+}
 
 mychart = Chart(data=dataset, kind='bar')
 mychart

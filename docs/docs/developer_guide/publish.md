@@ -17,7 +17,7 @@ Build the Javascript files and publish the node package to [npmjs.org](https://w
 For more info see the [official doc](https://docs.npmjs.com/getting-started/publishing-npm-packages).
 
 ```bash
-# build notebook extension javascript
+# build Javascript extension
 $ cd js
 $ npm install
 

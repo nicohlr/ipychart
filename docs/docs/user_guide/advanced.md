@@ -2,13 +2,13 @@
 
 ## Datalabels
 
-In ipychart, you can add labels directy to your chart. This is not a native feature in Chart.js and it hab been added using [an external open source package](https://chartjs-plugin-datalabels.netlify.app/). 
+In ipychart, you can add labels directy to your chart. This is not a native feature in Chart.js and it has been added using [an external open source package](https://chartjs-plugin-datalabels.netlify.app/). 
 
 In practice, the datalabels are controlled from the 'datalabels' key (which takes a dict as value) present in each dataset that you pass to the *Chart* class. For example, with the following code, we will display the datalabels on the first dataset:
 
 ```py
 dataset = {
-  'labels': ['Dataset 1', 'Dataset 2', 'Dataset 3'],
+  'labels': ['Label 1', 'Label 2', 'Label 3'],
   'datasets': [{'data': [221, 783, 2478], 'label': "Africa"},
                {'data': [1402, 3700, 5267], 'label': "Asia",
                 'datalabels':  {'display': True}}, # Toggle display datalabels
@@ -21,7 +21,7 @@ mychart = Chart(dataset, 'bar', colorscheme='tableau.Tableau10')
 mychart
 ```
 
-<datalabels-example1/>
+<advanced-datalabels-simple/>
 
 By default, datalabels are just the values of the y axis for each data point, written in gray on each point. However, it is possible to personalize them. Some of the available options are listed below. You can see all the possible options on the documentation of the [chartjs-plugin-datalabels](https://chartjs-plugin-datalabels.netlify.app/guide/options.html#scriptable-options).
 
@@ -47,10 +47,10 @@ When the `'borderRadius'` argument is set, ipychart will automatically fill also
 
 ```py
 datalabels_arguments = {'display': True, 'borderWidth': 1, 'anchor': 'end', 
-                        'align': 'end', 'borderRadius': 5}
+                        'align': 'end', 'borderRadius': 5, 'color': '#fff'}
 
 dataset = {
-  'labels': ['Dataset 1', 'Dataset 2', 'Dataset 3'],
+  'labels': ['Label 1', 'Label 2', 'Label 3'],
   'datasets': [{'data': [221, 783, 2478], 'label': "Africa", 
                 'datalabels':  datalabels_arguments},  
                 {'data': [1402, 3700, 5267], 'label': "Asia", 
@@ -67,7 +67,7 @@ mychart = Chart(dataset, 'bar', colorscheme='tableau.Tableau10')
 mychart
 ```
 
-<datalabels-example2/>
+<advanced-datalabels-full/>
 
 ## Ipywidgets compatibility
 
@@ -89,11 +89,13 @@ grid = wd.TwoByTwoLayout(top_left=mychart1, top_right=mychart2,
 grid
 ```
 
+<advanced-ipywidgets/>
+
 ## Callback functions
 
-Callback functions are javascript functions inputed into the chart to do some specific actions. There are a lot of things that can be customizable with callback functions in Chart.js (and therefore in ipychart). Often, they are used for advanced customization of some aspects of the chart. For example we saw previously, in the configuration section, that we could modify the text of tooltips (the text bubbles that appear when we hover over a data point on a chart) with a callback function.
+Callback functions are Javascript functions inputed into the chart to do some specific actions. There are a lot of things that can be customizable with callback functions in Chart.js (and therefore in ipychart). Often, they are used for advanced customization of some aspects of the chart. For example we saw previously, in the configuration section, that we could modify the text of tooltips (the text bubbles that appear when we hover over a data point on a chart) with a callback function.
 
-Concretely, a callback function is a function written in Javascript that will be given as an argument and which will then be executed by Chart.js when the chart is created. To pass a callback function to ipychart while coding in python, all you have to do is wrap the function in a string. As functions can contain single or double quotes ('or "), it is advisable to encapsulate them in triple quotes:
+Concretely, a callback function is a function written in Javascript that will be given as an argument and which will then be executed by Chart.js when the chart is created. To pass a callback function to ipychart while coding in Python, all you have to do is wrap the function in a string. As functions can contain single or double quotes ('or "), it is advisable to encapsulate them in triple quotes:
 
 ```py
 callback_function = '''function(value, index, values) {return '$' + value;}'''
@@ -145,6 +147,6 @@ chart = Chart(
 
 Ipychart offers three ways to export a created Chart. These ways correspond to three methods of the *Chart* class: 
 
-- `to_html`: This function embed the chart widget into an HTML file dumped at the inputed path location.
-- `get_html_template`: This function returns a string containing HTML code to embed the Chart.
-- `print_python_template`: This function print the python code to run in order to reproduce exactly the same chart.
+- `to_html(path)`: This function embed the chart widget into an HTML file dumped at the inputed path location.
+- `get_html_template()`: This function returns a string containing HTML code to embed the Chart.
+- `print_python_template()`: This function print the Python code to run in order to reproduce exactly the same chart.
