@@ -130,6 +130,7 @@ class Chart(widgets.DOMWidget):
             if len(self.data['datasets']) == 1 and self.kind in ['bar', 'line', 'horizontalBar', 'bubble', 'radar', 'scatter']:
                 self.options.update({'legend': False})
 
+
     def _set_default_style(self):
         """
         This function set a default style for the chart.
@@ -144,49 +145,54 @@ class Chart(widgets.DOMWidget):
         # Chart.js main colors for one dataset
         default_colors_one = ['rgba(54, 163, 235, 0.2)', 'rgba(254, 119, 124, 0.2)', 'rgba(255, 206, 87, 0.2)']
 
-        # Chosen colors for the six fist datasets then random colors
+        # Chosen colors for the ten fist datasets then random colors
         default_colors_all = ['rgba(54, 163, 235, 0.2)', 'rgba(254, 119, 124, 0.2)', 'rgba(255, 206, 87, 0.2)',
                               'rgba(11, 255, 238, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)',
                               'rgba(5, 169, 69, 0.2)', 'rgba(230, 120, 199, 0.2)', 'rgba(35, 120, 206, 0.2)',
                               'rgba(211, 216, 214, 0.2)'] + random_colors
 
-        # Override default style options from Chart.js if not setted by the user
+        # Mix of color if only one dataset
         if len(self.data['datasets']) == 1:
+            dataset_type = self.data['datasets'][0]['type'] if 'type' in self.data['datasets'][0] else self.kind
             if 'backgroundColor' not in self.data['datasets'][0]:
-                if self.kind in ['line', 'radar', 'scatter', 'bubble']:
+                if dataset_type in ['line', 'radar', 'scatter', 'bubble']:
                     self.data['datasets'][0]['backgroundColor'] = default_colors_one[0]
-                elif self.kind in ['bar', 'horizontalBar']:
-                    self.data['datasets'][0]['backgroundColor'] = default_colors_one * (int(len(self.data['datasets'][0]['data'])) + 1)
+                elif dataset_type in ['bar', 'horizontalBar']:
+                    data_length = int(len(self.data['datasets'][0]['data']))
+                    bar_colors = default_colors_one * (data_length + 1)
+                    self.data['datasets'][0]['backgroundColor'] = bar_colors[:data_length]
                 else:
                     self.data['datasets'][0]['backgroundColor'] = default_colors_all[:len(self.data['datasets'][0]['data'])]
             if 'borderColor' not in self.data['datasets'][0]:
-                if self.kind in ['line', 'radar', 'scatter', 'bubble']:
+                if dataset_type in ['line', 'radar', 'scatter', 'bubble']:
                     self.data['datasets'][0]['borderColor'] = self.data['datasets'][0]['backgroundColor'].replace('0.2', '1')
                 else:
                     self.data['datasets'][0]['borderColor'] = [c.replace('0.2', '1') for c in self.data['datasets'][0]['backgroundColor']]
             if 'borderWidth' not in self.data['datasets'][0]:
                 self.data['datasets'][0]['borderWidth'] = 1
-            if self.kind in ['line', 'radar', 'scatter', 'bubble']:
+            if dataset_type in ['line', 'radar', 'scatter', 'bubble']:
                 if 'pointBackgroundColor' not in self.data['datasets'][0]:
                     self.data['datasets'][0]['pointBackgroundColor'] = self.data['datasets'][0]['backgroundColor']
                 if 'pointBorderColor' not in self.data['datasets'][0]:
                     self.data['datasets'][0]['pointBorderColor'] = self.data['datasets'][0]['borderColor']
 
+        # One color per dataset if more than one dataset
         else:
             for idx, ds in enumerate(self.data['datasets']):
+                dataset_type = ds['type'] if 'type' in ds else self.kind
                 if 'backgroundColor' not in ds:
-                    if self.kind in ['bar', 'horizontalBar', 'line', 'radar', 'scatter', 'bubble']:
+                    if dataset_type in ['bar', 'horizontalBar', 'line', 'radar', 'scatter', 'bubble']:
                         ds['backgroundColor'] = default_colors_all[idx]
                     else:
                         ds['backgroundColor'] = default_colors_all[:len(ds['data'])]
                 if 'borderColor' not in ds:
-                    if self.kind in ['bar', 'horizontalBar', 'line', 'radar', 'scatter', 'bubble']:
+                    if dataset_type in ['bar', 'horizontalBar', 'line', 'radar', 'scatter', 'bubble']:
                         ds['borderColor'] = ds['backgroundColor'].replace('0.2', '1')
                     else:
                         ds['borderColor'] = [c.replace('0.2', '1') for c in ds['backgroundColor']]
                 if 'borderWidth' not in ds:
                     ds['borderWidth'] = 1
-                if self.kind in ['line', 'radar', 'scatter', 'bubble']:
+                if dataset_type in ['line', 'radar', 'scatter', 'bubble']:
                     if 'pointBackgroundColor' not in ds:
                         ds['pointBackgroundColor'] = ds['backgroundColor']
                     if 'pointBorderColor' not in ds:
