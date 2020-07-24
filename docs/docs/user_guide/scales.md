@@ -235,26 +235,25 @@ Here is an example of a scale with custom ticks options:
 
 ``` py
 dataset = {
-    'labels': ['Dataset 1', 'Dataset 2', 'Dataset 3', 'Dataset 4',
-               'Dataset 5'],
+    'labels': ['Data 1', 'Data 2', 'Data 3', 'Data 4', 'Data 5'],
     'datasets': [{ 
-        'data': [500,114,106,420,107],
+        'data': [500, 114, 106, 420, 107],
         'label': "Africa",
         'fill': False
       }, { 
-        'data': [282,350,411,350,220],
+        'data': [282, 350, 411, 350, 220],
         'label': "Asia",
         'fill': False
       }, { 
-        'data': [168,170,250,380,480],
+        'data': [168, 170, 250, 380, 480],
         'label': "Europe",
         'fill': False
       }, { 
-        'data': [450,270,10,100,24],
+        'data': [450, 270, 10, 100, 24],
         'label': "Latin America",
         'fill': False
       }, { 
-        'data': [6,40,200,300,350],
+        'data': [6, 40, 200, 300, 350],
         'label': "North America",
         'fill': False
       }
@@ -262,12 +261,10 @@ dataset = {
   }
 
 options = {
-    'scales': {'xAxes': [{'ticks': {
-                   'min': 0, 'max': 500, 'fontSize': 15, 'fontStyle': 'italic', 
-                   'stepSize': 0.5,'maxTicksLimit': 100}}],
+    'scales': {'xAxes': [{'ticks': {'fontSize': 15, 'fontStyle': 'italic'}}],
                'yAxes': [{'ticks': {
                    'min': 0, 'max': 500, 'fontSize': 15, 'fontStyle': 'italic', 
-                   'stepSize': 50, 'minRotation': 45, 'padding': 20,}}]}
+                   'stepSize': 50, 'minRotation': 45, 'padding': 20}}]}
 }
 
 mychart = Chart(dataset, 'line', options=options, colorscheme='office.Composite6')

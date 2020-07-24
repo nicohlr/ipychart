@@ -53,7 +53,8 @@ Concretely, we can do that very easily in one cell of our notebook in the follow
 
 ``` py
 dataset = {
-  'labels': ['Data 1', 'Data 2', 'Data 3', 'Data 4', 'Data 5', 'Data 6', 'Data 7', 'Data 8'],
+  'labels': ['Data 1', 'Data 2', 'Data 3', 'Data 4', 
+             'Data 5', 'Data 6', 'Data 7', 'Data 8'],
   'datasets': [{'data': [14, 22, 36, 48, 60, 90, 28, 12]}]
 }
 
