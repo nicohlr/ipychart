@@ -112,7 +112,7 @@ data = {
 ```
 
 ::: tip
-You can also give a **pandas series** to the data argument. For exemple by giving a column of a **pandas dataframe** ⟶ 'data': df['column'] 
+You can also give a **Pandas series** to the data argument. For exemple by giving a column of a **Pandas dataframe** ⟶ 'data': df['column'] 
 :::
 
 ## Bar 
@@ -124,9 +124,9 @@ A bar chart provides a way of showing data values represented as vertical bars. 
 
 ``` py
 dataset = {
-    'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 'Poland', 
-               'Portugal', 'Sweden', 'Ireland'],
-    'datasets': [{'data': [14, 106, 16, 107, 45, 133, 19, 109, 60, 107]}]}
+  'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 'Poland', 
+             'Portugal', 'Sweden', 'Ireland'],
+  'datasets': [{'data': [14, 106, 16, 107, 45, 133, 19, 109, 60, 107]}]}
 
 mychart = Chart(dataset, 'bar')
 mychart
@@ -221,7 +221,7 @@ data = {
 ```
 
 ::: tip
-You can also give a **pandas series** to the data argument. For exemple by giving a column of a **pandas dataframe** ⟶ 'data': df['column'] 
+You can also give a **Pandas series** to the data argument. For exemple by giving a column of a **Pandas dataframe** ⟶ 'data': df['column'] 
 :::
 
 ### Horizontal Bar chart
@@ -233,9 +233,9 @@ You can rotate your bar chart by setting the `kind` argument of your chart to `'
 
 ``` py
 dataset = {
-    'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 'Poland', 
-               'Portugal', 'Sweden', 'Ireland'],
-    'datasets': [{'data': [14, 106, 16, 107, 45, 133, 19, 109, 60, 107]}]}
+  'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 'Poland', 
+             'Portugal', 'Sweden', 'Ireland'],
+  'datasets': [{'data': [14, 106, 16, 107, 45, 133, 19, 109, 60, 107]}]}
 
 mychart = Chart(dataset, 'horizontalBar')
 mychart
@@ -253,14 +253,13 @@ A radar chart is a way of showing multiple data points and the variation between
 
 ``` py
 dataset = {
-    'labels': ['Top','TopRight', 'BottomRight', 'BottomLeft', 'TopLeft'],
-    'datasets': [{'data': [140, 106, 160, 107, 45],
-                  'label': 'Dataset1',
-                  'borderWidth': 3
-                 },
-                {'data': [32, 160, 72, 140, 89],
-                 'label': 'Dataset2',
-                 'borderWidth': 3}]
+  'labels': ['Top','TopRight', 'BottomRight', 'BottomLeft', 'TopLeft'],
+  'datasets': [{'data': [140, 106, 160, 107, 45],
+                'label': 'Dataset1',
+                'borderWidth': 3},
+               {'data': [32, 160, 72, 140, 89],
+                'label': 'Dataset2',
+                'borderWidth': 3}]
 }
 
 mychart = Chart(dataset, 'radar')
@@ -284,7 +283,7 @@ data = {
     # dataset general options
     'fill': bool or str or int # How to fill the area under the line. | Default: True
     'label': bool or str # Label of the dataset | Default: ''
-    'lineTension': int # Bezier curve tension of the line. | Default: 0.4
+    'lineTension': int # Bezier curve tension of the line. | Default: 0
     'order': int # Drawing order of dataset | Default: 0
     'spanGaps': bool or int # Draw lines between points with no data | Default: False
 
@@ -333,13 +332,13 @@ They are excellent at showing the relational proportions between data.
 
 ``` py
 dataset = {
-    'labels': ['Red','Blue', 'Yellow', 'Green', 'Purple'],
-    'datasets': [{'data': [140, 106, 160, 107, 45],
-                  'backgroundColor': ['rgba(255, 99, 132, 1)', 
-                                      'rgba(54, 162, 235, 1)',
-                                      'rgba(255, 206, 86, 1)',
-                                      'rgba(75, 192, 192, 1)',
-                                      'rgba(153, 102, 255, 1)']
+  'labels': ['Red','Blue', 'Yellow', 'Green', 'Purple'],
+  'datasets': [{'data': [140, 106, 160, 107, 45],
+                'backgroundColor': ['rgba(255, 99, 132, 1)', 
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)']
 }]}
 
 mychart = Chart(dataset, 'doughnut')
@@ -354,13 +353,13 @@ mychart
 
 ``` py
 dataset = {
-    'labels': ['Red','Blue', 'Yellow', 'Green', 'Purple'],
-    'datasets': [{'data': [140, 106, 160, 107, 45],
-                  'backgroundColor': ['rgba(255, 99, 132, 1)', 
-                                      'rgba(54, 162, 235, 1)',
-                                      'rgba(255, 206, 86, 1)',
-                                      'rgba(75, 192, 192, 1)',
-                                      'rgba(153, 102, 255, 1)']
+  'labels': ['Red','Blue', 'Yellow', 'Green', 'Purple'],
+  'datasets': [{'data': [140, 106, 160, 107, 45],
+                'backgroundColor': ['rgba(255, 99, 132, 1)', 
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)']
 }]}
 
 mychart = Chart(dataset, 'pie')
@@ -497,10 +496,11 @@ Scatter charts are based on basic line charts with the x axis changed to a linea
 
 ``` py
 dataset = {
-  'datasets': [{'data': [{'x': random.randint(0, 100), 
-                          'y': random.randint(0, 100), 
-                          'r': random.randint(0, 100)} for _ in range(100)
-                        ]}]
+  'datasets': [{'data': [
+    {'x': random.randint(0, 100), 
+     'y': random.randint(0, 100), 
+     'r': random.randint(0, 100)} for _ in range(100)
+  ]}]
 }
 
 mychart = Chart(dataset, 'scatter')
@@ -538,16 +538,16 @@ A bubble chart is used to display three dimensions of data at the same time. The
 
 ``` py
 dataset = {
-    'datasets': [{'data': [{'x': 20, 'y': 30, 'r': 20}, 
-                           {'x': 10, 'y': 20, 'r': 40}, 
-                           {'x': 15, 'y': 40, 'r': 90}, 
-                           {'x': 5, 'y': 10, 'r': 50}],
-                  'borderWidth': 4}]
+  'datasets': [{'data': [{'x': 20, 'y': 30, 'r': 20}, 
+                         {'x': 10, 'y': 20, 'r': 40}, 
+                         {'x': 15, 'y': 40, 'r': 90}, 
+                         {'x': 5, 'y': 10, 'r': 50}],
+                'borderWidth': 4}]
 }
 
 options = {
-    'scales': {'xAxes': [{'ticks': {'min': 0, 'max': 25}}],
-               'yAxes': [{'ticks': {'min': 0, 'max': 60}}]}
+  'scales': {'xAxes': [{'ticks': {'min': 0, 'max': 25}}],
+             'yAxes': [{'ticks': {'min': 0, 'max': 60}}]}
 }
 
 mychart = Chart(dataset, 'bubble', options=options)
@@ -633,8 +633,8 @@ dataset = {
 }
 
 options = {
-    'scales': {'xAxes': [{'stacked': True}],
-               'yAxes': [{'stacked': True}]}
+  'scales': {'xAxes': [{'stacked': True}],
+             'yAxes': [{'stacked': True}]}
 }
 
 mychart = Chart(dataset, 'bar', options=options, colorscheme='tableau.Tableau20')
@@ -667,11 +667,11 @@ Here is an example of an area chart made using the `'fill'` option:
 
 ``` py
 dataset = {
-    'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 'Poland', 
-               'Portugal', 'Sweden', 'Ireland'],
-    'datasets': [{ 
-            'data': [14, 106, 16, 107, 45, 133, 109, 109, 108, 107],
-            'fill': True
+  'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 'Poland', 
+             'Portugal', 'Sweden', 'Ireland'],
+  'datasets': [{ 
+    'data': [14, 106, 16, 107, 45, 133, 109, 109, 108, 107],
+    'fill': True
 }]}
 
 mychart = Chart(dataset, 'line', colorscheme='brewer.PuOr3')
@@ -690,29 +690,29 @@ With ipychart, it is possible to create mixed charts that are a combination of t
 
 ``` py
 dataset = {
-    'labels': ['Dataset 1', 'Dataset 2', 'Dataset 3', 'Dataset 4',
-               'Dataset 5', 'Dataset 6', 'Dataset 7', 'Dataset 8',
-               'Dataset 9','Dataset 10'],
-    'datasets': [{ 
-        'data': [86, 114, 106, 106, 107, 111, 133, 221, 121, 142],
-        'label': "Africa", 'fill': False, 'type': 'line', # Change the type
-        'pointRadius': 5, 'pointHoverRadius': 10
-      }, { 
-        'data': [99, 130, 64, 100, 73, 22, 88, 198, 144, 64],
-        'label': "Asia",
-      }, { 
-        'data': [168, 170, 178, 190, 203, 200, 164, 100, 72, 85],
-        'label': "Europe", 'fill': False, 'type': 'line', # Change the type
-        'pointRadius': 5, 'pointHoverRadius': 10
-      }, {
-        'data': [40, 20, 10, 16, 24, 38, 74, 167, 80, 150],
-        'label': "Latin America",
-      }, { 
-        'data': [56, 95, 44, 112, 215, 35, 95, 74, 64, 78],
-        'label': "North America",
-      }
-    ]
-  }
+  'labels': ['Dataset 1', 'Dataset 2', 'Dataset 3', 'Dataset 4',
+             'Dataset 5', 'Dataset 6', 'Dataset 7', 'Dataset 8',
+             'Dataset 9','Dataset 10'],
+  'datasets': [{ 
+    'data': [86, 114, 106, 106, 107, 111, 133, 221, 121, 142],
+    'label': "Africa", 'fill': False, 'type': 'line', # Change the type
+    'pointRadius': 5, 'pointHoverRadius': 10
+    }, { 
+    'data': [99, 130, 64, 100, 73, 22, 88, 198, 144, 64],
+    'label': "Asia",
+    }, { 
+    'data': [168, 170, 178, 190, 203, 200, 164, 100, 72, 85],
+    'label': "Europe", 'fill': False, 'type': 'line', # Change the type
+    'pointRadius': 5, 'pointHoverRadius': 10
+    }, {
+    'data': [40, 20, 10, 16, 24, 38, 74, 167, 80, 150],
+    'label': "Latin America",
+    }, { 
+    'data': [56, 95, 44, 112, 215, 35, 95, 74, 64, 78],
+    'label': "North America",
+    }
+  ]
+}
 
 mychart = Chart(dataset, 'bar', colorscheme='tableau.ClassicLight10') # Base type
 mychart

@@ -1,6 +1,6 @@
 # Usage
 
-The ipychart API is composed of only one *Chart* class which allow you to create all types of chart. This class takes 4 arguments as input : **data**, **kind**, **options** and **colorscheme**. This arguments have a particular structure to match the backend Chart.js API. If you don't respect the structure of these arguments the package may not work. 
+The ipychart API is composed of only one *Chart* class which allows you to create all types of chart. This class takes 4 arguments as input : **data**, **kind**, **options** and **colorscheme**. This arguments have a particular structure to match the backend Chart.js API. If you don't respect the structure of these arguments the package may not work. 
 
 In this section, we will go through each argument to present its use and its structure. But before that, let's start with a little aside to compare the APIs of Chart.js and ipychart.
 
@@ -71,7 +71,7 @@ As you can see, a Chart.js user will not be disoriented by switching to ipychart
 
 ### Data
 
-The `data` argument is the most important of the *Chart* class. Without this argument, the chart cannot be displayed (how to display a chart without data?). The `data` argument **must be a dict**. This constraint is imposed by Chart.js, which takes its arguments via a Javascript dict. This data dict must have the following structure : 
+The `data` argument is the most important one of the *Chart* class. Without this argument, the chart cannot be displayed (how to display a chart without data?). The `data` argument **must be a dict**. This constraint is imposed by Chart.js, which takes its arguments via a Javascript dict. This data dict must have the following structure : 
 
 ``` py
 data = {
@@ -113,7 +113,7 @@ The `type` argument in Chart.js became `kind` argument in Python because, unlike
 
 ### Options
 
-Fanally, the last argument of the *Chart* class is `options`. This argument **must be a dict** dans it allows you to completely configure your chart.
+Finally, the last argument of the *Chart* class is `options`. This argument **must be a dict**, it allows you to completely configure your chart.
 
 ``` py
 options = {

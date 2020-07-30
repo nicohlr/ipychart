@@ -4,7 +4,7 @@
 
 In ipychart, you can add labels directy to your chart. This is not a native feature in Chart.js and it has been added using [an external open source package](https://chartjs-plugin-datalabels.netlify.app/). 
 
-In practice, the datalabels are controlled from the 'datalabels' key (which takes a dict as value) present in each dataset that you pass to the *Chart* class. For example, with the following code, we will display the datalabels on the first dataset:
+In practice, the datalabels are controlled from the 'datalabels' key (which takes a dict as value) present in each dataset that you pass to the *Chart* class. For example, with the following code, we will display the datalabels on the second dataset:
 
 ```py
 dataset = {
@@ -43,7 +43,7 @@ dataset = {
 }
 ```
 
-When the `'borderRadius'` argument is set, ipychart will automatically fill also the `'borderColor'` and `'backgroundColor'` arguments (if they are not already set by the user) to match the charts colors. Therefore, you can quickly format the datalabels so that they appear harmoniously on the chart:
+When the `'borderRadius'` argument is set, ipychart will automatically fill also the `'borderColor'` and `'backgroundColor'` arguments (if they are not already set by the user) to match the chart colors. Therefore, you can quickly format the datalabels so that they appear harmoniously on the chart:
 
 ```py
 datalabels_arguments = {'display': True, 'borderWidth': 1, 'anchor': 'end', 

@@ -41,7 +41,7 @@ options = {
       'ticks': dict # See Ticks Argument below | Default: {}
       'time': dict # See Time Argument below | Default: {}
 	
-      # Only for time cartesian scales (work if type is 'time')
+      # Only for time cartesian scales & only when 'type' is set to 'time'
       'distribution': str # See below | Default: 'linear'
       'bounds': str # See below | Default: 'data'
       
@@ -104,9 +104,9 @@ Here is an example of a scale with labels:
 
 ``` py
 dataset = {
-    'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 'Poland', 
-               'Portugal', 'Sweden', 'Ireland'],
-    'datasets': [{'data': [14, 106, 16, 107, 45, 133, 19, 109, 60, 107]}]}
+  'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 'Poland', 
+             'Portugal', 'Sweden', 'Ireland'],
+  'datasets': [{'data': [14, 106, 16, 107, 45, 133, 19, 109, 60, 107]}]}
 
 options = {
   'scales': {
@@ -177,7 +177,7 @@ options = {
         'minor': str # See below | Default: {}
         'major': str # See below | Default: {}
 
-        # Callbacks options
+        # Callbacks functions
         'callback': str # Callback function (see below) | Default: ''
         
         # Only for category cartesian scales (work if 'type' is 'category')
@@ -235,36 +235,31 @@ Here is an example of a scale with custom ticks options:
 
 ``` py
 dataset = {
-    'labels': ['Data 1', 'Data 2', 'Data 3', 'Data 4', 'Data 5'],
-    'datasets': [{ 
-        'data': [500, 114, 106, 420, 107],
-        'label': "Africa",
-        'fill': False
-      }, { 
-        'data': [282, 350, 411, 350, 220],
-        'label': "Asia",
-        'fill': False
-      }, { 
-        'data': [168, 170, 250, 380, 480],
-        'label': "Europe",
-        'fill': False
-      }, { 
-        'data': [450, 270, 10, 100, 24],
-        'label': "Latin America",
-        'fill': False
-      }, { 
-        'data': [6, 40, 200, 300, 350],
-        'label': "North America",
-        'fill': False
-      }
-    ]
-  }
+  'labels': ['Data 1', 'Data 2', 'Data 3', 'Data 4', 'Data 5'],
+  'datasets': [
+    {'data': [500, 114, 106, 420, 107],
+     'label': "Africa",
+     'fill': False}, 
+    {'data': [282, 350, 411, 350, 220],
+     'label': "Asia",
+      'fill': False}, 
+    {'data': [168, 170, 250, 380, 480],
+     'label': "Europe",
+      'fill': False}, 
+    {'data': [450, 270, 10, 100, 24],
+     'label': "Latin America",
+     'fill': False}, 
+    {'data': [6, 40, 200, 300, 350],
+     'label': "North America",
+     'fill': False}
+  ]
+}
 
 options = {
-    'scales': {'xAxes': [{'ticks': {'fontSize': 15, 'fontStyle': 'italic'}}],
-               'yAxes': [{'ticks': {
-                   'min': 0, 'max': 500, 'fontSize': 15, 'fontStyle': 'italic', 
-                   'stepSize': 50, 'minRotation': 45, 'padding': 20}}]}
+  'scales': {'xAxes': [{'ticks': {'fontSize': 15, 'fontStyle': 'italic'}}],
+             'yAxes': [{'ticks': {
+                'min': 0, 'max': 500, 'fontSize': 15, 'fontStyle': 'italic', 
+                'stepSize': 50, 'minRotation': 45, 'padding': 20}}]}
 }
 
 mychart = Chart(dataset, 'line', options=options, colorscheme='office.Composite6')
@@ -272,7 +267,7 @@ mychart
 ```
 :::
 
-<scales-ticks-cartesian/>
+<scales-ticks/>
 
 ### Time argument
 
@@ -314,9 +309,20 @@ options = {
 }
 ```
 
+
+#### Parser subargument (`'time'` option)
+
+If this property is defined as a string, it is interpreted as a custom format to be used by Moment.js to parse the date. See [Moment.js](https://momentjs.com/docs/#/displaying/format/) for the allowable format strings.
+
+If this is a function, it must return a Moment.js object given the appropriate data value.
+
 #### DisplayFormats subargument (`'time'` option)
 
 The following display formats are used to configure how different time units are formed into strings for the axis tick marks. See [Moment.js](https://momentjs.com/docs/#/displaying/format/) for the allowable format strings.
+
+::: warning
+You have to change the DisplayFormats dictionary key corresponding to the value of the 'unit' argument. For example, if you set 'unit' to 'week', you will need to use the 'week' key of the DisplayFormats dictionary to see an effective format change.
+:::
 
 ```py
 'options': {
@@ -357,13 +363,59 @@ Here is an example of a chart with a time scale:
 <br/>
 
 ``` py
+data = {"datasets": [
+  {'label': "US",
+   'data': [{'x': "01/01/2019", 'y': 172},
+            {'x': "04/01/2019", 'y': 173},
+            {'x': "08/01/2019", 'y': 174},
+            {'x': "10/01/2019", 'y': 175},
+            {'x': "12/01/2019", 'y': 178},
+            {'x': "04/01/2020", 'y': 182}, 
+            {'x': "10/01/2020", 'y': 192},
+            {'x': "12/01/2020", 'y': 200}],
+   'fill': False},
+  {'label': "UK",
+   'data':  [{'x': "01/01/2019", 'y': 175},
+             {'x': "04/01/2019", 'y': 177},
+             {'x': "08/01/2019", 'y': 182},
+             {'x': "10/01/2019", 'y': 172},
+             {'x': "12/01/2019", 'y': 184},
+             {'x': "04/01/2020", 'y': 192}, 
+             {'x': "10/01/2020", 'y': 188},
+             {'x': "12/01/2020", 'y': 210}],
+   'fill':  False}]
+}
 
+options = {'scales': {
+  'xAxes': [{
+      
+    'type': "time",
+    'time': {
+      'tooltipFormat': 'll',
+      'unit': 'week', # change unit from month to week
+      'round': 'week', # print only first day of week
+      'isoWeekday': True, # monday as first day of week
+      'stepSize': 2,# one tick each 2 weeks
+      # Change display format
+      # see: https://momentjs.com/docs/#/displaying/format/
+      'displayFormats': {'week': 'ddd D MMM YYYY'}}, # one tick each 2 weeks
+      
+    'scaleLabel': {'display': True,
+                   'labelString': 'Date'}}],
+  'yAxes': [{
+    'scaleLabel': {'display': True,
+                   'labelString': 'Value'}}]
+}}
+
+mychart = Chart(data, 'line', options, colorscheme='tableau.Tableau10')
+mychart
 ```
 :::
 
 <scales-time/>
 
-### Distribution argument (only for time scales)
+### Distribution argument (
+  only for time scales)
 
 The `'distribution'` argument controls the data distribution along the scale (**only for time scales**, i.e `type` argument = `'time'`):
 
@@ -421,20 +473,6 @@ options = {
 }
 ```
 
-#### Example
-
-Here is an example of a scale with custom angleLines options:
-
-:::details Click to show the code used to generate the Chart.
-<br/>
-
-``` py
-
-```
-:::
-
-<scales-anglelines/>
-
 ### GridLines argument
 
 As this nested options are common to both cartesian and radial scales, this argument is detailed [at the end of this section]().
@@ -457,7 +495,7 @@ options = {
       'lineHeight': int or str # Height of an individual line of text
                                # ex: 2.4 or '100%' | Default: 1.2
         
-      # Callbacks options
+      # Callbacks functions
       'callback': str # Callback function to convert data labels to point labels.
                       # Default implementation simply returns the current string.
 
@@ -465,20 +503,6 @@ options = {
   }
 }
 ```
-
-#### Example
-
-Here is an example of a scale with custom pointLabels options:
-
-:::details Click to show the code used to generate the Chart.
-<br/>
-
-``` py
-
-```
-:::
-
-<scales-pointlabels/>
 
 ### Ticks argument
 
@@ -528,7 +552,7 @@ options = {
       'minor': str # Same as for cartesion scale, see above | Default: {}
       'major': str # Same as for cartesion scale, see above | Default: {}
 
-      # Callbacks options
+      # Callbacks functions
       'callback': str # Callback function (see below) | Default: ''
       
     }
@@ -544,19 +568,61 @@ The minor and major tick configuration are nested under the ticks configuration 
 
 The ticks can be customized with a callback function. Callback function are Javascript function inputed into the chart to do some specific actions. To learn how to use callback function in ipychart, you can read [the callback functions section of the documentation](https://github.com/nicohlr/ipychart/blob/master/docs/docs/user_guide).
 
-#### Example
+### Example of custom radial scale
 
-Here is an example of a scale with custom ticks options:
+Here is an example of a scale with custom angleLines, gridLines, pointLabels and ticks options:
 
 :::details Click to show the code used to generate the Chart.
 <br/>
 
 ``` py
+dataset = {
+  'labels': ['Top', 'TopRight', 'BottomRight', 'Bottom', 
+             'BottomLeft', 'TopLeft'],
+  'datasets': [
+    {'data': [140, 106, 160, 107, 45, 27],
+     'label': 'Dataset 1',
+     'borderWidth': 3,
+     'lineTension': 0.3},
+    {'data': [32, 160, 72, 140, 89, 112],
+     'label': 'Dataset 2',
+     'borderWidth': 3,
+     'lineTension': 0.3}]
+}
 
+options = {
+  'scale': {
+    'angleLines': {
+      'display': True,
+      'color': 'black',
+      'lineWidth': 1.5,
+      'borderDashOffset': 10
+    },
+    'gridLines': {
+      'color': 'black',
+      'lineWidth': 1.5,
+      'circular': True
+    },
+    'pointLabels': {
+      'display': True,
+      'fontColor': 'black',
+      'fontSize': 14,
+      'fontStyle': 'italic',
+    },
+    'ticks': {
+      'fontSize': 18,
+      'fontColor': 'black',
+      'stepSize': 30
+    }
+  }
+}
+
+mychart = Chart(dataset, 'radar', options=options, colorscheme='brewer.DarkTwo3')
+mychart
 ```
 :::
 
-<scales-ticks-radial/>
+<scales-radial/>
 
 ## Common options
 
@@ -622,7 +688,31 @@ Here is an example of a scale with custom gridLines options:
 <br/>
 
 ``` py
+dataset = {
+  'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 'Poland', 
+             'Portugal', 'Sweden', 'Ireland'],
+  'datasets': [{'data': [14, 106, 16, 107, 45, 133, 19, 109, 60, 107], 'label': 'Dataset 1'},
+               {'data': [95, 28, 56, 82, 37, 155, 120, 132, 74, 85], 'label': 'Dataset 2'}]
+}
 
+options = {
+  'scales': {
+    'xAxes': [{
+      'gridLines': {
+      'display': True,
+      'color': 'black',
+      'z': -1}}],
+    'yAxes': [{
+      'gridLines': {
+      'display': True,
+      'color': 'black',
+      'z': -1}}]
+  }
+}
+
+
+mychart = Chart(dataset, 'line', options=options, colorscheme='tableau.JewelBright9')
+mychart
 ```
 :::
 
@@ -651,7 +741,7 @@ options = {
           'lineHeight': int or str # Height of an individual line of text
                                    # ex: 2.4 or '100%' | Default: 1.2
                 
-          # Callbacks options
+          # Callbacks functions
           'callback': str # Callback function which returns the string 
                           # representation of the tick value as it should 
                           # be displayed on the chart. | Default: ''
@@ -699,7 +789,7 @@ options = {
           'lineHeight': int or str # Height of an individual line of text
                                    # ex: 2.4 or '100%' | Default: 1.2
                 
-          # Callbacks options
+          # Callbacks functions
           'callback': str # Callback function which returns the string 
                           # representation of the tick value as it should 
                           # be displayed on the chart. | Default: ''

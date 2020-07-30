@@ -21,7 +21,7 @@ Otherwise, the charts will not be displayed.
 
 ## Check Installation
 
-You may have to enable the Jupyter notebook extension if it is not done already. You can check which extension is enabled using the folowing command:
+You may have to enable the Jupyter notebook extension if it is not done already. You can check which extension is enabled using the following command:
 
 ``` bash
 $ jupyter nbextension list
@@ -49,7 +49,7 @@ from ipychart import Chart
 
 After that, we need to create an instance of that class. We'll have to create a Python dict to format our data. We'll also specify with what type of chart we want to display our data using the **kind** argument. 
 
-Concretely, we can do that very easily in one cell of our notebook in the following way:
+Concretely, we can do that very easily in the following way:
 
 ``` py
 dataset = {

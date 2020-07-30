@@ -4,11 +4,11 @@
 
 Today, Python is one of the most popular languages for data analysis and data science. One of the reasons for Python's success in these areas is Pandas, the leading package for data manipulation with Python. This package has quickly become a must and is used by a very large number of people around the world.
 
-It is therefore essential to be able to create visualizations directly from a pandas dataframe. This can be done for example with Seaborn, a famous Python package for data visualization. Thanks to the interface presented in this section, it is also possible to do the same thing with ipychart.
+It is therefore essential to be able to create visualizations directly from a Pandas dataframe. This can be done for example with Seaborn, a famous Python package for data visualization. Thanks to the interface presented in this section, it is also possible to do the same thing with ipychart.
 
 ## Usage
 
-This interface allows you to quickly create charts from a pandas dataframe, without having to use the low-level syntax of Chart.js. We will use, in the rest of this section, the famous titanic dataset. Let's start by loading this dataset with pandas:
+This interface allows you to quickly create charts from a pandas dataframe, without having to use the low-level syntax of Chart.js. We will use, in the rest of this section, the famous titanic dataset. Let's start by loading this dataset with Pandas:
 
 ```py
 import pandas as pd
@@ -18,7 +18,7 @@ titanic.head()
 ```
 <pandas-head/>
 
-Concretely, to use ipychart's pandas interface, we will have to use the *ChartDataFrame* class (instead of using the *Chart* class that we saw previously). So let's start by creating an instance of this class, giving our pandas dataframe as an argument:
+Concretely, to use ipychart's Pandas interface, we will have to use the *ChartDataFrame* class (instead of using the *Chart* class that we saw previously). So let's start by creating an instance of this class, giving our Pandas dataframe as an argument:
 
 ```py
 from ipychart import ChartDataFrame
@@ -43,7 +43,7 @@ All methods have two parameters in common: `dataset_options` and `options`. The 
 ### Count
 
 :::tip
-This chart can only be created from a single column of a pandas dataframe.
+This chart can only be created from a single column of a Pandas dataframe.
 :::
 
 The count chart shows the counts of observations in each categorical bin using bars. To draw it, you must call the *count* method:
@@ -72,7 +72,7 @@ titanic_chart.count(x='Embarked')
 ### Dist
 
 :::tip
-This chart can only be created from a single column of a pandas dataframe.
+This chart can only be created from a single column of a Pandas dataframe.
 :::
 
 Fit and plot a univariate kernel density estimate on a line chart. This chart is useful to have a representation of the distribution of the data. To draw it, you must call the *dist* method:

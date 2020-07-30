@@ -6,19 +6,37 @@ This package is a Python package made for data vizualisation. It allows to creat
 
 Ipychart is an [ipywidget](https://ipywidgets.readthedocs.io/en/stable/). Ipywidgets are tools developed by the creators of Jupyter themselves. It allows to use pure Javascript code directly in the Jupyter environment, which is a Python environment. This bridge between Javascript and Python is made available in open source via the possibility for anyone to create a custom ipywidget. This package, which is therefore a custom ipywidget, takes advantage of the power of this bridge between Javascript and Python to make the [Chart.js](https://www.chartjs.org/) Javascript library available to all Jupyter Notebooks users.
 
-The ipychart API is extremely similar - not to say identical - to the API of Chart.js. It is made to make all options and possibilities offered by Chart.js avaible in ipychart. As a lot of informations present in the official Chart.js documentation can be transposed in ipychart, with an adaptation to the syntax of Python, do not hesitate to refer to the [official documentation of Chart.js](https://www.chartjs.org/docs/latest/) if you cannot find what you are looking for here.
+The ipychart API is extremely similar - not to say identical - to the API of Chart.js. It is made to make all options and possibilities offered by Chart.js avaible in ipychart. As a lot of informations contained in the official Chart.js documentation can be transposed in ipychart, with an adaptation to the syntax of Python, do not hesitate to refer to the [official documentation of Chart.js](https://www.chartjs.org/docs/latest/) if you cannot find what you are looking for here.
 
 ## Table of Contents
 
 - [**Introduction**](https://nicohlr.gitlab.io/ipychart/user_guide/introduction.html)
 - [**Getting Started**](https://nicohlr.gitlab.io/ipychart/user_guide/getting_started.html)
 - [**Usage**](https://nicohlr.gitlab.io/ipychart/user_guide/usage.html)
-- [**Charts**](https://nicohlr.gitlab.io/ipychart/user_guide/charts.html)
+- [**Create Charts**](https://nicohlr.gitlab.io/ipychart/user_guide/charts.html)
 - [**Configuration**](https://nicohlr.gitlab.io/ipychart/user_guide/config.html)
 - [**Scales**](https://nicohlr.gitlab.io/ipychart/user_guide/scales.html)
 - [**Pandas Interface**](https://nicohlr.gitlab.io/ipychart/user_guide/pandas.html)
 - [**Advanced Features**](https://nicohlr.gitlab.io/ipychart/user_guide/advanced.html)
 - [**Developers**](https://nicohlr.gitlab.io/test_deploy_vuepress/developer_guide/development_installation.html)
+
+## Related resources
+
+The source code of the ipychart package is available on GitHub at https://github.com/nicohlr/ipychart.
+
+You can also find, on Github, a repo with notebooks containing various examples on the use of ipychart. Many code snippets used to create all kinds of charts are gathered there. The repo **ipychart-demo-notebooks** is accessible at the following address : https://github.com/nicohlr/ipychart-demo-notebooks
+
+Finally, you can also try ipychart online, directly on the dedicated binder that uses the notebooks of the **ipychart-demo-notebooks** repo. To do so, [**click here**]().
+
+## References
+
+- [**Chart.js**](https://www.chartjs.org/)
+- [**Ipywidgets**](https://ipywidgets.readthedocs.io/en/latest/index.html)
+- [**Ipywidgets cookiecutter template**](https://github.com/jupyter-widgets/widget-cookiecutter)
+- [**Chart.js Datalabels**](https://github.com/chartjs/chartjs-plugin-datalabels)
+- [**Chart.js Colorschemes**](https://github.com/nagix/chartjs-plugin-colorschemes)
+- [**Vuepress**](https://vuepress.vuejs.org/)
+- [**GitLab Pages**](https://docs.gitlab.com/ee/user/project/pages/)
 
 ## License
 
