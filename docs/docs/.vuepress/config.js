@@ -20,7 +20,7 @@ module.exports = ctx => ({
         repo: 'https://github.com/nicohlr/ipychart',
         editLinks: false,
         docsDir: 'docs',
-        logo: '/ipychart-logo.svg',
+        logo: '/ipychart-logo.png',
 
         algolia: ctx.isProd ? ({
             apiKey: '',
@@ -38,12 +38,12 @@ module.exports = ctx => ({
                 link: '/developer_guide/development_installation',
             },
         ],
-        sidebarDepth: 5,
+
         sidebar: [
             {
                 title: 'User Guide',
                 collapsable: false,
-                sidebarDepth: 1,
+                sidebarDepth: 2,
                 children: [
                     '/user_guide/introduction', 
                     '/user_guide/getting_started', 

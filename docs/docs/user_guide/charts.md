@@ -29,7 +29,7 @@ mychart
 
 You can choose this type for your chart by setting the `kind` argument to `'line'`.
 
-### Dataset properties
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Dataset properties</p>
 
 For each dataset, the following properties ar configurable:
 
@@ -91,7 +91,7 @@ How to clip relative to chartArea. Positive value allows overflow, negative valu
 * `'after'`: Step-after Interpolation
 * `'middle'`: Step-middle Interpolation
 
-### Data structure
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Data structures</p>
 
 You can input your data in the data argument of the dataset using two different formats :
 
@@ -137,7 +137,7 @@ mychart
 
 You can choose this type for your chart by setting the `kind` argument to `'bar'` or `'horizontalBar'`.
 
-### Dataset properties
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Dataset properties</p>
 
 For each dataset, the following properties ar configurable:
 
@@ -188,7 +188,7 @@ If set to `'flex'`, the base sample widths are calculated automatically based on
 
 If not set (default), the base sample widths are calculated using the smallest interval that prevents bar overlapping, and bars are sized using `barPercentage` and `categoryPercentage`. This mode always generates bars equally sized.
 
-### Data structure
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Data structures</p>
 
 You can input your data in the data argument of the dataset using three different formats :
 
@@ -224,7 +224,7 @@ data = {
 You can also give a **Pandas series** to the data argument. For exemple by giving a column of a **Pandas dataframe** ⟶ 'data': df['column'] 
 :::
 
-### Horizontal Bar chart
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Horizontal Bar chart</p>
 
 You can rotate your bar chart by setting the `kind` argument of your chart to `'horizontalBar'`:
 
@@ -271,7 +271,7 @@ mychart
 
 You can choose this type for your chart by setting the `kind` argument to `'radar'`.
 
-### Dataset properties
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Dataset properties</p>
 
 For each dataset, the following properties ar configurable:
 
@@ -311,7 +311,7 @@ data = {
 
 You can also control the style of the points and the lines when hovering the chart by using the 'hover' prefix on some of the above options (types are the same that the option without prefix) : `hoverBackgroundColor`, `hoverBorderCapStyle`, `hoverBorderColor`, `hoverBorderDash`, `hoverBorderDashOffset`, `hoverBorderJoinStyle`, `hoverBorderWidth`, `pointHoverBackgroundColor`, `pointHoverBorderColor`, `pointHoverBorderWidth`, `pointHoverRadius`
 
-### Data structure
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Data structures</p>
 
 You can input your data in the data argument of the dataset using the **number** format :
 
@@ -371,7 +371,7 @@ mychart
 
 You can choose this type for your chart by setting the `kind` argument to either `'doughnut'` or `'pie'`.
 
-### Dataset properties
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Dataset properties</p>
 
 For each dataset, the following properties ar configurable:
 
@@ -407,7 +407,7 @@ The following values are supported for `'borderAlign'`.
 
 When `'center'` is set, the borders of arcs next to each other will overlap. When `'inner'` is set, it is guaranteed that all borders will not overlap.
 
-### Data structure
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Data structures</p>
 
 You can input your data in the data argument of the dataset using the **number** format :
 
@@ -446,7 +446,8 @@ mychart
 
 You can choose this type for your chart by setting the `kind` argument to `'polarArea'`.
 
-### Dataset properties
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Dataset properties</p>
+
 
 For each dataset, the following properties ar configurable:
 
@@ -477,7 +478,7 @@ The following values are supported for `'borderAlign'`.
 
 When `'center'` is set, the borders of arcs next to each other will overlap. When `'inner'` is set, it is guaranteed that all borders will not overlap.
 
-### Data structure
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Data structures</p>
 
 You can input your data in the data argument of the dataset using the **number** format :
 
@@ -512,11 +513,11 @@ mychart
 
 You can choose this type for your chart by setting the `kind` argument to `'scatter
 
-### Dataset properties
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Dataset properties</p>
 
 The scatter chart supports all of the same properties as the [line chart]().
 
-### Data structure
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Data structures</p>
 
 You can input your data in the data argument of the dataset using the **point** format:
 
@@ -559,7 +560,7 @@ mychart
 
 You can choose this type for your chart by setting the `kind` argument to `'bubble'`
 
-### Dataset properties
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Dataset properties</p>
 
 For each dataset, the following properties ar configurable:
 
@@ -590,7 +591,7 @@ data = {
 You can also control the style of the points and the lines when hovering the chart by using the 'hover' prefix on some of the above options (types are the same that the option without prefix) : `hoverBackgroundColor`, `hoverBorderColor`, `hoverBorderWidth`, `hoverRadius`, `hitRadius`
 
 
-### Data structure
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Data structures</p>
 
 You can input your data in the data argument of the dataset using the following **point** format:
 

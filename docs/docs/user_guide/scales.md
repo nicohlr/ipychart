@@ -414,8 +414,7 @@ mychart
 
 <scales-time/>
 
-### Distribution argument (
-  only for time scales)
+### Distribution argument (time scale)
 
 The `'distribution'` argument controls the data distribution along the scale (**only for time scales**, i.e `type` argument = `'time'`):
 
@@ -424,7 +423,7 @@ The `'distribution'` argument controls the data distribution along the scale (**
 
 When the scale is in `series` mode, the data indices are expected to be unique, sorted, and consistent across datasets.
 
-### Bounds argument (only for time scales)
+### Bounds argument (time scale)
 
 The `'bounds'` argument controls, **only for time scales** (i.e `type` argument = `'time'`), the scale boundary strategy (bypassed by `'min'`/`'max'` time options):
 
@@ -568,9 +567,9 @@ The minor and major tick configuration are nested under the ticks configuration 
 
 The ticks can be customized with a callback function. Callback function are Javascript function inputed into the chart to do some specific actions. To learn how to use callback function in ipychart, you can read [the callback functions section of the documentation](https://github.com/nicohlr/ipychart/blob/master/docs/docs/user_guide).
 
-### Example of custom radial scale
+### Example
 
-Here is an example of a scale with custom angleLines, gridLines, pointLabels and ticks options:
+Here is an example of a radial scale with custom angleLines, gridLines, pointLabels and ticks options:
 
 :::details Click to show the code used to generate the Chart.
 <br/>

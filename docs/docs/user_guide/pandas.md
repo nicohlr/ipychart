@@ -34,6 +34,10 @@ titanic_chart.bar(x='Embarked', y='Age', hue='Survived')
 
 <pandas-example/>
 
+:::tip
+The hue argument allows you to display a third (categorical) column of your dataframe on the chart.
+:::
+
 ## Charts
 
 You can find here all the methods of the *ChartDataFrame* class, each one corresponding to a type of chart. Each method returns a *Chart* object, i.e. an instance of the *Chart* class of ipychart package.

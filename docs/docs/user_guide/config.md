@@ -8,7 +8,7 @@ The options relating to the modification of the scales are very complete and are
 
 ## Title
 
-### Title options
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Title options</p>
 
 With this argument, you can add a title to your chart. There are some configuration available to modify your title:
 
@@ -30,7 +30,7 @@ options = {
 }
 ```
 
-### Example of a chart with a title
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Example</p>
 
 Here is a example of what you can do to with the title options (not exhaustive):
 
@@ -77,7 +77,7 @@ mychart
 Unlike Chart.js, ipychart will display a legend only for Charts containing more than one dataset.
 :::
 
-### Legend options
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Legend options</p>
 
 With this argument, you can configure the legend of your chart.
 
@@ -132,7 +132,7 @@ options = {
 }
 ```
 
-### Example of a chart with a legend
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Example</p>
 
 Here is a example of what you can do to with the legend options (not exhaustive):
 
@@ -181,7 +181,7 @@ You can hide or show datasets by clicking on each element of the legend.
 
 ## Tooltips
 
-### Tooltips options
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Tooltips options</p>
 
 With this argument, you can customize the tooltips of your chart. Tooltips are the information displayed on your chart when you hover the datapoints. Here are the tooltips configuration options:
 
@@ -298,7 +298,7 @@ options = {
 }
 ```
 
-### Example of a chart with custom tooltips
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Example</p>
 
 Here is a example of what you can do to with the tooltips options (not exhaustive):
 
@@ -375,7 +375,7 @@ In the above example, we used a callback function to modify the tooltip using Ja
 
 ## Layout
 
-### Layout options
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Layout options</p>
 
 With this argument, you can configure the layout of your chart (i.e. the position of your chart in its HTML container, which is the output area of the cell of your Jupyter notebook). The layout argument is a dict containing only one key, allowing you to move the chart within its container by modifying the padding around it.
 
@@ -403,7 +403,7 @@ options = {
 ```
 
 
-### Example of a chart with custom layout
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Example</p>
 
 Here is a example of what you can do to with the layout padding option (not exhaustive):
 
@@ -435,7 +435,7 @@ As you can see, the chart now takes up less space in its container.
 
 ## Hover
 
-### Hover options
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Hover options</p>
 
 With this argument, you can configure the the behaviour of your chart when it is hovered. Available options are:
 
@@ -457,7 +457,7 @@ options = {
 
 ## Animations
 
-### Animations options
+<p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Animations options</p>
 
 With this argument, you can configure the animations of your chart. Available options are:
 
