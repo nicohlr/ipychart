@@ -1,6 +1,6 @@
 # Scales
 
-This section is dedicated to the `'scales'` argument of the options dict that you'll pass to your Chart. As the other arguments described if the [previous section](/user_guide/configuration), the scales argument is a key of the `options` dict. However, as it has a lot of possible nested configurations, a whole section of the documentation is dedicated to it. 
+This section is dedicated to the `'scales'` argument of the options dictionary that you'll pass to your Chart. As the other arguments described if the [previous section](/user_guide/configuration), the scales argument is a key of the `options` dictionary. However, as it has a lot of possible nested configurations, a whole section of the documentation is dedicated to it. 
 
 With the `'scales'` argument, you can completely configure the axis of your chart. This configuration involves configuring the two axis of your Chart: the x axis and the y axis.
 
@@ -12,7 +12,7 @@ All charts doesn't have the same type of scales. There are two types of scales a
 The other types of charts (doughnut, pie) do not use scales.
 
 ::: tip
-In this part, the term **arguments** corresponds to the options of the main dictionnaries, whereas the term **subarguments** corresponds to the options of the nested dictionnaries (`'ticks'` and `'time'` sub-dictionnaries for example)
+In this part, the term **arguments** corresponds to the options of the main dictionaries (dictionaries contained in `'xAxes'`, `'xAxes'` lists or in the `'scale'` dictionary), whereas the term **subarguments** corresponds to the options of the nested dictionaries (`'ticks'` or `'time'` sub-dictionaries for example)
 :::
 
 ## Cartesian scale

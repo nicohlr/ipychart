@@ -47,7 +47,7 @@ To create a chart, we first need to import the *Chart* class from ipychart:
 from ipychart import Chart
 ```
 
-After that, we need to create an instance of that class. We'll have to create a Python dict to format our data. We'll also specify with what type of chart we want to display our data using the **kind** argument. 
+After that, we need to create an instance of that class. We'll have to create a Python dictionary to format our data. We'll also specify with what type of chart we want to display our data using the **kind** argument. 
 
 Concretely, we can do that very easily in the following way:
 

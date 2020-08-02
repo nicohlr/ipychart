@@ -71,7 +71,7 @@ As you can see, a Chart.js user will not be disoriented by switching to ipychart
 
 ### Data
 
-The `data` argument is the most important one of the *Chart* class. Without this argument, the chart cannot be displayed (how to display a chart without data?). The `data` argument **must be a dict**. This constraint is imposed by Chart.js, which takes its arguments via a Javascript dict. This data dict must have the following structure : 
+The `data` argument is the most important one of the *Chart* class. Without this argument, the chart cannot be displayed (how to display a chart without data?). The `data` argument **must be a dict**. This constraint is imposed by Chart.js, which takes its arguments via a Javascript dict. This data dictionary must have the following structure : 
 
 ``` py
 data = {
@@ -80,14 +80,14 @@ data = {
 }
 ```
 
-The value for `'datasets'` will hold your data, it **must be a list of dict, each dict containing at least a key named** `'data'`. It is a list because you can print more than one ensemble of data points in one chart. Each sub dict corresponds to an ensemble of data points, representing a dataset, and must also follow a specific structure. However, this structure may change according to the type of chart. 
+The value for `'datasets'` will hold your data, it **must be a list of dictionary, each one containing at least a key named** `'data'`. It is a list because you can print more than one ensemble of data points in one chart. Each sub dictionary corresponds to an ensemble of data points, representing a dataset, and must also follow a specific structure. However, this structure may change according to the type of chart. 
 
 Please refer to [the documentation of each chart type](/user_guide/charts) to have more details about the dataset structure to adopt. 
 
 The value for `'labels'` **must be a list**. If only one dataset is passed (i.e. if len(data['datasets] is 1)), the labels list will represent the labels of each datapoint of the only dataset passed. However, if more than one dataset is passed, the label list will represent the labels of each dataset.
 
 ::: warning
-The data dict must have these two elements, otherwise you can expect dysfunction or unexpected behavior.
+The data dictionary must have these two elements, otherwise you can expect dysfunction or unexpected behavior.
 :::
 
 ### Kind
@@ -126,15 +126,15 @@ options = {
     'animation': dict,
 }
 ```
-Below are the use of each of these dict. Of course, these five dict have numerous sub arguments. This is why two whole sections of this documentation are dedicated them. 
+Below are the use of each of these dictionaries. Of course, these five dictionaries have numerous sub arguments. This is why two whole sections of this documentation are dedicated them. 
 
-- **legend:** you can configure the legend of your chart with this dict. In ipychart, legend is dynamic and allow you to display or hide some of your inputed datasets ! To find out how you can customize the legend of your chart, please check the [legend documentation section](/user_guide/configuration#legend).
-- **title:** you can configure the title of your chart with this dict. To find out how, please check the [title documentation section](/user_guide/configuration#title).
-- **tooltips:** you can configure the tooltips of your chart with this dict. In ipychart, hovering a chart display some information, these popus are called "tooltips". You can configure these tooltips in many ways. To find out how, please check the [tooltips documentation section](/user_guide/configuration#tooltips). You can even inject some Javascript code do display your own text around your data on hover a chart. The procedure for doing this is described in the [callback functions section of the documentation](/user_guide/advanced#callback-functions).
-- **scales:** you can configure the scales of your chart with this dict. To find out how, please check the [scales page](/user_guide/scales).
-- **layout:** you can configure the layout of your chart with this dict. To find out how, please check the [layout documentation section](/user_guide/configuration#layout).
-- **hover:** you can configure the hovering options of your chart with this dict. To find out how, please check the [hover documentation section](/user_guide/configuration#hover).
-- **animation:** you can configure the animations of your chart with this dict. To find out how, please check the [animation documentation section](/user_guide/configuration#animations).
+- **legend:** you can configure the legend of your chart with this dictionary. In ipychart, legend is dynamic and allow you to display or hide some of your inputed datasets ! To find out how you can customize the legend of your chart, please check the [legend documentation section](/user_guide/configuration#legend).
+- **title:** you can configure the title of your chart with this dictionary. To find out how, please check the [title documentation section](/user_guide/configuration#title).
+- **tooltips:** you can configure the tooltips of your chart with this dictionary. In ipychart, hovering a chart display some information, these popus are called "tooltips". You can configure these tooltips in many ways. To find out how, please check the [tooltips documentation section](/user_guide/configuration#tooltips). You can even inject some Javascript code do display your own text around your data on hover a chart. The procedure for doing this is described in the [callback functions section of the documentation](/user_guide/advanced#callback-functions).
+- **scales:** you can configure the scales of your chart with this dictionary. To find out how, please check the [scales page](/user_guide/scales).
+- **layout:** you can configure the layout of your chart with this dictionary. To find out how, please check the [layout documentation section](/user_guide/configuration#layout).
+- **hover:** you can configure the hovering options of your chart with this dictionary. To find out how, please check the [hover documentation section](/user_guide/configuration#hover).
+- **animation:** you can configure the animations of your chart with this dictionary. To find out how, please check the [animation documentation section](/user_guide/configuration#animations).
 
 ### Colorscheme
 

@@ -4,7 +4,7 @@
 
 In ipychart, you can add labels directy to your chart. This is not a native feature in Chart.js and it has been added using [an external open source package](https://chartjs-plugin-datalabels.netlify.app/). 
 
-In practice, the datalabels are controlled from the 'datalabels' key (which takes a dict as value) present in each dataset that you pass to the *Chart* class. For example, with the following code, we will display the datalabels on the second dataset:
+In practice, the datalabels are controlled from the 'datalabels' key (which takes a dictionary as value) present in each dataset that you pass to the *Chart* class. For example, with the following code, we will display the datalabels on the second dataset:
 
 ```py
 dataset = {

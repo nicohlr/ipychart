@@ -1,6 +1,6 @@
 # Configuration
 
-The options argument of the chart allows you to configure the chart as you want. In this section, we will go through each arguments of the options dict that you'll pass to your chart instance. Each of them allows you to configure a specific aspect of your chart.
+The options argument of the chart allows you to configure the chart as you want. In this section, we will go through each arguments of the options dictionary that you'll pass to your chart instance. Each of them allows you to configure a specific aspect of your chart.
 
 :::tip Note
 The options relating to the modification of the scales are very complete and are therefore the subject of a separate section of the documentation. You can find this section [**here**](/user_guide/scales).
@@ -110,7 +110,7 @@ Some of the arguments can be filled with callback functions. Callback function a
 
 #### Labels argument
 
-The legend label configuration is nested below the legend configuration using the `'labels'` key. It is a dict which allows you to configure the appearance of the labels within the legent. It can contains the followings arguments:
+The legend label configuration is nested below the legend configuration using the `'labels'` key. It is a dictionary which allows you to configure the appearance of the labels within the legent. It can contains the followings arguments:
 
 ``` py
 options = {
@@ -377,7 +377,7 @@ In the above example, we used a callback function to modify the tooltip using Ja
 
 <p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Layout options</p>
 
-With this argument, you can configure the layout of your chart (i.e. the position of your chart in its HTML container, which is the output area of the cell of your Jupyter notebook). The layout argument is a dict containing only one key, allowing you to move the chart within its container by modifying the padding around it.
+With this argument, you can configure the layout of your chart (i.e. the position of your chart in its HTML container, which is the output area of the cell of your Jupyter notebook). The layout argument is a dictionary containing only one key, allowing you to move the chart within its container by modifying the padding around it.
 
 ``` py
 options = {
@@ -387,7 +387,7 @@ options = {
 }
 ```
 
-You can spcify padding on each side of the chart if you use a dict:
+You can spcify padding on each side of the chart if you use a dictionary:
 
 ``` py
 options = {

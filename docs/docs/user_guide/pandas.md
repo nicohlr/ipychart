@@ -42,7 +42,7 @@ The hue argument allows you to display a third (categorical) column of your data
 
 You can find here all the methods of the *ChartDataFrame* class, each one corresponding to a type of chart. Each method returns a *Chart* object, i.e. an instance of the *Chart* class of ipychart package.
 
-All methods have two parameters in common: `dataset_options` and `options`. The `dataset_options` parameter allows you to set the options for each dataset, as with the *Chart* class. If you don't use the `hue` parameter, the chart will have only one dataset and you will have to pass a dictionary. Otherwise, the Chart will have N datasets (each one corresponding to a distinct value of the column selected in the `hue` parameter) and you must pass a list of dict. In the same way, you can use the `options` parameter to customize the Chart, like when you use the *Chart* class.
+All methods have two parameters in common: `dataset_options` and `options`. The `dataset_options` parameter allows you to set the options for each dataset, as with the *Chart* class. If you don't use the `hue` parameter, the chart will have only one dataset and you will have to pass a dictionary. Otherwise, the Chart will have N datasets (each one corresponding to a distinct value of the column selected in the `hue` parameter) and you must pass a list of dictionaries. In the same way, you can use the `options` parameter to customize the Chart, like when you use the *Chart* class.
 
 ### Count
 
@@ -260,7 +260,7 @@ titanic_chart.polararea(x='Title', y='Fare', colorscheme='brewer.SetThree5')
 Scatter charts are based on basic line charts with the x axis changed to a linear axis. To draw it, you must call the *scatter* method:
 
 ```py
-ChartDataFrame.scatter(x: str, y: str, hue: str = None, agg: str = 'mean', 
+ChartDataFrame.scatter(x: str, y: str, hue: str = None,
                        dataset_options: [dict, list] = {},
                        options: dict = None, colorscheme: str = None):
 ```
@@ -295,7 +295,7 @@ A bubble chart is used to display three dimensions of data at the same time. The
 
 ```py
 ChartDataFrame.bubble(x: str, y: str, r: str = None, hue: str = None, 
-                      agg: str = 'mean', dataset_options: [dict, list] = {},
+                      dataset_options: [dict, list] = {},
                       options: dict = None, colorscheme: str = None):
 ```
 
