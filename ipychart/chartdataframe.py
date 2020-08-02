@@ -11,7 +11,7 @@ class ChartDataFrame():
     A Jupyter - Chart.js bridge enabling interactive data visualization in the Jupyter notebook.
 
     Official documentation : https://nicohlr.gitlab.io/ipychart/
-    Pandas Interface section : https://nicohlr.gitlab.io/ipychart/     # TODO: add link to pandas section
+    Pandas Interface section : https://nicohlr.gitlab.io/ipychart/user_guide/pandas.html
 
     This class is ipychart's Pandas API, allowing you to draw numerous interactive charts directly from a pandas dataframe.
 
@@ -23,7 +23,7 @@ class ChartDataFrame():
 
         self.df = df
 
-    def _create_chart_options(self, kind: str, x: str, y: str, hue: str, options: dict):
+    def _create_chart_options(self, kind: str, x: str, y: str, hue: str, options: dict, agg: str = None):
         """
         This function will prepare all the options to create a chart from the input of the user.
         Axes labels are automatically set to match the names of the columns drawn on the chart.
@@ -37,8 +37,10 @@ class ChartDataFrame():
             options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
 
         Returns:
-            options (dict): options dict ready to be inputed into a Chart class (i.e. match ipychart options format)
+            options (dict): options dictionary ready to be inputed into a Chart class (i.e. match ipychart options format)
         """
+
+        agg_label = '' if not agg else ' (' + agg + ')'
 
         # Set axes labels corresponding to dataframe cols when option is not already set
         if kind != 'radar':
@@ -54,18 +56,27 @@ class ChartDataFrame():
                         options['scales'].update({'xAxes': [{'scaleLabel': {'display': True, 'labelString': x}}]})
                     if 'yAxes' in options['scales'].keys():
                         if 'scaleLabel' not in options['scales']['yAxes'][0]:
-                            options['scales']['yAxes'][0].update({'scaleLabel': {'display': True, 'labelString': y}})
+                            options['scales']['yAxes'][0].update({'scaleLabel': {'display': True, 'labelString': y + agg_label}})
                         else:
                             if 'labelString' not in options['scales']['yAxes'][0]['scaleLabel']:
-                                options['scales']['yAxes'][0]['scaleLabel']['labelString'] = y
+                                options['scales']['yAxes'][0]['scaleLabel']['labelString'] = y + agg_label
                     else:
-                        options['scales'].update({'yAxes': [{'scaleLabel': {'display': True, 'labelString': y}}]})
+                        options['scales'].update({'yAxes': [{'scaleLabel': {'display': True, 'labelString': y + agg_label}}]})
                 else:
                     options['scales'] = {'xAxes': [{'scaleLabel': {'display': True, 'labelString': x}}],
-                                         'yAxes': [{'scaleLabel': {'display': True, 'labelString': y}}]}
+                                         'yAxes': [{'scaleLabel': {'display': True, 'labelString': y + agg_label}}]}
             else:
                 options = {'scales': {'xAxes': [{'scaleLabel': {'display': True, 'labelString': x}}],
-                                      'yAxes': [{'scaleLabel': {'display': True, 'labelString': y}}]}}
+                                      'yAxes': [{'scaleLabel': {'display': True, 'labelString': y + agg_label}}]}}
+        else:
+            if options:
+                if 'legend' in options.keys():
+                    if 'display' not in options['legend'].keys():
+                        options['legend']['display'] = True
+                else:
+                    options['legend'] = {'display': True}
+            else:
+                options = {'legend': {'display': True}}
 
         # Set legend prefix if "hue" if activated
         if hue:
@@ -101,7 +112,7 @@ class ChartDataFrame():
             dataset_options ([dict, list], optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
 
         Returns:
-            data (dict): data dict ready to be inputed into a Chart class (i.e. match ipychart data format)
+            data (dict): data dictionary ready to be inputed into a Chart class (i.e. match ipychart data format)
         """
 
         assert x in self.df.columns
@@ -132,7 +143,7 @@ class ChartDataFrame():
             dataset_options ([dict, list], optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
 
         Returns:
-            data (dict): data dict ready to be inputed into a Chart class (i.e. match ipychart data format)
+            data (dict): data dictionary ready to be inputed into a Chart class (i.e. match ipychart data format)
         """
 
         assert x in self.df.columns
@@ -144,22 +155,27 @@ class ChartDataFrame():
             assert hue in self.df.columns
             assert self.df[hue].nunique() <= 10, 'Too much values for the hue column'
 
-        if isinstance(dataset_options, list):
-            assert hue, 'For multiple dataset options, you must choose a column for hue that will create multiple datasets. Each dataset will corresponds to a unique value of the hue column'
-            assert len(dataset_options) == self.df[hue].nunique(), 'The number of dataset options must be equal to the number of unique values in the hue column'
+        if len(dataset_options):
+            if isinstance(dataset_options, list):
+                assert hue, 'For multiple dataset options, you must choose a column for hue that will create multiple datasets. Each dataset will corresponds to a unique value of the hue column.'
+                assert len(dataset_options) == self.df[hue].nunique(), 'The number of dataset_options elements must be equal to the number of unique values in the hue column.'
 
         data = {'datasets': []}
 
-        if kind not in ['scatter', 'bubble']:
+        if kind not in ['scatter', 'bubble', 'radar']:
 
             data['labels'] = self.df[x].value_counts(ascending=True, sort=False).index.tolist()
 
             if hue:
                 # Create one dataset for each unique value of the hue column
-                for v in self.df[hue].unique():
-                    data['datasets'].append({'data': self.df[self.df[hue] == v].groupby(x).agg(agg)[y].round(4).tolist(), 'label': v, **dataset_options})
+                for i, v in enumerate(self.df[hue].unique()):
+                    if isinstance(dataset_options, list):
+                        print(dataset_options[i])
+                        data['datasets'].append({'data': self.df[self.df[hue] == v].groupby(x).agg(agg)[y].round(4).tolist(), 'label': v, **dataset_options[i]})
+                    else:
+                        data['datasets'].append({'data': self.df[self.df[hue] == v].groupby(x).agg(agg)[y].round(4).tolist(), 'label': v, **dataset_options})
             else:
-                data['datasets'] = [{'data': self.df.groupby(x).agg(agg)[y].round(4).tolist(), **dataset_options}]
+                data['datasets'] = [{'data': self.df.groupby(x).agg(agg)[y].round(4).tolist(), 'label': y, **dataset_options}]
 
         elif kind == 'bubble':
             assert is_numeric_dtype(self.df[r]), 'Please input a numeric columns as r'
@@ -168,8 +184,11 @@ class ChartDataFrame():
 
             if hue:
                 # Create one dataset for each unique value of the hue column
-                for v in self.df[hue].unique():
-                    data['datasets'].append({'data': self.df[self.df[hue] == v].apply(lambda row: {'x': row[x], 'y': row[y], 'r': row[r]}, 1).tolist(), 'label': v, **dataset_options})
+                for i, v in enumerate(self.df[hue].unique()):
+                    if isinstance(dataset_options, list):
+                        data['datasets'].append({'data': self.df[self.df[hue] == v].apply(lambda row: {'x': row[x], 'y': row[y], 'r': row[r]}, 1).tolist(), 'label': v, **dataset_options[i]})
+                    else:
+                        data['datasets'].append({'data': self.df[self.df[hue] == v].apply(lambda row: {'x': row[x], 'y': row[y], 'r': row[r]}, 1).tolist(), 'label': v, **dataset_options})
             else:
                 data['datasets'] = [{'data': self.df.apply(lambda row: {'x': row[x], 'y': row[y], 'r': row[r]}, 1).tolist(), **dataset_options}]
 
@@ -180,10 +199,28 @@ class ChartDataFrame():
 
             if hue:
                 # Create one dataset for each unique value of the hue column
-                for v in self.df[hue].unique():
-                    data['datasets'].append({'data': self.df[self.df[hue] == v].apply(lambda row: {'x': row[x], 'y': row[y]}, 1).tolist(), 'label': v, **dataset_options})
+                for i, v in enumerate(self.df[hue].unique()):
+                    if isinstance(dataset_options, list):
+                        data['datasets'].append({'data': self.df[self.df[hue] == v].apply(lambda row: {'x': row[x], 'y': row[y]}, 1).tolist(), 'label': v, **dataset_options[i]})
+                    else:
+                        data['datasets'].append({'data': self.df[self.df[hue] == v].apply(lambda row: {'x': row[x], 'y': row[y]}, 1).tolist(), 'label': v, **dataset_options})
             else:
                 data['datasets'] = [{'data': self.df.apply(lambda row: {'x': row[x], 'y': row[y]}, 1).tolist(), **dataset_options}]
+
+        elif kind == 'radar':
+
+            agg_label = '' if not agg else ' (' + agg + ')'
+            data['labels'] = self.df[x].value_counts(ascending=True, sort=False).index.tolist()
+
+            if hue:
+                # Create one dataset for each unique value of the hue column
+                for i, v in enumerate(self.df[hue].unique()):
+                    if isinstance(dataset_options, list):
+                        data['datasets'].append({'data': self.df[self.df[hue] == v].groupby(x).agg(agg)[y].round(4).tolist(), 'label': v, **dataset_options[i]})
+                    else:
+                        data['datasets'].append({'data': self.df[self.df[hue] == v].groupby(x).agg(agg)[y].round(4).tolist(), 'label': v, **dataset_options})
+            else:
+                data['datasets'] = [{'data': self.df.groupby(x).agg(agg)[y].round(4).tolist(), 'label': y + agg_label, **dataset_options}]
 
         else:
             pass
@@ -250,11 +287,11 @@ class ChartDataFrame():
         # If bandwidth is 'auto', find the best bandwidh using gridsearch
         if bandwidth == 'auto':
             grid = GridSearchCV(KernelDensity(), {'bandwidth': np.linspace(0.1, 2, 30)}, cv=5)
-            grid.fit(self.df[x].dropna()[:, None])
+            grid.fit(self.df[x].dropna().to_numpy()[:, None])
             bandwidth = grid.best_params_['bandwidth']
 
         kde_skl = KernelDensity(bandwidth=bandwidth, **kwargs)
-        kde_skl.fit(self.df[x].dropna()[:, np.newaxis])
+        kde_skl.fit(self.df[x].dropna().to_numpy()[:, np.newaxis])
         pdf = np.exp(kde_skl.score_samples(x_grid[:, np.newaxis]))
 
         data = {'labels': x_grid.tolist(), 'datasets': [{'data': pdf.tolist(), 'pointRadius': 0}]}
@@ -295,7 +332,7 @@ class ChartDataFrame():
         """
 
         data = self._create_chart_data_agg(kind='line', x=x, y=y, hue=hue, agg=agg, dataset_options=dataset_options)
-        options = self._create_chart_options(kind='line', options=options, x=x, y=y, hue=hue)
+        options = self._create_chart_options(kind='line', options=options, x=x, y=y, hue=hue, agg=agg)
 
         return Chart(data=data, kind='line', options=options, colorscheme=colorscheme)
 
@@ -319,7 +356,7 @@ class ChartDataFrame():
         """
 
         data = self._create_chart_data_agg(kind='bar', x=x, y=y, hue=hue, agg=agg, dataset_options=dataset_options)
-        options = self._create_chart_options(kind='bar', options=options, x=x, y=y, hue=hue)
+        options = self._create_chart_options(kind='bar', options=options, x=x, y=y, hue=hue, agg=agg)
 
         if horizontal:
             return Chart(data=data, kind='horizontalBar', options=options, colorscheme=colorscheme)
@@ -345,7 +382,7 @@ class ChartDataFrame():
         """
 
         data = self._create_chart_data_agg(kind='radar', x=x, y=y, hue=hue, agg=agg, dataset_options=dataset_options)
-        options = self._create_chart_options(kind='radar', options=options, x=x, y=y, hue=hue)
+        options = self._create_chart_options(kind='radar', options=options, x=x, y=y, hue=hue, agg=agg)
 
         return Chart(data=data, kind='radar', options=options, colorscheme=colorscheme)
 
@@ -419,7 +456,7 @@ class ChartDataFrame():
 
         return Chart(data=data, kind='polarArea', options=options, colorscheme=colorscheme)
 
-    def scatter(self, x: str, y: str, hue: str = None, agg: str = 'mean', dataset_options: [dict, list] = {},
+    def scatter(self, x: str, y: str, hue: str = None, dataset_options: [dict, list] = {},
                 options: dict = None, colorscheme: str = None):
         """
         Scatter charts are based on basic line charts with the x axis changed to a linear axis.
@@ -437,12 +474,12 @@ class ChartDataFrame():
             [ipychart.Chart]: A chart which display the data using ipychart
         """
 
-        data = self._create_chart_data_agg(kind='scatter', x=x, y=y, hue=hue, agg=agg, dataset_options=dataset_options)
+        data = self._create_chart_data_agg(kind='scatter', x=x, y=y, hue=hue, dataset_options=dataset_options)
         options = self._create_chart_options(kind='scatter', options=options, x=x, y=y, hue=hue)
 
         return Chart(data=data, kind='scatter', options=options, colorscheme=colorscheme)
 
-    def bubble(self, x: str, y: str, r: str, hue: str = None, agg: str = 'mean', dataset_options: [dict, list] = {},
+    def bubble(self, x: str, y: str, r: str, hue: str = None, dataset_options: [dict, list] = {},
                options: dict = None, colorscheme: str = None):
         """
         A bubble chart is used to display three dimensions of data at the same time.
@@ -463,7 +500,7 @@ class ChartDataFrame():
             [ipychart.Chart]: A chart which display the data using ipychart
         """
 
-        data = self._create_chart_data_agg(kind='bubble', x=x, y=y, r=r, hue=hue, agg=agg, dataset_options=dataset_options)
+        data = self._create_chart_data_agg(kind='bubble', x=x, y=y, r=r, hue=hue, dataset_options=dataset_options)
         options = self._create_chart_options(kind='bubble', options=options, x=x, y=y, hue=hue)
 
         return Chart(data=data, kind='bubble', options=options, colorscheme=colorscheme)

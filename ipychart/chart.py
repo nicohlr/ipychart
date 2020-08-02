@@ -61,13 +61,13 @@ class Chart(widgets.DOMWidget):
         """
         This function checks all arguments passed when the user create an instance of the Chart class.
         To match Chart.js format, arguments must have a very specific structure.
-        To see more details about this structure, please check the documentation: https://
+        To see more details about this structure, please check the documentation: https://nicohlr.gitlab.io/ipychart/user_guide/usage.html
         """
 
-        msg_data = 'Wrong input format for data argument. See https:// for more details'  # TODO: link to the doc
-        msg_kind = 'Chart kind must be one of : line, bar, radar, doughnut, polarArea, bubble, horizontalBar, pie. See https:// for more details'  # TODO: link to the doc
-        msg_options = 'Wrong input format for options argument. See https:// for more details'  # TODO: link to the doc
-        msg_colorscheme = 'Wrong input format for colorscheme argument. See https:// for more details'  # TODO: link to the doc
+        msg_data = 'Wrong input format for data argument. See https://nicohlr.gitlab.io/ipychart/ for more details'
+        msg_kind = 'Chart kind must be one of : line, bar, radar, doughnut, polarArea, bubble, horizontalBar, pie. See https://nicohlr.gitlab.io/ipychart/ for more details'
+        msg_options = 'Wrong input format for options argument. See https://nicohlr.gitlab.io/ipychart/ for more details'
+        msg_colorscheme = 'Wrong input format for colorscheme argument. See https://nicohlr.gitlab.io/ipychart/ for more details'
 
         # Check data argument
         assert 'datasets' in self.data, msg_data
@@ -107,7 +107,7 @@ class Chart(widgets.DOMWidget):
     def _set_default_options(self):
         """
         This function set some default options for the chart.
-        To see more details about options in ipychart, please check the documentation: https://  # TODO: link to the doc
+        To see more details about options in ipychart, please check the documentation: https://nicohlr.gitlab.io/ipychart/user_guide/configuration.html
         """
 
         # Display axis by default only for certain types of chart
@@ -135,7 +135,7 @@ class Chart(widgets.DOMWidget):
         """
         This function set a default style for the chart.
         It allows to get a good looking chart with ipychart without having to input some styling options.
-        To see more details about styling in ipychart, please check the documentation: https://  # TODO: link to the doc
+        To see more details about styling in ipychart, please check the documentation: https://nicohlr.gitlab.io/ipychart/user_guide/charts.html
         """
 
         random_colors = ['rgba({}, {}, {}, 0.2)'.format(*random.sample(

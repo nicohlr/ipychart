@@ -27,7 +27,7 @@ const ChartView = widgets.DOMWidgetView.extend({
         let options = this.model.get("_options");
         let type = this.model.get("_type");
 
-        // All paths of options dict with callback functions
+        // All paths of options dictionary with callback functions
         let callbacks_options_paths = [
             ['legendCallback'],
             ['tooltips', 'custom'],
@@ -52,8 +52,8 @@ const ChartView = widgets.DOMWidgetView.extend({
             ['legend', 'onLeave'],
             ['legend', 'labels', 'generateLabels'],
             ['legend', 'labels', 'filter'],
-            ['animation', 'onProgress'],
-            ['animation', 'onComplete '],
+            ['animations', 'onProgress'],
+            ['animations', 'onComplete '],
             ['scale', 'pointLabels', 'callback'],
             ['scale', 'ticks', 'callback'],
             ['scale', 'ticks', 'minor', 'callback'],
@@ -61,6 +61,7 @@ const ChartView = widgets.DOMWidgetView.extend({
         ]
         
         // These paths must be handled for all axes
+        // i.e. all axes contained in scales.xAxes or scales.yAxes arrays
         let callbacks_scales_paths = [
             ['ticks', 'callback'],
             ['ticks', 'minor', 'callback'],
