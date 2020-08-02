@@ -13,8 +13,7 @@ This is a **manual** sync.
 
 ## Node
 
-Build the Javascript files and publish the node package to [npmjs.org](https://www.npmjs.com/).  
-For more info see the [official doc](https://docs.npmjs.com/getting-started/publishing-npm-packages).
+Build the Javascript files and publish the node package to [npmjs.org](https://www.npmjs.com/). For more info on how to proceed, see the [official doc](https://docs.npmjs.com/getting-started/publishing-npm-packages).
 
 ```bash
 # build Javascript extension
@@ -34,8 +33,7 @@ $ npm publish --access=public
 
 ## Python
 
-Publish the Python package to PyPI.  
-For more info see the [official doc](https://packaging.python.org/tutorials/distributing-packages/). 
+Publish the Python package to PyPI. For more info on how to proceed, see the [official doc](https://packaging.python.org/tutorials/distributing-packages/).
 
 ```bash
 # clear dist/ from previous bundles

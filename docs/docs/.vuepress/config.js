@@ -49,7 +49,7 @@ module.exports = ctx => ({
                     '/user_guide/getting_started', 
                     '/user_guide/usage', 
                     '/user_guide/charts', 
-                    '/user_guide/config', 
+                    '/user_guide/configuration', 
                     '/user_guide/scales',
                     '/user_guide/pandas',
                     '/user_guide/advanced'

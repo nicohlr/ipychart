@@ -10,21 +10,21 @@ The ipychart API is extremely similar - not to say identical - to the API of Cha
 
 <p style="font-size:1.65rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;padding-bottom:.3rem;margin-top:-3.1rem;border-bottom:1px solid #eaecef;">Table of Contents</p>
 
-- [**Introduction**](https://nicohlr.gitlab.io/ipychart/user_guide/introduction.html)
-- [**Getting Started**](https://nicohlr.gitlab.io/ipychart/user_guide/getting_started.html)
-- [**Usage**](https://nicohlr.gitlab.io/ipychart/user_guide/usage.html)
-- [**Create Charts**](https://nicohlr.gitlab.io/ipychart/user_guide/charts.html)
-- [**Configuration**](https://nicohlr.gitlab.io/ipychart/user_guide/config.html)
-- [**Scales**](https://nicohlr.gitlab.io/ipychart/user_guide/scales.html)
-- [**Pandas Interface**](https://nicohlr.gitlab.io/ipychart/user_guide/pandas.html)
-- [**Advanced Features**](https://nicohlr.gitlab.io/ipychart/user_guide/advanced.html)
-- [**Developers**](https://nicohlr.gitlab.io/test_deploy_vuepress/developer_guide/development_installation.html)
+- [**Introduction**](/user_guide/introduction)
+- [**Getting Started**](/user_guide/getting_started)
+- [**Usage**](/user_guide/usage)
+- [**Charts**](/user_guide/charts)
+- [**Configuration**](/user_guide/configuration)
+- [**Scales**](/user_guide/scales)
+- [**Pandas Interface**](/user_guide/pandas)
+- [**Advanced Features**](/user_guide/advanced)
+- [**Developers**](/developer_guide/development_installation)
 
 <p style="font-size:1.65rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;padding-bottom:.3rem;margin-top:-3.1rem;border-bottom:1px solid #eaecef;">Related resources</p>
 
-The source code of the ipychart package is available on GitHub at https://github.com/nicohlr/ipychart.
+The source code of the ipychart package is available on GitHub at [github.com/nicohlr/ipychart](https://github.com/nicohlr/ipychart).
 
-You can also find, on Github, a repo with notebooks containing various examples on the use of ipychart. Many code snippets used to create all kinds of charts are gathered there. The repo **ipychart-demo-notebooks** is accessible at the following address : https://github.com/nicohlr/ipychart-demo-notebooks
+You can also find, on Github, a repo with notebooks containing various examples on the use of ipychart. Many code snippets used to create all kinds of charts are gathered there. The repo **ipychart-demo-notebooks** is accessible at the following address : [github.com/nicohlr/ipychart-demo-notebooks](https://github.com/nicohlr/ipychart-demo-notebooks)
 
 Finally, you can also try ipychart online, directly on the dedicated binder that uses the notebooks of the **ipychart-demo-notebooks** repo. To do so, [**click here**]().
 

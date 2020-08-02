@@ -8,7 +8,7 @@ It is therefore essential to be able to create visualizations directly from a Pa
 
 ## Usage
 
-This interface allows you to quickly create charts from a pandas dataframe, without having to use the low-level syntax of Chart.js. We will use, in the rest of this section, the famous titanic dataset. Let's start by loading this dataset with Pandas:
+This interface allows you to quickly create charts from a pandas dataframe, without having to use the low-level syntax of Chart.js. We will use, in the rest of this section, a slightly processed version (extraction of the title from the name column) of the famous [titanic dataset](https://www.kaggle.com/c/titanic/data). Let's start by loading this dataset with Pandas:
 
 ```py
 import pandas as pd

@@ -18,6 +18,6 @@ $ yarn docs:dev # OR npm run docs:dev
 
 ## Deployment
 
-To deploy the doc, the easiest way is to upload it on a GitLab repo with a [.gitlab-ci.yml](https://github.com/nicohlr/ipychart/blob/master/.gitlab-ci.yml) file at the root of the project. Deployment will then be automated by [GitLab pages](https://docs.gitlab.com/ee/user/project/pages/).
+To deploy the doc, the easiest way is to push it on a GitLab repo with a [.gitlab-ci.yml](https://github.com/nicohlr/ipychart/blob/master/.gitlab-ci.yml) file at the root of the project. Deployment will then be automated by [GitLab pages](https://docs.gitlab.com/ee/user/project/pages/).
 
 Vuepress also offers [other deployment methods](https://vuepress.vuejs.org/guide/deploy.html).

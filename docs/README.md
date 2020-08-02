@@ -1,6 +1,6 @@
 # Documentation
 
-This folder contains the documentation of ipychart. It is made using [Vuepress](https://vuepress.vuejs.org/)
+This folder contains the documentation of ipychart. It is made using [Vuepress](https://vuepress.vuejs.org/).
 
 ## Install
 
