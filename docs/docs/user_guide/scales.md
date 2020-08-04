@@ -1,13 +1,13 @@
 # Scales
 
-This section is dedicated to the `'scales'` argument of the options dictionary that you'll pass to your Chart. As the other arguments described if the [previous section](/user_guide/configuration), the scales argument is a key of the `options` dictionary. However, as it has a lot of possible nested configurations, a whole section of the documentation is dedicated to it. 
+This section is dedicated to the `'scales'` argument of the options dictionary that you'll pass to your Chart. As the other arguments described if the [previous section](/ipychart/user_guide/configuration), the scales argument is a key of the `options` dictionary. However, as it has a lot of possible nested configurations, a whole section of the documentation is dedicated to it. 
 
 With the `'scales'` argument, you can completely configure the axis of your chart. This configuration involves configuring the two axes of your Chart: the x axis and the y axis.
 
 Different charts don’t have the same type of scales. There are two types of scales available in ipychart:
-* [**The Cartesian Scale**](/user_guide/scales#cartesian-scale), used for the following types of chart: line, bar, horizontalBar, bubble, scatter. These charts have two axes positioned on one of the edges (the **x** axis and the **y** axis). You can configure them using the `'scales'` option.
+* [**The Cartesian Scale**](/ipychart/user_guide/scales#cartesian-scale), used for the following types of chart: line, bar, horizontalBar, bubble, scatter. These charts have two axes positioned on one of the edges (the **x** axis and the **y** axis). You can configure them using the `'scales'` option.
 
-* [**The Radial Scale**](/user_guide/scales#radial-scale), used for the following types of chart: radar, polarArea. These charts have only one axis which overlays the chart area. You can configure it using the `'scale'` option.
+* [**The Radial Scale**](/ipychart/user_guide/scales#radial-scale), used for the following types of chart: radar, polarArea. These charts have only one axis which overlays the chart area. You can configure it using the `'scale'` option.
 
 Other types of charts (doughnut, pie) do not use scales.
 
@@ -59,7 +59,7 @@ options = {
 
 ### GridLines argument
 
-As these nested options are common to both cartesian and radial scales, this argument is detailed [at the end of this section](/user_guide/scales#gridlines-argument-3).
+As these nested options are common to both cartesian and radial scales, this argument is detailed [at the end of this section](/ipychart/user_guide/scales#gridlines-argument-3).
 
 ### ScaleLabel argument
 
@@ -212,11 +212,11 @@ options = {
 
 #### Minor and Major subarguments (`'ticks'` options)
 
-The minor and major tick configurations are nested under the tick's configuration in the respective `'minor'` and `'major'` keys. As these nested options are common to both cartesian and radial scales, these options are detailed [at the end of this section](/user_guide/scales#ticks-argument-3).
+The minor and major tick configurations are nested under the tick's configuration in the respective `'minor'` and `'major'` keys. As these nested options are common to both cartesian and radial scales, these options are detailed [at the end of this section](/ipychart/user_guide/scales#ticks-argument-3).
 
 #### Callback subargument (`'ticks'` option)
 
-The ticks can be customized with a callback function. A Callback function is a Javascript function inputted into the chart to do some specific actions. To learn how to use callback functions in ipychart, you can read [the callback functions section of the documentation](/user_guide/advanced#callback-functions). 
+The ticks can be customized with a callback function. A Callback function is a Javascript function inputted into the chart to do some specific actions. To learn how to use callback functions in ipychart, you can read [the callback functions section of the documentation](/ipychart/user_guide/advanced#callback-functions). 
 
 #### Source subargument (`'ticks'` option, only for time scales)
 
@@ -474,7 +474,7 @@ options = {
 
 ### GridLines argument
 
-As this nested options are common to both cartesian and radial scales, this argument is detailed [at the end of this section](/user_guide/scales#gridlines-argument-3).
+As this nested options are common to both cartesian and radial scales, this argument is detailed [at the end of this section](/ipychart/user_guide/scales#gridlines-argument-3).
 
 ### PointLabels argument
 
@@ -561,11 +561,11 @@ options = {
 
 #### Minor and Major subarguments (`'ticks'` options)
 
-The minor and major tick configurations are nested under the tick's configuration in the respective `'minor'` and `'major'` keys. As this nested options are common to both cartesian and radial scales, these options are detailed [at the end of this section](/user_guide/scales#ticks-argument-3).
+The minor and major tick configurations are nested under the tick's configuration in the respective `'minor'` and `'major'` keys. As this nested options are common to both cartesian and radial scales, these options are detailed [at the end of this section](/ipychart/user_guide/scales#ticks-argument-3).
 
 #### Callback subargument (`'ticks'` option)
 
-The ticks can be customized with a callback function. A Callback function is a Javascript function inputted into the chart to do some specific actions. To learn how to use callback functions in ipychart, you can read [the callback functions section of the documentation](/user_guide/advanced#callback-functions).
+The ticks can be customized with a callback function. A Callback function is a Javascript function inputted into the chart to do some specific actions. To learn how to use callback functions in ipychart, you can read [the callback functions section of the documentation](/ipychart/user_guide/advanced#callback-functions).
 
 ### Example
 

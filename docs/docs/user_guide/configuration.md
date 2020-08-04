@@ -3,7 +3,7 @@
 The `options` argument of the chart allows you to configure the chart as you please. In this section, we will go through each argument of the options dictionary that you'll pass to your chart instance. Each of them allows you to configure a specific aspect of your chart.
 
 :::tip Note
-The options relative to the modification of the scales are very complete and are therefore the subject of a separate section of the documentation. You can find this section [**here**](/user_guide/scales).
+The options relative to the modification of the scales are very complete and are therefore the subject of a separate section of the documentation. You can find this section [**here**](/ipychart/user_guide/scales).
 :::
 
 ## Title
@@ -106,7 +106,7 @@ options = {
 
 #### Callbacks functions
 
-Some of the arguments can be filled with callback functions. A Callback function is a Javascript function inputted into the chart to do some specific actions. To learn how to use callback functions in ipychart, you can read [the callback functions section of the documentation](/user_guide/advanced#callback-functions).
+Some of the arguments can be filled with callback functions. A Callback function is a Javascript function inputted into the chart to do some specific actions. To learn how to use callback functions in ipychart, you can read [the callback functions section of the documentation](/ipychart/user_guide/advanced#callback-functions).
 
 #### Labels argument
 
@@ -264,7 +264,7 @@ These options are only applied to text lines. Color boxes are always aligned to 
 
 #### Callbacks argument
 
-The tooltips can be customized with callback functions. A Callback function is a Javascript functions inputted into the chart to do some specific actions. To learn how to use callback functions in ipychart, you can read [the callback functions section of the documentation](/user_guide/advanced#callback-functions).
+The tooltips can be customized with callback functions. A Callback function is a Javascript functions inputted into the chart to do some specific actions. To learn how to use callback functions in ipychart, you can read [the callback functions section of the documentation](/ipychart/user_guide/advanced#callback-functions).
 
 All tooltip callback functions are called with the same arguments: a `tooltip` item and the `data` object passed to the chart. Therefore, you can render tooltips using your data. All functions must return either a string or an array of strings. Arrays of strings are treated as multiple lines of text.
 
@@ -479,10 +479,10 @@ options = {
 
 #### Callbacks functions
 
-Some of the arguments can be filled with callback functions. A Callback function is a Javascript function inputted into the chart to do some specific actions. To learn how to use callback functions in ipychart, you can read [the callback functions section of the documentation](/user_guide/advanced#callback-functions).
+Some of the arguments can be filled with callback functions. A Callback function is a Javascript function inputted into the chart to do some specific actions. To learn how to use callback functions in ipychart, you can read [the callback functions section of the documentation](/ipychart/user_guide/advanced#callback-functions).
 
 #### Easing
 
 Possible values are: `'linear'`, `'easeInQuad'`, `'easeOutQuad'`, `'easeInOutQuad'`, `'easeInCubic'`, `'easeOutCubic'`, `'easeInOutCubic'`, `'easeInQuart'`, `'easeOutQuart'`, `'easeInOutQuart'`, `'easeInQuint'`, `'easeOutQuint'`, `'easeInOutQuint'`, `'easeInSine'`, `'easeOutSine'`, `'easeInOutSine'`, `'easeInExpo'`, `'easeOutExpo'`, `'easeInOutExpo'`, `'easeInCirc'`, `'easeOutCirc'`, `'easeInOutCirc'`, `'easeInElastic'`, `'easeOutElastic'`, `'easeInOutElastic'`, `'easeInBack'`, `'easeOutBack'`, `'easeInOutBack'`, `'easeInBounce'`, `'easeOutBounce'`, `'easeInOutBounce'`.
 
-Finally, we only have one option left to explore: the `'scales'` option. As it is very complete, the [next section](/user_guide/scales) is dedicated to it.
+Finally, we only have one option left to explore: the `'scales'` option. As it is very complete, the [next section](/ipychart/user_guide/scales) is dedicated to it.

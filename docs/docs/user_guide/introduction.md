@@ -10,15 +10,15 @@ The ipychart API is extremely similar - not to say identical - to the API of Cha
 
 <p style="font-size:1.65rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;padding-bottom:.3rem;margin-top:-3.1rem;border-bottom:1px solid #eaecef;">Table of Contents</p>
 
-- [**Introduction**](/user_guide/introduction)
-- [**Getting Started**](/user_guide/getting_started)
-- [**Usage**](/user_guide/usage)
-- [**Charts**](/user_guide/charts)
-- [**Configuration**](/user_guide/configuration)
-- [**Scales**](/user_guide/scales)
-- [**Pandas Interface**](/user_guide/pandas)
-- [**Advanced Features**](/user_guide/advanced)
-- [**Developers**](/developer_guide/development_installation)
+- [**Introduction**](/ipychart/user_guide/introduction)
+- [**Getting Started**](/ipychart/user_guide/getting_started)
+- [**Usage**](/ipychart/user_guide/usage)
+- [**Charts**](/ipychart/user_guide/charts)
+- [**Configuration**](/ipychart/user_guide/configuration)
+- [**Scales**](/ipychart/user_guide/scales)
+- [**Pandas Interface**](/ipychart/user_guide/pandas)
+- [**Advanced Features**](/ipychart/user_guide/advanced)
+- [**Developers**](/ipychart/developer_guide/development_installation)
 
 <p style="font-size:1.65rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;padding-bottom:.3rem;margin-top:-3.1rem;border-bottom:1px solid #eaecef;">Related resources</p>
 

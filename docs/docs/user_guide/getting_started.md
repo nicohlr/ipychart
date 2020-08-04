@@ -66,5 +66,5 @@ The chart is displayed directly as an output from the notebook cell. It looks li
 <getting-started/>
 
 ::: tip
-You can hover the chart to display some data for each bar. These popups are called "tooltips" and are [fully configurable](/user_guide/advanced#callback-functions).
+You can hover the chart to display some data for each bar. These popups are called "tooltips" and are [fully configurable](/ipychart/user_guide/advanced#callback-functions).
 :::
