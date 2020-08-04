@@ -200,7 +200,7 @@ class Chart(widgets.DOMWidget):
 
     def to_html(self, path):
         """
-        This function embed the chart widget into an HTML file dumped at the inputed path location.
+        This function embed the chart widget into an HTML file dumped at the inputted path location.
         To see more details about embeding an ipywidget see: https://ipywidgets.readthedocs.io/en/latest/embedding.html
         """
 

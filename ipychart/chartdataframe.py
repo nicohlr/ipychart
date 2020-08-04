@@ -37,7 +37,7 @@ class ChartDataFrame():
             options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
 
         Returns:
-            options (dict): options dictionary ready to be inputed into a Chart class (i.e. match ipychart options format)
+            options (dict): options dictionary ready to be inputted into a Chart class (i.e. match ipychart options format)
         """
 
         agg_label = '' if not agg else ' (' + agg + ')'
@@ -112,7 +112,7 @@ class ChartDataFrame():
             dataset_options ([dict, list], optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
 
         Returns:
-            data (dict): data dictionary ready to be inputed into a Chart class (i.e. match ipychart data format)
+            data (dict): data dictionary ready to be inputted into a Chart class (i.e. match ipychart data format)
         """
 
         assert x in self.df.columns
@@ -143,7 +143,7 @@ class ChartDataFrame():
             dataset_options ([dict, list], optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
 
         Returns:
-            data (dict): data dictionary ready to be inputed into a Chart class (i.e. match ipychart data format)
+            data (dict): data dictionary ready to be inputted into a Chart class (i.e. match ipychart data format)
         """
 
         assert x in self.df.columns
@@ -316,7 +316,7 @@ class ChartDataFrame():
     def line(self, x: str, y: str, hue: str = None, agg: str = 'mean', dataset_options: [dict, list] = {},
              options: dict = None, colorscheme: str = None):
         """
-        A line chart is a way of plotting data points on a line. Often, it is used to show trend data, or the comparison of two data sets.
+        A line chart is a way of plotting data points on a line. Often, it is used to show a trend in the data, or the comparison of two data sets.
 
         Args:
             x (str): Column of the dataframe used as datapoints for x Axis.
@@ -339,7 +339,7 @@ class ChartDataFrame():
     def bar(self, x: str, y: str, hue: str = None, agg: str = 'mean', dataset_options: [dict, list] = {},
             options: dict = None, colorscheme: str = None, horizontal: bool = False):
         """
-        A bar chart provides a way of showing data values represented as vertical bars. It is sometimes used to show trend data, and the comparison of multiple data sets side by side.
+        A bar chart provides a way of showing data values represented as vertical bars. It is sometimes used to show a trend in the data, and the comparison of multiple data sets side by side.
 
         Args:
             x (str): Column of the dataframe used as datapoints for x Axis.
@@ -482,7 +482,7 @@ class ChartDataFrame():
     def bubble(self, x: str, y: str, r: str, hue: str = None, dataset_options: [dict, list] = {},
                options: dict = None, colorscheme: str = None):
         """
-        A bubble chart is used to display three dimensions of data at the same time.
+        A bubble chart is used to display three-dimension data.
         The location of the bubble is determined by the first two dimensions and the corresponding horizontal and vertical axes.
         The third dimension is represented by the radius of the individual bubbles.
 
