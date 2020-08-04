@@ -2,7 +2,7 @@
 
 ## Datalabels
 
-In ipychart, you can add labels directy to your chart. This is not a native feature in Chart.js and it has been added using [an external open source package](https://chartjs-plugin-datalabels.netlify.app/). 
+In ipychart, you can add labels directly to your chart. This is not a native feature in Chart.js and it has been added using [an external open source package](https://chartjs-plugin-datalabels.netlify.app/). 
 
 In practice, the datalabels are controlled from the 'datalabels' key (which takes a dictionary as value) present in each dataset that you pass to the *Chart* class. For example, with the following code, we will display the datalabels on the second dataset:
 
@@ -43,7 +43,7 @@ dataset = {
 }
 ```
 
-When the `'borderRadius'` argument is set, ipychart will automatically fill also the `'borderColor'` and `'backgroundColor'` arguments (if they are not already set by the user) to match the chart colors. Therefore, you can quickly format the datalabels so that they appear harmoniously on the chart:
+When the `'borderRadius'` argument is set, ipychart will automatically fill the `'borderColor'` and `'backgroundColor'` arguments (if they are not already set by the user) to match the chart colors. Therefore, you can quickly format the datalabels so that they appear harmoniously on the chart:
 
 ```py
 datalabels_arguments = {'display': True, 'borderWidth': 1, 'anchor': 'end', 
@@ -93,7 +93,7 @@ grid
 
 ## Callback functions
 
-Callback functions are Javascript functions inputed into the chart to do some specific actions. There are a lot of things that can be customizable with callback functions in Chart.js (and therefore in ipychart). Often, they are used for advanced customization of some aspects of the chart. For example we saw previously, in the configuration section, that we could modify the text of tooltips (the text bubbles that appear when we hover over a data point on a chart) with a callback function.
+A Callback function is a Javascript functions inputted into the chart to do some specific actions. There are a lot of things that can be customizable with callback functions in Chart.js (and therefore in ipychart). Often, they are used for advanced customization of some aspects of the chart. For example we saw previously, in the configuration section, that we could modify the text of tooltips (the text bubbles that appear when we hover a data point on a chart) with a callback function.
 
 Concretely, a callback function is a function written in Javascript that will be given as an argument and which will then be executed by Chart.js when the chart is created. To pass a callback function to ipychart while coding in Python, all you have to do is wrap the function in a string. As functions can contain single or double quotes ('or "), it is advisable to encapsulate them in triple quotes:
 
@@ -147,6 +147,6 @@ chart = Chart(
 
 Ipychart offers three ways to export a created Chart. These ways correspond to three methods of the *Chart* class: 
 
-- `to_html(path)`: This function embed the chart widget into an HTML file dumped at the inputed path location.
+- `to_html(path)`: This function embeds the chart widget into an HTML file dumped at the inputted path location.
 - `get_html_template()`: This function returns a string containing HTML code to embed the Chart.
-- `print_python_template()`: This function print the Python code to run in order to reproduce exactly the same chart.
+- `print_python_template()`: This function prints the Python code to run in order to reproduce exactly the same chart.

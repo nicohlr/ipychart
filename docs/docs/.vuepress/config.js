@@ -2,7 +2,8 @@ module.exports = ctx => ({
 
     title: 'ipychart',
     description: 'A Jupyter - Chart.js bridge enabling interactive data visualization in the Jupyter notebook.',
-    //base: '/<REPO>/', 
+    base: '/ipychart/',
+    dest: '../public',
     head: [
         ['link', {rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png'}],
         ['link', {rel: 'icon', type:'image/png', sizes: '192x192', href: '/android-chrome-192x192.png'}],

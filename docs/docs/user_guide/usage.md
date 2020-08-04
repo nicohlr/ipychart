@@ -1,8 +1,8 @@
 # Usage
 
-The ipychart API is composed of only one *Chart* class which allows you to create all types of chart. This class takes 4 arguments as input : **data**, **kind**, **options** and **colorscheme**. This arguments have a particular structure to match the backend Chart.js API. If you don't respect the structure of these arguments the package may not work. 
+The ipychart API is composed of only one *Chart* class which allows you to create all types of charts. This class takes 4 arguments as inputs: **data**, **kind**, **options** and **colorscheme**. These arguments have a particular structure to match the backend Chart.js API. If you don't respect the structure of these arguments the package may not work. 
 
-In this section, we will go through each argument to present its use and its structure. But before that, let's start with a little aside to compare the APIs of Chart.js and ipychart.
+In this section, we will go through each argument to present its use and its structure. But before that, let's start with a little aside where we compare the APIs of Chart.js and ipychart.
 
 ## Chart.js vs ipychart
 
@@ -10,7 +10,7 @@ In this section, we will go through each argument to present its use and its str
 If you are already familiar with Chart.js, you can skip this part.
 :::
 
-Before looking at ipychart, lets take a look at what it looks like to create a chart with Chart.js. It will allow us to better understand how ipychart works:
+Before looking at ipychart, let's take a look at what it looks like to create a chart with Chart.js. It will allow us to better understand how ipychart works:
 
 ``` js
 // This is to gather the html container of the chart
@@ -38,7 +38,7 @@ var chart = new Chart(ctx, {
 });
 ```
 
-This example is taken from [the getting-started page of the Chart.js documentation](https://www.chartjs.org/docs/latest/getting-started/). As you can see, there are also three main arguments in Chart.js : **data**, **type** and **options**. These are the same arguments in ipychart, except for the `type` argument which as been renamed `kind` in ipychart because `type` is a reserved keyword in the Python language. Now, lets take a look of how we can create the same chart as above but using Python code and the ipychart library in our Jupyter Notebook environment:
+This example is taken from [the getting-started page of the Chart.js documentation](https://www.chartjs.org/docs/latest/getting-started/). As you can see, there are also three main arguments in Chart.js : **data**, **type** and **options**. These are the same arguments in ipychart, except for the `type` argument which has been renamed `kind` in ipychart because `type` is a reserved keyword in the Python language. Now, let's take a look on how we can create the same chart as above while using Python code and the ipychart library in our Jupyter Notebook environment:
 
 ``` py
 from ipychart import Chart
@@ -80,11 +80,11 @@ data = {
 }
 ```
 
-The value for `'datasets'` will hold your data, it **must be a list of dictionary, each one containing at least a key named** `'data'`. It is a list because you can print more than one ensemble of data points in one chart. Each sub dictionary corresponds to an ensemble of data points, representing a dataset, and must also follow a specific structure. However, this structure may change according to the type of chart. 
+The value of `'datasets'` will hold your data, it **must be a list of dictionaries, each one containing at least a key named** `'data'`. It is a list because you can print more than one ensemble of data points in one chart. Each sub dictionary corresponds to an ensemble of data points, representing a dataset, and must also follow a specific structure. However, this structure may change according to the type of chart. 
 
-Please refer to [the documentation of each chart type](/user_guide/charts) to have more details about the dataset structure to adopt. 
+Please refer to [the documentation of each chart type](/user_guide/charts) to have more details about the dataset structure to use. 
 
-The value for `'labels'` **must be a list**. If only one dataset is passed (i.e. if len(data['datasets] is 1)), the labels list will represent the labels of each datapoint of the only dataset passed. However, if more than one dataset is passed, the label list will represent the labels of each dataset.
+The value of `'labels'` **must be a list**. If only one dataset is passed (i.e. if len(data['datasets] is 1)), the labels list will represent the labels of each datapoint of the only dataset passed. However, if more than one dataset is passed, the label list will represent the labels of each dataset.
 
 ::: warning
 The data dictionary must have these two elements, otherwise you can expect dysfunction or unexpected behavior.
@@ -92,7 +92,7 @@ The data dictionary must have these two elements, otherwise you can expect dysfu
 
 ### Kind
 
-The `kind` argument allows you to choose the type of chart you wants to draw. It **must be a string**. You can choose a type of string in the following values :
+The `kind` argument allows you to choose the type of chart you want to draw. It **must be a string**. You can choose a type of string from the following list:
 
 ``` py
 # Possible values for the kind argument
@@ -126,11 +126,11 @@ options = {
     'animation': dict,
 }
 ```
-Below are the use of each of these dictionaries. Of course, these five dictionaries have numerous sub arguments. This is why two whole sections of this documentation are dedicated them. 
+Below is the use case of each of these dictionaries. Of course, these five dictionaries have numerous sub arguments. This is why two whole sections of this documentation have been dedicated to them. 
 
-- **legend:** you can configure the legend of your chart with this dictionary. In ipychart, legend is dynamic and allow you to display or hide some of your inputed datasets ! To find out how you can customize the legend of your chart, please check the [legend documentation section](/user_guide/configuration#legend).
+- **legend:** you can configure the legend of your chart with this dictionary. In ipychart, legend is dynamic and allows you to display or hide some of your inputted datasets! To find out how you can customize the legend of your chart, please check the [legend documentation section](/user_guide/configuration#legend).
 - **title:** you can configure the title of your chart with this dictionary. To find out how, please check the [title documentation section](/user_guide/configuration#title).
-- **tooltips:** you can configure the tooltips of your chart with this dictionary. In ipychart, hovering a chart display some information, these popus are called "tooltips". You can configure these tooltips in many ways. To find out how, please check the [tooltips documentation section](/user_guide/configuration#tooltips). You can even inject some Javascript code do display your own text around your data on hover a chart. The procedure for doing this is described in the [callback functions section of the documentation](/user_guide/advanced#callback-functions).
+- **tooltips:** you can configure the tooltips of your chart with this dictionary. In ipychart, hovering a chart displays some information, these popups are called "tooltips". You can configure these tooltips in many ways. To find out how, please check the [tooltips documentation section](/user_guide/configuration#tooltips). You can even inject some Javascript code to display your own text around your data on while hovering a chart. The procedure for doing this is described in the [callback functions section of the documentation](/user_guide/advanced#callback-functions).
 - **scales:** you can configure the scales of your chart with this dictionary. To find out how, please check the [scales page](/user_guide/scales).
 - **layout:** you can configure the layout of your chart with this dictionary. To find out how, please check the [layout documentation section](/user_guide/configuration#layout).
 - **hover:** you can configure the hovering options of your chart with this dictionary. To find out how, please check the [hover documentation section](/user_guide/configuration#hover).
@@ -142,9 +142,9 @@ Below are the use of each of these dictionaries. Of course, these five dictionar
 The `colorscheme` argument will be ignored if any color configuration is set in one of the datasets passed to the chart. In other words, **the argument will only work if no color configuration option is used in the chart**.
 :::
 
-The `colorscheme` arguments allows you to automatically set a predefined color scheme to your chart. This is a feature which is not present natively in Chart.js. It has been added in ipychart using [an open-source implementation](https://github.com/nagix/chartjs-plugin-colorschemes). 
+The `colorscheme` argument allow you to automatically set a predefined color scheme to your chart. This is a feature which is not present natively in Chart.js. It has been added in ipychart using [an open-source implementation](https://github.com/nagix/chartjs-plugin-colorschemes). 
 
-The `colorscheme` argument must be a string corresponding to the choosen color scheme ([click here to see the list of all available color schemes](https://nagix.github.io/chartjs-plugin-colorschemes/colorchart.html)). Color schemes are based on popular tools such as ColorBrewer, Microsoft Office and Tableau.
+The `colorscheme` argument must be a string corresponding to the chosen color scheme ([click here to see the list of all the available color schemes](https://nagix.github.io/chartjs-plugin-colorschemes/colorchart.html)). Color schemes are based on popular tools such as ColorBrewer, Microsoft Office and Tableau.
 
 Example of setting a colorscheme to a chart:
 

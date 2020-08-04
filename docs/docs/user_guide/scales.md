@@ -2,14 +2,14 @@
 
 This section is dedicated to the `'scales'` argument of the options dictionary that you'll pass to your Chart. As the other arguments described if the [previous section](/user_guide/configuration), the scales argument is a key of the `options` dictionary. However, as it has a lot of possible nested configurations, a whole section of the documentation is dedicated to it. 
 
-With the `'scales'` argument, you can completely configure the axis of your chart. This configuration involves configuring the two axis of your Chart: the x axis and the y axis.
+With the `'scales'` argument, you can completely configure the axis of your chart. This configuration involves configuring the two axes of your Chart: the x axis and the y axis.
 
-All charts doesn't have the same type of scales. There are two types of scales available in ipychart:
+Different charts don’t have the same type of scales. There are two types of scales available in ipychart:
 * [**The Cartesian Scale**](/user_guide/scales#cartesian-scale), used for the following types of chart: line, bar, horizontalBar, bubble, scatter. These charts have two axes positioned on one of the edges (the **x** axis and the **y** axis). You can configure them using the `'scales'` option.
 
-* [**The Radial Scale**](/user_guide/scales#radial-scale), used for the following types of chart: radar, polarArea. These charts have only one axis which overlay the chart area. You can configure it using the `'scale'` option.
+* [**The Radial Scale**](/user_guide/scales#radial-scale), used for the following types of chart: radar, polarArea. These charts have only one axis which overlays the chart area. You can configure it using the `'scale'` option.
 
-The other types of charts (doughnut, pie) do not use scales.
+Other types of charts (doughnut, pie) do not use scales.
 
 ::: tip
 In this part, the term **arguments** corresponds to the options of the main dictionaries (dictionaries contained in `'xAxes'`, `'xAxes'` lists or in the `'scale'` dictionary), whereas the term **subarguments** corresponds to the options of the nested dictionaries (`'ticks'` or `'time'` sub-dictionaries for example)
@@ -21,7 +21,7 @@ In this part, the term **arguments** corresponds to the options of the main dict
 This section only applies to the following types of charts: **line**, **bar**, **horizontalBar**, **bubble** & **scatter**.
 :::
 
-Axis that follow a cartesian grid are known as 'Cartesian Axis'. **Cartesian axis are used for line, bar, and bubble charts**. To configure your axes, you'll have to use the `'scales'` option and the `'xAxes'` and `'yAxes'` sub-options.
+Axes that follow a cartesian grid are known as 'Cartesian Axes'. **Cartesian axes are used for line, bar, and bubble charts**. To configure your axes, you'll have to use the `'scales'` option and the `'xAxes'` and `'yAxes'` sub-options.
 
 The following options are available:
 
@@ -54,16 +54,16 @@ options = {
 ```
 
 ::: tip
-`'xAxes'` and `'yAxes'` are lists, each element of the list corresponds to the scale of a dataset. Therefore, the lenght of the `'xAxes'` and `'yAxes'` lists must be equal to the number of dataset passed to the chart.
+`'xAxes'` and `'yAxes'` are lists, each element of the list corresponds to the scale of a dataset. Therefore, the length of the `'xAxes'` and `'yAxes'` lists must be equal to the number of datasets inputted to the chart.
 :::
 
 ### GridLines argument
 
-As this nested options are common to both cartesian and radial scales, this argument is detailed [at the end of this section](/user_guide/scales#gridlines-argument-3).
+As these nested options are common to both cartesian and radial scales, this argument is detailed [at the end of this section](/user_guide/scales#gridlines-argument-3).
 
 ### ScaleLabel argument
 
-This argument allows to configure the scale title of the Axis. Available options are:
+This argument allows us to configure the scale title of the Axis. Available options are:
 
 ```py
 options = {
@@ -131,7 +131,7 @@ mychart
 
 ### Ticks argument
 
-This argument allows to configure the scale of the Axis. Available options are:
+This argument allows us to configure the scale of the Axis. Available options are:
 
 ```py
 options = {
@@ -212,15 +212,15 @@ options = {
 
 #### Minor and Major subarguments (`'ticks'` options)
 
-The minor and major tick configuration are nested under the ticks configuration in the respective `'minor'` and `'major'` key. As this nested options are common to both cartesian and radial scales, these options are detailed [at the end of this section](/user_guide/scales#ticks-argument-3).
+The minor and major tick configurations are nested under the tick's configuration in the respective `'minor'` and `'major'` keys. As these nested options are common to both cartesian and radial scales, these options are detailed [at the end of this section](/user_guide/scales#ticks-argument-3).
 
 #### Callback subargument (`'ticks'` option)
 
-The ticks can be customized with a callback function. Callback function are Javascript function inputed into the chart to do some specific actions. To learn how to use callback function in ipychart, you can read [the callback functions section of the documentation](/user_guide/advanced#callback-functions). 
+The ticks can be customized with a callback function. A Callback function is a Javascript function inputted into the chart to do some specific actions. To learn how to use callback functions in ipychart, you can read [the callback functions section of the documentation](/user_guide/advanced#callback-functions). 
 
 #### Source subargument (`'ticks'` option, only for time scales)
 
-The `'source'` subargument controls the ticks generation **for time scales** (i.e `type` argument = `'time'`):
+The `'source'` subargument controls the tick's generation **of time scales** (i.e `type` argument = `'time'`):
 
 * `'auto'`: generates "optimal" ticks based on scale size and time options
 * `'data'`: generates ticks from data (including labels from data `{t|x|y}` objects)
@@ -228,7 +228,7 @@ The `'source'` subargument controls the ticks generation **for time scales** (i.
 
 #### Example
 
-Here is an example of a scale with custom ticks options:
+Here is an example of a scale with custom tick's options:
 
 :::details Click to show the code used to generate the Chart.
 <br/>
@@ -418,8 +418,8 @@ mychart
 
 The `'distribution'` argument controls the data distribution along the scale (**only for time scales**, i.e `type` argument = `'time'`):
 
-* `'linear'`: data are spread according to their time (distances can vary)
-* `'series'`: data are spread at the same distance from each other
+* `'linear'`: data is spread according to their time (distances can vary)
+* `'series'`: data is spread at the same distance from each other
 
 When the scale is in `series` mode, the data indices are expected to be unique, sorted, and consistent across datasets.
 
@@ -427,8 +427,8 @@ When the scale is in `series` mode, the data indices are expected to be unique, 
 
 The `'bounds'` argument controls, **only for time scales** (i.e `type` argument = `'time'`), the scale boundary strategy (bypassed by `'min'`/`'max'` time options):
 
-* `'data'`: makes sure data are fully visible, labels outside are removed
-* `'ticks'`: makes sure ticks are fully visible, data outside are truncated
+* `'data'`: makes sure data is fully visible, labels outside are removed
+* `'ticks'`: makes sure ticks is fully visible, data outside are truncated
 
 ## Radial scale
 
@@ -436,7 +436,7 @@ The `'bounds'` argument controls, **only for time scales** (i.e `type` argument 
 This section only applies to the following types of charts: **radar** & **polarArea**.
 :::
 
-**Radial axis are used specifically for the radar and polar area chart types**. These axis overlay the chart area, rather than being positioned on one of the edges. To configure it, you need to use the `'scale'` option (without 's', as radar and polarArea charts only have one axis).
+**Radial axes are used specifically for the radar and polar area chart types**. These axes overlay the chart area, rather than being positioned on one of the edges. To configure it, you need to use the `'scale'` option (without 's', as radar and polarArea charts only have one axis).
 
 ```py
 options = {
@@ -505,7 +505,7 @@ options = {
 
 ### Ticks argument
 
-This argument allows to configure the scale of the Axis. Available options are:
+This argument allows us to configure the scale of the Axis. Available options are:
 
 ```py
 options = {
@@ -561,11 +561,11 @@ options = {
 
 #### Minor and Major subarguments (`'ticks'` options)
 
-The minor and major tick configuration are nested under the ticks configuration in the respective `'minor'` and `'major'` key. As this nested options are common to both cartesian and radial scales, these options are detailed [at the end of this section](/user_guide/scales#ticks-argument-3).
+The minor and major tick configurations are nested under the tick's configuration in the respective `'minor'` and `'major'` keys. As this nested options are common to both cartesian and radial scales, these options are detailed [at the end of this section](/user_guide/scales#ticks-argument-3).
 
 #### Callback subargument (`'ticks'` option)
 
-The ticks can be customized with a callback function. Callback function are Javascript function inputed into the chart to do some specific actions. To learn how to use callback function in ipychart, you can read [the callback functions section of the documentation](/user_guide/advanced#callback-functions).
+The ticks can be customized with a callback function. A Callback function is a Javascript function inputted into the chart to do some specific actions. To learn how to use callback functions in ipychart, you can read [the callback functions section of the documentation](/user_guide/advanced#callback-functions).
 
 ### Example
 
@@ -719,11 +719,11 @@ mychart
 
 ### Ticks argument
 
-The minor and major ticks options are common to both scales. Therefore, for reasons of clarity and readability of the documentation, the detailed description of these options was placed here, at the end of this section.
+The minor and major tick's options are common to both scales. Therefore, for reasons of clarity and readability of the documentation, the detailed description of these options was placed here, at the end of this section.
 
 #### Minor subarguments (`'ticks'` options)
 
-The minor tick configuration is nested under the ticks configuration in the `'minor'` key. It defines options for the minor tick marks that are generated by the axis (omitted options are inherited from ticks configuration):
+The minor tick configuration is nested under the tick's configuration in the `'minor'` key. It defines options for the minor tick marks that are generated by the axis (omitted options are inherited from tick's configuration):
 
 ```py
 options = {
@@ -769,7 +769,7 @@ options = {
 
 #### Major subarguments (`'ticks'` options)
 
-The major tick configuration is nested under the ticks configuration in the `'major'` key. It defines options — these options are disabled by default — for the major tick marks that are generated by the axis (omitted options are inherited from ticks configuration): 
+The major tick configuration is nested under the tick's configuration in the `'major'` key. It defines options — these options are disabled by default — for the major tick marks that are generated by the axis (omitted options are inherited from tick's configuration): 
 
 ```py
 options = {

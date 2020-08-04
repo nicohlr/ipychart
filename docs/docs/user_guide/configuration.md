@@ -1,16 +1,16 @@
 # Configuration
 
-The options argument of the chart allows you to configure the chart as you want. In this section, we will go through each arguments of the options dictionary that you'll pass to your chart instance. Each of them allows you to configure a specific aspect of your chart.
+The `options` argument of the chart allows you to configure the chart as you please. In this section, we will go through each argument of the options dictionary that you'll pass to your chart instance. Each of them allows you to configure a specific aspect of your chart.
 
 :::tip Note
-The options relating to the modification of the scales are very complete and are therefore the subject of a separate section of the documentation. You can find this section [**here**](/user_guide/scales).
+The options relative to the modification of the scales are very complete and are therefore the subject of a separate section of the documentation. You can find this section [**here**](/user_guide/scales).
 :::
 
 ## Title
 
 <p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Title options</p>
 
-With this argument, you can add a title to your chart. There are some configuration available to modify your title:
+By using this argument, you can add a title to your chart. There is some configuration available to modify your title:
 
 ``` py
 options = {
@@ -32,7 +32,7 @@ options = {
 
 <p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Example</p>
 
-Here is a example of what you can do to with the title options (not exhaustive):
+Here is an example of what you can do to with the title options (not exhaustive):
 
 :::details Click to show the code used to generate the Chart.
 <br/>
@@ -106,11 +106,11 @@ options = {
 
 #### Callbacks functions
 
-Some of the arguments can be filled with callback functions. Callback function are Javascript function inputed into the chart to do some specific actions. To learn how to use callback function in ipychart, you can read [the callback functions section of the documentation](/user_guide/advanced#callback-functions).
+Some of the arguments can be filled with callback functions. A Callback function is a Javascript function inputted into the chart to do some specific actions. To learn how to use callback functions in ipychart, you can read [the callback functions section of the documentation](/user_guide/advanced#callback-functions).
 
 #### Labels argument
 
-The legend label configuration is nested below the legend configuration using the `'labels'` key. It is a dictionary which allows you to configure the appearance of the labels within the legent. It can contains the followings arguments:
+The legend label configuration is nested below the legend configuration using the `'labels'` key. It is a dictionary which allows you to configurate the appearance of the labels within the legend. It can contain the followings arguments:
 
 ``` py
 options = {
@@ -134,7 +134,7 @@ options = {
 
 <p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Example</p>
 
-Here is a example of what you can do to with the legend options (not exhaustive):
+Here is an example of what you can do to with the legend options (not exhaustive):
 
 :::details Click to show the code used to generate the Chart.
 <br/>
@@ -248,8 +248,9 @@ options = {
 #### Position argument
 
 Possible modes are:
-* `'average'`: place the tooltip at the average position of the items displayed in the tooltip.
-* `'nearest'`: place the tooltip at the position of the element closest to the event position.
+
+* `'average'`: places the tooltip at the average position of the items displayed in the tooltip.
+* `'nearest'`: places the tooltip at the position of the element closest to the event position.
 
 #### Alignment
 
@@ -263,9 +264,9 @@ These options are only applied to text lines. Color boxes are always aligned to 
 
 #### Callbacks argument
 
-The tooltips can be customized with callback functions. Callback functions are Javascript functions inputed into the chart to do some specific actions. To learn how to use callback function in ipychart, you can read [the callback functions section of the documentation](/user_guide/advanced#callback-functions).
+The tooltips can be customized with callback functions. A Callback function is a Javascript functions inputted into the chart to do some specific actions. To learn how to use callback functions in ipychart, you can read [the callback functions section of the documentation](/user_guide/advanced#callback-functions).
 
-All tooltips functions are called with the same arguments: a `tooltip` item and the `data` object passed to the chart. Therefore, you can render tooltips using your data. All functions must return either a string or an array of strings. Arrays of strings are treated as multiple lines of text.
+All tooltip callback functions are called with the same arguments: a `tooltip` item and the `data` object passed to the chart. Therefore, you can render tooltips using your data. All functions must return either a string or an array of strings. Arrays of strings are treated as multiple lines of text.
 
 ``` py
 options = {
@@ -300,7 +301,7 @@ options = {
 
 <p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Example</p>
 
-Here is a example of what you can do to with the tooltips options (not exhaustive):
+Here is an example of what you can do to with the tooltip's options (not exhaustive):
 
 :::details Click to show the code used to generate the Chart.
 <br/>
@@ -371,7 +372,7 @@ mychart
 You can hover each element (bar or point) of the Chart to display the tooltips.
 :::
 
-In the above example, we used a callback function to modify the tooltip using Javascript code.
+In the example above, we used a callback function to modify the tooltip using Javascript code.
 
 ## Layout
 
@@ -387,7 +388,7 @@ options = {
 }
 ```
 
-You can spcify padding on each side of the chart if you use a dictionary:
+You can specify padding on each side of the chart if you use a dictionary:
 
 ``` py
 options = {
@@ -405,7 +406,7 @@ options = {
 
 <p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Example</p>
 
-Here is a example of what you can do to with the layout padding option (not exhaustive):
+Here is an example of what you can do to with the layout padding option (not exhaustive):
 
 :::details Click to show the code used to generate the Chart.
 <br/>
@@ -437,7 +438,7 @@ As you can see, the chart now takes up less space in its container.
 
 <p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Hover options</p>
 
-With this argument, you can configure the the behaviour of your chart when it is hovered. Available options are:
+With this argument, you can configure the the behavior of your chart when it is hovered. Available options are:
 
 ``` py
 options = {
@@ -478,7 +479,7 @@ options = {
 
 #### Callbacks functions
 
-Some of the arguments can be filled with callback functions. Callback function are Javascript function inputed into the chart to do some specific actions. To learn how to use callback function in ipychart, you can read [the callback functions section of the documentation](/user_guide/advanced#callback-functions).
+Some of the arguments can be filled with callback functions. A Callback function is a Javascript function inputted into the chart to do some specific actions. To learn how to use callback functions in ipychart, you can read [the callback functions section of the documentation](/user_guide/advanced#callback-functions).
 
 #### Easing
 

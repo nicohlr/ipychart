@@ -50,7 +50,7 @@ All methods have two parameters in common: `dataset_options` and `options`. The 
 This chart can only be created from a single column of a Pandas dataframe.
 :::
 
-The count chart shows the counts of observations in each categorical bin using bars. To draw it, you must call the *count* method:
+The count chart shows the count of observations in each categorical bin using bars. To draw it, you must call the *count* method:
 
 ```py
 ChartDataFrame.count(x: str, orient: str = 'v', dataset_options: dict = {}, 
@@ -111,7 +111,7 @@ titanic_chart.dist(x='Age')
 
 ### Line
 
-A line chart is a way of plotting data points on a line. Often, it is used to show trend data, or the comparison of two data sets. To draw it, you must call the *line* method:
+A line chart is a way of plotting data points on a line. Often, it is used to show a trend in the data, or the comparison of two data sets. To draw it, you must call the *line* method:
 
 ```py
 ChartDataFrame.line(x: str, y: str, hue: str = None, agg: str = 'mean', 
@@ -149,7 +149,7 @@ titanic_chart.line(x='Pclass', y='Age', hue='Sex',
 
 ### Bar
 
-A bar chart provides a way of showing data values represented as vertical bars. It is sometimes used to show trend data, and the comparison of multiple data sets side by side. To draw it, you must call the *bar* method:
+A bar chart provides a way of showing data values represented as vertical bars. It is sometimes used to show a trend in the data, and the comparison of multiple data sets side by side. To draw it, you must call the *bar* method:
 
 ```py
 ChartDataFrame.bar(x: str, y: str, hue: str = None, agg: str = 'mean', 
@@ -291,7 +291,7 @@ titanic_chart.scatter(x='Age', y='Fare', hue='Survived',
 
 ### Bubble
 
-A bubble chart is used to display three dimensions of data at the same time. The location of the bubble is determined by the first two dimensions and the corresponding horizontal and vertical axes. The third dimension is represented by the radius of the individual bubbles. To draw it, you must call the *bubble* method:
+A bubble chart is used to display three-dimension data. The location of the bubble is determined by the first two dimensions and the corresponding horizontal and vertical axes. The third dimension is represented by the radius of the individual bubbles. To draw it, you must call the *bubble* method:
 
 ```py
 ChartDataFrame.bubble(x: str, y: str, r: str = None, hue: str = None, 

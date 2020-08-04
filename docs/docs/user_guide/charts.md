@@ -1,6 +1,6 @@
 # Charts
 
-In this section, we will go though each type of chart to see what possibilities it offers to display your data. We will also detail all the properties and the structure of the `'dataset'` sub dictionary that you'll build in the data argument ([see previous section](/user_guide/usage)) of the *Chart* class.
+In this section, we will go through each type of chart to see what possibilities it offers to display your data. We will also detail all the properties and the structure of the `'dataset'` sub dictionary that you'll build in the data argument ([see previous section](/user_guide/usage)) of the *Chart* class.
 
 ::: tip
 Logically, much of the content of this page is identical or very similar to that of the corresponding section of the documentation of Chart.js. You can consult it at any time by clicking [**here**](https://www.chartjs.org/docs/latest/charts/).
@@ -8,7 +8,7 @@ Logically, much of the content of this page is identical or very similar to that
 
 ## Line
 
-A line chart is a way of plotting data points on a line. Often, it is used to show trend data, or the comparison of two data sets.
+A line chart is a way of plotting data points on a line. Often, it is used to show a trend in the data, or the comparison of two data sets.
 
 :::details Click to show the code used to generate the Chart.
 <br/>
@@ -27,11 +27,11 @@ mychart
 
 <charts-line/>
 
-You can choose this type for your chart by setting the `kind` argument to `'line'`.
+You can choose this type of chart by setting the `kind` argument to `'line'`.
 
 <p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Dataset properties</p>
 
-For each dataset, the following properties ar configurable:
+For each dataset, the following properties are configurable:
 
 ``` py
 data = {
@@ -71,7 +71,7 @@ data = {
 }
 ```
 
-You can also control the style of the points and the lines when hovering the chart by using the 'hover' prefix on some of the above options (types are the same that the option without prefix) : `hoverBackgroundColor`, `hoverBorderCapStyle`, `hoverBorderColor`, `hoverBorderDash`, `hoverBorderDashOffset`, `hoverBorderJoinStyle`, `hoverBorderWidth`, `pointHoverBackgroundColor`, `pointHoverBorderColor`, `pointHoverBorderWidth`, `pointHoverRadius`
+You can also control the style of the points and the lines when hovering the chart by using the 'hover' prefix on some of the above options: `hoverBackgroundColor`, `hoverBorderCapStyle`, `hoverBorderColor`, `hoverBorderDash`, `hoverBorderDashOffset`, `hoverBorderJoinStyle`, `hoverBorderWidth`, `pointHoverBackgroundColor`, `pointHoverBorderColor`, `pointHoverBorderWidth`, `pointHoverRadius`
 
 #### clip
 
@@ -80,8 +80,8 @@ How to clip relative to chartArea. Positive value allows overflow, negative valu
 
 #### cubicInterpolationMode
 
-* `'default'`: algorithm uses a custom weighted cubic interpolation, which produces pleasant curves for all types of datasets.
-* `'monotone'`: algorithm is more suited to `y = f(x)` datasets : it preserves monotonicity (or piecewise monotonicity) of the dataset being interpolated, and ensures local extremums (if any) stay at input data points.
+* `'default'`: algorithm that uses a custom weighted cubic interpolation, which produces pleasant curves for all types of datasets.
+* `'monotone'`: this algorithm is more suited to `y = f(x)` datasets : it preserves monotonicity (or piecewise monotonicity) of the dataset being interpolated, and ensures local extremums (if any) stay at input data points.
 
 #### Stepped
 
@@ -112,12 +112,12 @@ data = {
 ```
 
 ::: tip
-You can also give a **Pandas series** to the data argument. For exemple by giving a column of a **Pandas dataframe** ⟶ 'data': df['column'] 
+For all types of chart, you can also give a **Pandas series** to the data argument. For example by giving a column of a **Pandas dataframe** ⟶ 'data': df['column'] 
 :::
 
 ## Bar 
 
-A bar chart provides a way of showing data values represented as vertical bars. It is sometimes used to show trend data, and the comparison of multiple data sets side by side.
+A bar chart provides a way of showing data values represented as vertical bars. It is sometimes used to show a trend in the data, and the comparison of multiple data sets side by side.
 
 :::details Click to show the code used to generate the Chart.
 <br/>
@@ -135,11 +135,11 @@ mychart
 
 <charts-bar/>
 
-You can choose this type for your chart by setting the `kind` argument to `'bar'` or `'horizontalBar'`.
+You can choose this type of chart by setting the `kind` argument to `'bar'` or `'horizontalBar'`.
 
 <p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Dataset properties</p>
 
-For each dataset, the following properties ar configurable:
+For each dataset, the following properties are configurable:
 
 ``` py
 data = {
@@ -165,12 +165,12 @@ data = {
 }
 ```
 
-You can also control the style of the points and the lines when hovering the chart by using the 'hover' prefix on some of the above options (types are the same that the option without prefix) : `hoverBackgroundColor`, `hoverBorderColor`, `hoverBorderWidth`
+You can also control the style of the points and the lines when hovering the chart by using the 'hover' prefix on some of the above options: `hoverBackgroundColor`, `hoverBorderColor`, `hoverBorderWidth`
 
 #### borderSkipped
 
 This setting is used to avoid drawing the bar stroke at the base of the fill. In general, this does not need to be changed except when creating chart types that derive from a bar chart.
-**Note:** for negative bars in vertical chart, `top` and `bottom` are flipped. Same goes for `left` and `right` in horizontal chart.
+**Note:** for negative bars in vertical charts, `top` and `bottom` are flipped. Same goes for `left` and `right` in horizontal charts.
 
 Options are:
 
@@ -184,9 +184,9 @@ Options are:
 
 If this value is a number, it is applied to the width of each bar, in pixels. When this is enforced, `barPercentage` and `categoryPercentage` are ignored.
 
-If set to `'flex'`, the base sample widths are calculated automatically based on the previous and following samples so that they take the full available widths without overlap. Then, bars are sized using `barPercentage` and `categoryPercentage`. There is no gap when the percentage options are 1. This mode generates bars with different widths when data are not evenly spaced.
+If set to `'flex'`, the base sample widths are calculated automatically based on the previous and following samples so that they take the full available widths without overlapping. Then, bars are sized using `barPercentage` and `categoryPercentage`. There is no gap when the percentage options are 1. This mode generates bars with different widths when data is not evenly spaced.
 
-If not set (default), the base sample widths are calculated using the smallest interval that prevents bar overlapping, and bars are sized using `barPercentage` and `categoryPercentage`. This mode always generates bars equally sized.
+If not set (default), the base sample widths are calculated using the smallest interval that prevents bars from overlapping, and bars are sized using `barPercentage` and `categoryPercentage`. This mode always generates bars equally sized.
 
 <p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Data structures</p>
 
@@ -212,17 +212,13 @@ data = {
 
 #### Array
 
-You can also specify the dataset for a bar chart as arrays of two numbers. This will force rendering of bars with gaps between them (floating-bars). First and second numbers in array will correspond the start and the end point of a bar respectively.
+You can also specify the dataset for a bar chart as arrays of two numbers. This will force rendering of bars with gaps between them (floating-bars). First and second numbers in array will correspond to the start and the end point of a bar respectively.
 
 ``` py
 data = {
   'datasets': [{'data': [[5, 6], [-3, -6]]}]
 }
 ```
-
-::: tip
-You can also give a **Pandas series** to the data argument. For exemple by giving a column of a **Pandas dataframe** ⟶ 'data': df['column'] 
-:::
 
 <p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Horizontal Bar chart</p>
 
@@ -269,11 +265,11 @@ mychart
 
 <charts-radar/>
 
-You can choose this type for your chart by setting the `kind` argument to `'radar'`.
+You can choose this type of chart by setting the `kind` argument to `'radar'`.
 
 <p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Dataset properties</p>
 
-For each dataset, the following properties ar configurable:
+For each dataset, the following properties are configurable:
 
 ``` py
 data = {
@@ -309,7 +305,7 @@ data = {
 }
 ```
 
-You can also control the style of the points and the lines when hovering the chart by using the 'hover' prefix on some of the above options (types are the same that the option without prefix) : `hoverBackgroundColor`, `hoverBorderCapStyle`, `hoverBorderColor`, `hoverBorderDash`, `hoverBorderDashOffset`, `hoverBorderJoinStyle`, `hoverBorderWidth`, `pointHoverBackgroundColor`, `pointHoverBorderColor`, `pointHoverBorderWidth`, `pointHoverRadius`
+You can also control the style of the points and the lines when hovering the chart by using the 'hover' prefix on some of the above options: `hoverBackgroundColor`, `hoverBorderCapStyle`, `hoverBorderColor`, `hoverBorderDash`, `hoverBorderDashOffset`, `hoverBorderJoinStyle`, `hoverBorderWidth`, `pointHoverBackgroundColor`, `pointHoverBorderColor`, `pointHoverBorderWidth`, `pointHoverRadius`
 
 <p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Data structures</p>
 
@@ -369,11 +365,11 @@ mychart
 
 <charts-pie/>
 
-You can choose this type for your chart by setting the `kind` argument to either `'doughnut'` or `'pie'`.
+You can choose this type of chart by setting the `kind` argument to either `'doughnut'` or `'pie'`.
 
 <p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Dataset properties</p>
 
-For each dataset, the following properties ar configurable:
+For each dataset, the following properties are configurable:
 
 ``` py
 data = {
@@ -397,7 +393,7 @@ data = {
 }
 ```
 
-You can also control the style of the points and the lines when hovering the chart by using the 'hover' prefix on some of the above options (types are the same that the option without prefix) : `hoverBackgroundColor`, `hoverBorderColor`, `hoverBorderWidth`
+You can also control the style of the points and the lines when hovering the chart by using the 'hover' prefix on some of the above options: `hoverBackgroundColor`, `hoverBorderColor`, `hoverBorderWidth`
 
 #### Border Alignment
 
@@ -444,12 +440,12 @@ mychart
 
 <charts-polar/>
 
-You can choose this type for your chart by setting the `kind` argument to `'polarArea'`.
+You can choose this type of chart by setting the `kind` argument to `'polarArea'`.
 
 <p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Dataset properties</p>
 
 
-For each dataset, the following properties ar configurable:
+For each dataset, the following properties are configurable:
 
 ``` py
 data = {
@@ -468,7 +464,7 @@ data = {
 }
 ```
 
-You can also control the style of the points and the lines when hovering the chart by using the 'hover' prefix on some of the above options (types are the same that the option without prefix) : `hoverBackgroundColor`, `hoverBorderColor`, `hoverBorderWidth`
+You can also control the style of the points and the lines when hovering the chart by using the 'hover' prefix on some of the above options: `hoverBackgroundColor`, `hoverBorderColor`, `hoverBorderWidth`
 
 #### Border Alignment
 
@@ -511,7 +507,7 @@ mychart
 
 <charts-scatter/>
 
-You can choose this type for your chart by setting the `kind` argument to `'scatter
+You can choose this type of chart by setting the `kind` argument to `'scatter
 
 <p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Dataset properties</p>
 
@@ -532,7 +528,7 @@ data = {
 
 ## Bubble
 
-A bubble chart is used to display three dimensions of data at the same time. The location of the bubble is determined by the first two dimensions and the corresponding horizontal and vertical axes. The third dimension is represented by the radius of the individual bubbles.
+A bubble chart is used to display three-dimension data. The location of the bubble is determined by the first two dimensions and the corresponding horizontal and vertical axes. The third dimension is represented by the radius of the individual bubbles.
 
 :::details Click to show the code used to generate the Chart.
 <br/>
@@ -558,11 +554,11 @@ mychart
 
 <charts-bubble/>
 
-You can choose this type for your chart by setting the `kind` argument to `'bubble'`
+You can choose this type of chart by setting the `kind` argument to `'bubble'`
 
 <p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Dataset properties</p>
 
-For each dataset, the following properties ar configurable:
+For each dataset, the following properties are configurable:
 
 ``` py
 data = {
@@ -588,7 +584,7 @@ data = {
 }
 ```
 
-You can also control the style of the points and the lines when hovering the chart by using the 'hover' prefix on some of the above options (types are the same that the option without prefix) : `hoverBackgroundColor`, `hoverBorderColor`, `hoverBorderWidth`, `hoverRadius`, `hitRadius`
+You can also control the style of the points and the lines when hovering the chart by using the 'hover' prefix on some of the above options: `hoverBackgroundColor`, `hoverBorderColor`, `hoverBorderWidth`, `hoverRadius`, `hitRadius`
 
 
 <p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Data structures</p>
@@ -609,9 +605,9 @@ data = {
 ### Stacked
 
 Stacked bar charts can be used to show how one data series is made up of a number of smaller pieces.
-Bar charts can be configured into stacked bar charts by changing the settings on the X and Y axes to enable stacking. To do this, you juste have to set the `'stacked'` options of the Axes to `True`.
+Bar charts can be configured into stacked bar charts by changing the settings on the X and Y axes to enable stacking. To do this, you only must set the `'stacked'` options of the Axes to `True`.
 
-Here is an example of an stacked bar chart :
+Here is an example of a stacked bar chart :
 
 :::details Click to show the code used to generate the Chart.
 <br/>
@@ -647,7 +643,7 @@ mychart
 
 ### Area
 
-Both [line](/user_guide/charts#line) and [radar](/user_guide/charts#radar) charts support a `'fill'` option on the dataset object which can be used to create area between two datasets
+Both [line](/user_guide/charts#line) and [radar](/user_guide/charts#radar) charts support a `'fill'` option on the dataset object which can be used to create an area between two datasets
 
 ``` py
 data = {

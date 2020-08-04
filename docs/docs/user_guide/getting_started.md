@@ -8,10 +8,10 @@ You can install ipychart from your terminal using pip:
 $ pip install ipychart
 ```
 
-That's all. You can now start a Jupyter Notebook and start using ipychart !
+That's about it. You can now start a Jupyter Notebook and start using ipychart !
 
 ::: danger
-If you are working with a virtual environment, **please be sure to launch the notebook from the same environment where you installed ipychart**:
+If you are working within a virtual environment, **please make sure to launch the notebook from the same environment out of which you installed ipychart**:
 ```bash
 $ source activate myenv # or conda activate myenv
 (myenv) $ jupyter notebook # notebook is launched from myenv environment
@@ -21,7 +21,7 @@ Otherwise, the charts will not be displayed.
 
 ## Check Installation
 
-You may have to enable the Jupyter notebook extension if it is not done already. You can check which extension is enabled using the following command:
+You may have to enable the Jupyter notebook extension if it is not already done. You can view enabled extensions using the following command:
 
 ``` bash
 $ jupyter nbextension list
