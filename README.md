@@ -4,6 +4,8 @@
 </p>
 
 <p align="center">
+    <img alt="GitHub" src="https://img.shields.io/github/license/nicohlr/ipychart">
+    <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/nicohlr/ipychart">
 </p>
 
 Installation
@@ -22,11 +24,11 @@ Documentation
 - [**Getting Started**](https://nicohlr.gitlab.io/ipychart/user_guide/getting_started.html)
 - [**Usage**](https://nicohlr.gitlab.io/ipychart/user_guide/usage.html)
 - [**Charts**](https://nicohlr.gitlab.io/ipychart/user_guide/charts.html)
-- [**Configuration**](https://nicohlr.gitlab.io/ipychart/user_guide/config.html)
+- [**Configuration**](https://nicohlr.gitlab.io/ipychart/user_guide/configuration.html)
 - [**Scales**](https://nicohlr.gitlab.io/ipychart/user_guide/scales.html)
 - [**Pandas Interface**](https://nicohlr.gitlab.io/ipychart/user_guide/pandas.html)
 - [**Advanced Features**](https://nicohlr.gitlab.io/ipychart/user_guide/advanced.html)
-- [**Developers**](https://nicohlr.gitlab.io/test_deploy_vuepress/developer_guide/development_installation.html)
+- [**Developers**](https://nicohlr.gitlab.io/ipychart/developer_guide/development_installation.html)
 
 Usage
 ------------
