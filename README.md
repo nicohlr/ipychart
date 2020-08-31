@@ -11,10 +11,14 @@
 Installation
 ------------
 
-To install use pip:
+You can install ipychart from your terminal using pip or conda:
 
 ```bash
+# using pip
 $ pip install ipychart
+
+# using conda
+$ conda install -c conda-forge ipychart
 ```
 
 Documentation

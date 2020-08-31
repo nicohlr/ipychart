@@ -21,6 +21,9 @@ pageClass: custom-home-page
 ``` bash
 # using pip
 $ pip install ipychart
+
+# using conda
+$ conda install -c conda-forge ipychart
 ```
 
 ::: warning COMPATIBILITY NOTE

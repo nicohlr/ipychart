@@ -2,10 +2,14 @@
 
 ## Installation
 
-You can install ipychart from your terminal using pip:
+You can install ipychart from your terminal using pip or conda:
 
 ``` bash
+# using pip
 $ pip install ipychart
+
+# using conda
+$ conda install -c conda-forge ipychart
 ```
 
 That's about it. You can now start a Jupyter Notebook and start using ipychart !
@@ -66,5 +70,5 @@ The chart is displayed directly as an output from the notebook cell. It looks li
 <getting-started/>
 
 ::: tip
-You can hover the chart to display some data for each bar. These popups are called "tooltips" and are [fully configurable](/ipychart/user_guide/advanced#callback-functions).
+You can hover the chart to display some data for each bar. These popups are called "tooltips" and are [fully configurable](/ipychart/user_guide/configuration#tooltips).
 :::
