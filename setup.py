@@ -142,7 +142,12 @@ setup_args = {
         ('etc/jupyter/nbconfig/notebook.d', ['ipychart.json'])
     ],
     'install_requires': [
-        'ipywidgets>=7.0.0',
+        'ipywidgets>=7.4.0',
+        'numpy>=1.18.0',
+        'pandas>=1.0.3',
+        'pydash>=4.8.0',
+        'scikit-learn>=0.23.2',
+        'traitlets>=4.3.0',
     ],
     'packages': find_packages(),
     'zip_safe': False,
@@ -154,7 +159,7 @@ setup_args = {
     },
 
     'author': 'Nicolas Houlier',
-    'author_email': 'houlier.nicolas@outlook.fr',
+    'author_email': 'nicolas.houlier@gmail.com',
     'url': 'https://github.com/nicohlr/ipychart',
     'keywords': [
         'ipython',
@@ -173,6 +178,9 @@ setup_args = {
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
     ],
 }
 
