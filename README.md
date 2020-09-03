@@ -6,6 +6,9 @@
 <p align="center">
     <img alt="GitHub" src="https://img.shields.io/github/license/nicohlr/ipychart">
     <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/nicohlr/ipychart">
+    <a href="https://mybinder.org/v2/gh/nicohlr/ipychart-demo-notebooks/master">
+        <img alt="GitHub release (latest by date)" src="https://mybinder.org/badge_logo.svg">
+    </a>
 </p>
 
 Installation
