@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from pydash import set_, merge
 from pandas.api.types import is_numeric_dtype
 from sklearn.neighbors import KernelDensity
 from sklearn.model_selection import GridSearchCV
@@ -42,63 +43,32 @@ class ChartDataFrame():
 
         agg_label = '' if not agg else ' (' + agg + ')'
 
-        # Set axes labels corresponding to dataframe cols when option is not already set
         if kind != 'radar':
-            if options:
-                if 'scales' in options.keys():
-                    if 'xAxes' in options['scales'].keys():
-                        if 'scaleLabel' not in options['scales']['xAxes'][0]:
-                            options['scales']['xAxes'][0].update({'scaleLabel': {'display': True, 'labelString': x}})
-                        else:
-                            if 'labelString' not in options['scales']['xAxes'][0]['scaleLabel']:
-                                options['scales']['xAxes'][0]['scaleLabel']['labelString'] = x
-                    else:
-                        options['scales'].update({'xAxes': [{'scaleLabel': {'display': True, 'labelString': x}}]})
-                    if 'yAxes' in options['scales'].keys():
-                        if 'scaleLabel' not in options['scales']['yAxes'][0]:
-                            options['scales']['yAxes'][0].update({'scaleLabel': {'display': True, 'labelString': y + agg_label}})
-                        else:
-                            if 'labelString' not in options['scales']['yAxes'][0]['scaleLabel']:
-                                options['scales']['yAxes'][0]['scaleLabel']['labelString'] = y + agg_label
-                    else:
-                        options['scales'].update({'yAxes': [{'scaleLabel': {'display': True, 'labelString': y + agg_label}}]})
-                else:
-                    options['scales'] = {'xAxes': [{'scaleLabel': {'display': True, 'labelString': x}}],
-                                         'yAxes': [{'scaleLabel': {'display': True, 'labelString': y + agg_label}}]}
-            else:
-                options = {'scales': {'xAxes': [{'scaleLabel': {'display': True, 'labelString': x}}],
-                                      'yAxes': [{'scaleLabel': {'display': True, 'labelString': y + agg_label}}]}}
+
+            default_options = {
+                'scales': {'xAxes': [{'scaleLabel': {'display': True, 'labelString': x}}],
+                           'yAxes': [{'scaleLabel': {'display': True, 'labelString': y + agg_label}}]},
+                'tooltips': {'titleFontSize': 18, 'bodyFontSize': 18, 'enabled': True,
+                             'callbacks': {'title': """function(tooltipItem, data) {return '%s = ' + tooltipItem[0].xLabel;};""" % x,
+                                           'label': """function(tooltipItem, data) {return '%s = ' + tooltipItem.yLabel;};""" % (y + agg_label)}}
+            }
+
         else:
-            if options:
-                if 'legend' in options.keys():
-                    if 'display' not in options['legend'].keys():
-                        options['legend']['display'] = True
-                else:
-                    options['legend'] = {'display': True}
-            else:
-                options = {'legend': {'display': True}}
+            default_options = {'legend': {'display': True},
+                               'tooltips': {'titleFontSize': 18, 'bodyFontSize': 18, 'enabled': True,
+                                            'callbacks': {'title': """function(tooltipItem, data) {return '%s = ' + data.labels[tooltipItem[0].index];};""" % x,
+                                                          'label': """function(tooltipItem, data) {return '%s = ' + tooltipItem.yLabel;};""" % (y + agg_label)}}}
 
         # Set legend prefix if "hue" if activated
         if hue:
-            if options:
-                skip_legend = False
-                if 'legend' in options.keys():
-                    if 'labels' in options['legend'].keys():
-                        if 'generateLabels' in options['legend']['labels']:
-                            skip_legend = True
-                    else:
-                        options['legend'].update({'labels': {}})
-                else:
-                    options['legend'] = {'labels': {}}
-            else:
-                options = {'legend': {}}
+            default_options = set_(default_options, 'legend.labels.generateLabels',
+                                   """function(chart) {let labels = Chart.defaults.global.legend.labels.generateLabels(chart);
+                                   labels.map(label => {label['text'] = "%s" + " = " + label['text']; return label});return labels;};""" % hue)
 
-            if not skip_legend:
-                # Callback function to add preficx before legend labels
-                options['legend']['labels']['generateLabels'] = """function(chart) {
-                        let labels = Chart.defaults.global.legend.labels.generateLabels(chart);
-                        labels.map(label => {label['text'] = "%s" + " = " + label['text']; return label});
-                        return labels;};""" % hue
+            default_options = set_(default_options, 'tooltips.callbacks.title',
+                                   """function(tooltipItem, data) {return '%s = ' + tooltipItem[0].xLabel + ' AND ' + '%s = ' + data.datasets[tooltipItem[0].datasetIndex].label;};""" % (x, hue))
+
+        options = merge(default_options, options)
 
         return options
 
@@ -168,9 +138,8 @@ class ChartDataFrame():
 
             if hue:
                 # Create one dataset for each unique value of the hue column
-                for i, v in enumerate(self.df[hue].unique()):
+                for i, v in enumerate(sorted(self.df[hue].unique())):
                     if isinstance(dataset_options, list):
-                        print(dataset_options[i])
                         data['datasets'].append({'data': self.df[self.df[hue] == v].groupby(x).agg(agg)[y].round(4).tolist(), 'label': v, **dataset_options[i]})
                     else:
                         data['datasets'].append({'data': self.df[self.df[hue] == v].groupby(x).agg(agg)[y].round(4).tolist(), 'label': v, **dataset_options})
