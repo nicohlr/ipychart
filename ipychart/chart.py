@@ -3,7 +3,7 @@ import json
 import numpy as np
 import pandas as pd
 import ipywidgets as widgets
-from pydash import has
+from pydash import has, set_, merge
 from traitlets import Unicode, default, Dict
 from ipywidgets.embed import embed_minimal_html, dependency_state, embed_data
 from ._version import __version__
@@ -111,25 +111,22 @@ class Chart(widgets.DOMWidget):
         """
 
         # Display axis by default only for certain types of chart
-        x_axis_display, y_axis_display = (True, True)
-        if self.kind in ['radar', 'doughnut', 'polarArea', 'pie']:
-            x_axis_display, y_axis_display = (False, False)
+        x_axis_display, y_axis_display = (False,) * 2 if self.kind in ['radar', 'doughnut', 'polarArea', 'pie'] else (True,) * 2
 
-        # Override default scales options from Chart.js if not setted by the user
-        if 'scales' not in self.options and 'scale' not in self.options:
-            if self.kind not in ['radar', 'polarArea']:
-                self.options.update({'scales': {
-                    'yAxes': [{'display': y_axis_display, 'ticks': {'beginAtZero': True, 'display': y_axis_display}}],
-                    'xAxes': [{'display': x_axis_display, 'ticks': {'beginAtZero': True, 'display': x_axis_display}}]
-                }})
-            else:
-                self.options.update({'scale': {'ticks': {'beginAtZero': True}}})
+        # Default Axes options
+        if self.kind not in ['radar', 'polarArea']:
+            default_options = {'scales': {
+                'yAxes': [{'display': y_axis_display, 'ticks': {'beginAtZero': True, 'display': y_axis_display}}],
+                'xAxes': [{'display': x_axis_display, 'ticks': {'beginAtZero': True, 'display': x_axis_display}}]}
+            }
+        else:
+            default_options = {'scale': {'ticks': {'beginAtZero': True}}}
 
-        # Override default legend options from Chart.js if not setted by the user
-        if 'legend' not in self.options:
-            if len(self.data['datasets']) == 1 and self.kind in ['bar', 'line', 'horizontalBar', 'bubble', 'radar', 'scatter']:
-                self.options.update({'legend': False})
+        # Default Legend options
+        if len(self.data['datasets']) == 1 and self.kind in ['bar', 'line', 'horizontalBar', 'bubble', 'radar', 'scatter']:
+            default_options = set_(default_options, 'legend', False)
 
+        self.options = merge(default_options, self.options)
 
     def _set_default_style(self):
         """
