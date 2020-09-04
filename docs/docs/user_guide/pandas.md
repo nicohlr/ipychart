@@ -18,7 +18,7 @@ titanic.head()
 ```
 <pandas-head/>
 
-Concretely, to use ipychart's Pandas interface, we will have to use the *ChartDataFrame* class (instead of using the *Chart* class that we saw previously). So let's start by creating an instance of this class, giving our Pandas dataframe as an argument:
+Concretely, to use ipychart's Pandas interface, we will have to use the second class of the ipychart package: the *ChartDataFrame* class (instead of using the *Chart* class that we saw previously). So let's start by creating an instance of this class, giving our Pandas dataframe as an argument:
 
 ```py
 from ipychart import ChartDataFrame
@@ -210,15 +210,15 @@ Colorscheme to use when drawing the chart. List of available colorscheme: link.
 **Example:**
 
 ```py
-data_chart.radar(x='Title', y='Fare', colorscheme='office.Yellow6')
+titanic_chart.radar(x='Title', y='Fare', colorscheme='office.Yellow6')
 ```
 
 <pandas-radar/>
 
-### Pie, Doughnut & Polar Area
+### Doughnut, Pie & Polar Area
 
-Pie and doughnut charts are excellent at showing the relational proportions between data. Polar Area charts are similar to pie and doughnut charts, but each segment has the same angle - the radius of the segment differs depending on the value. 
-To draw one of these charts, you must call the *pie* method, the *doughnut* method or the *polararea* method:
+Doughnut and pie charts are excellent at showing the relational proportions between data. Polar Area charts are similar to doughnut and pie charts, but each segment has the same angle - the radius of the segment differs depending on the value. 
+To draw one of these charts, you must call the *doughnut* method, the *pie* method or the *polararea* method:
 
 ```py
 ChartDataFrame.doughnut(x: str, y: str, agg: str = 'mean', 

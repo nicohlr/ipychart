@@ -26,7 +26,7 @@ The source code of the ipychart package is available on GitHub at [github.com/ni
 
 You can also find, on Github, a repo with notebooks containing various examples of use cases of ipychart. Many code snippets used to create all kinds of charts are gathered there. The repo **ipychart-demo-notebooks** is accessible at the following address : [github.com/nicohlr/ipychart-demo-notebooks](https://github.com/nicohlr/ipychart-demo-notebooks)
 
-Finally, you can also try ipychart online, directly on the dedicated binder that uses the notebooks of the **ipychart-demo-notebooks** repo. To do so, [**click here**]().
+Finally, you can also try ipychart online, directly on the dedicated binder that uses the notebooks of the **ipychart-demo-notebooks** repo. To do so, [**click here**](https://mybinder.org/v2/gh/nicohlr/ipychart-demo-notebooks/master).
 
 <p style="font-size:1.65rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;padding-bottom:.3rem;margin-top:-3.1rem;border-bottom:1px solid #eaecef;">References</p>
 

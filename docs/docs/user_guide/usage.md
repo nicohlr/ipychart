@@ -1,6 +1,6 @@
 # Usage
 
-The ipychart API is composed of only one *Chart* class which allows you to create all types of charts. This class takes 4 arguments as inputs: **data**, **kind**, **options** and **colorscheme**. These arguments have a particular structure to match the backend Chart.js API. If you don't respect the structure of these arguments the package may not work. 
+The ipychart API is composed of a base class named *Chart* which allows you to create all types of charts. This class takes 4 arguments as inputs: **data**, **kind**, **options** and **colorscheme**. These arguments have a particular structure to match the backend Chart.js API. If you don't respect the structure of these arguments the package may not work. 
 
 In this section, we will go through each argument to present its use and its structure. But before that, let's start with a little aside where we compare the APIs of Chart.js and ipychart.
 
