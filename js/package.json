@@ -4,6 +4,7 @@
   "description": "A Jupyter - Chart.js bridge enabling interactive data visualization in the Jupyter notebook.",
   "author": "Nicolas Houlier",
   "main": "lib/index.js",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/nicohlr/ipychart.git"
@@ -21,8 +22,8 @@
   ],
   "scripts": {
     "clean": "rimraf dist/",
-    "prepublish": "webpack",
-    "build": "webpack",
+    "prepublish": "webpack --mode production",
+    "build": "webpack --mode production",
     "watch": "webpack --watch --mode=development",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
