@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./docs/docs/.vuepress/public/ipychart.png" width="16%"><br/>
+    <img src="./docs/docs/.vuepress/public/ipychart.png" width="18%"><br/>
     The power of Chart.js in Jupyter Notebooks
 </p>
 
@@ -7,7 +7,10 @@
     <img alt="GitHub" src="https://img.shields.io/github/license/nicohlr/ipychart">
     <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/nicohlr/ipychart">
     <a href="https://mybinder.org/v2/gh/nicohlr/ipychart-demo-notebooks/master">
-        <img alt="GitHub release (latest by date)" src="https://mybinder.org/badge_logo.svg">
+        <img alt="Binder" src="https://mybinder.org/badge_logo.svg">
+    </a>
+    <a href="https://github.com/chartjs/awesome">
+        <img alt="Awesome Chart.js" src="https://img.shields.io/static/v1?message=awesome&logo=awesome-lists&labelColor=fc60a8&color=494368&logoColor=white&label=%20">
     </a>
 </p>
 
