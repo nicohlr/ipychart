@@ -72,7 +72,7 @@ class ChartDataFrame():
 
         return options
 
-    def _create_chart_data_count(self, x: str, dataset_options: [dict, list] = {}):
+    def _create_chart_data_count(self, x: str, dataset_options: list[dict, list] = {}):
         """
         This function will prepare all the arguments to create a chart from the input of the user.
         Data are counted before being send to the Chart.
@@ -98,7 +98,7 @@ class ChartDataFrame():
 
         return data
 
-    def _create_chart_data_agg(self, kind: str, x: str, y: str, hue: str = None, r: str = None, agg: str = None, dataset_options: [dict, list] = {}):
+    def _create_chart_data_agg(self, kind: str, x: str, y: str, hue: str = None, r: str = None, agg: str = None, dataset_options: list[dict, list] = {}):
         """
         This function will prepare all the arguments to create a chart from the input of the user.
         Data are automatically aggregated using the method specified in the "agg" argument before being send to the Chart.
@@ -196,7 +196,8 @@ class ChartDataFrame():
 
         return data
 
-    def count(self, x: str, orient: str = 'v', dataset_options: dict = {}, options: dict = None, colorscheme: str = None):
+    def count(self, x: str, orient: str = 'v', dataset_options: dict = {}, options: dict = None, colorscheme: str = None,
+              zoom: bool = True):
         """
         Show the counts of observations in each categorical bin using bars.
 
@@ -205,6 +206,7 @@ class ChartDataFrame():
             dataset_options (dict, optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
             options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
             colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None. Defaults to None.
+            zoom (bool, optional): Allow the user to zoom on the Chart once it is created. Defaults to True.
 
         Returns:
             [ipychart.Chart]: A chart which display the data using ipychart
@@ -221,9 +223,10 @@ class ChartDataFrame():
 
         kind = 'bar' if orient == 'v' else 'horizontalBar'
 
-        return Chart(data=data, kind=kind, options=options, colorscheme=colorscheme)
+        return Chart(data=data, kind=kind, options=options, colorscheme=colorscheme, zoom=zoom)
 
-    def dist(self, x: str, bandwidth: [float, str] = 'auto', gridsize: int = 1000, dataset_options: dict = {}, options: dict = None, colorscheme: str = None, **kwargs):
+    def dist(self, x: str, bandwidth: list[float, str] = 'auto', gridsize: int = 1000, dataset_options: dict = {},
+             options: dict = None, colorscheme: str = None, zoom: bool = True, **kwargs):
         """
         Fit and plot a univariate kernel density estimate on a line chart. This is useful to have a representation of the distribution of the data.
 
@@ -234,6 +237,7 @@ class ChartDataFrame():
             dataset_options (dict, optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
             options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
             colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None. Defaults to None.
+            zoom (bool, optional): Allow the user to zoom on the Chart once it is created. Defaults to True.
 
         Returns:
             [ipychart.Chart]: A chart which display the data using ipychart
@@ -280,10 +284,10 @@ class ChartDataFrame():
             if 'callback' not in options['scales']['xAxes'][0]['ticks']:
                 options['scales']['xAxes'][0]['ticks']['callback'] = ticks_format_function
 
-        return Chart(data, 'line', options=options)
+        return Chart(data, 'line', options=options, colorscheme=colorscheme, zoom=zoom)
 
-    def line(self, x: str, y: str, hue: str = None, agg: str = 'mean', dataset_options: [dict, list] = {},
-             options: dict = None, colorscheme: str = None):
+    def line(self, x: str, y: str, hue: str = None, agg: str = 'mean', dataset_options: list[dict, list] = {},
+             options: dict = None, colorscheme: str = None, zoom: bool = True):
         """
         A line chart is a way of plotting data points on a line. Often, it is used to show a trend in the data, or the comparison of two data sets.
 
@@ -295,6 +299,7 @@ class ChartDataFrame():
             dataset_options ([dict, list], optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
             options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
             colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None.
+            zoom (bool, optional): Allow the user to zoom on the Chart once it is created. Defaults to True.
 
         Returns:
             [ipychart.Chart]: A chart which display the data using ipychart
@@ -303,10 +308,10 @@ class ChartDataFrame():
         data = self._create_chart_data_agg(kind='line', x=x, y=y, hue=hue, agg=agg, dataset_options=dataset_options)
         options = self._create_chart_options(kind='line', options=options, x=x, y=y, hue=hue, agg=agg)
 
-        return Chart(data=data, kind='line', options=options, colorscheme=colorscheme)
+        return Chart(data=data, kind='line', options=options, colorscheme=colorscheme, zoom=zoom)
 
-    def bar(self, x: str, y: str, hue: str = None, agg: str = 'mean', dataset_options: [dict, list] = {},
-            options: dict = None, colorscheme: str = None, horizontal: bool = False):
+    def bar(self, x: str, y: str, hue: str = None, agg: str = 'mean', dataset_options: list[dict, list] = {},
+            options: dict = None, colorscheme: str = None, horizontal: bool = False, zoom: bool = True):
         """
         A bar chart provides a way of showing data values represented as vertical bars. It is sometimes used to show a trend in the data, and the comparison of multiple data sets side by side.
 
@@ -319,6 +324,7 @@ class ChartDataFrame():
             options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
             colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None.
             horizontal (bool): draw the bar chart horizontally. Defaults to False.
+            zoom (bool, optional): Allow the user to zoom on the Chart once it is created. Defaults to True.
 
         Returns:
             [ipychart.Chart]: A chart which display the data using ipychart
@@ -328,11 +334,11 @@ class ChartDataFrame():
         options = self._create_chart_options(kind='bar', options=options, x=x, y=y, hue=hue, agg=agg)
 
         if horizontal:
-            return Chart(data=data, kind='horizontalBar', options=options, colorscheme=colorscheme)
+            return Chart(data=data, kind='horizontalBar', options=options, colorscheme=colorscheme, zoom=zoom)
         else:
-            return Chart(data=data, kind='bar', options=options, colorscheme=colorscheme)
+            return Chart(data=data, kind='bar', options=options, colorscheme=colorscheme, zoom=zoom)
 
-    def radar(self, x: str, y: str, hue: str = None, agg: str = 'mean', dataset_options: [dict, list] = {},
+    def radar(self, x: str, y: str, hue: str = None, agg: str = 'mean', dataset_options: list[dict, list] = {},
               options: dict = None, colorscheme: str = None):
         """
         A radar chart is a way of showing multiple data points and the variation between them. They are often useful for comparing the points of two or more different data sets.
@@ -425,8 +431,8 @@ class ChartDataFrame():
 
         return Chart(data=data, kind='polarArea', options=options, colorscheme=colorscheme)
 
-    def scatter(self, x: str, y: str, hue: str = None, dataset_options: [dict, list] = {},
-                options: dict = None, colorscheme: str = None):
+    def scatter(self, x: str, y: str, hue: str = None, dataset_options: list[dict, list] = {},
+                options: dict = None, colorscheme: str = None, zoom: bool = True):
         """
         Scatter charts are based on basic line charts with the x axis changed to a linear axis.
 
@@ -438,6 +444,7 @@ class ChartDataFrame():
             dataset_options ([dict, list], optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
             options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
             colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None.
+            zoom (bool, optional): Allow the user to zoom on the Chart once it is created. Defaults to True.
 
         Returns:
             [ipychart.Chart]: A chart which display the data using ipychart
@@ -446,10 +453,10 @@ class ChartDataFrame():
         data = self._create_chart_data_agg(kind='scatter', x=x, y=y, hue=hue, dataset_options=dataset_options)
         options = self._create_chart_options(kind='scatter', options=options, x=x, y=y, hue=hue)
 
-        return Chart(data=data, kind='scatter', options=options, colorscheme=colorscheme)
+        return Chart(data=data, kind='scatter', options=options, colorscheme=colorscheme, zoom=zoom)
 
-    def bubble(self, x: str, y: str, r: str, hue: str = None, dataset_options: [dict, list] = {},
-               options: dict = None, colorscheme: str = None):
+    def bubble(self, x: str, y: str, r: str, hue: str = None, dataset_options: list[dict, list] = {},
+               options: dict = None, colorscheme: str = None, zoom: bool = True):
         """
         A bubble chart is used to display three-dimension data.
         The location of the bubble is determined by the first two dimensions and the corresponding horizontal and vertical axes.
@@ -464,6 +471,7 @@ class ChartDataFrame():
             dataset_options ([dict, list], optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
             options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
             colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None.
+            zoom (bool, optional): Allow the user to zoom on the Chart once it is created. Defaults to True.
 
         Returns:
             [ipychart.Chart]: A chart which display the data using ipychart
@@ -472,4 +480,4 @@ class ChartDataFrame():
         data = self._create_chart_data_agg(kind='bubble', x=x, y=y, r=r, hue=hue, dataset_options=dataset_options)
         options = self._create_chart_options(kind='bubble', options=options, x=x, y=y, hue=hue)
 
-        return Chart(data=data, kind='bubble', options=options, colorscheme=colorscheme)
+        return Chart(data=data, kind='bubble', options=options, colorscheme=colorscheme, zoom=zoom)

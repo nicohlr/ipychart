@@ -2,6 +2,7 @@ const widgets = require('@jupyter-widgets/base');
 const Chart = require('chart.js');
 const ChartDataLabels = require('chartjs-plugin-datalabels');
 const ChartColorSchemes = require('chartjs-plugin-colorschemes');
+const ChartZoom = require('chartjs-plugin-zoom');
 const Colorschemes = require('./colorschemes.js')['default'];
 var version = require('../package.json')['version'];
 var _ = require('lodash');
@@ -155,13 +156,15 @@ const ChartView = widgets.DOMWidgetView.extend({
         const ctx = canvas.getContext('2d');
 
         // Create chart
-        new Chart(ctx, {
-            plugins: [ChartDataLabels, ChartColorSchemes],
+        const chart = new Chart(ctx, {
+            plugins: [ChartDataLabels, ChartColorSchemes, ChartZoom],
             type: type,
             data: data,
             options: options
         });
-
+        
+        chart.canvas.ondblclick = function() {chart.resetZoom()};
+        
         // Add element to output
         this.el.appendChild(canvas);
         console.log(version)

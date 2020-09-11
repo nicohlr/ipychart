@@ -20,6 +20,7 @@ class Chart(widgets.DOMWidget):
         kind (str): Type of chart. This string corresponds to the "type" argument of Chart.js.
         options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
         colorscheme (str, optional): Choose a predefined color scheme to your chart. List of all available colorschemes can be found here: https://nagix.github.io/chartjs-plugin-colorschemes/colorchart.html. Defaults to None.
+        zoom (bool, optional): Allow the user to zoom on the Chart once it is created. Disabled for Doughnut, Pie, PolarArea and Radar Charts. Defaults to True.
     """
 
     _view_name = Unicode('ChartView').tag(sync=True)
@@ -33,13 +34,14 @@ class Chart(widgets.DOMWidget):
     _options = Dict().tag(sync=True)
     _type = Unicode().tag(sync=True)
 
-    def __init__(self, data: dict, kind: str, options: dict = None, colorscheme: str = None):
+    def __init__(self, data: dict, kind: str, options: dict = None, colorscheme: str = None, zoom: bool = True):
 
         super().__init__()
         self.data = data
         self.kind = kind
         self.options = options if options else {}
         self.colorscheme = colorscheme
+        self.zoom = zoom
 
         # Check user input
         self._validate_input()
@@ -95,6 +97,11 @@ class Chart(widgets.DOMWidget):
         if self.colorscheme:
             assert isinstance(self.colorscheme, str), msg_format.format('colorscheme')
             self.options = merge({'plugins': {'colorschemes': {'scheme': self.colorscheme}}}, self.options)
+
+        # Check zoom argument
+        assert isinstance(self.zoom, bool), msg_format.format('zoom')
+        self.zoom = False if self.kind in ['radar', 'doughnut', 'polarArea', 'pie'] else self.zoom
+        self.options = merge({'plugins': {'zoom': {'zoom': {'enabled': self.zoom, 'drag': True}, 'pan': {'enabled': False}}}}, self.options)
 
     def _set_default_options(self):
         """
