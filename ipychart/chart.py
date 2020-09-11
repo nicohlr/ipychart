@@ -19,6 +19,7 @@ class Chart(widgets.DOMWidget):
         data (dict): Data to draw. This dictionary corresponds to the "data" argument of Chart.js.
         kind (str): Type of chart. This string corresponds to the "type" argument of Chart.js.
         options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
+        colorscheme (str, optional): Choose a predefined color scheme to your chart. List of all available colorschemes can be found here: https://nagix.github.io/chartjs-plugin-colorschemes/colorchart.html. Defaults to None.
     """
 
     _view_name = Unicode('ChartView').tag(sync=True)
@@ -64,45 +65,36 @@ class Chart(widgets.DOMWidget):
         To see more details about this structure, please check the documentation: https://nicohlr.gitlab.io/ipychart/user_guide/usage.html
         """
 
-        msg_data = 'Wrong input format for data argument. See https://nicohlr.gitlab.io/ipychart/ for more details'
-        msg_kind = 'Chart kind must be one of : line, bar, radar, doughnut, polarArea, bubble, horizontalBar, pie. See https://nicohlr.gitlab.io/ipychart/ for more details'
-        msg_options = 'Wrong input format for options argument. See https://nicohlr.gitlab.io/ipychart/ for more details'
-        msg_colorscheme = 'Wrong input format for colorscheme argument. See https://nicohlr.gitlab.io/ipychart/ for more details'
+        msg_format = 'Wrong input format for {} argument. See https://nicohlr.gitlab.io/ipychart/user_guide/usage.html for more details'
+        msg_kind = 'Chart kind must be one of : line, bar, radar, doughnut, polarArea, bubble, horizontalBar, pie. See https://nicohlr.gitlab.io/ipychart/user_guide/charts.html for more details'
 
         # Check data argument
-        assert 'datasets' in self.data, msg_data
-        assert len(self.data['datasets']), msg_data
-        assert ['data' in ds for ds in self.data['datasets']] == [True] * len(self.data['datasets']), msg_data
+        assert 'datasets' in self.data, msg_format.format('data')
+        assert len(self.data['datasets']), msg_format.format('data')
+        assert ['data' in ds for ds in self.data['datasets']] == [True] * len(self.data['datasets']), msg_format.format('data')
         if 'kind' in ['bubble', 'scatter']:
-            for d in self.data['datasets']:
-                assert all(isinstance(x, dict) for x in d['data']), msg_data
-                assert all(k in p for k in ('x', 'y', 'r') for p in self.data), msg_data
-        for d in self.data['datasets']:
-            if 'datalabels' in d:
-                assert isinstance(d['datalabels'], dict), msg_data
+            for dataset in self.data['datasets']:
+                assert all(isinstance(x, dict) for x in dataset['data']), msg_format.format("data['datasets']")
+                assert all(k in p for k in ('x', 'y', 'r') for p in self.data), msg_format.format('data')
+        for dataset in self.data['datasets']:
+            dataset['data'] = dataset['data'].tolist() if isinstance(dataset['data'], pd.Series) else dataset['data']
+            if 'datalabels' in dataset:
+                assert isinstance(dataset['datalabels'], dict), msg_format.format('data')
+        if 'labels' in self.data:
+            self.data['labels'] = self.data['labels'].tolist() if isinstance(self.data['labels'], pd.Series) else self.data['labels']
 
         # Check kind argument
         assert self.kind in ['line', 'bar', 'horizontalBar', 'radar', 'doughnut', 'polarArea', 'bubble', 'pie', 'scatter'], msg_kind
 
         # Check options argument
         if self.options:
-            assert isinstance(self.options, dict), msg_options
-            for key in self.options:
-                assert key in ['legend', 'title', 'tooltips', 'scales', 'scale', 'layout', 'animation', 'hover', 'plugins', 'legendCallback'], msg_options
+            assert isinstance(self.options, dict), msg_format.format('options')
+            assert set(self.options.keys()).issubset(set(['legend', 'title', 'tooltips', 'scales', 'scale', 'layout', 'animation', 'hover', 'plugins', 'legendCallback'])), msg_format.format('options')
 
         # Check colorscheme argument
         if self.colorscheme:
-            assert isinstance(self.colorscheme, str), msg_colorscheme
-            if self.options:
-                self.options.update({'plugins': {'colorschemes': {'scheme': self.colorscheme}}})
-            else:
-                self.options = {'plugins': {'colorschemes': {'scheme': self.colorscheme}}}
-
-        # Pandas series handling
-        for d in self.data['datasets']:
-            d['data'] = d['data'].tolist() if isinstance(d['data'], pd.Series) else d['data']
-        if 'labels' in self.data:
-            self.data['labels'] = self.data['labels'].tolist() if isinstance(self.data['labels'], pd.Series) else self.data['labels']
+            assert isinstance(self.colorscheme, str), msg_format.format('colorscheme')
+            self.options = merge({'plugins': {'colorschemes': {'scheme': self.colorscheme}}}, self.options)
 
     def _set_default_options(self):
         """
