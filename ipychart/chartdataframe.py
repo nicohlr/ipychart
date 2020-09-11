@@ -85,7 +85,7 @@ class ChartDataFrame():
             data (dict): data dictionary ready to be inputted into a Chart class (i.e. match ipychart data format)
         """
 
-        assert x in self.df.columns
+        assert x in self.df.columns, f'Column {x} not found in dataframe columns'
 
         data = {'datasets': []}
 
@@ -98,7 +98,7 @@ class ChartDataFrame():
 
         return data
 
-    def _create_chart_data_agg(self, kind: str, x: str, y: str, hue: str = None, r: str = None, agg: str = None, dataset_options: list[dict, list] = {}):
+    def _create_chart_data_agg(self, kind: str, x: str, y: str, r: str = None, hue: str = None, agg: str = None, dataset_options: list[dict, list] = {}):
         """
         This function will prepare all the arguments to create a chart from the input of the user.
         Data are automatically aggregated using the method specified in the "agg" argument before being send to the Chart.
@@ -107,8 +107,8 @@ class ChartDataFrame():
             kind (str): The kind of the chart.
             x (str): Column of the dataframe used as datapoints for x Axis.
             y (str): Column of the dataframe used as datapoints for y Axis.
-            hue (str, optional): Grouping variable that will produce points with different colors. Defaults to None.
             r (str, optional): Column used to define the radius of the bubbles (only for bubble chart). Defaults to None.
+            hue (str, optional): Grouping variable that will produce points with different colors. Defaults to None.
             agg (str, optional): The aggregator used to gather data (ex: 'median' or 'mean'). Defaults to None.
             dataset_options ([dict, list], optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
 
@@ -116,13 +116,13 @@ class ChartDataFrame():
             data (dict): data dictionary ready to be inputted into a Chart class (i.e. match ipychart data format)
         """
 
-        assert x in self.df.columns
-        assert y in self.df.columns
+        assert x in self.df.columns, f'Column {x} not found in dataframe columns'
+        assert y in self.df.columns, f'Column {y} not found in dataframe columns'
         assert is_numeric_dtype(self.df[y]), 'Please input a numeric columns as y'
         assert kind in ['line', 'bar', 'horizontalBar', 'radar', 'doughnut', 'polarArea', 'bubble', 'pie', 'scatter']
 
         if hue:
-            assert hue in self.df.columns
+            assert hue in self.df.columns, f'Column {hue} not found in dataframe columns'
             assert self.df[hue].nunique() <= 10, 'Too much values for the hue column'
 
         if len(dataset_options):
@@ -196,13 +196,14 @@ class ChartDataFrame():
 
         return data
 
-    def count(self, x: str, orient: str = 'v', dataset_options: dict = {}, options: dict = None, colorscheme: str = None,
+    def count(self, x: str, horizontal: bool = False, dataset_options: dict = {}, options: dict = None, colorscheme: str = None,
               zoom: bool = True):
         """
         Show the counts of observations in each categorical bin using bars.
 
         Args:
             x (str): Column of the dataframe used as datapoints for x Axis.
+            horizontal (bool): draw the bar chart horizontally. Defaults to False.
             dataset_options (dict, optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
             options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
             colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None. Defaults to None.
@@ -212,16 +213,14 @@ class ChartDataFrame():
             [ipychart.Chart]: A chart which display the data using ipychart
         """
 
-        assert orient in ['v', 'h'], "orient argument must be either 'v' (vertical) or 'h' (horizontal)"
-
         data = self._create_chart_data_count(x=x, dataset_options=dataset_options)
 
-        if orient == 'v':
-            options = self._create_chart_options(kind='count', options=options, x=x, y='Count', hue=None)
-        else:
+        if horizontal:
             options = self._create_chart_options(kind='count', options=options, x='Count', y=x, hue=None)
+        else:
+            options = self._create_chart_options(kind='count', options=options, x=x, y='Count', hue=None)
 
-        kind = 'bar' if orient == 'v' else 'horizontalBar'
+        kind = 'horizontalBar' if horizontal else 'bar'
 
         return Chart(data=data, kind=kind, options=options, colorscheme=colorscheme, zoom=zoom)
 
@@ -238,6 +237,7 @@ class ChartDataFrame():
             options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
             colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None. Defaults to None.
             zoom (bool, optional): Allow the user to zoom on the Chart once it is created. Defaults to True.
+            kwargs (optionnal): Other keyword arguments are passed down to scikit-learn's KernelDensity class.
 
         Returns:
             [ipychart.Chart]: A chart which display the data using ipychart
@@ -267,7 +267,7 @@ class ChartDataFrame():
         kde_skl.fit(self.df[x].dropna().to_numpy()[:, np.newaxis])
         pdf = np.exp(kde_skl.score_samples(x_grid[:, np.newaxis]))
 
-        data = {'labels': x_grid.tolist(), 'datasets': [{'data': pdf.tolist(), 'pointRadius': 0}]}
+        data = {'labels': x_grid.tolist(), 'datasets': [{'data': pdf.tolist(), 'pointRadius': 0, **dataset_options}]}
 
         options = self._create_chart_options(kind='count', options=options, x=x, y=f'Density (bandwidth: {bandwidth.round(4)})', hue=None)
 
@@ -310,8 +310,8 @@ class ChartDataFrame():
 
         return Chart(data=data, kind='line', options=options, colorscheme=colorscheme, zoom=zoom)
 
-    def bar(self, x: str, y: str, hue: str = None, agg: str = 'mean', dataset_options: list[dict, list] = {},
-            options: dict = None, colorscheme: str = None, horizontal: bool = False, zoom: bool = True):
+    def bar(self, x: str, y: str, hue: str = None, horizontal: bool = False, agg: str = 'mean', dataset_options: list[dict, list] = {},
+            options: dict = None, colorscheme: str = None, zoom: bool = True):
         """
         A bar chart provides a way of showing data values represented as vertical bars. It is sometimes used to show a trend in the data, and the comparison of multiple data sets side by side.
 
@@ -319,11 +319,11 @@ class ChartDataFrame():
             x (str): Column of the dataframe used as datapoints for x Axis.
             y (str): Column of the dataframe used as datapoints for y Axis.
             hue (str, optional): Grouping variable that will produce points with different colors. Defaults to None.
+            horizontal (bool): draw the bar chart horizontally. Defaults to False.
             agg (str, optional): The aggregator used to gather data (ex: 'median' or 'mean'). Defaults to None.
             dataset_options ([dict, list], optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
             options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
             colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None.
-            horizontal (bool): draw the bar chart horizontally. Defaults to False.
             zoom (bool, optional): Allow the user to zoom on the Chart once it is created. Defaults to True.
 
         Returns:
@@ -440,7 +440,6 @@ class ChartDataFrame():
             x (str): Column of the dataframe used as datapoints for x Axis.
             y (str): Column of the dataframe used as datapoints for y Axis.
             hue (str, optional): Grouping variable that will produce points with different colors. Defaults to None.
-            agg (str, optional): The aggregator used to gather data (ex: 'median' or 'mean'). Defaults to None.
             dataset_options ([dict, list], optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
             options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
             colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None.
@@ -467,7 +466,6 @@ class ChartDataFrame():
             y (str): Column of the dataframe used as datapoints for y Axis.
             r (str, optional): Column of the dataframe used as radius for bubbles.
             hue (str, optional): Grouping variable that will produce points with different colors. Defaults to None.
-            agg (str, optional): The aggregator used to gather data (ex: 'median' or 'mean'). Defaults to None.
             dataset_options ([dict, list], optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
             options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
             colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None.
