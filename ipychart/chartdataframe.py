@@ -37,9 +37,10 @@ class ChartDataFrame():
             y (str): Column of the dataframe used as datapoints for y Axis.
             hue (str, optional): Grouping variable that will produce points with different colors. Defaults to None.
             options (dict, optional): All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js. Defaults to None.
+            agg (str, optional): The aggregator used to gather data (ex: 'median' or 'mean'). Defaults to None.
 
         Returns:
-            options (dict): options dictionary ready to be inputted into a Chart class (i.e. match ipychart options format)
+            options (dict): options dictionary ready to be inputted into a Chart class (i.e. match ipychart options format).
         """
 
         agg_label = '' if not agg else ' (' + agg + ')'
@@ -68,7 +69,7 @@ class ChartDataFrame():
                                    labels.map(label => {label['text'] = "%s" + " = " + label['text']; return label});return labels;};""" % hue)
 
             default_options = set_(default_options, 'tooltips.callbacks.title',
-                                   """function(tooltipItem, data) {return '%s = ' + tooltipItem[0].xLabel + ' AND ' + '%s = ' + data.datasets[tooltipItem[0].datasetIndex].label;};""" % (x, hue))
+                                   """function(tooltipItem, data) {return '%s = ' + tooltipItem[0].xLabel + ' & ' + '%s = ' + data.datasets[tooltipItem[0].datasetIndex].label;};""" % (x, hue))
 
         options = merge(default_options, options)
 
@@ -84,7 +85,7 @@ class ChartDataFrame():
             dataset_options ([dict, list], optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
 
         Returns:
-            data (dict): data dictionary ready to be inputted into a Chart class (i.e. match ipychart data format)
+            data (dict): data dictionary ready to be inputted into a Chart class (i.e. match ipychart data format).
         """
 
         assert x in self.df.columns, f'Column {x} not found in dataframe columns'
@@ -100,7 +101,8 @@ class ChartDataFrame():
 
         return data
 
-    def _create_chart_data_agg(self, kind: str, x: str, y: str, r: str = None, hue: str = None, agg: str = None, dataset_options: Union[dict, list] = {}):
+    def _create_chart_data_agg(self, kind: str, x: str, y: str, r: str = None, hue: str = None, agg: str = None,
+                               dataset_options: Union[dict, list] = {}):
         """
         This function will prepare all the arguments to create a chart from the input of the user.
         Data are automatically aggregated using the method specified in the "agg" argument before being send to the Chart.
@@ -115,7 +117,7 @@ class ChartDataFrame():
             dataset_options ([dict, list], optional): These are options directly related to the dataset object (i.e. options concerning your data). Defaults to {}.
 
         Returns:
-            data (dict): data dictionary ready to be inputted into a Chart class (i.e. match ipychart data format)
+            data (dict): data dictionary ready to be inputted into a Chart class (i.e. match ipychart data format).
         """
 
         assert x in self.df.columns, f'Column {x} not found in dataframe columns'
@@ -212,7 +214,7 @@ class ChartDataFrame():
             zoom (bool, optional): Allow the user to zoom on the Chart once it is created. Defaults to True.
 
         Returns:
-            [ipychart.Chart]: A chart which display the data using ipychart
+            [ipychart.Chart]: A chart which display the data using ipychart.
         """
 
         data = self._create_chart_data_count(x=x, dataset_options=dataset_options)
@@ -242,7 +244,7 @@ class ChartDataFrame():
             kwargs (optionnal): Other keyword arguments are passed down to scikit-learn's KernelDensity class.
 
         Returns:
-            [ipychart.Chart]: A chart which display the data using ipychart
+            [ipychart.Chart]: A chart which display the data using ipychart.
         """
 
         assert is_numeric_dtype(self.df[x]), 'Please input a numeric columns as x'
@@ -304,7 +306,7 @@ class ChartDataFrame():
             zoom (bool, optional): Allow the user to zoom on the Chart once it is created. Defaults to True.
 
         Returns:
-            [ipychart.Chart]: A chart which display the data using ipychart
+            [ipychart.Chart]: A chart which display the data using ipychart.
         """
 
         data = self._create_chart_data_agg(kind='line', x=x, y=y, hue=hue, agg=agg, dataset_options=dataset_options)
@@ -329,7 +331,7 @@ class ChartDataFrame():
             zoom (bool, optional): Allow the user to zoom on the Chart once it is created. Defaults to True.
 
         Returns:
-            [ipychart.Chart]: A chart which display the data using ipychart
+            [ipychart.Chart]: A chart which display the data using ipychart.
         """
 
         data = self._create_chart_data_agg(kind='bar', x=x, y=y, hue=hue, agg=agg, dataset_options=dataset_options)
@@ -355,7 +357,7 @@ class ChartDataFrame():
             colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None.
 
         Returns:
-            [ipychart.Chart]: A chart which display the data using ipychart
+            [ipychart.Chart]: A chart which display the data using ipychart.
         """
 
         data = self._create_chart_data_agg(kind='radar', x=x, y=y, hue=hue, agg=agg, dataset_options=dataset_options)
@@ -377,7 +379,7 @@ class ChartDataFrame():
             colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None.
 
         Returns:
-            [ipychart.Chart]: A chart which display the data using ipychart
+            [ipychart.Chart]: A chart which display the data using ipychart.
         """
         if y:
             data = self._create_chart_data_agg(kind='doughnut', x=x, y=y, agg=agg, dataset_options=dataset_options)
@@ -401,7 +403,7 @@ class ChartDataFrame():
             colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None.
 
         Returns:
-            [ipychart.Chart]: A chart which display the data using ipychart
+            [ipychart.Chart]: A chart which display the data using ipychart.
         """
 
         if y:
@@ -426,7 +428,7 @@ class ChartDataFrame():
             colorscheme (str, optional): Colorscheme to use when drawing the chart. Defaults to None.
 
         Returns:
-            [ipychart.Chart]: A chart which display the data using ipychart
+            [ipychart.Chart]: A chart which display the data using ipychart.
         """
         if y:
             data = self._create_chart_data_agg(kind='polarArea', x=x, y=y, agg=agg, dataset_options=dataset_options)
@@ -451,7 +453,7 @@ class ChartDataFrame():
             zoom (bool, optional): Allow the user to zoom on the Chart once it is created. Defaults to True.
 
         Returns:
-            [ipychart.Chart]: A chart which display the data using ipychart
+            [ipychart.Chart]: A chart which display the data using ipychart.
         """
 
         data = self._create_chart_data_agg(kind='scatter', x=x, y=y, hue=hue, dataset_options=dataset_options)
@@ -477,7 +479,7 @@ class ChartDataFrame():
             zoom (bool, optional): Allow the user to zoom on the Chart once it is created. Defaults to True.
 
         Returns:
-            [ipychart.Chart]: A chart which display the data using ipychart
+            [ipychart.Chart]: A chart which display the data using ipychart.
         """
 
         data = self._create_chart_data_agg(kind='bubble', x=x, y=y, r=r, hue=hue, dataset_options=dataset_options)

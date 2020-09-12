@@ -85,33 +85,42 @@ const ChartView = widgets.DOMWidgetView.extend({
             ['afterUpdate']
         ];
         
-        // Convert strings containing callback functions to real JS functions
+        // Convert strings containing callback functions to real JS functions for most paths
         _.forEach(callbacks_options_paths, function(callback, i) { 
             if (_.has(options, callback)) {
                 _.set(options, callback, new Function('return ' + _.get(options, callback))());
             }
         });
         
-        // Convert strings containing callback functions to real JS functions for each axes
+        // Convert strings containing callback functions to real JS functions for x axis paths
         if (_.has(options, ['scales', 'xAxes'])) {
             _.forEach(options.scales.xAxes, function(axis, i) {
                 _.forEach(callbacks_scales_paths, function(callback, j) {
                     if (_.has(options.scales.xAxes[i], callback)) {
                         _.set(options.scales.xAxes[i], callback, new Function('return ' + _.get(options.scales.xAxes[i], callback))());
                     }
-                })
-            })
+                });
+            });
         };
-
+        
+        // Convert strings containing callback functions to real JS functions for y axis paths
         if (_.has(options, ['scales', 'yAxes'])) {
             _.forEach(options.scales.yAxes, function(axis, i) {
                 _.forEach(callbacks_scales_paths, function(callback, j) {
                     if (_.has(options.scales.yAxes[i], callback)) {
                         _.set(options.scales.yAxes[i], callback, new Function('return ' + _.get(options.scales.yAxes[i], callback))());
                     }
-                })
-            })
+                });
+            });
         };
+
+        // Set colorscheme options if not None
+        if (colorscheme){
+            options = _.merge({'plugins': {'colorschemes': {'scheme': colorscheme}}}, options);
+        }
+
+        // Set zoom options
+        options = _.merge({'plugins': {'zoom': {'zoom': {'enabled': zoom, 'drag': true}, 'pan': {'enabled': false}}}}, options);
 
         // Set datalabels default options
         _.forEach(data.datasets, function(dataset, i) {
@@ -149,14 +158,6 @@ const ChartView = widgets.DOMWidgetView.extend({
                 }
             }
         });
-
-        // Set colorscheme options if not None
-        if (colorscheme){
-            options = _.merge({'plugins': {'colorschemes': {'scheme': colorscheme}}}, options);
-        }
-
-        // Set zoom options
-        options = _.merge({'plugins': {'zoom': {'zoom': {'enabled': zoom, 'drag': true}, 'pan': {'enabled': false}}}}, options);
 
         console.log('Chart data:', data);
         console.log('Chart options:', options);
