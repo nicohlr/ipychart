@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from typing import Union
 from pydash import set_, merge
 from pandas.api.types import is_numeric_dtype
 from sklearn.neighbors import KernelDensity
@@ -43,7 +44,7 @@ class ChartDataFrame():
 
         agg_label = '' if not agg else ' (' + agg + ')'
 
-        if kind != 'radar':
+        if kind not in ['radar', 'pie', 'polarArea', 'doughnut']:
 
             default_options = {
                 'scales': {'xAxes': [{'scaleLabel': {'display': True, 'labelString': x}}],
@@ -54,10 +55,11 @@ class ChartDataFrame():
             }
 
         else:
+            y_value = 'tooltipItem.yLabel' if kind == 'radar' else 'data.datasets[0].data[tooltipItem.index]'
             default_options = {'legend': {'display': True},
                                'tooltips': {'titleFontSize': 18, 'bodyFontSize': 18, 'enabled': True,
                                             'callbacks': {'title': """function(tooltipItem, data) {return '%s = ' + data.labels[tooltipItem[0].index];};""" % x,
-                                                          'label': """function(tooltipItem, data) {return '%s = ' + tooltipItem.yLabel;};""" % (y + agg_label)}}}
+                                                          'label': """function(tooltipItem, data) {console.log(data);return '%s = ' + %s;};""" % (y + agg_label, y_value)}}}
 
         # Set legend prefix if "hue" if activated
         if hue:
@@ -72,7 +74,7 @@ class ChartDataFrame():
 
         return options
 
-    def _create_chart_data_count(self, x: str, dataset_options: list[dict, list] = {}):
+    def _create_chart_data_count(self, x: str, dataset_options: Union[dict, list] = {}):
         """
         This function will prepare all the arguments to create a chart from the input of the user.
         Data are counted before being send to the Chart.
@@ -98,7 +100,7 @@ class ChartDataFrame():
 
         return data
 
-    def _create_chart_data_agg(self, kind: str, x: str, y: str, r: str = None, hue: str = None, agg: str = None, dataset_options: list[dict, list] = {}):
+    def _create_chart_data_agg(self, kind: str, x: str, y: str, r: str = None, hue: str = None, agg: str = None, dataset_options: Union[dict, list] = {}):
         """
         This function will prepare all the arguments to create a chart from the input of the user.
         Data are automatically aggregated using the method specified in the "agg" argument before being send to the Chart.
@@ -224,7 +226,7 @@ class ChartDataFrame():
 
         return Chart(data=data, kind=kind, options=options, colorscheme=colorscheme, zoom=zoom)
 
-    def dist(self, x: str, bandwidth: list[float, str] = 'auto', gridsize: int = 1000, dataset_options: dict = {},
+    def dist(self, x: str, bandwidth: Union[float, str] = 'auto', gridsize: int = 1000, dataset_options: dict = {},
              options: dict = None, colorscheme: str = None, zoom: bool = True, **kwargs):
         """
         Fit and plot a univariate kernel density estimate on a line chart. This is useful to have a representation of the distribution of the data.
@@ -286,7 +288,7 @@ class ChartDataFrame():
 
         return Chart(data, 'line', options=options, colorscheme=colorscheme, zoom=zoom)
 
-    def line(self, x: str, y: str, hue: str = None, agg: str = 'mean', dataset_options: list[dict, list] = {},
+    def line(self, x: str, y: str, hue: str = None, agg: str = 'mean', dataset_options: Union[dict, list] = {},
              options: dict = None, colorscheme: str = None, zoom: bool = True):
         """
         A line chart is a way of plotting data points on a line. Often, it is used to show a trend in the data, or the comparison of two data sets.
@@ -310,7 +312,7 @@ class ChartDataFrame():
 
         return Chart(data=data, kind='line', options=options, colorscheme=colorscheme, zoom=zoom)
 
-    def bar(self, x: str, y: str, hue: str = None, horizontal: bool = False, agg: str = 'mean', dataset_options: list[dict, list] = {},
+    def bar(self, x: str, y: str, hue: str = None, horizontal: bool = False, agg: str = 'mean', dataset_options: Union[dict, list] = {},
             options: dict = None, colorscheme: str = None, zoom: bool = True):
         """
         A bar chart provides a way of showing data values represented as vertical bars. It is sometimes used to show a trend in the data, and the comparison of multiple data sets side by side.
@@ -338,7 +340,7 @@ class ChartDataFrame():
         else:
             return Chart(data=data, kind='bar', options=options, colorscheme=colorscheme, zoom=zoom)
 
-    def radar(self, x: str, y: str, hue: str = None, agg: str = 'mean', dataset_options: list[dict, list] = {},
+    def radar(self, x: str, y: str, hue: str = None, agg: str = 'mean', dataset_options: Union[dict, list] = {},
               options: dict = None, colorscheme: str = None):
         """
         A radar chart is a way of showing multiple data points and the variation between them. They are often useful for comparing the points of two or more different data sets.
@@ -381,6 +383,7 @@ class ChartDataFrame():
             data = self._create_chart_data_agg(kind='doughnut', x=x, y=y, agg=agg, dataset_options=dataset_options)
         else:
             data = self._create_chart_data_count(x=x, dataset_options=dataset_options)
+        options = self._create_chart_options(kind='doughnut', options=options, x=x, y=y, hue=None, agg=agg)
 
         return Chart(data=data, kind='doughnut', options=options, colorscheme=colorscheme)
 
@@ -405,6 +408,7 @@ class ChartDataFrame():
             data = self._create_chart_data_agg(kind='pie', x=x, y=y, agg=agg, dataset_options=dataset_options)
         else:
             data = self._create_chart_data_count(x=x, dataset_options=dataset_options)
+        options = self._create_chart_options(kind='pie', options=options, x=x, y=y, hue=None, agg=agg)
 
         return Chart(data=data, kind='pie', options=options, colorscheme=colorscheme)
 
@@ -428,10 +432,11 @@ class ChartDataFrame():
             data = self._create_chart_data_agg(kind='polarArea', x=x, y=y, agg=agg, dataset_options=dataset_options)
         else:
             data = self._create_chart_data_count(x=x, dataset_options=dataset_options)
+        options = self._create_chart_options(kind='polarArea', options=options, x=x, y=y, hue=None, agg=agg)
 
         return Chart(data=data, kind='polarArea', options=options, colorscheme=colorscheme)
 
-    def scatter(self, x: str, y: str, hue: str = None, dataset_options: list[dict, list] = {},
+    def scatter(self, x: str, y: str, hue: str = None, dataset_options: Union[dict, list] = {},
                 options: dict = None, colorscheme: str = None, zoom: bool = True):
         """
         Scatter charts are based on basic line charts with the x axis changed to a linear axis.
@@ -454,7 +459,7 @@ class ChartDataFrame():
 
         return Chart(data=data, kind='scatter', options=options, colorscheme=colorscheme, zoom=zoom)
 
-    def bubble(self, x: str, y: str, r: str, hue: str = None, dataset_options: list[dict, list] = {},
+    def bubble(self, x: str, y: str, r: str, hue: str = None, dataset_options: Union[dict, list] = {},
                options: dict = None, colorscheme: str = None, zoom: bool = True):
         """
         A bubble chart is used to display three-dimension data.
