@@ -27,6 +27,8 @@ const ChartView = widgets.DOMWidgetView.extend({
         let data = this.model.get("_data");
         let options = this.model.get("_options");
         let type = this.model.get("_type");
+        let colorscheme = this.model.get("_colorscheme");
+        let zoom = this.model.get("_zoom");
 
         // All paths of options dictionary with callback functions
         let callbacks_options_paths = [
@@ -59,7 +61,7 @@ const ChartView = widgets.DOMWidgetView.extend({
             ['scale', 'ticks', 'callback'],
             ['scale', 'ticks', 'minor', 'callback'],
             ['scale', 'ticks', 'major', 'callback']
-        ]
+        ];
         
         // These paths must be handled for all axes
         // i.e. all axes contained in scales.xAxes or scales.yAxes arrays
@@ -81,7 +83,7 @@ const ChartView = widgets.DOMWidgetView.extend({
             ['beforeFit'],
             ['afterFit'],
             ['afterUpdate']
-        ]
+        ];
         
         // Convert strings containing callback functions to real JS functions
         _.forEach(callbacks_options_paths, function(callback, i) { 
@@ -97,9 +99,9 @@ const ChartView = widgets.DOMWidgetView.extend({
                     if (_.has(options.scales.xAxes[i], callback)) {
                         _.set(options.scales.xAxes[i], callback, new Function('return ' + _.get(options.scales.xAxes[i], callback))());
                     }
-                });
-            });
-        }
+                })
+            })
+        };
 
         if (_.has(options, ['scales', 'yAxes'])) {
             _.forEach(options.scales.yAxes, function(axis, i) {
@@ -107,9 +109,9 @@ const ChartView = widgets.DOMWidgetView.extend({
                     if (_.has(options.scales.yAxes[i], callback)) {
                         _.set(options.scales.yAxes[i], callback, new Function('return ' + _.get(options.scales.yAxes[i], callback))());
                     }
-                });
-            });
-        }
+                })
+            })
+        };
 
         // Set datalabels default options
         _.forEach(data.datasets, function(dataset, i) {
@@ -148,8 +150,16 @@ const ChartView = widgets.DOMWidgetView.extend({
             }
         });
 
-        console.log('Chart data:', data)
-        console.log('Chart options:', options)
+        // Set colorscheme options if not None
+        if (colorscheme){
+            options = _.merge({'plugins': {'colorschemes': {'scheme': colorscheme}}}, options);
+        }
+
+        // Set zoom options
+        options = _.merge({'plugins': {'zoom': {'zoom': {'enabled': zoom, 'drag': true}, 'pan': {'enabled': false}}}}, options);
+
+        console.log('Chart data:', data);
+        console.log('Chart options:', options);
         
         // Create Chart.js HTML element
         const canvas = document.createElement("canvas");
@@ -167,7 +177,7 @@ const ChartView = widgets.DOMWidgetView.extend({
         
         // Add element to output
         this.el.appendChild(canvas);
-        console.log(version)
+        console.log(version);
         console.log('end ipychart render');
     }
 });

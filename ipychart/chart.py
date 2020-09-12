@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import ipywidgets as widgets
 from pydash import has, set_, merge
-from traitlets import Unicode, default, Dict
+from traitlets import Unicode, default, Dict, Bool
 from ipywidgets.embed import embed_minimal_html, dependency_state, embed_data
 from ._version import __version__
 
@@ -33,6 +33,8 @@ class Chart(widgets.DOMWidget):
     _data = Dict().tag(sync=True)
     _options = Dict().tag(sync=True)
     _type = Unicode().tag(sync=True)
+    _colorscheme = Unicode(allow_none=True).tag(sync=True)
+    _zoom = Bool().tag(sync=True)
 
     def __init__(self, data: dict, kind: str, options: dict = None, colorscheme: str = None, zoom: bool = True):
 
@@ -55,6 +57,8 @@ class Chart(widgets.DOMWidget):
         self._options = self.options
         self._data = self.data
         self._type = self.kind
+        self._colorscheme = self.colorscheme
+        self._zoom = self.zoom
 
     @default('layout')
     def _default_layout(self):
@@ -96,12 +100,10 @@ class Chart(widgets.DOMWidget):
         # Check colorscheme argument
         if self.colorscheme:
             assert isinstance(self.colorscheme, str), msg_format.format('colorscheme')
-            self.options = merge({'plugins': {'colorschemes': {'scheme': self.colorscheme}}}, self.options)
 
         # Check zoom argument
         assert isinstance(self.zoom, bool), msg_format.format('zoom')
         self.zoom = False if self.kind in ['radar', 'doughnut', 'polarArea', 'pie'] else self.zoom
-        self.options = merge({'plugins': {'zoom': {'zoom': {'enabled': self.zoom, 'drag': True}, 'pan': {'enabled': False}}}}, self.options)
 
     def _set_default_options(self):
         """
