@@ -53,18 +53,22 @@ This chart can only be created from a single column of a Pandas dataframe.
 The count chart shows the count of observations in each categorical bin using bars. To draw it, you must call the *count* method:
 
 ```py
-ChartDataFrame.count(x: str, orient: str = 'v', dataset_options: dict = {}, 
-                     options: dict = None, colorscheme: str = None)
+ChartDataFrame.count(x: str, horizontal: bool = False, dataset_options: dict = {},
+                     options: dict = None, colorscheme: str = None, zoom: bool = True)
 ```
 
 - **x : str**<br>
 Column of the dataframe used as datapoints for x Axis.
+- **horizontal : bool**<br>
+Draw the bar chart horizontally. Defaults to False.
 - **dataset_options (optional): dict**<br>
 These are options directly related to the dataset object (i.e. options concerning your data).
 - **options (optional): dict**<br>
 All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js.
 - **colorscheme (optional): str**<br>
 Colorscheme to use when drawing the chart. List of available colorscheme: link.
+- **zoom (optional): bool**<br>
+Allow the user to zoom on the Chart once it is created. Defaults to True.
 
 **Example:**
 
@@ -82,9 +86,9 @@ This chart can only be created from a single column of a Pandas dataframe.
 Fit and plot a univariate kernel density estimate on a line chart. This chart is useful to have a representation of the distribution of the data. To draw it, you must call the *dist* method:
 
 ```py
-ChartDataFrame.dist(x: str, bandwidth: [float, str] = 'auto', gridsize: int = 1000, 
+ChartDataFrame.dist(x: str, bandwidth: Union[float, str] = 'auto', gridsize: int = 1000, 
                     dataset_options: dict = {}, options: dict = None, 
-                    colorscheme: str = None, **kwargs):
+                    colorscheme: str = None, zoom: bool = True, **kwargs)
 ```
 
 - **x : str**<br>
@@ -99,8 +103,10 @@ These are options directly related to the dataset object (i.e. options concernin
 All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js.
 - **colorscheme (optional): str**<br>
 Colorscheme to use when drawing the chart. List of available colorscheme: link.
+- **zoom (optional): bool**<br>
+Allow the user to zoom on the Chart once it is created. Defaults to True.
 - **kwargs (optional): dict**<br>
-Other keyword arguments are passed to the *KernelDensity* class of scikit-learn. 
+Other keyword arguments are passed down to scikit-learn's *KernelDensity* class. 
 
 **Example:**
 
@@ -115,8 +121,8 @@ A line chart is a way of plotting data points on a line. Often, it is used to sh
 
 ```py
 ChartDataFrame.line(x: str, y: str, hue: str = None, agg: str = 'mean', 
-                    dataset_options: [dict, list] = {},
-                    options: dict = None, colorscheme: str = None):
+                    dataset_options: [dict, list] = {}, options: dict = None, 
+					colorscheme: str = None, zoom: bool = True)
 ```
 
 - **x : str**<br>
@@ -133,6 +139,8 @@ These are options directly related to the dataset object (i.e. options concernin
 All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js.
 - **colorscheme (optional): str**<br>
 Colorscheme to use when drawing the chart. List of available colorscheme: link.
+- **zoom (optional): bool**<br>
+Allow the user to zoom on the Chart once it is created. Defaults to True.
 
 **Example:**
 
@@ -152,9 +160,9 @@ titanic_chart.line(x='Pclass', y='Age', hue='Sex',
 A bar chart provides a way of showing data values represented as vertical bars. It is sometimes used to show a trend in the data, and the comparison of multiple data sets side by side. To draw it, you must call the *bar* method:
 
 ```py
-ChartDataFrame.bar(x: str, y: str, hue: str = None, agg: str = 'mean', 
-                   dataset_options: [dict, list] = {},
-                   options: dict = None, colorscheme: str = None):
+ChartDataFrame.bar(x: str, y: str, hue: str = None, horizontal: bool = False,
+				   agg: str = 'mean', dataset_options: Union[dict, list] = {},
+				   options: dict = None, colorscheme: str = None, zoom: bool = True)
 ```
 
 - **x : str**<br>
@@ -163,6 +171,8 @@ Column of the dataframe used as datapoints for x Axis.
 Column of the dataframe used as datapoints for y Axis.
 - **hue (optionnal): str**<br>
 Grouping variable that will produce points with different colors.
+- **horizontal (optional): bool**<br>
+Draw the bar chart horizontally.
 - **agg (optionnal): str**<br>
 The aggregator used to gather data (ex: 'median' or 'mean').
 - **dataset_options (optional): dict**<br>
@@ -171,8 +181,8 @@ These are options directly related to the dataset object (i.e. options concernin
 All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js.
 - **colorscheme (optional): str**<br>
 Colorscheme to use when drawing the chart. List of available colorscheme: link.
-- **horizontal (optional): bool**<br>
-Draw the bar chart horizontally.
+- **zoom (optional): bool**<br>
+Allow the user to zoom on the Chart once it is created. Defaults to True.
 
 **Example:**
 
@@ -188,8 +198,8 @@ A radar chart is a way of showing multiple data points and the variation between
 
 ```py
 ChartDataFrame.radar(x: str, y: str, hue: str = None, agg: str = 'mean', 
-                     dataset_options: [dict, list] = {},
-                     options: dict = None, colorscheme: str = None):
+                     dataset_options: Union[dict, list] = {},
+                     options: dict = None, colorscheme: str = None)
 ```
 
 - **x : str**<br>
@@ -222,16 +232,16 @@ To draw one of these charts, you must call the *doughnut* method, the *pie* meth
 
 ```py
 ChartDataFrame.doughnut(x: str, y: str, agg: str = 'mean', 
-                        dataset_options: [dict, list] = {},
-                        options: dict = None, colorscheme: str = None):
+                        dataset_options: Union[dict, list] = {},
+                        options: dict = None, colorscheme: str = None)
                         
 ChartDataFrame.pie(x: str, y: str, agg: str = 'mean', 
-                   dataset_options: [dict, list] = {},
-                   options: dict = None, colorscheme: str = None):
+                   dataset_options: Union[dict, list] = {},
+                   options: dict = None, colorscheme: str = None)
                         
 ChartDataFrame.polararea(x: str, y: str, agg: str = 'mean', 
-                         dataset_options: [dict, list] = {},
-                         options: dict = None, colorscheme: str = None):
+                         dataset_options: Union[dict, list] = {},
+                         options: dict = None, colorscheme: str = None)
 ```
 
 - **x : str**<br>
@@ -261,8 +271,9 @@ Scatter charts are based on basic line charts with the x axis changed to a linea
 
 ```py
 ChartDataFrame.scatter(x: str, y: str, hue: str = None,
-                       dataset_options: [dict, list] = {},
-                       options: dict = None, colorscheme: str = None):
+					   dataset_options: Union[dict, list] = {},
+					   options: dict = None, colorscheme: str = None,
+					   zoom: bool = True)
 ```
 
 - **x : str**<br>
@@ -271,14 +282,14 @@ Column of the dataframe used as datapoints for x Axis.
 Column of the dataframe used as datapoints for y Axis.
 - **hue (optionnal): str**<br>
 Grouping variable that will produce points with different colors.
-- **agg (optionnal): str**<br>
-The aggregator used to gather data (ex: 'median' or 'mean').
 - **dataset_options (optional): dict**<br>
 These are options directly related to the dataset object (i.e. options concerning your data).
 - **options (optional): dict**<br>
 All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js.
 - **colorscheme (optional): str**<br>
 Colorscheme to use when drawing the chart. List of available colorscheme: link.
+- **zoom (optional): bool**<br>
+Allow the user to zoom on the Chart once it is created. Defaults to True.
 
 **Example:**
 
@@ -294,9 +305,10 @@ titanic_chart.scatter(x='Age', y='Fare', hue='Survived',
 A bubble chart is used to display three-dimension data. The location of the bubble is determined by the first two dimensions and the corresponding horizontal and vertical axes. The third dimension is represented by the radius of the individual bubbles. To draw it, you must call the *bubble* method:
 
 ```py
-ChartDataFrame.bubble(x: str, y: str, r: str = None, hue: str = None, 
-                      dataset_options: [dict, list] = {},
-                      options: dict = None, colorscheme: str = None):
+ChartDataFrame.bubble(x: str, y: str, r: str, hue: str = None,
+					  dataset_options: Union[dict, list] = {},
+					  options: dict = None, colorscheme: str = None,
+					  zoom: bool = True)
 ```
 
 - **x : str**<br>
@@ -307,14 +319,14 @@ Column of the dataframe used as datapoints for y Axis.
 Column of the dataframe used as radius for bubbles.
 - **hue (optionnal): str**<br>
 Grouping variable that will produce points with different colors.
-- **agg (optionnal): str**<br>
-The aggregator used to gather data (ex: 'median' or 'mean').
 - **dataset_options (optional): dict**<br>
 These are options directly related to the dataset object (i.e. options concerning your data).
 - **options (optional): dict**<br>
 All options to configure the chart. This dictionary corresponds to the "options" argument of Chart.js.
 - **colorscheme (optional): str**<br>
 Colorscheme to use when drawing the chart. List of available colorscheme: link.
+- **zoom (optional): bool**<br>
+Allow the user to zoom on the Chart once it is created. Defaults to True.
 
 **Example:**
 

@@ -1,8 +1,10 @@
 # Usage
 
-The ipychart API is composed of a base class named *Chart* which allows you to create all types of charts. This class takes 4 arguments as inputs: **data**, **kind**, **options** and **colorscheme**. These arguments have a particular structure to match the backend Chart.js API. If you don't respect the structure of these arguments the package may not work. 
+The ipychart API is composed of two classes:
 
-In this section, we will go through each argument to present its use and its structure. But before that, let's start with a little aside where we compare the APIs of Chart.js and ipychart.
+- The first one, named *Chart*, replicates the *Chart* class of Chart.js library while being adapted to the syntax of Python. The majority of the documentation is dedicated to it.
+
+- The second class, named *ChartDataFrame*, allows you to draw charts directly from a Pandas dataframe. It is described in the [Pandas Interface section](/ipychart/user_guide/pandas).
 
 ## Chart.js vs ipychart
 
@@ -38,7 +40,9 @@ var chart = new Chart(ctx, {
 });
 ```
 
-This example is taken from [the getting-started page of the Chart.js documentation](https://www.chartjs.org/docs/latest/getting-started/). As you can see, there are also three main arguments in Chart.js : **data**, **type** and **options**. These are the same arguments in ipychart, except for the `type` argument which has been renamed `kind` in ipychart because `type` is a reserved keyword in the Python language. Now, let's take a look on how we can create the same chart as above while using Python code and the ipychart library in our Jupyter Notebook environment:
+This example is taken from [the getting-started page of the Chart.js documentation](https://www.chartjs.org/docs/latest/getting-started/). As you can see, there are three main arguments in Chart.js : **data**, **type** and **options**. These are the same arguments in ipychart, except for the `type` argument which has been renamed `kind` in ipychart because `type` is a reserved keyword in the Python language. 
+
+Now, let's take a look on how we can create the same chart as above while using Python code and the ipychart library in our Jupyter Notebook environment:
 
 ``` py
 from ipychart import Chart
@@ -68,6 +72,18 @@ As you can see, a Chart.js user will not be disoriented by switching to ipychart
 
 
 ## Chart arguments
+
+The *Chart* class takes 5 arguments as inputs: **data**, **kind**, **options**, **colorscheme** and **zoom**. These arguments have a particular structure to match the backend Chart.js API. If you don't respect the structure of these arguments the package may not work.
+
+``` py
+Chart(data: dict,
+	  kind: str,
+	  options: dict = None,
+	  colorscheme: str = None,
+	  zoom: bool = True)
+```
+
+In this section, we will go through each argument to present its use and its structure.
 
 ### Data
 
@@ -156,3 +172,17 @@ Please note that the chart will associate one color of the colorscheme to each d
 
 
 Now that you are familiar with the structure of each argument, you can head to the next section to learn about the different types of charts.
+
+### Zoom
+
+::: warning
+The zoom features is not available for **radar**, **doughnut**, **pie** and **polarArea** charts (i.e. the `zoom` argument will automatically be set to `False` for these charts).
+:::
+
+The `zoom` argument allow you to zoom on the chart once it is created. As the `colorscheme` argument, the `zoom` argument is not present natively in Chart.js. It has been added in ipychart using [an open-source implementation](https://github.com/chartjs/chartjs-plugin-zoom).
+
+By default, the zoom is activated when you create a chart. To disable this feature, just set the zoom argument of the chart to `False`.
+
+::: tip
+To reset the zoom to its initial level, you only have to double click anywhere on the chart!
+:::
