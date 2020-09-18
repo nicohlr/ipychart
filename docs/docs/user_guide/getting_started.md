@@ -71,4 +71,6 @@ The chart is displayed directly as an output from the notebook cell. It looks li
 
 ::: tip
 You can hover the chart to display some data for each bar. These popups are called "tooltips" and are [fully configurable](/ipychart/user_guide/configuration#tooltips).
+
+You can also zoom in on the chart. To do this, click anywhere on it and draw a rectangle that will delimit the zoom area. To reset the zoom, you just have to double click anywhere on the chart.
 :::
