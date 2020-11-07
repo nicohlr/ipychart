@@ -87,7 +87,7 @@ In this section, we will go through each argument to present its use and its str
 
 ### Data
 
-The `data` argument is the most important one of the *Chart* class. Without this argument, the chart cannot be displayed (how to display a chart without data?). The `data` argument **must be a dict**. This constraint is imposed by Chart.js, which takes its arguments via a Javascript dict. This data dictionary must have the following structure : 
+The `data` argument is the most important one of the *Chart* class. Without this argument, the chart cannot be displayed (how to display a chart without data?). The `data` argument **must be a dict**. This constraint is imposed by Chart.js, which takes its arguments via a Javascript object. This data dictionary must have the following structure : 
 
 ``` py
 data = {
@@ -96,7 +96,7 @@ data = {
 }
 ```
 
-The value of `'datasets'` will hold your data, it **must be a list of dictionaries, each one containing at least a key named** `'data'`. It is a list because you can print more than one ensemble of data points in one chart. Each sub dictionary corresponds to an ensemble of data points, representing a dataset, and must also follow a specific structure. However, this structure may change according to the type of chart. 
+The value of `'datasets'` will hold your data, it **must be a list of dictionaries, each one containing at least a key named** `'data'`. It is a list because you can display more than one ensemble of data points in one chart. Each sub dictionary corresponds to an ensemble of data points, representing a dataset, and must also follow a specific structure. However, this structure may change according to the type of chart. 
 
 Please refer to [the documentation of each chart type](/ipychart/user_guide/charts) to have more details about the dataset structure to use. 
 

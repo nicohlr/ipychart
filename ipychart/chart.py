@@ -113,7 +113,7 @@ class Chart(widgets.DOMWidget):
         )
 
         datasets = self.data['datasets']
-        
+
         # Check data argument
         assert 'datasets' in self.data, msg_format.format('data')
         assert len(datasets), msg_format.format('data')

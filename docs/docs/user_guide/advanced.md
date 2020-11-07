@@ -149,4 +149,4 @@ Ipychart offers three ways to export a created Chart. These ways correspond to t
 
 - `to_html(path)`: This function embeds the chart widget into an HTML file dumped at the inputted path location.
 - `get_html_template()`: This function returns a string containing HTML code to embed the Chart.
-- `print_python_template()`: This function prints the Python code to run in order to reproduce exactly the same chart.
+- `get_python_template()`: This function returns the Python code to run in order to reproduce exactly the same chart.
