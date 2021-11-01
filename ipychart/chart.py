@@ -220,11 +220,10 @@ class Chart(widgets.DOMWidget):
         """
 
         random_colors = [
-            'rgba({}, {}, {}, 0.2)'.format(
-                *random.sample(
-                    list(np.random.choice(range(256), size=2)) +
-                    list(np.random.choice(range(200, 256), size=1)), 3)
-                ) for _ in range(100)
+            'rgba({}, {}, {}, 0.2)'.format(*random.sample(
+                list(np.random.choice(range(256), size=2)) +
+                list(np.random.choice(range(200, 256), size=1)), 3))
+            for _ in range(100)
         ]
 
         # Chart.js main colors for one dataset

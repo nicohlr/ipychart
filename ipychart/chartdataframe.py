@@ -148,7 +148,7 @@ class ChartDataFrame():
 
     def _create_chart_data_count(self,
                                  x: str,
-                                 dataset_options: Union[dict, list] = {}
+                                 dataset_options: Union[dict, list] = None
                                  ) -> dict:
         """
         This function will prepare all the arguments to create a chart from the
@@ -167,6 +167,9 @@ class ChartDataFrame():
         """
 
         assert x in self.df.columns, f'Column {x} not found in dataframe'
+
+        if dataset_options is None:
+            dataset_options = {}
 
         data = {'datasets': []}
 
@@ -197,7 +200,7 @@ class ChartDataFrame():
                                r: str = None,
                                hue: str = None,
                                agg: str = None,
-                               dataset_options: Union[dict, list] = {}
+                               dataset_options: Union[dict, list] = None
                                ) -> dict:
         """
         This function will prepare all the arguments to create a chart from
@@ -244,6 +247,9 @@ class ChartDataFrame():
                  'polarArea', 'bubble', 'pie', 'scatter']
 
         assert kind in kinds, msg_kind
+
+        if dataset_options is None:
+            dataset_options = {}
 
         if hue:
             assert hue in self.df.columns, f'{hue} not found in dataframe'
@@ -311,16 +317,16 @@ class ChartDataFrame():
                     if isinstance(dataset_options, list):
                         data['datasets'].append(
                             {'data': self.df[self.df[hue] == v].apply(
-                                    lambda row: {'x': row[x], 'y': row[y],
-                                                 'r': row[r]}, 1).tolist(),
+                                lambda row: {'x': row[x], 'y': row[y],
+                                             'r': row[r]}, 1).tolist(),
                              'label': v, **dataset_options[i]}
                         )
 
                     else:
                         data['datasets'].append(
                             {'data': self.df[self.df[hue] == v].apply(
-                                    lambda row: {'x': row[x], 'y': row[y],
-                                                 'r': row[r]}, 1).tolist(),
+                                lambda row: {'x': row[x], 'y': row[y],
+                                             'r': row[r]}, 1).tolist(),
                              'label': v, **dataset_options}
                         )
             else:
@@ -398,7 +404,7 @@ class ChartDataFrame():
     def count(self,
               x: str,
               horizontal: bool = False,
-              dataset_options: dict = {},
+              dataset_options: dict = None,
               options: dict = None,
               colorscheme: str = None,
               zoom: bool = True) -> Chart:
@@ -427,6 +433,9 @@ class ChartDataFrame():
         Returns:
             [ipychart.Chart]: A chart which display the data using ipychart.
         """
+
+        if dataset_options is None:
+            dataset_options = {}
 
         data = self._create_chart_data_count(
             x=x,
@@ -464,7 +473,7 @@ class ChartDataFrame():
              x: str,
              bandwidth: Union[float, str] = 'auto',
              gridsize: int = 1000,
-             dataset_options: dict = {},
+             dataset_options: dict = None,
              options: dict = None,
              colorscheme: str = None,
              zoom: bool = True, **kwargs) -> Chart:
@@ -508,6 +517,9 @@ class ChartDataFrame():
         assert is_numeric_dtype(self.df[x]), 'x must be a numeric column'
         if isinstance(bandwidth, str):
             assert bandwidth == 'auto', "bandwidth must be an int or 'auto'"
+
+        if dataset_options is None:
+            dataset_options = {}
 
         # Remove outliers to find max and min values for the x axis
         iqr = self.df[x].quantile(0.95) - self.df[x].quantile(0.05)
@@ -586,7 +598,7 @@ class ChartDataFrame():
              y: str,
              hue: str = None,
              agg: str = 'mean',
-             dataset_options: Union[dict, list] = {},
+             dataset_options: Union[dict, list] = None,
              options: dict = None,
              colorscheme: str = None,
              zoom: bool = True) -> Chart:
@@ -623,6 +635,9 @@ class ChartDataFrame():
             [ipychart.Chart]: A chart which display the data using ipychart.
         """
 
+        if dataset_options is None:
+            dataset_options = {}
+
         data = self._create_chart_data_agg(
             kind='line',
             x=x,
@@ -655,7 +670,7 @@ class ChartDataFrame():
             hue: str = None,
             horizontal: bool = False,
             agg: str = 'mean',
-            dataset_options: Union[dict, list] = {},
+            dataset_options: Union[dict, list] = None,
             options: dict = None,
             colorscheme: str = None,
             zoom: bool = True) -> Chart:
@@ -696,6 +711,9 @@ class ChartDataFrame():
             [ipychart.Chart]: A chart which display the data using ipychart.
         """
 
+        if dataset_options is None:
+            dataset_options = {}
+
         data = self._create_chart_data_agg(
             kind='bar',
             x=x,
@@ -729,7 +747,7 @@ class ChartDataFrame():
               y: str,
               hue: str = None,
               agg: str = 'mean',
-              dataset_options: Union[dict, list] = {},
+              dataset_options: Union[dict, list] = None,
               options: dict = None,
               colorscheme: str = None) -> Chart:
         """
@@ -763,6 +781,9 @@ class ChartDataFrame():
             [ipychart.Chart]: A chart which display the data using ipychart.
         """
 
+        if dataset_options is None:
+            dataset_options = {}
+
         data = self._create_chart_data_agg(
             kind='radar',
             x=x,
@@ -792,7 +813,7 @@ class ChartDataFrame():
                  x: str,
                  y: str = None,
                  agg: str = 'mean',
-                 dataset_options: dict = {},
+                 dataset_options: dict = None,
                  options: dict = None,
                  colorscheme: str = None) -> Chart:
         """
@@ -822,6 +843,9 @@ class ChartDataFrame():
         Returns:
             [ipychart.Chart]: A chart which display the data using ipychart.
         """
+
+        if dataset_options is None:
+            dataset_options = {}
 
         if y:
             data = self._create_chart_data_agg(
@@ -858,7 +882,7 @@ class ChartDataFrame():
             x: str,
             y: str = None,
             agg: str = 'mean',
-            dataset_options: dict = {},
+            dataset_options: dict = None,
             options: dict = None,
             colorscheme: str = None) -> Chart:
         """
@@ -888,6 +912,9 @@ class ChartDataFrame():
         Returns:
             [ipychart.Chart]: A chart which display the data using ipychart.
         """
+
+        if dataset_options is None:
+            dataset_options = {}
 
         if y:
             data = self._create_chart_data_agg(
@@ -924,7 +951,7 @@ class ChartDataFrame():
                   x: str,
                   y: str = None,
                   agg: str = 'mean',
-                  dataset_options: dict = {},
+                  dataset_options: dict = None,
                   options: dict = None,
                   colorscheme: str = None) -> Chart:
         """
@@ -954,6 +981,9 @@ class ChartDataFrame():
         Returns:
             [ipychart.Chart]: A chart which display the data using ipychart.
         """
+
+        if dataset_options is None:
+            dataset_options = {}
 
         if y:
             data = self._create_chart_data_agg(
@@ -990,7 +1020,7 @@ class ChartDataFrame():
                 x: str,
                 y: str,
                 hue: str = None,
-                dataset_options: Union[dict, list] = {},
+                dataset_options: Union[dict, list] = None,
                 options: dict = None,
                 colorscheme: str = None,
                 zoom: bool = True) -> Chart:
@@ -1024,6 +1054,9 @@ class ChartDataFrame():
             [ipychart.Chart]: A chart which display the data using ipychart.
         """
 
+        if dataset_options is None:
+            dataset_options = {}
+
         data = self._create_chart_data_agg(
             kind='scatter',
             x=x,
@@ -1053,7 +1086,7 @@ class ChartDataFrame():
                y: str,
                r: str,
                hue: str = None,
-               dataset_options: Union[dict, list] = {},
+               dataset_options: Union[dict, list] = None,
                options: dict = None,
                colorscheme: str = None,
                zoom: bool = True) -> Chart:
@@ -1094,6 +1127,9 @@ class ChartDataFrame():
         Returns:
             [ipychart.Chart]: A chart which display the data using ipychart.
         """
+
+        if dataset_options is None:
+            dataset_options = {}
 
         data = self._create_chart_data_agg(
             kind='bubble',
