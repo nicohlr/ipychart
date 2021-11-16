@@ -56,6 +56,7 @@ For a development installation:
     $ cd ipychart
     $ conda install jupyterlab nodejs -c conda-forge
     $ cd ipychart/js
+    $ npm install yarn
     $ npm install 
     $ cd .. 
     $ pip install -e .
