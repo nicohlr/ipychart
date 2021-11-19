@@ -3,10 +3,10 @@
 */__pycache__/
 dist/
 build/
+.pypirc
 *.py[cod]
 **/node_modules/
 */package-lock.json
-package-lock.json
 */static/
 js/dist/
 */*.tgz
@@ -17,12 +17,13 @@ js/temp.*
 */yarn.lock
 
 # Compiled javascript
+ipychart/nbextension/
+ipychart/labextension/
 ipychart/static/
 
 # OS X
 .DS_Store
 
+# IDEs
 .idea/
 .vscode/
-
-.pypirc
