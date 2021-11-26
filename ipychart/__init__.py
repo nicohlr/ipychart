@@ -1,7 +1,7 @@
 from ._version import version_info, __version__
 
 from .chart import Chart
-from .chartdataframe import ChartDataFrame
+from .plots import *
 
 
 def _jupyter_labextension_paths():
