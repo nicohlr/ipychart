@@ -129,7 +129,7 @@ const ChartView = widgets.DOMWidgetView.extend({
         // Convert strings containing this.callback functions to real JS functions for x axis paths
         if (_.has(options, ['scales', 'xAxes'])) {
             _.forEach(options.scales.xAxes, function(xaxes) {
-                _.forEach(this.callbacks_scales_paths, function(callback_path) {
+                _.forEach(callbacks_scales_paths, function(callback_path) {
                     if (_.has(xaxes, callback_path)) {
                         _.set(xaxes, callback_path, new Function('return ' + _.get(xaxes, callback_path))());
                     }
