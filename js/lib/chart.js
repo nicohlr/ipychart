@@ -197,13 +197,13 @@ const ChartView = widgets.DOMWidgetView.extend({
                 options: this.input.options
             });
             
-            this.chart.canvas.ondblclick = function() {this.chart.resetZoom()};
+            this.chart.canvas.ondblclick = function() {this.chart.resetZoom()}.bind(this);
 
             // Add element to output
             if (!this.el.canvas) {
                 this.el.appendChild(this.canvas);
             }
-            console.log('end ipychart render');
+            console.log('Chart created');
             
             // Python -> JavaScript update
             this.model.on('change:_data_sync', this.data_changed, this);
@@ -226,9 +226,9 @@ const ChartView = widgets.DOMWidgetView.extend({
                 options: this.input.options
             });
 
-            this.chart.canvas.ondblclick = function() {this.chart.resetZoom()};
+            this.chart.canvas.ondblclick = function() {this.chart.resetZoom()}.bind(this);
 
-            console.log('chart udpated');
+            console.log('Chart udpated');
 
         }
     },
