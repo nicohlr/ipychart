@@ -441,7 +441,7 @@ class Chart(widgets.DOMWidget):
         python_template = (
             f'data = {self._data}\n\n'
             f'options = {self._options}\n\n'
-            f"mychart = Chart(data=data, kind='{self._type}', options=options,"
+            f"mychart = Chart(data=data, kind='{self._kind}', options=options,"
         )
 
         end_template = (
