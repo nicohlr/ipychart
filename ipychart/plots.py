@@ -31,8 +31,8 @@ def countplot(data: pd.DataFrame,
         hue (str, optional): Grouping variable that will produce points
             with different colors. Defaults to None.
 
-        horizontal (bool): Draw the bar chart horizontally. Defaults to
-            False.
+        horizontal (bool, optional): Draw the bar chart horizontally.
+            Defaults to False.
 
         dataset_options (dict, optional): Options related to the dataset
             object (i.e. options concerning your data). Defaults to {}.
