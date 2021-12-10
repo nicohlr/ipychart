@@ -35,7 +35,7 @@ options = {
 Here is an example of what you can do to with the title options (not exhaustive):
 
 :::details Click to show the code used to generate the Chart.
-<br/>
+<br>
 
 ``` py
 dataset = {
@@ -137,7 +137,7 @@ options = {
 Here is an example of what you can do to with the legend options (not exhaustive):
 
 :::details Click to show the code used to generate the Chart.
-<br/>
+<br>
 
 ``` py
 dataset = {
@@ -304,7 +304,7 @@ options = {
 Here is an example of what you can do to with the tooltip's options (not exhaustive):
 
 :::details Click to show the code used to generate the Chart.
-<br/>
+<br>
 
 ``` py
 dataset = {
@@ -409,7 +409,7 @@ options = {
 Here is an example of what you can do to with the layout padding option (not exhaustive):
 
 :::details Click to show the code used to generate the Chart.
-<br/>
+<br>
 
 ``` py
 dataset = {

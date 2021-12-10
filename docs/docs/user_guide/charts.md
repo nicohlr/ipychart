@@ -11,7 +11,7 @@ Logically, much of the content of this page is identical or very similar to that
 A line chart is a way of plotting data points on a line. Often, it is used to show a trend in the data, or the comparison of two data sets.
 
 :::details Click to show the code used to generate the Chart.
-<br/>
+<br>
 
 ``` py
 dataset = {
@@ -120,7 +120,7 @@ For all types of chart, you can also give a **Pandas series** to the data argume
 A bar chart provides a way of showing data values represented as vertical bars. It is sometimes used to show a trend in the data, and the comparison of multiple data sets side by side.
 
 :::details Click to show the code used to generate the Chart.
-<br/>
+<br>
 
 ``` py
 dataset = {
@@ -225,7 +225,7 @@ data = {
 You can rotate your bar chart by setting the `kind` argument of your chart to `'horizontalBar'`:
 
 :::details Click to show the code used to generate the Chart.
-<br/>
+<br>
 
 ``` py
 dataset = {
@@ -245,7 +245,7 @@ mychart
 A radar chart is a way of showing multiple data points and the variation between them. They are often useful for comparing the points of two or more different data sets.
 
 :::details Click to show the code used to generate the Chart.
-<br/>
+<br>
 
 ``` py
 dataset = {
@@ -324,7 +324,7 @@ Pie and doughnut charts are probably the most commonly used charts. They are div
 They are excellent at showing the relational proportions between data.
 
 :::details Click to show the code used to generate the Chart.
-<br/>
+<br>
 
 ``` py
 dataset = {
@@ -345,7 +345,7 @@ mychart
 <charts-doughnut/>
 
 :::details Click to show the code used to generate the Chart.
-<br/>
+<br>
 
 ``` py
 dataset = {
@@ -418,7 +418,7 @@ data = {
 Polar area charts are similar to pie charts, but each segment has the same angle - the radius of the segment differs depending on the value. This type of chart is often useful when we want to show a comparison data similar to a pie chart, but also show a scale of values for context.
 
 :::details Click to show the code used to generate the Chart.
-<br/>
+<br>
 
 ``` py
 dataset = {
@@ -489,7 +489,7 @@ data = {
 Scatter charts are based on basic line charts with the x axis changed to a linear axis.
 
 :::details Click to show the code used to generate the Chart.
-<br/>
+<br>
 
 ``` py
 dataset = {
@@ -531,7 +531,7 @@ data = {
 A bubble chart is used to display three-dimension data. The location of the bubble is determined by the first two dimensions and the corresponding horizontal and vertical axes. The third dimension is represented by the radius of the individual bubbles.
 
 :::details Click to show the code used to generate the Chart.
-<br/>
+<br>
 
 ``` py
 dataset = {
@@ -610,7 +610,7 @@ Bar charts can be configured into stacked bar charts by changing the settings on
 Here is an example of a stacked bar chart :
 
 :::details Click to show the code used to generate the Chart.
-<br/>
+<br>
 
 ``` py
 dataset = {
@@ -660,7 +660,7 @@ data = {
 Here is an example of an area chart made using the `'fill'` option:
 
 :::details Click to show the code used to generate the Chart.
-<br/>
+<br>
 
 ``` py
 dataset = {
@@ -683,7 +683,7 @@ mychart
 With ipychart, it is possible to create mixed charts that are a combination of two or more different chart types. A common example is a bar chart that also includes a line dataset:
 
 :::details Click to show the code used to generate the Chart.
-<br/>
+<br>
 
 ``` py
 dataset = {

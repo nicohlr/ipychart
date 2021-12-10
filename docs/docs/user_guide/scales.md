@@ -100,7 +100,7 @@ options = {
 Here is an example of a scale with labels:
 
 :::details Click to show the code used to generate the Chart.
-<br/>
+<br>
 
 ``` py
 dataset = {
@@ -231,7 +231,7 @@ The `'source'` subargument controls the tick's generation **of time scales** (i.
 Here is an example of a scale with custom tick's options:
 
 :::details Click to show the code used to generate the Chart.
-<br/>
+<br>
 
 ``` py
 dataset = {
@@ -360,7 +360,7 @@ For example, to set the display format for the `quarter` unit to show the month 
 Here is an example of a chart with a time scale:
 
 :::details Click to show the code used to generate the Chart.
-<br/>
+<br>
 
 ``` py
 data = {"datasets": [
@@ -572,7 +572,7 @@ The ticks can be customized with a callback function. A Callback function is a J
 Here is an example of a radial scale with custom angleLines, gridLines, pointLabels and ticks options:
 
 :::details Click to show the code used to generate the Chart.
-<br/>
+<br>
 
 ``` py
 dataset = {
@@ -684,7 +684,7 @@ options = {
 Here is an example of a scale with custom gridLines options:
 
 :::details Click to show the code used to generate the Chart.
-<br/>
+<br>
 
 ``` py
 dataset = {
