@@ -1,5 +1,6 @@
 <p align="center">
-    <img src="./docs/docs/.vuepress/public/ipychart.png" width="18%"><br/>
+    <img src="./docs/docs/.vuepress/public/ipychart.png#gh-light-mode-only" width="18%">
+    <img src="./docs/docs/.vuepress/public/ipychart-dark.png#gh-dark-mode-only" width="18%"><br>
     The power of Chart.js in Jupyter Notebooks
 </p>
 
@@ -43,9 +44,11 @@ Documentation
 Usage
 ------------
 
-Create charts with Python in a very similar way to creating charts using Chart.js ([create a bar chart using Chart.js](https://nicohlr.gitlab.io/ipychart/user_guide/charts/bar.html)). The charts created are fully configurable, interactive and modular and are displayed directly in the output of the the cells of your jupyter notebook environment:
+Create charts with Python in a very similar way to creating charts using Chart.js. The charts created are fully configurable, interactive and modular and are displayed directly in the output of the the cells of your jupyter notebook environment:
 
-![](./docs/docs/.vuepress/public/ipychart.gif)
+![](./docs/docs/.vuepress/public/ipychart-demo.gif)
+
+You can also create charts directly from a pandas dataframe. See the [**Pandas Interface**](https://nicohlr.gitlab.io/ipychart/user_guide/pandas.html) section of the documentation for more details.
 
 Development Installation 
 ------------
