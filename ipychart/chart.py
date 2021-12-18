@@ -1,5 +1,6 @@
 import random
 import json
+import copy
 
 import numpy as np
 import pandas as pd
@@ -12,6 +13,7 @@ from ipywidgets.embed import embed_minimal_html, dependency_state, embed_data
 from ._version import __version__
 
 
+@widgets.register
 class Chart(widgets.DOMWidget):
     """
     A Jupyter - Chart.js bridge enabling interactive data visualization in
@@ -48,11 +50,11 @@ class Chart(widgets.DOMWidget):
     _view_module_version = Unicode('^' + __version__).tag(sync=True)
     _model_module_version = Unicode('^' + __version__).tag(sync=True)
 
-    _data = Dict().tag(sync=True)
-    _options = Dict().tag(sync=True)
-    _type = Unicode().tag(sync=True)
-    _colorscheme = Unicode(allow_none=True).tag(sync=True)
-    _zoom = Bool().tag(sync=True)
+    _data_sync = Dict().tag(sync=True)
+    _options_sync = Dict().tag(sync=True)
+    _kind_sync = Unicode().tag(sync=True)
+    _colorscheme_sync = Unicode(allow_none=True).tag(sync=True)
+    _zoom_sync = Bool().tag(sync=True)
 
     def __init__(self,
                  data: dict,
@@ -63,33 +65,86 @@ class Chart(widgets.DOMWidget):
 
         super().__init__()
 
-        self.data = data
-        self.kind = kind
-        self.options = options if options else {}
-        self.colorscheme = colorscheme
-        self.zoom = zoom
+        self._data_in = data
+        self._kind_in = kind
+        self._options_in = options if options else {}
+        self._colorscheme_in = colorscheme
+        self._zoom_in = zoom
 
-        # Check user input
-        self._validate_input()
+        self._data = None
+        self._kind = None
+        self._options = None
+        self._colorscheme = None
+        self._zoom = None
 
-        # Set default style and options
-        self._set_default_options()
+        # Set default values in inputs
+        self._set_default_inputs()
 
-        if not colorscheme and not has(options, 'plugins.colorschemes.scheme'):
-            self._set_default_style()
+        # Set synced attributes for JS
+        self._set_synced_attributes()
 
-        # Set synced arguments
-        self._options = self.options
-        self._data = self.data
-        self._type = self.kind
-        self._colorscheme = self.colorscheme
-        self._zoom = self.zoom
+    @property
+    def data(self):
+        return self._data
+
+    @data.setter
+    def data(self, new_value):
+        self._data_in = new_value
+        self._set_default_inputs()
+        self._set_synced_attributes()
+
+    @property
+    def kind(self):
+        return self._kind
+
+    @kind.setter
+    def kind(self, new_value):
+        self._kind_in = new_value
+        self._set_default_inputs()
+        self._set_synced_attributes()
+
+    @property
+    def options(self):
+        return self._options
+
+    @options.setter
+    def options(self, new_value):
+        self._options_in = new_value
+        self._set_default_inputs()
+        self._set_synced_attributes()
+
+    @property
+    def colorscheme(self):
+        return self._colorscheme
+
+    @colorscheme.setter
+    def colorscheme(self, new_value):
+        self._colorscheme_in = new_value
+        self._set_default_inputs()
+        self._set_synced_attributes()
+
+    @property
+    def zoom(self):
+        return self._zoom
+
+    @zoom.setter
+    def zoom(self, new_value):
+        self._zoom_in = new_value
+        self._set_default_inputs()
+        self._set_synced_attributes()
 
     @default('layout')
     def _default_layout(self):
         return widgets.Layout(height='auto', align_self='stretch')
 
-    def _validate_input(self):
+    def _set_synced_attributes(self):
+        self._options_sync = self._options
+        self._data_sync = self._data
+        self._kind_sync = self._kind
+        self._colorscheme_sync = self._colorscheme
+        self._zoom_sync = self._zoom
+
+    def _validate_inputs(self):
         """
         This function checks all arguments passed when the user create an
         instance of the Chart class.
@@ -112,10 +167,17 @@ class Chart(widgets.DOMWidget):
             'for more details'
         )
 
-        datasets = self.data['datasets']
+        # Copy input data to avoid modifying it
+        self._data = copy.deepcopy(self._data_in)
+        self._options = copy.deepcopy(self._options_in)
+        self._kind = self._kind_in
+        self._colorscheme = self._colorscheme_in
+        self._zoom = self._zoom_in
+
+        datasets = self._data['datasets']
 
         # Check data argument
-        assert 'datasets' in self.data, msg_format.format('data')
+        assert 'datasets' in self._data, msg_format.format('data')
         assert len(datasets), msg_format.format('data')
         assert ['data' in ds for ds in datasets] == [True] * len(datasets), (
             msg_format.format('data'))
@@ -125,7 +187,7 @@ class Chart(widgets.DOMWidget):
             for dataset in datasets:
                 assert all(isinstance(x, dict) for x in dataset['data']), (
                     msg_format.format("data['datasets']"))
-                assert all(k in p for k in ('x', 'y', 'r') for p in self.data
+                assert all(k in p for k in ('x', 'y', 'r') for p in self._data
                            ), msg_format.format('data')
 
         for dataset in datasets:
@@ -140,41 +202,41 @@ class Chart(widgets.DOMWidget):
                 assert isinstance(dataset['datalabels'], dict), (
                     msg_format.format('data'))
 
-        if 'labels' in self.data:
+        if 'labels' in self._data:
 
-            self.data['labels'] = (
-                self.data['labels'].tolist()
-                if isinstance(self.data['labels'], pd.Series)
-                else self.data['labels']
+            self._data['labels'] = (
+                self._data['labels'].tolist()
+                if isinstance(self._data['labels'], pd.Series)
+                else self._data['labels']
             )
 
         # Check kind argument
         kinds = ['line', 'bar', 'horizontalBar', 'radar', 'doughnut',
                  'polarArea', 'bubble', 'pie', 'scatter']
-        assert self.kind in kinds, msg_kind
+        assert self._kind in kinds, msg_kind
 
         # Check options argument
-        if self.options:
+        if self._options:
 
-            assert isinstance(self.options, dict), msg_format.format('options')
+            assert isinstance(self._options, dict), msg_format.format('options')
 
             all_options = ['legend', 'title', 'tooltips', 'scales', 'scale',
                            'layout', 'animation', 'hover', 'plugins',
                            'legendCallback']
 
-            assert set(self.options.keys()).issubset(set(all_options)), (
+            assert set(self._options.keys()).issubset(set(all_options)), (
                 msg_format.format('options'))
 
         # Check colorscheme argument
-        if self.colorscheme:
-            assert isinstance(self.colorscheme, str), (
+        if self._colorscheme:
+            assert isinstance(self._colorscheme, str), (
                 msg_format.format('colorscheme'))
 
         # Check zoom argument
-        assert isinstance(self.zoom, bool), msg_format.format('zoom')
+        assert isinstance(self._zoom, bool), msg_format.format('zoom')
         # Disable zoom for radial charts
         radials = ['radar', 'doughnut', 'polarArea', 'pie']
-        self.zoom = False if self.kind in radials else self.zoom
+        self._zoom = False if self._kind in radials else self._zoom
 
     def _set_default_options(self):
         """
@@ -188,10 +250,10 @@ class Chart(widgets.DOMWidget):
         no_axis = ['radar', 'doughnut', 'polarArea', 'pie']
 
         show_xaxis, show_yaxis = (
-            (False,) * 2 if self.kind in no_axis else (True,) * 2
+            (False,) * 2 if self._kind in no_axis else (True,) * 2
         )
 
-        if self.kind not in ['radar', 'polarArea']:
+        if self._kind not in ['radar', 'polarArea']:
             default_options = {'scales': {
                 'yAxes': [{'display': show_yaxis, 'ticks': {
                     'beginAtZero': True, 'display': show_yaxis}}],
@@ -205,10 +267,10 @@ class Chart(widgets.DOMWidget):
         no_legend = [
             'bar', 'line', 'horizontalBar', 'bubble', 'radar', 'scatter']
 
-        if (len(self.data['datasets']) == 1) and (self.kind in no_legend):
+        if (len(self._data['datasets']) == 1) and (self._kind in no_legend):
             default_options = set_(default_options, 'legend', False)
 
-        self.options = merge(default_options, self.options)
+        self._options = merge(default_options, self._options)
 
     def _set_default_style(self):
         """
@@ -220,11 +282,10 @@ class Chart(widgets.DOMWidget):
         """
 
         random_colors = [
-            'rgba({}, {}, {}, 0.2)'.format(
-                *random.sample(
-                    list(np.random.choice(range(256), size=2)) +
-                    list(np.random.choice(range(200, 256), size=1)), 3)
-                ) for _ in range(100)
+            'rgba({}, {}, {}, 0.2)'.format(*random.sample(
+                list(np.random.choice(range(256), size=2)) +
+                list(np.random.choice(range(200, 256), size=1)), 3))
+            for _ in range(100)
         ]
 
         # Chart.js main colors for one dataset
@@ -249,75 +310,82 @@ class Chart(widgets.DOMWidget):
         ] + random_colors
 
         # Accessors for readability
-        bac = 'backgroundColor'
-        boc = 'borderColor'
-        bow = 'borderWidth'
-        pbac = 'pointBackgroundColor'
-        pboc = 'pointBorderColor'
+        bgc = 'backgroundColor'
+        bdc = 'borderColor'
+        bdw = 'borderWidth'
+        pbgc = 'pointBackgroundColor'
+        pbdc = 'pointBorderColor'
 
         # Chart types lists
         bars = ['bar', 'horizontalBar']
         lrsb = ['line', 'radar', 'scatter', 'bubble']
 
         # Set a mix of color if only one dataset
-        if len(self.data['datasets']) == 1:
+        if len(self._data['datasets']) == 1:
 
-            ds = self.data['datasets'][0]
-            ds_type = ds['type'] if 'type' in ds else self.kind
+            ds = self._data['datasets'][0]
+            ds_type = ds['type'] if 'type' in ds else self._kind
 
-            if bac not in ds:
+            if bgc not in ds:
 
                 if ds_type in lrsb:
-                    ds[bac] = colors_one[0]
+                    ds[bgc] = colors_one[0]
                 elif ds_type in ['bar', 'horizontalBar']:
                     size = int(len(ds['data']))
                     colors = colors_one * (size + 1)
-                    ds[bac] = colors[:size]
+                    ds[bgc] = colors[:size]
                 else:
-                    ds[bac] = colors_all[:len(ds['data'])]
+                    ds[bgc] = colors_all[:len(ds['data'])]
 
-            if boc not in ds:
+            if bdc not in ds:
                 if ds_type in lrsb:
-                    ds[boc] = ds[bac].replace('0.2', '1')
+                    ds[bdc] = ds[bgc].replace('0.2', '1')
                 else:
-                    ds[boc] = [c.replace('0.2', '1') for c in ds[bac]]
+                    ds[bdc] = [c.replace('0.2', '1') for c in ds[bgc]]
 
-            if bow not in ds:
-                ds[bow] = 1
+            if bdw not in ds:
+                ds[bdw] = 1
 
             if ds_type in lrsb:
-                if pbac not in ds:
-                    ds[pbac] = ds[bac]
-                if pboc not in ds:
-                    ds[pboc] = ds[boc]
+                if pbgc not in ds:
+                    ds[pbgc] = ds[bgc]
+                if pbdc not in ds:
+                    ds[pbdc] = ds[bdc]
 
         # Set one color per dataset if more than one dataset
         else:
 
-            for idx, ds in enumerate(self.data['datasets']):
+            for idx, ds in enumerate(self._data['datasets']):
 
-                ds_type = ds['type'] if 'type' in ds else self.kind
+                ds_type = ds['type'] if 'type' in ds else self._kind
 
-                if bac not in ds:
+                if bgc not in ds:
                     if ds_type in lrsb + bars:
-                        ds[bac] = colors_all[idx]
+                        ds[bgc] = colors_all[idx]
                     else:
-                        ds[bac] = colors_all[:len(ds['data'])]
+                        ds[bgc] = colors_all[:len(ds['data'])]
 
-                if boc not in ds:
+                if bdc not in ds:
                     if ds_type in lrsb + bars:
-                        ds[boc] = ds[bac].replace('0.2', '1')
+                        ds[bdc] = ds[bgc].replace('0.2', '1')
                     else:
-                        ds[boc] = [c.replace('0.2', '1') for c in ds[bac]]
+                        ds[bdc] = [c.replace('0.2', '1') for c in ds[bgc]]
 
-                if bow not in ds:
-                    ds[bow] = 1
+                if bdw not in ds:
+                    ds[bdw] = 1
 
                 if ds_type in lrsb:
-                    if pbac not in ds:
-                        ds[pbac] = ds[bac]
-                    if pboc not in ds:
-                        ds[pboc] = ds[boc]
+                    if pbgc not in ds:
+                        ds[pbgc] = ds[bgc]
+                    if pbdc not in ds:
+                        ds[pbdc] = ds[bdc]
+
+    def _set_default_inputs(self):
+        self._validate_inputs()
+        self._set_default_options()
+        if (not self._colorscheme
+                and not has(self._options, 'plugins.colorschemes.scheme')):
+            self._set_default_style()
 
     def to_html(self, path):
         """
@@ -373,11 +441,11 @@ class Chart(widgets.DOMWidget):
         python_template = (
             f'data = {self._data}\n\n'
             f'options = {self._options}\n\n'
-            f"mychart = Chart(data=data, kind='{self._type}', options=options,"
+            f"mychart = Chart(data=data, kind='{self._kind}', options=options,"
         )
 
         end_template = (
-            f" colorscheme='{self.colorscheme}')" if self.colorscheme else ')'
+            f" colorscheme='{self._colorscheme}')" if self._colorscheme else ')'
         )
 
         python_template += end_template

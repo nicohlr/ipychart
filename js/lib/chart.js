@@ -7,6 +7,7 @@ const Colorschemes = require('./colorschemes.js')['default'];
 var version = require('../package.json')['version'];
 var _ = require('lodash');
 
+
 const ChartModel = widgets.DOMWidgetModel.extend({
     defaults: _.extend(widgets.DOMWidgetModel.prototype.defaults(), {
         _model_name : 'ChartModel',
@@ -21,15 +22,48 @@ const ChartModel = widgets.DOMWidgetModel.extend({
 
 const ChartView = widgets.DOMWidgetView.extend({
 
-    render: function() {
+    convert_input_data: function(data, options) {
+        // Set datalabels default options
+        _.forEach(data.datasets, function(dataset, i) {
 
-        // Get data and type from python
-        let data = this.model.get("_data");
-        let options = this.model.get("_options");
-        let type = this.model.get("_type");
-        let colorscheme = this.model.get("_colorscheme");
-        let zoom = this.model.get("_zoom");
+            // Hide datalabels by default in each dataset
+            if (!_.has(dataset, 'datalabels')) {
+                _.set(dataset, 'datalabels', {display: false});
+            }
 
+            // If datalabels options are present, set automatic coloring based on dataset color when borderwidth is != 0
+            else {
+                // If a colorscheme is selected, we set color based on a list of colors corresponding to each colorscheme
+                if (_.has(options, ['plugins', 'colorschemes', 'scheme'])) {
+                    let color = Colorschemes[options.plugins.colorschemes.scheme][i];
+                    if (_.has(dataset.datalabels, 'borderWidth')) {
+                        if (!_.has(dataset.datalabels, 'backgroundColor')) {
+                            _.set(dataset.datalabels, 'backgroundColor', color);
+                        }
+                        if (!_.has(dataset.datalabels, 'borderColor')) {
+                            _.set(dataset.datalabels, 'borderColor', color);
+                        }
+                    }
+                }
+
+                // If no colorscheme is selected, we set color based on the colors of the dataset
+                else {
+                    if (_.has(dataset.datalabels, 'borderWidth')) {
+                        if (!_.has(dataset.datalabels, 'backgroundColor')) {
+                            _.set(dataset.datalabels, 'backgroundColor', dataset.backgroundColor)
+                        }
+                        if (!_.has(dataset.datalabels, 'borderColor')) {
+                            _.set(dataset.datalabels, 'borderColor', dataset.borderColor)
+                        }
+                    }
+                }
+            }
+        });
+
+        return data;
+    },
+
+    convert_input_options: function(options, colorscheme, zoom) {
         // All paths of options dictionary with callback functions
         let callbacks_options_paths = [
             ['legendCallback'],
@@ -85,19 +119,19 @@ const ChartView = widgets.DOMWidgetView.extend({
             ['afterUpdate']
         ];
         
-        // Convert strings containing callback functions to real JS functions for most paths
-        _.forEach(callbacks_options_paths, function(callback, i) { 
-            if (_.has(options, callback)) {
-                _.set(options, callback, new Function('return ' + _.get(options, callback))());
+        // Convert strings containing callback functions to real JS functions for all paths
+        _.forEach(callbacks_options_paths, function(callback_path) {
+            if (_.has(options, callback_path)) {
+                _.set(options, callback_path, new Function('return ' + _.get(options, callback_path))());
             }
         });
         
-        // Convert strings containing callback functions to real JS functions for x axis paths
+        // Convert strings containing this.callback functions to real JS functions for x axis paths
         if (_.has(options, ['scales', 'xAxes'])) {
-            _.forEach(options.scales.xAxes, function(axis, i) {
-                _.forEach(callbacks_scales_paths, function(callback, j) {
-                    if (_.has(options.scales.xAxes[i], callback)) {
-                        _.set(options.scales.xAxes[i], callback, new Function('return ' + _.get(options.scales.xAxes[i], callback))());
+            _.forEach(options.scales.xAxes, function(xaxes) {
+                _.forEach(callbacks_scales_paths, function(callback_path) {
+                    if (_.has(xaxes, callback_path)) {
+                        _.set(xaxes, callback_path, new Function('return ' + _.get(xaxes, callback_path))());
                     }
                 });
             });
@@ -105,10 +139,10 @@ const ChartView = widgets.DOMWidgetView.extend({
         
         // Convert strings containing callback functions to real JS functions for y axis paths
         if (_.has(options, ['scales', 'yAxes'])) {
-            _.forEach(options.scales.yAxes, function(axis, i) {
-                _.forEach(callbacks_scales_paths, function(callback, j) {
-                    if (_.has(options.scales.yAxes[i], callback)) {
-                        _.set(options.scales.yAxes[i], callback, new Function('return ' + _.get(options.scales.yAxes[i], callback))());
+            _.forEach(options.scales.yAxes, function(yaxes) {
+                _.forEach(callbacks_scales_paths, function(callback_path) {
+                    if (_.has(yaxes, callback_path)) {
+                        _.set(yaxes, callback_path, new Function('return ' + _.get(yaxes, callback_path))());
                     }
                 });
             });
@@ -116,71 +150,119 @@ const ChartView = widgets.DOMWidgetView.extend({
 
         // Set colorscheme options if not None
         if (colorscheme){
-            options = _.merge({'plugins': {'colorschemes': {'scheme': colorscheme}}}, options);
+            options = _.merge({'plugins': {'colorschemes': {'scheme': colorscheme, 'override': true}}}, options);
         }
 
         // Set zoom options
         options = _.merge({'plugins': {'zoom': {'zoom': {'enabled': zoom, 'drag': true}, 'pan': {'enabled': false}}}}, options);
 
-        // Set datalabels default options
-        _.forEach(data.datasets, function(dataset, i) {
+        return options;
+    },
 
-            // Hide datalabels by default in each dataset
-            if (!_.has(dataset, 'datalabels')) {
-                _.set(dataset, 'datalabels', {display: false});
-            }
+    render: function() {
 
-            // If datalabels options are present, set automatic coloring based on dataset color when borderwidth is != 0
-            else {
-                // If a colorscheme is selected, we set color based on a list of colors corresponding to each colorscheme
-                if (_.has(options, ['plugins', 'colorschemes', 'scheme'])) {
-                    let color = Colorschemes[options.plugins.colorschemes.scheme][i];
-                    if (_.has(dataset.datalabels, 'borderWidth')) {
-                        if (!_.has(dataset.datalabels, 'backgroundColor')) {
-                            _.set(dataset.datalabels, 'backgroundColor', color);
-                        }
-                        if (!_.has(dataset.datalabels, 'borderColor')) {
-                            _.set(dataset.datalabels, 'borderColor', color);
-                        }
-                    }
-                }
+        // Get data and type from python
+        this.input = document.createElement('input');
+        this.input.colorscheme = this.model.get("_colorscheme_sync");
+        this.input.zoom = this.model.get("_zoom_sync");
+        
+        this.input.options = this.convert_input_options(
+            this.model.get("_options_sync"),
+            this.input.colorscheme,
+            this.input.zoom
+        );
+        this.input.data = this.convert_input_data(
+            this.model.get("_data_sync"),
+            this.input.options
+        );
+        this.input.kind = this.model.get("_kind_sync");
 
-                // If no colorscheme is selected, we set color based on the colors of the dataset
-                else {
-                    if (_.has(dataset.datalabels, 'borderWidth')) {
-                        if (!_.has(dataset.datalabels, 'backgroundColor')) {
-                            _.set(dataset.datalabels, 'backgroundColor', dataset.backgroundColor)
-                        }
-                        if (!_.has(dataset.datalabels, 'borderColor')) {
-                            _.set(dataset.datalabels, 'borderColor', dataset.borderColor)
-                        }
-                    }
-                }
-            }
-        });
-
-        console.log('Chart data:', data);
-        console.log('Chart options:', options);
+        console.log('Chart data:', this.input.data);
+        console.log('Chart options:', this.input.options);
+        console.log('Chart type:', this.input.kind);
+        console.log('Chart colorscheme:', this.input.colorscheme);
+        console.log('Chart zoom:', this.input.zoom);
         
         // Create Chart.js HTML element
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext('2d');
+        if (!this.chart) {
 
-        // Create chart
-        const chart = new Chart(ctx, {
-            plugins: [ChartDataLabels, ChartColorSchemes, ChartZoom],
-            type: type,
-            data: data,
-            options: options
-        });
-        
-        chart.canvas.ondblclick = function() {chart.resetZoom()};
-        
-        // Add element to output
-        this.el.appendChild(canvas);
-        console.log(version);
-        console.log('end ipychart render');
-    }
+            this.canvas = document.createElement('canvas');
+            this.ctx = this.canvas.getContext('2d');
+
+            // Create chart
+            this.chart = new Chart(this.ctx, {
+                plugins: [ChartDataLabels, ChartColorSchemes, ChartZoom],
+                type: this.input.kind,
+                data: this.input.data,
+                options: this.input.options
+            });
+            
+            this.chart.canvas.ondblclick = function() {this.chart.resetZoom()}.bind(this);
+
+            // Add element to output
+            if (!this.el.canvas) {
+                this.el.appendChild(this.canvas);
+            }
+            console.log('Chart created');
+            
+            // Python -> JavaScript update
+            this.model.on('change:_data_sync', this.data_changed, this);
+            this.model.on('change:_options_sync', this.options_changed, this);
+            this.model.on('change:_kind_sync', this.kind_changed, this);
+            this.model.on('change:_colorscheme_sync', this.colorscheme_changed, this);
+            this.model.on('change:_zoom_sync', this.zoom_changed, this);
+
+            // JavaScript -> Python update
+            this.input.onchange = this.input_changed.bind(this);
+
+        } else {
+
+            // Update chart
+            this.chart.destroy();
+            this.chart = new Chart(this.ctx, {
+                plugins: [ChartDataLabels, ChartColorSchemes, ChartZoom],
+                type: this.input.kind,
+                data: this.input.data,
+                options: this.input.options
+            });
+
+            this.chart.canvas.ondblclick = function() {this.chart.resetZoom()}.bind(this);
+
+            console.log('Chart udpated');
+
+        }
+    },
+
+    data_changed: function() {
+        this.input.data = this.model.get('_data_sync');
+        this.render();
+    },
+    options_changed: function() {
+        this.input.options = this.model.get('_options_sync');
+        this.render();
+    },
+    kind_changed: function() {
+        this.input.kind = this.model.get('_kind_sync');
+        this.render();
+    },
+    colorscheme_changed: function() {
+        this.input.colorscheme = this.model.get('_colorscheme_sync');
+        this.render();
+    },
+    zoom_changed: function() {
+        this.input.zoom = this.model.get('_zoom');
+        this.render();
+    },
+
+    input_changed: function() {
+        this.model.set('_data_sync', this.input.data);
+        this.model.set('_options_sync', this.input.options);
+        this.model.set('_kind_sync', this.input.kind);
+        this.model.set('_colorscheme_sync', this.input.colorscheme);
+        this.model.set('_zoom_sync', this.input.zoom);
+        this.model.save_changes();
+        this.render();
+    },
 });
 
 module.exports = {

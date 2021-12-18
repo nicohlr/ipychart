@@ -100,7 +100,7 @@
 
 <script>
 export default {
-  name: 'chart-horizontalbar',
+  name: 'pandas-head',
   data () {return {}},
 }
 </script>

@@ -18,19 +18,15 @@ titanic.head()
 ```
 <pandas-head/>
 
-Concretely, to use ipychart's Pandas interface, we will have to use the second class of the ipychart package: the *ChartDataFrame* class (instead of using the *Chart* class that we saw previously). So let's start by creating an instance of this class, giving our Pandas dataframe as an argument:
+Concretely, to use ipychart's Pandas interface, we will have to call some function directly from the ipychart package. For example, to draw a bar chart using the titanic dataset, you need to execute:
 
 ```py
-from ipychart import ChartDataFrame
+import ipychart as ipc
 
-titanic_chart = ChartDataFrame(titanic)
+ipc.barplot(data=titanic, x='Embarked', y='Age', hue='Survived')
 ```
 
-We are now ready to plot all kinds of visualizations on the dataset from this instance. To do this, we need to call the methods of the *ChartDataFrame* class. Each method corresponds to a type of chart. To draw a bar chart, for example, you need to execute:
-
-```py
-titanic_chart.bar(x='Embarked', y='Age', hue='Survived')
-```
+The dataset is always passed through the `data` parameter. The `x` and `y` parameters are the columns to use for the x and y axis. The `hue` parameter is used to color the bars.
 
 <pandas-example/>
 
@@ -40,9 +36,9 @@ The hue argument allows you to display a third (categorical) column of your data
 
 ## Charts
 
-You can find here all the methods of the *ChartDataFrame* class, each one corresponding to a type of chart. Each method returns a *Chart* object, i.e. an instance of the *Chart* class of ipychart package.
+You can find here all the functions of the ipychart package for usage with a pandas dataframe, each one corresponding to a type of chart. Each function returns a *Chart* object, i.e. an instance of the *Chart* class of ipychart package.
 
-All methods have two parameters in common: `dataset_options` and `options`. The `dataset_options` parameter allows you to set the options for each dataset, as with the *Chart* class. If you don't use the `hue` parameter, the chart will have only one dataset and you will have to pass a dictionary. Otherwise, the Chart will have N datasets (each one corresponding to a distinct value of the column selected in the `hue` parameter) and you must pass a list of dictionaries. In the same way, you can use the `options` parameter to customize the Chart, like when you use the *Chart* class.
+All functions have two parameters in common: `dataset_options` and `options`. The `dataset_options` parameter allows you to set the options for each dataset, as with the *Chart* class. If you don't use the `hue` parameter, the chart will have only one dataset and you will have to pass a dictionary. Otherwise, the Chart will have N datasets (each one corresponding to a distinct value of the column selected in the `hue` parameter) and you must pass a list of dictionaries. In the same way, you can use the `options` parameter to customize the Chart, like when you use the *Chart* class.
 
 ### Count
 
@@ -53,13 +49,23 @@ This chart can only be created from a single column of a Pandas dataframe.
 The count chart shows the count of observations in each categorical bin using bars. To draw it, you must call the *count* method:
 
 ```py
-ChartDataFrame.count(x: str, horizontal: bool = False, dataset_options: dict = {},
-                     options: dict = None, colorscheme: str = None, zoom: bool = True)
+ipc.countplot(data: pd.DataFrame,
+              x: str,
+              hue: str = None,
+              horizontal: bool = False,
+              dataset_options: dict = {},
+              options: dict = None,
+              colorscheme: str = None,
+              zoom: bool = True) -> ipc.Chart
 ```
 
+- **data : pd.DataFrame**<br>
+Data used to draw the chart.
 - **x : str**<br>
 Column of the dataframe used as datapoints for x Axis.
-- **horizontal : bool**<br>
+- **hue (optionnal): str**<br>
+Grouping variable that will produce points with different colors.
+- **horizontal (optionnal): bool**<br>
 Draw the bar chart horizontally. Defaults to False.
 - **dataset_options (optional): dict**<br>
 These are options directly related to the dataset object (i.e. options concerning your data).
@@ -73,7 +79,7 @@ Allow the user to zoom on the Chart once it is created. Defaults to True.
 **Example:**
 
 ```py
-titanic_chart.count(x='Embarked')
+ipc.countplot(data=titanic, x='Embarked')
 ```
 <pandas-count/>
 
@@ -86,11 +92,19 @@ This chart can only be created from a single column of a Pandas dataframe.
 Fit and plot a univariate kernel density estimate on a line chart. This chart is useful to have a representation of the distribution of the data. To draw it, you must call the *dist* method:
 
 ```py
-ChartDataFrame.dist(x: str, bandwidth: Union[float, str] = 'auto', gridsize: int = 1000, 
-                    dataset_options: dict = {}, options: dict = None, 
-                    colorscheme: str = None, zoom: bool = True, **kwargs)
+ipc.distplot(data: pd.DataFrame,
+             x: str,
+             bandwidth: Union[float, str] = 'auto',
+             gridsize: int = 1000, 
+             dataset_options: dict = {},
+             options: dict = None, 
+             colorscheme: str = None,
+             zoom: bool = True,
+             **kwargs) -> ipc.Chart
 ```
 
+- **data : pd.DataFrame**<br>
+Data used to draw the chart.
 - **x : str**<br>
 Column of the dataframe used as datapoints for x Axis.
 - **bandwidth (optionnal): float, str**<br>
@@ -111,7 +125,7 @@ Other keyword arguments are passed down to scikit-learn's *KernelDensity* class.
 **Example:**
 
 ```py
-titanic_chart.dist(x='Age')
+ipc.distplot(data=titanic, x='Age')
 ```
 <pandas-dist/>
 
@@ -120,11 +134,19 @@ titanic_chart.dist(x='Age')
 A line chart is a way of plotting data points on a line. Often, it is used to show a trend in the data, or the comparison of two data sets. To draw it, you must call the *line* method:
 
 ```py
-ChartDataFrame.line(x: str, y: str, hue: str = None, agg: str = 'mean', 
-                    dataset_options: [dict, list] = {}, options: dict = None, 
-					colorscheme: str = None, zoom: bool = True)
+ipc.lineplot(data: pd.DataFrame,
+             x: str,
+             y: str,
+             hue: str = None,
+             agg: str = 'mean',
+             dataset_options: [dict, list] = {},
+             options: dict = None,
+             colorscheme: str = None,
+             zoom: bool = True) -> ipc.Chart
 ```
 
+- **data : pd.DataFrame**<br>
+Data used to draw the chart.
 - **x : str**<br>
 Column of the dataframe used as datapoints for x Axis.
 - **y : str**<br>
@@ -148,9 +170,12 @@ Allow the user to zoom on the Chart once it is created. Defaults to True.
 datalabels_arguments = {'display': True, 'borderWidth': 1, 'anchor': 'end', 
                         'align': 'end', 'borderRadius': 5, 'color': '#fff'}
 
-titanic_chart.line(x='Pclass', y='Age', hue='Sex', 
-                   dataset_options={'fill': False, 'datalabels': datalabels_arguments}, 
-                   colorscheme='office.Parallax6')
+ipc.lineplot(data=titanic,
+             x='Pclass',
+             y='Age',
+             hue='Sex', 
+             dataset_options={'fill': False, 'datalabels': datalabels_arguments}, 
+             colorscheme='office.Parallax6')
 ```
 
 <pandas-line/>
@@ -160,11 +185,20 @@ titanic_chart.line(x='Pclass', y='Age', hue='Sex',
 A bar chart provides a way of showing data values represented as vertical bars. It is sometimes used to show a trend in the data, and the comparison of multiple data sets side by side. To draw it, you must call the *bar* method:
 
 ```py
-ChartDataFrame.bar(x: str, y: str, hue: str = None, horizontal: bool = False,
-				   agg: str = 'mean', dataset_options: Union[dict, list] = {},
-				   options: dict = None, colorscheme: str = None, zoom: bool = True)
+ipc.barplot(data: pd.DataFrame,
+            x: str,
+            y: str,
+            hue: str = None,
+            horizontal: bool = False,
+            agg: str = 'mean',
+            dataset_options: Union[dict, list] = {},
+            options: dict = None,
+            colorscheme: str = None,
+            zoom: bool = True) -> ipc.Chart
 ```
 
+- **data : pd.DataFrame**<br>
+Data used to draw the chart.
 - **x : str**<br>
 Column of the dataframe used as datapoints for x Axis.
 - **y : str**<br>
@@ -187,7 +221,11 @@ Allow the user to zoom on the Chart once it is created. Defaults to True.
 **Example:**
 
 ```py
-titanic_chart.bar(x='Pclass', y='Fare', hue='Sex', colorscheme='office.Parallax6')
+ipc.barplot(data=titanic,
+            x='Pclass',
+            y='Fare',
+            hue='Sex',
+            colorscheme='office.Parallax6')
 ```
 
 <pandas-bar/>
@@ -197,11 +235,18 @@ titanic_chart.bar(x='Pclass', y='Fare', hue='Sex', colorscheme='office.Parallax6
 A radar chart is a way of showing multiple data points and the variation between them. They are often useful for comparing the points of two or more different data sets. To draw it, you must call the *radar* method:
 
 ```py
-ChartDataFrame.radar(x: str, y: str, hue: str = None, agg: str = 'mean', 
-                     dataset_options: Union[dict, list] = {},
-                     options: dict = None, colorscheme: str = None)
+ipc.radarplot(data: pd.DataFrame,
+              x: str,
+              y: str,
+              hue: str = None,
+              agg: str = 'mean', 
+              dataset_options: Union[dict, list] = {},
+              options: dict = None,
+              colorscheme: str = None) -> ipc.Chart
 ```
 
+- **data : pd.DataFrame**<br>
+Data used to draw the chart.
 - **x : str**<br>
 Column of the dataframe used as datapoints for x Axis.
 - **y : str**<br>
@@ -220,7 +265,10 @@ Colorscheme to use when drawing the chart. List of available colorscheme: link.
 **Example:**
 
 ```py
-titanic_chart.radar(x='Title', y='Fare', colorscheme='office.Yellow6')
+ipc.radarplot(data=titanic,
+              x='Title',
+              y='Fare',
+              colorscheme='office.Yellow6')
 ```
 
 <pandas-radar/>
@@ -231,19 +279,33 @@ Doughnut and pie charts are excellent at showing the relational proportions betw
 To draw one of these charts, you must call the *doughnut* method, the *pie* method or the *polararea* method:
 
 ```py
-ChartDataFrame.doughnut(x: str, y: str, agg: str = 'mean', 
-                        dataset_options: Union[dict, list] = {},
-                        options: dict = None, colorscheme: str = None)
+ipc.doughnutplot(data: pd.DataFrame,
+                 x: str,
+                 y: str,
+                 agg: str = 'mean', 
+                 dataset_options: Union[dict, list] = {},
+                 options: dict = None,
+                 colorscheme: str = None) -> ipc.Chart
                         
-ChartDataFrame.pie(x: str, y: str, agg: str = 'mean', 
-                   dataset_options: Union[dict, list] = {},
-                   options: dict = None, colorscheme: str = None)
+ipc.pieplot(data: pd.DataFrame,
+            x: str,
+            y: str,
+            agg: str = 'mean', 
+            dataset_options: Union[dict, list] = {},
+            options: dict = None,
+            colorscheme: str = None) -> ipc.Chart
                         
-ChartDataFrame.polararea(x: str, y: str, agg: str = 'mean', 
-                         dataset_options: Union[dict, list] = {},
-                         options: dict = None, colorscheme: str = None)
+ipc.polarplot(data: pd.DataFrame,
+              x: str,
+              y: str,
+              agg: str = 'mean', 
+              dataset_options: Union[dict, list] = {},
+              options: dict = None,
+              colorscheme: str = None) -> ipc.Chart
 ```
 
+- **data : pd.DataFrame**<br>
+Data used to draw the chart.
 - **x : str**<br>
 Column of the dataframe used as datapoints for x Axis.
 - **y : str**<br>
@@ -260,7 +322,10 @@ Colorscheme to use when drawing the chart. List of available colorscheme: link.
 **Example:**
 
 ```py
-titanic_chart.polararea(x='Title', y='Fare', colorscheme='brewer.SetThree5')
+ipc.polarplot(data=titanic,
+              x='Title',
+              y='Fare',
+              colorscheme='brewer.SetThree5')
 ```
 
 <pandas-polararea/>
@@ -270,12 +335,18 @@ titanic_chart.polararea(x='Title', y='Fare', colorscheme='brewer.SetThree5')
 Scatter charts are based on basic line charts with the x axis changed to a linear axis. To draw it, you must call the *scatter* method:
 
 ```py
-ChartDataFrame.scatter(x: str, y: str, hue: str = None,
-					   dataset_options: Union[dict, list] = {},
-					   options: dict = None, colorscheme: str = None,
-					   zoom: bool = True)
+ipc.scatterplot(data: pd.DataFrame,
+                x: str,
+                y: str,
+                hue: str = None,
+                dataset_options: Union[dict, list] = {},
+                options: dict = None,
+                colorscheme: str = None,
+                zoom: bool = True) -> ipc.Chart
 ```
 
+- **data : pd.DataFrame**<br>
+Data used to draw the chart.
 - **x : str**<br>
 Column of the dataframe used as datapoints for x Axis.
 - **y : str**<br>
@@ -294,8 +365,11 @@ Allow the user to zoom on the Chart once it is created. Defaults to True.
 **Example:**
 
 ```py
-titanic_chart.scatter(x='Age', y='Fare', hue='Survived', 
-                      colorscheme='tableau.ColorBlind10')
+ipc.scatterplot(data=titanic,
+                x='Age',
+                y='Fare',
+                hue='Survived', 
+                colorscheme='tableau.ColorBlind10')
 ```
 
 <pandas-scatter/>
@@ -305,12 +379,19 @@ titanic_chart.scatter(x='Age', y='Fare', hue='Survived',
 A bubble chart is used to display three-dimension data. The location of the bubble is determined by the first two dimensions and the corresponding horizontal and vertical axes. The third dimension is represented by the radius of the individual bubbles. To draw it, you must call the *bubble* method:
 
 ```py
-ChartDataFrame.bubble(x: str, y: str, r: str, hue: str = None,
-					  dataset_options: Union[dict, list] = {},
-					  options: dict = None, colorscheme: str = None,
-					  zoom: bool = True)
+ipc.bubbleplot(data: pd.DataFrame,
+               x: str,
+               y: str,
+               r: str,
+               hue: str = None,
+               dataset_options: Union[dict, list] = {},
+               options: dict = None,
+               colorscheme: str = None,
+               zoom: bool = True) -> ipc.Chart
 ```
 
+- **data : pd.DataFrame**<br>
+Data used to draw the chart.
 - **x : str**<br>
 Column of the dataframe used as datapoints for x Axis.
 - **y : str**<br>
@@ -331,8 +412,12 @@ Allow the user to zoom on the Chart once it is created. Defaults to True.
 **Example:**
 
 ```py
-titanic_chart.bubble(x='Age', y='Fare', r='Pclass', hue='Survived', 
-                     colorscheme='office.Headlines6')
+ipc.bubbleplot(data=titanic,
+               x='Age',
+               y='Fare',
+               r='Pclass',
+               hue='Survived', 
+               colorscheme='office.Headlines6')
 ```
 
 <pandas-bubble/>

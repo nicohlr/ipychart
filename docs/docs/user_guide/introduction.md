@@ -2,7 +2,7 @@
 
 This package is a Python package made for data vizualisation. It allows to create dynamic, refined and customizable charts within the famous Jupyter Notebook environment. It is particularly suitable for Data Scientists who are looking for a smart way to display and present their data directly from the output cells of their notebooks.
 
-<p style="font-size:1.65rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;padding-bottom:.3rem;margin-top:-3.1rem;border-bottom:1px solid #eaecef;">How does it Works</p>
+<p style="font-size:1.65rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;padding-bottom:.3rem;margin-top:-3.1rem;border-bottom:1px solid #eaecef;">How does it work ?</p>
 
 Ipychart is an [ipywidget](https://ipywidgets.readthedocs.io/en/stable/). Ipywidgets are tools developed by the creators of Jupyter themselves. It allows using pure Javascript code directly in the Jupyter environment, which is a Python environment. This bridge between Javascript and Python is made available in open source with the possibility for anyone to create a custom ipywidget. This package, which is therefore a custom ipywidget, utilizes the power of this link between Javascript and Python to make the [Chart.js](https://www.chartjs.org/) Javascript library available to all Jupyter Notebooks users.
 

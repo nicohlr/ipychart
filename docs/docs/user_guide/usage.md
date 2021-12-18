@@ -87,7 +87,7 @@ In this section, we will go through each argument to present its use and its str
 
 ### Data
 
-The `data` argument is the most important one of the *Chart* class. Without this argument, the chart cannot be displayed (how to display a chart without data?). The `data` argument **must be a dict**. This constraint is imposed by Chart.js, which takes its arguments via a Javascript object. This data dictionary must have the following structure : 
+The `data` argument is the most important one of the *Chart* class. Without this argument, the chart cannot be displayed. The `data` argument **must be a dict**. This constraint is imposed by Chart.js, which takes its arguments via a Javascript object. This data dictionary must have the following structure : 
 
 ``` py
 data = {
@@ -100,7 +100,7 @@ The value of `'datasets'` will hold your data, it **must be a list of dictionari
 
 Please refer to [the documentation of each chart type](/ipychart/user_guide/charts) to have more details about the dataset structure to use. 
 
-The value of `'labels'` **must be a list**. If only one dataset is passed (i.e. if len(data['datasets] is 1)), the labels list will represent the labels of each datapoint of the only dataset passed. However, if more than one dataset is passed, the label list will represent the labels of each dataset.
+The value of `'labels'` **must be a list**. If only one dataset is passed, the labels list will represent the labels of each datapoint of the only dataset passed. However, if more than one dataset is passed, the label list will represent the labels of each dataset.
 
 ::: warning
 The data dictionary must have these two elements, otherwise you can expect dysfunction or unexpected behavior.
@@ -155,7 +155,7 @@ Below is the use case of each of these dictionaries. Of course, these five dicti
 ### Colorscheme
 
 ::: warning
-The `colorscheme` argument will be ignored if any color configuration is set in one of the datasets passed to the chart. In other words, **the argument will only work if no color configuration option is used in the chart**.
+The `colorscheme` argument will overwrite any color configuration passed through the datasets of the chart.
 :::
 
 The `colorscheme` argument allow you to automatically set a predefined color scheme to your chart. This is a feature which is not present natively in Chart.js. It has been added in ipychart using [an open-source implementation](https://github.com/nagix/chartjs-plugin-colorschemes). 
