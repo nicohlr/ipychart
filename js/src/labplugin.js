@@ -1,6 +1,6 @@
 import * as plugin from './index';
 import base from '@jupyter-widgets/base';
-import {version} from "./version";
+import { version } from "./version";
 
 export default {
   id: 'ipychart',

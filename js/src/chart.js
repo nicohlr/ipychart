@@ -9,8 +9,15 @@ Chart.register(ChartZoom);
 Chart.register(ChartDataLabels);
 
 // Local imports
-import Colorschemes from './colorschemes';
-import {version} from './version';
+import colorschemes from './colorschemes/index';
+import ColorSchemesPlugin from './plugin.colorschemes';
+import { version } from './version';
+
+Chart.colorschemes = colorschemes;
+Chart.register(ColorSchemesPlugin);
+
+
+console.log(_.get(Chart.colorschemes, 'brewer.DarkTwo3'));
 
 // Define the widget model.
 const ChartModel = widgets.DOMWidgetModel.extend({
@@ -40,7 +47,7 @@ const ChartView = widgets.DOMWidgetView.extend({
             else {
                 // If a colorscheme is selected, we set color based on a list of colors corresponding to each colorscheme
                 if (_.has(options, ['plugins', 'colorschemes', 'scheme'])) {
-                    let color = Colorschemes[options.plugins.colorschemes.scheme][i];
+                    let color = _.get(Chart.colorschemes, options.plugins.colorschemes.scheme)[i];
                     if (_.has(dataset.datalabels, 'borderWidth')) {
                         if (!_.has(dataset.datalabels, 'backgroundColor')) {
                             _.set(dataset.datalabels, 'backgroundColor', color);
