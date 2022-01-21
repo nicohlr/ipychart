@@ -295,18 +295,6 @@ def _create_chart_data_agg(data: pd.DataFrame,
     assert y in data.columns, f'{y} not found in dataframe'
     assert is_numeric_dtype(data[y]), 'y must be a numeric column'
 
-    msg_kind = (
-        'Chart kind must be one of : line, bar, radar, doughnut,'
-        'polarArea, bubble, horizontalBar, pie, scatter. See '
-        'https://nicohlr.gitlab.io/ipychart/user_guide/charts.html '
-        'for more details'
-    )
-
-    kinds = ['line', 'bar', 'horizontalBar', 'radar', 'doughnut',
-             'polarArea', 'bubble', 'pie', 'scatter']
-
-    assert kind in kinds, msg_kind
-
     if dataset_options is None:
         dataset_options = {}
 
