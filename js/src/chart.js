@@ -172,6 +172,7 @@ const ChartView = widgets.DOMWidgetView.extend({
         // Set zoom options
         options = _.merge(
             {
+                events: ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove', 'dblclick'],
                 plugins: {
                     zoom: {
                         zoom: {
@@ -219,11 +220,19 @@ const ChartView = widgets.DOMWidgetView.extend({
                 type: this.input.kind,
                 data: this.input.data,
                 options: this.input.options,
+                plugins: [
+                    {
+                        id: 'customEventListner',
+                        afterEvent: (chart, evt, opts) => {
+                            if (evt.event.type === 'dblclick') {
+                                setTimeout(() => {
+                                    chart.resetZoom();
+                                }, 100);
+                            }
+                        },
+                    },
+                ],
             });
-
-            this.chart.canvas.ondblclick = function resetzoom() {
-                this.chart.resetZoom();
-            }.bind(this);
 
             // Add element to output
             if (!this.el.canvas) {
@@ -247,11 +256,19 @@ const ChartView = widgets.DOMWidgetView.extend({
                 type: this.input.kind,
                 data: this.input.data,
                 options: this.input.options,
+                plugins: [
+                    {
+                        id: 'customEventListner',
+                        afterEvent: (chart, evt, opts) => {
+                            if (evt.event.type === 'dblclick') {
+                                setTimeout(() => {
+                                    chart.resetZoom();
+                                }, 100);
+                            }
+                        },
+                    },
+                ],
             });
-
-            this.chart.canvas.ondblclick = function resetzoom() {
-                this.chart.resetZoom();
-            }.bind(this);
 
             console.log('Chart udpated');
         }
