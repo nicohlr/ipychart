@@ -4,9 +4,6 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import ChartZoom from 'chartjs-plugin-zoom';
 import _ from 'lodash';
 import { Chart, registerables } from 'chart.js';
-Chart.register(...registerables);
-Chart.register(ChartZoom);
-Chart.register(ChartDataLabels);
 
 // Local imports
 import colorschemes from './colorschemes/index';
@@ -15,9 +12,9 @@ import { version } from './version';
 
 Chart.colorschemes = colorschemes;
 Chart.register(ColorSchemesPlugin);
-
-
-console.log(_.get(Chart.colorschemes, 'brewer.DarkTwo3'));
+Chart.register(...registerables);
+Chart.register(ChartZoom);
+Chart.register(ChartDataLabels);
 
 // Define the widget model.
 const ChartModel = widgets.DOMWidgetModel.extend({
@@ -215,7 +212,6 @@ const ChartView = widgets.DOMWidgetView.extend({
 
             // Create chart
             this.chart = new Chart(this.ctx, {
-                plugins: [ChartDataLabels, ChartZoom],
                 type: this.input.kind,
                 data: this.input.data,
                 options: this.input.options
@@ -244,7 +240,6 @@ const ChartView = widgets.DOMWidgetView.extend({
             // Update chart
             this.chart.destroy();
             this.chart = new Chart(this.ctx, {
-                plugins: [ChartDataLabels, ChartZoom],
                 type: this.input.kind,
                 data: this.input.data,
                 options: this.input.options

@@ -1,6 +1,6 @@
-import * as plugin from './index';
-import base from '@jupyter-widgets/base';
-import { version } from "./version";
+import * as base from '@jupyter-widgets/base';
+import * as plugin from './chart';
+import { version } from './version';
 
 export default {
   id: 'ipychart',
@@ -14,4 +14,3 @@ export default {
   },
   autoStart: true
 };
-

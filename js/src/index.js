@@ -1,3 +1,2 @@
-// Export widget models and views, and the npm package version number.
+// Export widget models and views.
 export * from './chart';
-export { version } from './version';
