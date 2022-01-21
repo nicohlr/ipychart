@@ -89,17 +89,8 @@ class Chart(widgets.DOMWidget):
         self._colorscheme = colorscheme
         self._zoom = zoom
 
-        self.data = data
-        self.kind = kind
-        self.options = options if options else {}
-        self.colorscheme = colorscheme
-        self.zoom = zoom
-
-        # Set default values in inputs
-        self._set_default_inputs()
-
-        # Set synced attributes for JS
-        self._set_synced_attributes()
+        # Check inputs and sync to JS
+        self._refresh_chart()
 
     @property
     def data(self):
@@ -107,12 +98,74 @@ class Chart(widgets.DOMWidget):
 
     @data.setter
     def data(self, value):
+        self._data = value
+        self._refresh_chart()
 
-        # Check inputted data
-        if 'datasets' not in value:
+    @property
+    def kind(self):
+        return self._kind
+
+    @kind.setter
+    def kind(self, value):
+        self._kind = value
+        self._refresh_chart()
+
+    @property
+    def options(self):
+        return self._options
+
+    @options.setter
+    def options(self, value):
+        self._options = value
+        self._refresh_chart()
+
+    @property
+    def colorscheme(self):
+        return self._colorscheme
+
+    @colorscheme.setter
+    def colorscheme(self, value):
+        self._colorscheme = value
+        self._refresh_chart()
+
+    @property
+    def zoom(self):
+        return self._zoom
+
+    @zoom.setter
+    def zoom(self, value):
+        self._zoom = value
+        self._refresh_chart()
+
+    @default('layout')
+    def _default_layout(self):
+        return widgets.Layout(height='auto', align_self='stretch')
+
+    def _refresh_chart(self):
+        """
+        This function is called when the user modifies the chart's inputs. It
+        checks inputted values, set some default options and style, and sync
+        the chart with the JS part.
+        """
+
+        self._validate_current_arguments()
+        self._set_default_inputs()
+        self._set_synced_attributes()
+
+    def _validate_current_arguments(self):
+        """
+        This function checks all current arguments of the chart and raises
+        errors if they are not valid. To match Chart.js format, arguments must
+        follow a specific structure. To see more details about this structure,
+        please check the documentation:
+        https://nicohlr.gitlab.io/ipychart/user_guide/usage.html
+        """
+
+        # Validate data argument
+        if 'datasets' not in self._data:
             raise ValueError(MSG_FORMAT.format('data'))
 
-        datasets = value['datasets']
+        datasets = self._data['datasets']
         if not isinstance(datasets, list):
             raise ValueError(MSG_FORMAT.format('data'))
         if not len(datasets):
@@ -125,48 +178,23 @@ class Chart(widgets.DOMWidget):
             if 'kind' in ['bubble', 'scatter']:
                 if not all(isinstance(x, dict) for x in dataset['data']):
                     raise ValueError(MSG_FORMAT.format("data['datasets']"))
-
-                if not all(k in p for k in ('x', 'y', 'r') for p in value):
+                if not all(k in p for k in ('x', 'y', 'r') for p in self._data):
                     raise ValueError(MSG_FORMAT.format('data'))
 
             if 'datalabels' in dataset:
                 if not isinstance(dataset['datalabels'], dict):
                     raise ValueError(MSG_FORMAT.format('data'))
 
-        if 'labels' in value:
-            if not isinstance(value['labels'], list):
+        if 'labels' in self._data:
+            if not isinstance(self._data['labels'], list):
                 raise ValueError(MSG_FORMAT.format('data'))
 
-        # Set argument
-        self._data = value
-        self._set_default_inputs()
-        self._set_synced_attributes()
-
-    @property
-    def kind(self):
-        return self._kind
-
-    @kind.setter
-    def kind(self, value):
-
-        # Check inputted data
-        if value not in KINDS:
+        # Validate kind argument
+        if self._kind not in KINDS:
             raise ValueError(MSG_KIND)
 
-        # Set argument
-        self._kind = value
-        self._set_default_inputs()
-        self._set_synced_attributes()
-
-    @property
-    def options(self):
-        return self._options
-
-    @options.setter
-    def options(self, value):
-
-        # Check inputted data
-        if not isinstance(value, dict):
+        # Validate options argument
+        if not isinstance(self._options, dict):
             raise ValueError(MSG_FORMAT.format('options'))
 
         all_options = ['legend', 'title', 'tooltips', 'scales', 'scale',
@@ -176,46 +204,14 @@ class Chart(widgets.DOMWidget):
         if not set(self._options.keys()).issubset(set(all_options)):
             raise ValueError(MSG_FORMAT.format('options'))
 
-        # Set argument
-        self._options = value
-        self._set_default_inputs()
-        self._set_synced_attributes()
-
-    @property
-    def colorscheme(self):
-        return self._colorscheme
-
-    @colorscheme.setter
-    def colorscheme(self, value):
-
-        # Check inputted data
-        if value is not None and value not in COLORSCHEMES:
+        # Validate colorscheme argument
+        if (self._colorscheme is not None
+                and self._colorscheme not in COLORSCHEMES):
             raise ValueError(MSG_COLORSCHEME)
 
-        # Set argument
-        self._colorscheme = value
-        self._set_default_inputs()
-        self._set_synced_attributes()
-
-    @property
-    def zoom(self):
-        return self._zoom
-
-    @zoom.setter
-    def zoom(self, value):
-
-        # Check inputted data
-        if not isinstance(value, bool):
+        # Validate zoom argument
+        if not isinstance(self._zoom, bool):
             raise ValueError(MSG_FORMAT.format('zoom'))
-
-        # Set argument
-        self._zoom = value
-        self._set_default_inputs()
-        self._set_synced_attributes()
-
-    @default('layout')
-    def _default_layout(self):
-        return widgets.Layout(height='auto', align_self='stretch')
 
     def _set_synced_attributes(self):
         self._options_sync = self._options
