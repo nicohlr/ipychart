@@ -124,7 +124,7 @@ def _create_chart_options(kind: str,
 def _create_counted_data_dict(data: pd.DataFrame,
                               x: str,
                               dataset_options: dict,
-                              label: str = None) -> dict:
+                              label: str | None = None) -> dict:
     """
     This function will prepare an ipychart dataset with counted data from
     a pandas dataframe.
@@ -166,8 +166,8 @@ def _create_counted_data_dict(data: pd.DataFrame,
 
 def _create_chart_data_count(data: pd.DataFrame,
                              x: str,
-                             hue: str = None,
-                             dataset_options: Union[dict, list] = None
+                             hue: str | None = None,
+                             dataset_options: dict | list | None = None
                              ) -> dict:
     """
     This function will prepare all the arguments to create a chart from the
@@ -254,10 +254,10 @@ def _create_chart_data_agg(data: pd.DataFrame,
                            kind: str,
                            x: str,
                            y: str,
-                           r: str = None,
-                           hue: str = None,
-                           agg: str = None,
-                           dataset_options: Union[dict, list] = None
+                           r: str | None = None,
+                           hue: str | None = None,
+                           agg: str | None = None,
+                           dataset_options: dict | list | None = None
                            ) -> dict:
     """
     This function will prepare all the arguments to create a chart from
