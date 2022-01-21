@@ -1,5 +1,5 @@
 KINDS = ['line', 'bar', 'radar', 'doughnut', 'polarArea', 'bubble',
-                 'pie', 'scatter']
+         'pie', 'scatter']
 
 COLORSCHEMES = [
     'brewer.YlGn3', 'brewer.YlGn4', 'brewer.YlGn5', 'brewer.YlGn6',

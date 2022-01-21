@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 
-from typing import Union
 from pandas.api.types import is_numeric_dtype
 from sklearn.neighbors import KernelDensity
 from sklearn.model_selection import GridSearchCV
@@ -175,17 +174,17 @@ def distplot(data: pd.DataFrame,
     # _create_chart_options method called previouly
     maxtickslimit = 10
     ticks_format_function = (
-        "function(value, index, values) {if (Math.abs(value) >= 1) {"
+        "function(value, index, ticks) {if (Math.abs(value) >= 1) {"
         "return Math.round(value);} else {return value.toFixed(3);}}"
     )
 
-    if 'ticks' not in options['scales']['xAxes'][0]:
-        options['scales']['xAxes'][0].update(
+    if 'ticks' not in options['scales']['x']:
+        options['scales']['x'].update(
             {'ticks': {'maxTicksLimit': maxtickslimit,
                        'callback': ticks_format_function}}
         )
     else:
-        ticks_options = options['scales']['xAxes'][0]['ticks']
+        ticks_options = options['scales']['x']['ticks']
         if 'maxTicksLimit' not in ticks_options:
             ticks_options['maxTicksLimit'] = maxtickslimit
         if 'callback' not in ticks_options:

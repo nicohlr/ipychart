@@ -197,7 +197,8 @@ class Chart(widgets.DOMWidget):
         if not isinstance(self._options, dict):
             raise ValueError(MSG_FORMAT.format('options'))
 
-        all_options = ['legend', 'title', 'tooltips', 'scales', 'scale',
+        # TODO: Adapt
+        all_options = ['legend', 'title', 'scales',
                        'layout', 'animation', 'hover', 'plugins',
                        'legendCallback', 'indexAxis']
 
@@ -235,7 +236,7 @@ class Chart(widgets.DOMWidget):
 
         # Disable cartesian axis by default for some charts
         radials = ['radar', 'doughnut', 'polarArea', 'pie']
-        default_options = {'scale': {'ticks': {'beginAtZero': True}}}
+        default_options = {}
 
         # Disable legend by default for some charts
         no_legend = ['bar', 'line', 'bubble', 'radar', 'scatter']

@@ -1,6 +1,6 @@
 // Global imports
 import * as widgets from '@jupyter-widgets/base';
-import { Chart, registerables } from 'chart.js';
+import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import ChartZoom from 'chartjs-plugin-zoom';
 import _ from 'lodash';
@@ -13,9 +13,11 @@ import version from './version';
 // Register plugins
 Chart.colorschemes = colorschemes;
 Chart.register(ColorSchemesPlugin);
-Chart.register(...registerables);
 Chart.register(ChartZoom);
 Chart.register(ChartDataLabels);
+
+// Make sure we have a global Chart object
+window.Chart = Chart;
 
 // Define the widget model.
 const ChartModel = widgets.DOMWidgetModel.extend({
@@ -66,29 +68,33 @@ const ChartView = widgets.DOMWidgetView.extend({
     convert_input_options(options, colorscheme, zoom) {
         // All paths of options dictionary with callback functions
         const callbackOptionsPaths = [
-            ['legendCallback'],
-            ['tooltips', 'custom'],
-            ['tooltips', 'itemSort'],
-            ['tooltips', 'filter'],
-            ['tooltips', 'callbacks', 'beforeTitle'],
-            ['tooltips', 'callbacks', 'title'],
-            ['tooltips', 'callbacks', 'afterTitle'],
-            ['tooltips', 'callbacks', 'beforeBody'],
-            ['tooltips', 'callbacks', 'beforeLabel'],
-            ['tooltips', 'callbacks', 'label'],
-            ['tooltips', 'callbacks', 'labelColor'],
-            ['tooltips', 'callbacks', 'labelTextColor'],
-            ['tooltips', 'callbacks', 'afterLabel'],
-            ['tooltips', 'callbacks', 'afterBody'],
-            ['tooltips', 'callbacks', 'beforeFooter'],
-            ['tooltips', 'callbacks', 'footer'],
-            ['tooltips', 'callbacks', 'afterFooter'],
-            ['legendCallback'],
-            ['legend', 'onClick'],
-            ['legend', 'onHover'],
-            ['legend', 'onLeave'],
-            ['legend', 'labels', 'generateLabels'],
-            ['legend', 'labels', 'filter'],
+            ['onHover'],
+            ['onClick'],
+            ['onResize'],
+            ['plugins', 'tooltip', 'custom'],
+            ['plugins', 'tooltip', 'external'],
+            ['plugins', 'tooltip', 'itemSort'],
+            ['plugins', 'tooltip', 'filter'],
+            ['plugins', 'tooltip', 'callbacks', 'beforeTitle'],
+            ['plugins', 'tooltip', 'callbacks', 'title'],
+            ['plugins', 'tooltip', 'callbacks', 'afterTitle'],
+            ['plugins', 'tooltip', 'callbacks', 'beforeBody'],
+            ['plugins', 'tooltip', 'callbacks', 'beforeLabel'],
+            ['plugins', 'tooltip', 'callbacks', 'label'],
+            ['plugins', 'tooltip', 'callbacks', 'labelColor'],
+            ['plugins', 'tooltip', 'callbacks', 'labelTextColor'],
+            ['plugins', 'tooltip', 'callbacks', 'labelPointStyle'],
+            ['plugins', 'tooltip', 'callbacks', 'afterLabel'],
+            ['plugins', 'tooltip', 'callbacks', 'afterBody'],
+            ['plugins', 'tooltip', 'callbacks', 'beforeFooter'],
+            ['plugins', 'tooltip', 'callbacks', 'footer'],
+            ['plugins', 'tooltip', 'callbacks', 'afterFooter'],
+            ['plugins', 'legend', 'onClick'],
+            ['plugins', 'legend', 'onHover'],
+            ['plugins', 'legend', 'onLeave'],
+            ['plugins', 'legend', 'labels', 'generateLabels'],
+            ['plugins', 'legend', 'labels', 'filter'],
+            ['plugins', 'legend', 'labels', 'sort'],
             ['animations', 'onProgress'],
             ['animations', 'onComplete '],
             ['scale', 'pointLabels', 'callback'],
@@ -98,12 +104,11 @@ const ChartView = widgets.DOMWidgetView.extend({
             ['plugins', 'datalabels', 'formatter']
         ];
 
-        // These paths must be handled for all axes
-        // i.e. all axes contained in scales.xAxes or scales.yAxes arrays
+        // These paths must be handled for all scales
+        // i.e. all entries contained in options.scales
         const callbackScalesPaths = [
             ['ticks', 'callback'],
-            ['ticks', 'minor', 'callback'],
-            ['ticks', 'major', 'callback'],
+            ['pointLabels', 'callback'],
             ['beforeUpdate'],
             ['beforeSetDimensions'],
             ['afterSetDimensions'],
@@ -131,35 +136,18 @@ const ChartView = widgets.DOMWidgetView.extend({
             }
         });
 
-        // Convert strings containing this.callback functions to real JS functions for x axis paths
-        if (_.has(options, ['scales', 'xAxes'])) {
-            _.forEach(options.scales.xAxes, (xaxes) => {
-                _.forEach(callbackScalesPaths, (callbackPath) => {
-                    if (_.has(xaxes, callbackPath)) {
-                        _.set(
-                            xaxes,
-                            callbackPath,
-                            new Function(`return ${_.get(xaxes, callbackPath)}`)(),
-                        );
-                    }
-                });
+        // Convert strings containing this.callback functions to real JS functions for scales paths
+        _.forEach(options.scales, (scale) => {
+            _.forEach(callbackScalesPaths, (callbackPath) => {
+                if (_.has(scale, callbackPath)) {
+                    _.set(
+                        scale,
+                        callbackPath,
+                        new Function(`return ${_.get(scale, callbackPath)}`)(),
+                    );
+                }
             });
-        }
-
-        // Convert strings containing callback functions to real JS functions for y axis paths
-        if (_.has(options, ['scales', 'yAxes'])) {
-            _.forEach(options.scales.yAxes, (yaxes) => {
-                _.forEach(callbackScalesPaths, (callbackPath) => {
-                    if (_.has(yaxes, callbackPath)) {
-                        _.set(
-                            yaxes,
-                            callbackPath,
-                            new Function(`return ${_.get(yaxes, callbackPath)}`)(),
-                        );
-                    }
-                });
-            });
-        }
+        });
 
         // Set colorscheme options if not None
         if (colorscheme) {
@@ -172,7 +160,6 @@ const ChartView = widgets.DOMWidgetView.extend({
         // Set zoom options
         options = _.merge(
             {
-                events: ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove', 'dblclick'],
                 plugins: {
                     zoom: {
                         zoom: {
@@ -220,19 +207,13 @@ const ChartView = widgets.DOMWidgetView.extend({
                 type: this.input.kind,
                 data: this.input.data,
                 options: this.input.options,
-                plugins: [
-                    {
-                        id: 'customEventListner',
-                        afterEvent: (chart, evt, opts) => {
-                            if (evt.event.type === 'dblclick') {
-                                setTimeout(() => {
-                                    chart.resetZoom();
-                                }, 100);
-                            }
-                        },
-                    },
-                ],
             });
+
+            if (this.input.zoom === true) {
+                this.chart.canvas.ondblclick = function resetzoom() {
+                    this.chart.resetZoom();
+                }.bind(this);
+            }
 
             // Add element to output
             if (!this.el.canvas) {
@@ -256,19 +237,13 @@ const ChartView = widgets.DOMWidgetView.extend({
                 type: this.input.kind,
                 data: this.input.data,
                 options: this.input.options,
-                plugins: [
-                    {
-                        id: 'customEventListner',
-                        afterEvent: (chart, evt, opts) => {
-                            if (evt.event.type === 'dblclick') {
-                                setTimeout(() => {
-                                    chart.resetZoom();
-                                }, 100);
-                            }
-                        },
-                    },
-                ],
             });
+
+            if (this.input.zoom === true) {
+                this.chart.canvas.ondblclick = function resetzoom() {
+                    this.chart.resetZoom();
+                }.bind(this);
+            }
 
             console.log('Chart udpated');
         }
