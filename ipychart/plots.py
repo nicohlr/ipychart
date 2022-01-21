@@ -15,7 +15,6 @@ from .utils.plots_utils import (_create_chart_options,
 def countplot(data: pd.DataFrame,
               x: str,
               hue: str | None = None,
-              horizontal: bool = False,
               dataset_options: dict | None = None,
               options: dict | None = None,
               colorscheme: str | None = None,
@@ -30,9 +29,6 @@ def countplot(data: pd.DataFrame,
 
         hue (str, optional): Grouping variable that will produce points
             with different colors. Defaults to None.
-
-        horizontal (bool, optional): Draw the bar chart horizontally.
-            Defaults to False.
 
         dataset_options (dict, optional): Options related to the dataset
             object (i.e. options concerning your data). Defaults to {}.
@@ -61,28 +57,17 @@ def countplot(data: pd.DataFrame,
         dataset_options=dataset_options
     )
 
-    if horizontal:
-        options = _create_chart_options(
-            kind='count',
-            options=options,
-            x='Count',
-            y=x,
-            hue=hue
-        )
-    else:
-        options = _create_chart_options(
-            kind='count',
-            options=options,
-            x=x,
-            y='Count',
-            hue=hue
-        )
-
-    kind = 'horizontalBar' if horizontal else 'bar'
+    options = _create_chart_options(
+        kind='count',
+        options=options,
+        x=x,
+        y='Count',
+        hue=hue
+    )
 
     return Chart(
         data=data,
-        kind=kind,
+        kind='bar',
         options=options,
         colorscheme=colorscheme,
         zoom=zoom
@@ -293,7 +278,6 @@ def barplot(data: pd.DataFrame,
             x: str,
             y: str,
             hue: str | None = None,
-            horizontal: bool = False,
             agg: str = 'mean',
             dataset_options: dict | list | None = None,
             options: dict | None = None,
@@ -313,8 +297,6 @@ def barplot(data: pd.DataFrame,
 
         hue (str, optional): Grouping variable that will produce points with
             different colors. Defaults to None.
-
-        horizontal (bool): Draw the bar chart horizontally. Defaults to False.
 
         agg (str, optional): The aggregator used to gather data (ex: 'median'
             or 'mean'). Defaults to None.
@@ -358,11 +340,9 @@ def barplot(data: pd.DataFrame,
         agg=agg
     )
 
-    kind = 'horizontalBar' if horizontal else 'bar'
-
     return Chart(
         data=data,
-        kind=kind,
+        kind='bar',
         options=options,
         colorscheme=colorscheme,
         zoom=zoom

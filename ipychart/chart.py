@@ -20,7 +20,7 @@ MSG_FORMAT = (
 
 MSG_KIND = (
     'Chart kind must be one of : line, bar, radar, doughnut,'
-    'polarArea, bubble, horizontalBar, pie, scatter. See '
+    'polarArea, bubble, pie, scatter. See '
     'https://nicohlr.gitlab.io/ipychart/user_guide/charts.html '
     'for more details'
 )
@@ -199,7 +199,7 @@ class Chart(widgets.DOMWidget):
 
         all_options = ['legend', 'title', 'tooltips', 'scales', 'scale',
                        'layout', 'animation', 'hover', 'plugins',
-                       'legendCallback']
+                       'legendCallback', 'indexAxis']
 
         if not set(self._options.keys()).issubset(set(all_options)):
             raise ValueError(MSG_FORMAT.format('options'))
@@ -238,8 +238,7 @@ class Chart(widgets.DOMWidget):
         default_options = {'scale': {'ticks': {'beginAtZero': True}}}
 
         # Disable legend by default for some charts
-        no_legend = ['bar', 'line', 'horizontalBar', 'bubble', 'radar',
-                     'scatter']
+        no_legend = ['bar', 'line', 'bubble', 'radar', 'scatter']
         if (len(self._data['datasets']) == 1) and (self._kind in no_legend):
             default_options = set_(default_options, 'plugins.legend', False)
 
@@ -298,7 +297,7 @@ class Chart(widgets.DOMWidget):
         pbdc = 'pointBorderColor'
 
         # Chart types lists
-        bars = ['bar', 'horizontalBar']
+        bars = ['bar']
         lrsb = ['line', 'radar', 'scatter', 'bubble']
 
         # Set a mix of color if only one dataset
@@ -311,7 +310,7 @@ class Chart(widgets.DOMWidget):
 
                 if ds_type in lrsb:
                     ds[bgc] = colors_unique[0]
-                elif ds_type in ['bar', 'horizontalBar']:
+                elif ds_type in bars:
                     size = int(len(ds['data']))
                     colors = colors_unique * (size + 1)
                     ds[bgc] = colors[:size]
