@@ -1,13 +1,14 @@
-var plugin = require('./index');
-var base = require('@jupyter-widgets/base');
+import * as plugin from './index';
+import base from '@jupyter-widgets/base';
+import {version} from "./version";
 
-module.exports = {
+export default {
   id: 'ipychart',
   requires: [base.IJupyterWidgetRegistry],
   activate: function(app, widgets) {
       widgets.registerWidget({
           name: 'ipychart',
-          version: plugin.version,
+          version: version,
           exports: plugin
       });
   },

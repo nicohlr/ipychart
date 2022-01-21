@@ -1,13 +1,18 @@
-const widgets = require('@jupyter-widgets/base');
-const Chart = require('chart.js');
-const ChartDataLabels = require('chartjs-plugin-datalabels');
-const ChartColorSchemes = require('chartjs-plugin-colorschemes');
-const ChartZoom = require('chartjs-plugin-zoom');
-const Colorschemes = require('./colorschemes.js')['default'];
-var version = require('../package.json')['version'];
-var _ = require('lodash');
+// Global imports
+import widgets from '@jupyter-widgets/base';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import ChartZoom from 'chartjs-plugin-zoom';
+import _ from 'lodash';
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
+Chart.register(ChartZoom);
+Chart.register(ChartDataLabels);
 
+// Local imports
+import Colorschemes from './colorschemes';
+import {version} from './version';
 
+// Define the widget model.
 const ChartModel = widgets.DOMWidgetModel.extend({
     defaults: _.extend(widgets.DOMWidgetModel.prototype.defaults(), {
         _model_name : 'ChartModel',
@@ -19,7 +24,7 @@ const ChartModel = widgets.DOMWidgetModel.extend({
     })
 });
 
-
+// Define the widget view.
 const ChartView = widgets.DOMWidgetView.extend({
 
     convert_input_data: function(data, options) {
@@ -155,7 +160,18 @@ const ChartView = widgets.DOMWidgetView.extend({
         }
 
         // Set zoom options
-        options = _.merge({'plugins': {'zoom': {'zoom': {'enabled': zoom, 'drag': true}, 'pan': {'enabled': false}}}}, options);
+        options = _.merge({
+            'plugins': {
+                'zoom': {
+                    'zoom': {
+                        'wheel': {'enabled': false},
+                        'pinch': {'enabled': false},
+                        'drag': {'enabled': zoom},
+                    },
+                    'pan': {'enabled': false}
+                }
+            }
+        }, options);
 
         return options;
     },
@@ -192,7 +208,7 @@ const ChartView = widgets.DOMWidgetView.extend({
 
             // Create chart
             this.chart = new Chart(this.ctx, {
-                plugins: [ChartDataLabels, ChartColorSchemes, ChartZoom],
+                plugins: [ChartDataLabels, ChartZoom],
                 type: this.input.kind,
                 data: this.input.data,
                 options: this.input.options
@@ -221,7 +237,7 @@ const ChartView = widgets.DOMWidgetView.extend({
             // Update chart
             this.chart.destroy();
             this.chart = new Chart(this.ctx, {
-                plugins: [ChartDataLabels, ChartColorSchemes, ChartZoom],
+                plugins: [ChartDataLabels, ChartZoom],
                 type: this.input.kind,
                 data: this.input.data,
                 options: this.input.options
@@ -266,7 +282,7 @@ const ChartView = widgets.DOMWidgetView.extend({
     },
 });
 
-module.exports = {
-    ChartModel: ChartModel,
-    ChartView: ChartView
+export {
+    ChartModel,
+    ChartView
 };

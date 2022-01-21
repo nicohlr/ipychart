@@ -3,7 +3,7 @@
   "version": "0.3.3",
   "description": "A Jupyter - Chart.js bridge enabling interactive data visualization in the Jupyter notebook.",
   "author": "Nicolas Houlier",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
     "jupyterlab-extension"
   ],
   "files": [
-    "lib/**/*.js",
+    "src/**/*.js",
     "dist/*.js"
   ],
   "scripts": {
@@ -37,14 +37,13 @@
   },
   "dependencies": {
     "@jupyter-widgets/base": "^1.1 || ^2 || ^3 || ^4",
-    "chart.js": "^2.8.0",
-    "chartjs-plugin-colorschemes": "^0.4.0",
-    "chartjs-plugin-datalabels": "^0.7.0",
-    "chartjs-plugin-zoom": "^0.7.7",
+    "chart.js": "^3.7.0",
+    "chartjs-plugin-datalabels": "^2.0.0",
+    "chartjs-plugin-zoom": "^1.2.0",
     "lodash": "^4.17.4"
   },
   "jupyterlab": {
-    "extension": "lib/labplugin",
+    "extension": "src/labplugin",
     "outputDir": "../ipychart/labextension",
     "sharedPackages": {
       "@jupyter-widgets/base": {

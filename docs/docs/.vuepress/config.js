@@ -1,4 +1,4 @@
-module.exports = ctx => ({
+export default ctx => ({
 
     title: 'ipychart',
     description: 'A Jupyter - Chart.js bridge enabling interactive data visualization in the Jupyter notebook.',
