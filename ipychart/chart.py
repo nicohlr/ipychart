@@ -77,8 +77,8 @@ class Chart(widgets.DOMWidget):
     def __init__(self,
                  data: dict,
                  kind: str,
-                 options: dict = None,
-                 colorscheme: str = None,
+                 options: dict | None = None,
+                 colorscheme: str | None = None,
                  zoom: bool = True):
 
         super().__init__()
@@ -145,7 +145,7 @@ class Chart(widgets.DOMWidget):
         """
         This function is called when the user modifies the chart's inputs. It
         checks inputted values, set some default options and style, and sync
-        the chart with the JS part.
+        the chart with the Javascript part.
         """
 
         self._validate_current_arguments()
@@ -214,6 +214,11 @@ class Chart(widgets.DOMWidget):
             raise ValueError(MSG_FORMAT.format('zoom'))
 
     def _set_synced_attributes(self):
+        """
+        This function sync the attributes of the chart with the Javascript
+        variables used to draw the chart.
+        """
+
         self._options_sync = self._options
         self._data_sync = self._data
         self._kind_sync = self._kind
@@ -230,22 +235,13 @@ class Chart(widgets.DOMWidget):
 
         # Disable cartesian axis by default for some charts
         radials = ['radar', 'doughnut', 'polarArea', 'pie']
-        show_x, show_y = (False,) * 2 if self._kind in radials else (True,) * 2
-        if self._kind not in ['radar', 'polarArea']:
-            default_options = {'scales': {
-                'yAxes': [{'display': show_y, 'ticks': {
-                    'beginAtZero': True, 'display': show_y}}],
-                'xAxes': [{'display': show_x, 'ticks': {
-                    'beginAtZero': True, 'display': show_x}}]}
-            }
-        else:
-            default_options = {'scale': {'ticks': {'beginAtZero': True}}}
+        default_options = {'scale': {'ticks': {'beginAtZero': True}}}
 
         # Disable legend by default for some charts
         no_legend = ['bar', 'line', 'horizontalBar', 'bubble', 'radar',
                      'scatter']
         if (len(self._data['datasets']) == 1) and (self._kind in no_legend):
-            default_options = set_(default_options, 'legend', False)
+            default_options = set_(default_options, 'plugins.legend', False)
 
         self._options = merge(default_options, self._options)
 
@@ -414,6 +410,9 @@ class Chart(widgets.DOMWidget):
         """
         This function returns the python code to run in order to reproduce
         exactly the same chart.
+
+        Returns:
+            [str]: Python code as a string.
         """
 
         python_template = (
