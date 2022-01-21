@@ -1,5 +1,5 @@
 // Global imports
-import widgets from '@jupyter-widgets/base';
+import * as widgets from '@jupyter-widgets/base';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import ChartZoom from 'chartjs-plugin-zoom';
 import _ from 'lodash';
@@ -10,6 +10,7 @@ import colorschemes from './colorschemes/index';
 import ColorSchemesPlugin from './plugin.colorschemes';
 import { version } from './version';
 
+// Register plugins
 Chart.colorschemes = colorschemes;
 Chart.register(ColorSchemesPlugin);
 Chart.register(...registerables);
