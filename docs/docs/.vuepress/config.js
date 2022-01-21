@@ -15,6 +15,10 @@ export default ctx => ({
         ['meta', {name: 'msapplication-TileColor', content: '#2b5797'}],
         ['meta', {name: 'theme-color', content: '#ffffff'}],
     ],
+	theme: 'chartjs',
+	plugins: [
+		['flexsearch', {maxSuggestions: 8}]
+	],
 
     themeConfig: {
 
@@ -22,11 +26,6 @@ export default ctx => ({
         editLinks: false,
         docsDir: 'docs',
         logo: '/ipychart-logo.png',
-
-        algolia: ctx.isProd ? ({
-            apiKey: '',
-            indexName: ''
-        }) : null,
 
         smoothScroll: true,
         nav: [
