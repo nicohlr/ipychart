@@ -1,9 +1,7 @@
 import random
 import json
-import copy
 
 import numpy as np
-import pandas as pd
 import ipywidgets as widgets
 
 from pydash import has, set_, merge
@@ -11,6 +9,27 @@ from traitlets import Unicode, default, Dict, Bool
 from ipywidgets.embed import embed_minimal_html, dependency_state, embed_data
 
 from ._version import __version__
+
+from .values import KINDS, COLORSCHEMES
+
+MSG_FORMAT = (
+    'Wrong input format for {} argument. See '
+    'https://nicohlr.gitlab.io/ipychart/user_guide/usage.html '
+    'for more details'
+)
+
+MSG_KIND = (
+    'Chart kind must be one of : line, bar, radar, doughnut,'
+    'polarArea, bubble, horizontalBar, pie, scatter. See '
+    'https://nicohlr.gitlab.io/ipychart/user_guide/charts.html '
+    'for more details'
+)
+
+MSG_COLORSCHEME = (
+    'Chart colorscheme must be one of the exposed colorschemes. See '
+    'https://nagix.github.io/chartjs-plugin-colorschemes/colorchart.html '
+    'for the list of available colorschemes.'
+)
 
 
 @widgets.register
@@ -64,17 +83,11 @@ class Chart(widgets.DOMWidget):
 
         super().__init__()
 
-        self._data_in = data
-        self._kind_in = kind
-        self._options_in = options if options else {}
-        self._colorscheme_in = colorscheme
-        self._zoom_in = zoom
-
-        self._data = None
-        self._kind = None
-        self._options = None
-        self._colorscheme = None
-        self._zoom = None
+        self._data = data
+        self._kind = kind
+        self._options = options if options else {}
+        self._colorscheme = colorscheme
+        self._zoom = zoom
 
         # Set default values in inputs
         self._set_default_inputs()
@@ -87,8 +100,39 @@ class Chart(widgets.DOMWidget):
         return self._data
 
     @data.setter
-    def data(self, new_value):
-        self._data_in = new_value
+    def data(self, value):
+
+        # Check inputted data
+        if 'datasets' not in value:
+            raise ValueError(MSG_FORMAT.format('data'))
+
+        datasets = value['datasets']
+        if not isinstance(datasets, list):
+            raise ValueError(MSG_FORMAT.format('data'))
+        if not len(datasets):
+            raise ValueError(MSG_FORMAT.format('data'))
+        if not ['data' in ds for ds in datasets] == [True] * len(datasets):
+            raise ValueError(MSG_FORMAT.format('data'))
+
+        for dataset in datasets:
+
+            if 'kind' in ['bubble', 'scatter']:
+                if not all(isinstance(x, dict) for x in dataset['data']):
+                    raise ValueError(MSG_FORMAT.format("data['datasets']"))
+
+                if not all(k in p for k in ('x', 'y', 'r') for p in value):
+                    raise ValueError(MSG_FORMAT.format('data'))
+
+            if 'datalabels' in dataset:
+                if not isinstance(dataset['datalabels'], dict):
+                    raise ValueError(MSG_FORMAT.format('data'))
+
+        if 'labels' in value:
+            if not isinstance(value['labels'], list):
+                raise ValueError(MSG_FORMAT.format('data'))
+
+        # Set argument
+        self._data = value
         self._set_default_inputs()
         self._set_synced_attributes()
 
@@ -97,8 +141,14 @@ class Chart(widgets.DOMWidget):
         return self._kind
 
     @kind.setter
-    def kind(self, new_value):
-        self._kind_in = new_value
+    def kind(self, value):
+
+        # Check inputted data
+        if value not in KINDS:
+            raise ValueError(MSG_KIND)
+
+        # Set argument
+        self._kind = value
         self._set_default_inputs()
         self._set_synced_attributes()
 
@@ -107,8 +157,21 @@ class Chart(widgets.DOMWidget):
         return self._options
 
     @options.setter
-    def options(self, new_value):
-        self._options_in = new_value
+    def options(self, value):
+
+        # Check inputted data
+        if not isinstance(value, dict):
+            raise ValueError(MSG_FORMAT.format('options'))
+
+        all_options = ['legend', 'title', 'tooltips', 'scales', 'scale',
+                       'layout', 'animation', 'hover', 'plugins',
+                       'legendCallback']
+
+        if not set(self._options.keys()).issubset(set(all_options)):
+            raise ValueError(MSG_FORMAT.format('options'))
+
+        # Set argument
+        self._options = value
         self._set_default_inputs()
         self._set_synced_attributes()
 
@@ -117,8 +180,17 @@ class Chart(widgets.DOMWidget):
         return self._colorscheme
 
     @colorscheme.setter
-    def colorscheme(self, new_value):
-        self._colorscheme_in = new_value
+    def colorscheme(self, value):
+
+        # Check inputted data
+        if not isinstance(value, str):
+            raise ValueError(MSG_FORMAT.format('colorscheme'))
+
+        if value not in COLORSCHEMES:
+            raise ValueError(MSG_COLORSCHEME)
+
+        # Set argument
+        self._colorscheme = value
         self._set_default_inputs()
         self._set_synced_attributes()
 
@@ -127,8 +199,14 @@ class Chart(widgets.DOMWidget):
         return self._zoom
 
     @zoom.setter
-    def zoom(self, new_value):
-        self._zoom_in = new_value
+    def zoom(self, value):
+
+        # Check inputted data
+        if not isinstance(value, bool):
+            raise ValueError(MSG_FORMAT.format('zoom'))
+
+        # Set argument
+        self._zoom = value
         self._set_default_inputs()
         self._set_synced_attributes()
 
@@ -143,133 +221,42 @@ class Chart(widgets.DOMWidget):
         self._colorscheme_sync = self._colorscheme
         self._zoom_sync = self._zoom
 
-    def _validate_inputs(self):
+    def _set_default_inputs(self):
         """
-        This function checks all arguments passed when the user create an
-        instance of the Chart class.
-
-        To match Chart.js format, arguments must have a specific structure.
-
-        To see more details about this structure, please check the
-        documentation: https://nicohlr.gitlab.io/ipychart/user_guide/usage.html
-        """
-
-        msg_format = (
-            'Wrong input format for {} argument. See '
-            'https://nicohlr.gitlab.io/ipychart/user_guide/usage.html '
-            'for more details')
-
-        msg_kind = (
-            'Chart kind must be one of : line, bar, radar, doughnut,'
-            'polarArea, bubble, horizontalBar, pie, scatter. See '
-            'https://nicohlr.gitlab.io/ipychart/user_guide/charts.html '
-            'for more details'
-        )
-
-        # Copy input data to avoid modifying it
-        self._data = copy.deepcopy(self._data_in)
-        self._options = copy.deepcopy(self._options_in)
-        self._kind = self._kind_in
-        self._colorscheme = self._colorscheme_in
-        self._zoom = self._zoom_in
-
-        datasets = self._data['datasets']
-
-        # Check data argument
-        assert 'datasets' in self._data, msg_format.format('data')
-        assert len(datasets), msg_format.format('data')
-        assert ['data' in ds for ds in datasets] == [True] * len(datasets), (
-            msg_format.format('data'))
-
-        if 'kind' in ['bubble', 'scatter']:
-
-            for dataset in datasets:
-                assert all(isinstance(x, dict) for x in dataset['data']), (
-                    msg_format.format("data['datasets']"))
-                assert all(k in p for k in ('x', 'y', 'r') for p in self._data
-                           ), msg_format.format('data')
-
-        for dataset in datasets:
-
-            dataset['data'] = (
-                dataset['data'].tolist() if isinstance(
-                    dataset['data'], pd.Series)
-                else dataset['data']
-            )
-
-            if 'datalabels' in dataset:
-                assert isinstance(dataset['datalabels'], dict), (
-                    msg_format.format('data'))
-
-        if 'labels' in self._data:
-
-            self._data['labels'] = (
-                self._data['labels'].tolist()
-                if isinstance(self._data['labels'], pd.Series)
-                else self._data['labels']
-            )
-
-        # Check kind argument
-        kinds = ['line', 'bar', 'horizontalBar', 'radar', 'doughnut',
-                 'polarArea', 'bubble', 'pie', 'scatter']
-        assert self._kind in kinds, msg_kind
-
-        # Check options argument
-        if self._options:
-
-            assert isinstance(self._options, dict), msg_format.format('options')
-
-            all_options = ['legend', 'title', 'tooltips', 'scales', 'scale',
-                           'layout', 'animation', 'hover', 'plugins',
-                           'legendCallback']
-
-            assert set(self._options.keys()).issubset(set(all_options)), (
-                msg_format.format('options'))
-
-        # Check colorscheme argument
-        if self._colorscheme:
-            assert isinstance(self._colorscheme, str), (
-                msg_format.format('colorscheme'))
-
-        # Check zoom argument
-        assert isinstance(self._zoom, bool), msg_format.format('zoom')
-        # Disable zoom for radial charts
-        radials = ['radar', 'doughnut', 'polarArea', 'pie']
-        self._zoom = False if self._kind in radials else self._zoom
-
-    def _set_default_options(self):
-        """
-        This function set some default options for the chart. To see more
+        This function set some default inputs for the chart. To see more
         details about options in ipychart, please check the official
         documentation:
         https://nicohlr.gitlab.io/ipychart/user_guide/configuration.html
         """
 
         # Disable cartesian axis by default for some charts
-        no_axis = ['radar', 'doughnut', 'polarArea', 'pie']
-
-        show_xaxis, show_yaxis = (
-            (False,) * 2 if self._kind in no_axis else (True,) * 2
-        )
-
+        radials = ['radar', 'doughnut', 'polarArea', 'pie']
+        show_x, show_y = (False,) * 2 if self._kind in radials else (True,) * 2
         if self._kind not in ['radar', 'polarArea']:
             default_options = {'scales': {
-                'yAxes': [{'display': show_yaxis, 'ticks': {
-                    'beginAtZero': True, 'display': show_yaxis}}],
-                'xAxes': [{'display': show_xaxis, 'ticks': {
-                    'beginAtZero': True, 'display': show_xaxis}}]}
+                'yAxes': [{'display': show_y, 'ticks': {
+                    'beginAtZero': True, 'display': show_y}}],
+                'xAxes': [{'display': show_x, 'ticks': {
+                    'beginAtZero': True, 'display': show_x}}]}
             }
         else:
             default_options = {'scale': {'ticks': {'beginAtZero': True}}}
 
         # Disable legend by default for some charts
-        no_legend = [
-            'bar', 'line', 'horizontalBar', 'bubble', 'radar', 'scatter']
-
+        no_legend = ['bar', 'line', 'horizontalBar', 'bubble', 'radar',
+                     'scatter']
         if (len(self._data['datasets']) == 1) and (self._kind in no_legend):
             default_options = set_(default_options, 'legend', False)
 
         self._options = merge(default_options, self._options)
+
+        # Disable zoom by default for some charts
+        self._zoom = False if self._kind in radials else self._zoom
+
+        # Set default style is colorscheme is not provided
+        cs_plugin_key = 'plugins.colorschemes.scheme'
+        if not self._colorscheme and not has(self._options, cs_plugin_key):
+            self._set_default_style()
 
     def _set_default_style(self):
         """
@@ -288,7 +275,7 @@ class Chart(widgets.DOMWidget):
         ]
 
         # Chart.js main colors for one dataset
-        colors_one = [
+        colors_unique = [
             'rgba(54, 163, 235, 0.2)',
             'rgba(254, 119, 124, 0.2)',
             'rgba(255, 206, 87, 0.2)'
@@ -328,10 +315,10 @@ class Chart(widgets.DOMWidget):
             if bgc not in ds:
 
                 if ds_type in lrsb:
-                    ds[bgc] = colors_one[0]
+                    ds[bgc] = colors_unique[0]
                 elif ds_type in ['bar', 'horizontalBar']:
                     size = int(len(ds['data']))
-                    colors = colors_one * (size + 1)
+                    colors = colors_unique * (size + 1)
                     ds[bgc] = colors[:size]
                 else:
                     ds[bgc] = colors_all[:len(ds['data'])]
@@ -378,13 +365,6 @@ class Chart(widgets.DOMWidget):
                         ds[pbgc] = ds[bgc]
                     if pbdc not in ds:
                         ds[pbdc] = ds[bdc]
-
-    def _set_default_inputs(self):
-        self._validate_inputs()
-        self._set_default_options()
-        if (not self._colorscheme
-                and not has(self._options, 'plugins.colorschemes.scheme')):
-            self._set_default_style()
 
     def to_html(self, path):
         """
