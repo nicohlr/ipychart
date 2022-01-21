@@ -89,6 +89,12 @@ class Chart(widgets.DOMWidget):
         self._colorscheme = colorscheme
         self._zoom = zoom
 
+        self.data = data
+        self.kind = kind
+        self.options = options if options else {}
+        self.colorscheme = colorscheme
+        self.zoom = zoom
+
         # Set default values in inputs
         self._set_default_inputs()
 
@@ -183,10 +189,7 @@ class Chart(widgets.DOMWidget):
     def colorscheme(self, value):
 
         # Check inputted data
-        if not isinstance(value, str):
-            raise ValueError(MSG_FORMAT.format('colorscheme'))
-
-        if value not in COLORSCHEMES:
+        if value is not None and value not in COLORSCHEMES:
             raise ValueError(MSG_COLORSCHEME)
 
         # Set argument
