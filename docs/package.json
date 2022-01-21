@@ -1,8 +1,7 @@
 {
   "devDependencies": {
     "vuepress": "^1.9.5",
-    "vuepress-plugin-flexsearch": "^0.3.0",
-    "vuepress-theme-chartjs": "^0.2.0"
+    "vuepress-plugin-flexsearch": "^0.3.0"
   },
   "scripts": {
     "docs:dev": "export NODE_OPTIONS=--openssl-legacy-provider && vuepress dev docs",

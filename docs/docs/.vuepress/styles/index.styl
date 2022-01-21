@@ -1,4 +1,167 @@
+// Credit: https://github.com/simonbrunel/vuepress-theme-chartjs
+@import 'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css'
+@import '~vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css'
+@import 'palette.styl'
+
+.ps
+  .ps__rail-x:hover, .ps__rail-y:hover
+  .ps__rail-x:focus, .ps__rail-y:focus
+  .ps__rail-x.ps--clicking, .ps__rail-y.ps--clicking
+    background-color transparent !important
+
+.prism-editor__textarea:focus
+  outline none !important
+
+.text-muted
+  opacity 0.5 !important
+
+.text-error
+  color $dangerColor !important
+
+// VuePress default theme overrides.
+
+.theme-container
+  .navbar, .sidebar
+    .nav-link, .repo-link
+      font-weight bold
+
+  .navbar
+    box-shadow 0 8px 8px -10px rgba(black, 0.15)
+    border none
+
+    .nav-links
+      margin-left 1rem
+
+      // The repo-link have a margin which is useless
+      // when it's the only item in the nav-links.
+      :first-child
+        margin-left 0
+
+      .nav-link
+        &:not(.external)
+          border-bottom-width 4px
+          margin-top -20px
+          padding-top 20px
+          padding-bottom 20px
+
+    .site-name
+      color $brandColor
+      font-size 1.1rem
+
+    .sidebar-button
+      margin 0.375rem 0
+      height initial
+      width initial
+
+  .search-box
+    input
+      background-color #f4f4f4
+      background-position 0.75rem 0.55rem
+      border-radius 8px
+      border-color transparent
+      border-width 2px
+      padding-left 2.2rem
+      height 2.2rem
+
+      &:hover
+        border-color rgba(black, 0.2)
+        background-color #fff
+
+      &:focus
+        border-color rgba($accentColor, 0.8)
+        background-color #fff
+
+  .sidebar
+    border-right 1px dashed #eee
+
+    .sidebar-link
+    .sidebar-heading
+      transition border-color .25s
+      padding 0.35rem 1.475rem
+
+      &.active
+        font-weight bold
+
+    > .sidebar-links > li
+    > .sidebar-links > li > .sidebar-group
+      > .sidebar-heading
+      > .sidebar-link
+        align-items center
+        display flex
+        border none
+
+        &:before
+          font-size 1.25rem
+          margin-right 0.75rem
+          line-height 0
+          opacity 0.25
+
+        .arrow
+          display none
+
+      > .sidebar-group-items
+      > .sidebar-sub-headers
+        padding-left 1.75rem
+
+        > li > .sidebar-link
+        > li > .sidebar-sub-headers
+          border-left 1px solid rgba($accentColor, 0.25)
+
+          &.active
+            border-left-color $accentColor
+
+        > li > .sidebar-link:hover
+        > li > .sidebar-link.active
+        > li > .sidebar-sub-headers.active
+          border-left-width 3px
+          margin-left -1px
+          padding-left calc(1.475rem - 1px)
+
+  .home
+    .hero
+      h1
+        font-size 2.5rem
+        font-weight bold
+        margin-bottom 0.75rem
+
+      .description
+        font-size 1.5rem
+        margin-top 0.75rem
+        margin-bottom 3rem
+
+.theme-default-content
+  &:not(.custom)
+    padding-top $navbarHeight * 0.675
+
+  a
+    .icon.outbound
+      margin-left 2px
+
+    // BUG: these hidden elements break layout on mobile.
+    .sr-only
+      display none
+
+    img + span > .icon.outbound
+      display none
+
+    code
+      color $accentColor !important
+
+  h1, h2, h3, h4, h5, h6
+    font-weight bold
+
+  h2
+    border-bottom-style dashed
+
+  sup
+    font-size 0.75em !important
+
+  // Make sure to keep the external link icon aligned with the
+  // text on small screen so it doesn't sit alone on a new line.
+  td > a
+    align-items center
+    display inline-flex
+
 .navbar .site-name {
-    line-height: 1.9rem;
     margin-left: -0.7rem;
 }
