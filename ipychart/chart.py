@@ -23,24 +23,23 @@ class Chart(widgets.DOMWidget):
 
     Args:
         data (dict): Data to draw. This dictionary corresponds to the "data"
-                     argument of Chart.js.
+            argument of Chart.js.
 
         kind (str): Type of chart. This string corresponds to the "type"
-                    argument of Chart.js.
+            argument of Chart.js.
 
         options (dict, optional): All options to configure the chart. This
-                                  dictionary corresponds to the "options"
-                                  argument of Chart.js. Defaults to None.
+            dictionary corresponds to the "options" argument of Chart.js.
+            Defaults to None.
 
         colorscheme (str, optional): Choose a predefined color scheme to your
-                                     chart. Defaults to None.
-                                     A list of all possible colorschemes can
-                                     be found at:
+            chart. Defaults to None. A list of all possible colorschemes can be
+            found at:
             https://nagix.github.io/chartjs-plugin-colorschemes/colorchart.html.
 
         zoom (bool, optional): Allow the user to zoom on the Chart once it is
-                               created. Disabled for Doughnut, Pie, PolarArea
-                               and Radar Charts. Defaults to True.
+            created. Disabled for Doughnut, Pie, PolarArea and Radar Charts.
+            Defaults to True.
     """
 
     _view_name = Unicode('ChartView').tag(sync=True)
@@ -240,9 +239,9 @@ class Chart(widgets.DOMWidget):
 
     def _set_default_options(self):
         """
-        This function set some default options for the chart.
-        To see more details about options in ipychart, please
-        check the official documentation:
+        This function set some default options for the chart. To see more
+        details about options in ipychart, please check the official
+        documentation:
         https://nicohlr.gitlab.io/ipychart/user_guide/configuration.html
         """
 
@@ -398,12 +397,12 @@ class Chart(widgets.DOMWidget):
 
     def get_html_template(self) -> str:
         """
-        This function gives HTML code to embed the chart widget.
-        To see more details about embeding an ipywidget see:
+        This function gives HTML code to embed the chart widget. To see more
+        details about embeding an ipywidget see:
         https://ipywidgets.readthedocs.io/en/latest/embedding.html
 
         Returns:
-            widget_html (str): HTML code to embed the chart.
+            [str]: HTML code to embed the chart.
         """
 
         html_template = (
@@ -441,13 +440,12 @@ class Chart(widgets.DOMWidget):
         python_template = (
             f'data = {self._data}\n\n'
             f'options = {self._options}\n\n'
-            f"mychart = Chart(data=data, kind='{self._kind}', options=options,"
+            f"mychart = Chart(data=data, kind='{self._kind}', options=options"
         )
 
-        end_template = (
-            f" colorscheme='{self._colorscheme}')" if self._colorscheme else ')'
-        )
+        if self._colorscheme:
+            python_template += f", colorscheme='{self._colorscheme}'"
 
-        python_template += end_template
+        python_template += ')'
 
         return python_template
