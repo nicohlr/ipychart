@@ -4,36 +4,28 @@
 // To see the original version of this file, please visit:
 // https://github.com/nagix/chartjs-plugin-colorschemes/blob/master/src/plugins/plugin.colorschemes.js
 
-import { Chart, registerables } from 'chart.js';
+import Chart from 'chart.js/auto';
 import { color, isArray } from 'chart.js/helpers';
-
-Chart.register(...registerables);
 
 const EXPANDO_KEY = '$colorschemes';
 
-function getScheme(scheme) {
-    let colorschemes; let matches; let arr; let
-        category;
+// Fix the chartjs 3 incompatibility with the colorschemes plugin.
+// by Github user gebrits (https://github.com/gebrits/chartjs-plugin-colorschemes)
+Chart.defaults.plugins.colorschemes = {
+    scheme: 'brewer.Paired12',
+    fillAlpha: 0.5,
+    reverse: false,
+    override: false,
+};
 
+function getScheme(scheme) {
     if (isArray(scheme)) {
         return scheme;
-    } if (typeof scheme === 'string') {
-        colorschemes = Chart.colorschemes || {};
-
-        // For backward compatibility
-        matches = scheme.match(/^(brewer\.\w+)([1-3])-(\d+)$/);
-        if (matches) {
-            scheme = matches[1] + ['One', 'Two', 'Three'][matches[2] - 1] + matches[3];
-        } else if (scheme === 'office.Office2007-2010-6') {
-            scheme = 'office.OfficeClassic6';
-        }
-
-        arr = scheme.split('.');
-        category = colorschemes[arr[0]];
-        if (category) {
-            return category[arr[1]];
-        }
     }
+    const colorschemes = Chart.colorschemes || {};
+    const arr = scheme.split('.');
+    const category = colorschemes[arr[0]];
+    return category[arr[1]];
 }
 
 const ColorSchemesPlugin = {
@@ -51,8 +43,11 @@ const ColorSchemesPlugin = {
         const { reverse } = options;
         const { override } = options;
         const { custom } = options;
-        let schemeClone; let customResult; let length; let colorIndex; let
-            colorCode;
+        let schemeClone;
+        let customResult;
+        let length;
+        let colorIndex;
+        let colorCode;
 
         if (scheme) {
             if (typeof custom === 'function') {
@@ -153,10 +148,17 @@ const ColorSchemesPlugin = {
                 if (Object.prototype.hasOwnProperty.call(dataset[EXPANDO_KEY], 'borderColor')) {
                     dataset.borderColor = dataset[EXPANDO_KEY].borderColor;
                 }
-                if (Object.prototype.hasOwnProperty.call(dataset[EXPANDO_KEY], 'pointBackgroundColor')) {
+                if (
+                    Object.prototype.hasOwnProperty.call(
+                        dataset[EXPANDO_KEY],
+                        'pointBackgroundColor',
+                    )
+                ) {
                     dataset.pointBackgroundColor = dataset[EXPANDO_KEY].pointBackgroundColor;
                 }
-                if (Object.prototype.hasOwnProperty.call(dataset[EXPANDO_KEY], 'pointBorderColor')) {
+                if (
+                    Object.prototype.hasOwnProperty.call(dataset[EXPANDO_KEY], 'pointBorderColor')
+                ) {
                     dataset.pointBorderColor = dataset[EXPANDO_KEY].pointBorderColor;
                 }
                 delete dataset[EXPANDO_KEY];
