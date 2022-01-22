@@ -9,17 +9,8 @@ import { color, isArray } from 'chart.js/helpers';
 
 const EXPANDO_KEY = '$colorschemes';
 
-// Fix the chartjs 3 incompatibility with the colorschemes plugin.
-// by Github user gebrits (https://github.com/gebrits/chartjs-plugin-colorschemes)
-Chart.defaults.plugins.colorschemes = {
-    scheme: 'brewer.Paired12',
-    fillAlpha: 0.5,
-    reverse: false,
-    override: false,
-};
-
 function getScheme(scheme) {
-    if (isArray(scheme)) {
+    if (isArray(scheme) || scheme == null) {
         return scheme;
     }
     const colorschemes = Chart.colorschemes || {};

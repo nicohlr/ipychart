@@ -101,7 +101,7 @@ const ChartView = widgets.DOMWidgetView.extend({
             ['scale', 'ticks', 'callback'],
             ['scale', 'ticks', 'minor', 'callback'],
             ['scale', 'ticks', 'major', 'callback'],
-            ['plugins', 'datalabels', 'formatter']
+            ['plugins', 'datalabels', 'formatter'],
         ];
 
         // These paths must be handled for all scales
