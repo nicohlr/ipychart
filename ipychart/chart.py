@@ -200,7 +200,7 @@ class Chart(widgets.DOMWidget):
         # TODO: Adapt
         all_options = ['legend', 'title', 'scales',
                        'layout', 'animation', 'hover', 'plugins',
-                       'legendCallback', 'indexAxis']
+                       'legendCallback', 'indexAxis', 'aspectRatio']
 
         if not set(self._options.keys()).issubset(set(all_options)):
             raise ValueError(MSG_FORMAT.format('options'))

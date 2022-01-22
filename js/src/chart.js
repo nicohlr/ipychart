@@ -4,6 +4,7 @@ import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import ChartZoom from 'chartjs-plugin-zoom';
 import _ from 'lodash';
+import 'chartjs-adapter-moment';
 
 // Local imports
 import colorschemes from './colorschemes/index';
@@ -184,6 +185,11 @@ const ChartView = widgets.DOMWidgetView.extend({
             },
             options,
         );
+
+        // Set aspect ratio
+        if (!_.has(options, 'aspectRatio')) {
+            options = _.merge({ aspectRatio: 2 }, options);
+        }
 
         return options;
     },

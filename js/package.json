@@ -42,9 +42,11 @@
   "dependencies": {
     "@jupyter-widgets/base": "^1.1 || ^2 || ^3 || ^4",
     "chart.js": "^3.7.0",
+    "chartjs-adapter-moment": "^1.0.0",
     "chartjs-plugin-datalabels": "^2.0.0",
     "chartjs-plugin-zoom": "^1.2.0",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "moment": "^2.29.1"
   },
   "jupyterlab": {
     "extension": "src/labplugin",
