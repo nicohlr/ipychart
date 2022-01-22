@@ -108,9 +108,7 @@ const ColorSchemesPlugin = {
                 case 'bar':
                     if (typeof dataset.backgroundColor === 'undefined' || override) {
                         dataset[EXPANDO_KEY].backgroundColor = dataset.backgroundColor;
-                        dataset.backgroundColor = color(colorCode)
-                            .alpha(fillAlpha)
-                            .rgbString();
+                        dataset.backgroundColor = colorCode;
                     }
                     if (typeof dataset.borderColor === 'undefined' || override) {
                         dataset[EXPANDO_KEY].borderColor = dataset.borderColor;
