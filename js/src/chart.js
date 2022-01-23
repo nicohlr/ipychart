@@ -13,6 +13,7 @@ import version from './version';
 
 // Register plugins
 Chart.colorschemes = colorschemes;
+Chart.register(ColorSchemesPlugin);
 Chart.register(ChartZoom);
 Chart.register(ChartDataLabels);
 
@@ -151,22 +152,10 @@ const ChartView = widgets.DOMWidgetView.extend({
 
         // Set colorscheme options if not None
         if (colorscheme) {
-            Chart.register(ColorSchemesPlugin);
-            // It is necessary to set a global default colorscheme to avoid a bug that blocks the
-            // display of bar charts and filled areas.
-            Chart.defaults.plugins.colorschemes = {
-                scheme: 'brewer.Paired12',
-                fillAlpha: 0.5,
-                reverse: false,
-                override: true,
-            };
             options = _.merge(
                 { plugins: { colorschemes: { scheme: colorscheme, override: true } } },
                 options,
             );
-        } else {
-            // Unregister plugin to avoid using brewer.Paired12 as default colors for any chart
-            Chart.unregister(ColorSchemesPlugin);
         }
 
         // Set zoom options

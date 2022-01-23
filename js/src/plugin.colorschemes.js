@@ -5,9 +5,22 @@
 // https://github.com/nagix/chartjs-plugin-colorschemes/blob/master/src/plugins/plugin.colorschemes.js
 
 import Chart from 'chart.js/auto';
-import { color, isArray } from 'chart.js/helpers';
+import { isArray } from 'chart.js/helpers';
 
 const EXPANDO_KEY = '$colorschemes';
+
+function addAlpha(hex) {
+    let c;
+    if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+        c = hex.substring(1).split('');
+        if (c.length === 3) {
+            c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+        }
+        c = `0x${c.join('')}`;
+        return `rgba(${[(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',')},0.5)`;
+    }
+    throw new Error('Bad Hex');
+}
 
 function getScheme(scheme) {
     if (isArray(scheme) || scheme == null) {
@@ -29,33 +42,14 @@ const ColorSchemesPlugin = {
             options = args;
         }
 
-        let scheme = getScheme(options.scheme);
-        const { fillAlpha } = options;
-        const { reverse } = options;
-        const { override } = options;
-        const { custom } = options;
-        let schemeClone;
-        let customResult;
+        const scheme = getScheme(options.scheme);
+        const { reverse } = false;
+        const { override } = true;
         let length;
         let colorIndex;
         let colorCode;
 
         if (scheme) {
-            if (typeof custom === 'function') {
-                // Clone the original scheme
-                schemeClone = scheme.slice();
-
-                // Execute own custom color function
-                customResult = custom(schemeClone);
-
-                // Check if we received a filled array; otherwise keep and use the original scheme
-                if (isArray(customResult) && customResult.length) {
-                    scheme = customResult;
-                } else if (isArray(schemeClone) && schemeClone.length) {
-                    scheme = schemeClone;
-                }
-            }
-
             length = scheme.length;
 
             // Set scheme colors
@@ -73,9 +67,7 @@ const ColorSchemesPlugin = {
                 case 'scatter':
                     if (typeof dataset.backgroundColor === 'undefined' || override) {
                         dataset[EXPANDO_KEY].backgroundColor = dataset.backgroundColor;
-                        dataset.backgroundColor = color(colorCode)
-                            .alpha(fillAlpha)
-                            .rgbString();
+                        dataset.backgroundColor = addAlpha(colorCode);
                     }
                     if (typeof dataset.borderColor === 'undefined' || override) {
                         dataset[EXPANDO_KEY].borderColor = dataset.borderColor;
@@ -83,9 +75,7 @@ const ColorSchemesPlugin = {
                     }
                     if (typeof dataset.pointBackgroundColor === 'undefined' || override) {
                         dataset[EXPANDO_KEY].pointBackgroundColor = dataset.pointBackgroundColor;
-                        dataset.pointBackgroundColor = color(colorCode)
-                            .alpha(fillAlpha)
-                            .rgbString();
+                        dataset.pointBackgroundColor = addAlpha(colorCode);
                     }
                     if (typeof dataset.pointBorderColor === 'undefined' || override) {
                         dataset[EXPANDO_KEY].pointBorderColor = dataset.pointBorderColor;
