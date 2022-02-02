@@ -1,7 +1,7 @@
 export default ctx => ({
 
     title: 'ipychart',
-    description: 'A Jupyter - Chart.js bridge enabling interactive data visualization in the Jupyter notebook.',
+    description: 'A Jupyter - Chart.js bridge enabling interactive data visualization with Python.',
     base: '/ipychart/',
     dest: '../public',
     head: [

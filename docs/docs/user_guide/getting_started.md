@@ -12,7 +12,7 @@ $ pip install ipychart
 $ conda install -c conda-forge ipychart
 ```
 
-That's about it. You can now start a Jupyter Notebook and start using ipychart !
+That's about it. You can now start a Jupyter environment (Notebook, Lab, VSCode ...) or any Python environment which supports ipywidgets and start using ipychart !
 
 ::: danger
 If you are working within a virtual environment, **please make sure to launch the notebook from the same environment out of which you installed ipychart**:

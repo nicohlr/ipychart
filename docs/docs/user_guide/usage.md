@@ -1,10 +1,10 @@
 # Usage
 
-The ipychart API is composed of two classes:
+The ipychart library can be used in two different ways:
 
-- The first one, named *Chart*, replicates the *Chart* class of Chart.js library while being adapted to the syntax of Python. The majority of the documentation is dedicated to it.
+- The first one is by using the *Chart* class, which replicates the *Chart* class of Chart.js library while being adapted to the syntax of Python. The majority of the documentation is dedicated to it.
 
-- The second class, named *ChartDataFrame*, allows you to draw charts directly from a Pandas dataframe. It is described in the [Pandas Interface section](/ipychart/user_guide/pandas).
+- The second one allows you to quickly create charts from a pandas dataframe by using the exposed plot functions. It is described in the [Pandas Interface section](/ipychart/user_guide/pandas).
 
 ## Chart.js vs ipychart
 
@@ -42,7 +42,7 @@ var chart = new Chart(ctx, {
 
 This example is taken from [the getting-started page of the Chart.js documentation](https://www.chartjs.org/docs/latest/getting-started/). As you can see, there are three main arguments in Chart.js : **data**, **type** and **options**. These are the same arguments in ipychart, except for the `type` argument which has been renamed `kind` in ipychart because `type` is a reserved keyword in the Python language. 
 
-Now, let's take a look on how we can create the same chart as above while using Python code and the ipychart library in our Jupyter Notebook environment:
+Now, let's take a look on how we can create the same chart as above while using Python code and the ipychart library:
 
 ``` py
 from ipychart import Chart
@@ -65,7 +65,7 @@ mychart = Chart(
 
     # Configuration options go here
     'options': {}
-})
+)
 ```
 
 As you can see, a Chart.js user will not be disoriented by switching to ipychart. Now, let's take a look at the specificities of each of these three arguments.
@@ -114,7 +114,6 @@ The `kind` argument allows you to choose the type of chart you want to draw. It 
 # Possible values for the kind argument
 'line'
 'bar'
-'horizontalBar'
 'radar'
 'doughnut'
 'pie'

@@ -2,95 +2,95 @@
 
 This section is dedicated to the `'scales'` argument of the options dictionary that you'll pass to your Chart. As the other arguments described if the [previous section](/ipychart/user_guide/configuration), the scales argument is a key of the `options` dictionary. However, as it has a lot of possible nested configurations, a whole section of the documentation is dedicated to it. 
 
-With the `'scales'` argument, you can completely configure the axis of your chart. This configuration involves configuring the two axes of your Chart: the x axis and the y axis.
+With the `'scales'` argument, you can completely configure the axis of your chart. This configuration involves configuring the three axes of your Chart: the x axis, the y axis and the r axis.
 
 Different charts don’t have the same type of scales. There are two types of scales available in ipychart:
-* [**The Cartesian Scale**](/ipychart/user_guide/scales#cartesian-scale), used for the following types of chart: line, bar, horizontalBar, bubble, scatter. These charts have two axes positioned on one of the edges (the **x** axis and the **y** axis). You can configure them using the `'scales'` option.
+* [**The Cartesian Scale**](/ipychart/user_guide/scales#cartesian-scale), used for the following types of chart: line, bar, bubble, scatter. These charts have two axes positioned on one of the edges (the **x** axis and the **y** axis). You can configure them using the `scales['x']` and the `scales['y']` options.
 
-* [**The Radial Scale**](/ipychart/user_guide/scales#radial-scale), used for the following types of chart: radar, polarArea. These charts have only one axis which overlays the chart area. You can configure it using the `'scale'` option.
+* [**The Radial Scale**](/ipychart/user_guide/scales#radial-scale), used for the following types of chart: radar, polarArea. These charts have only one axis which overlays the chart area. You can configure it using the `scales['r']` option.
 
 Other types of charts (doughnut, pie) do not use scales.
 
 ::: tip
-In this part, the term **arguments** corresponds to the options of the main dictionaries (dictionaries contained in `'xAxes'`, `'xAxes'` lists or in the `'scale'` dictionary), whereas the term **subarguments** corresponds to the options of the nested dictionaries (`'ticks'` or `'time'` sub-dictionaries for example)
+In this part, the term **arguments** corresponds to the options of the main dictionaries (dictionaries contained in `'x'`, `'y'` or `'r'` dictionaries), whereas the term **subarguments** corresponds to the options of the nested dictionaries (`'ticks'` or `'time'` sub-dictionaries for example)
 :::
 
 ## Cartesian scale
 
 ::: warning
-This section only applies to the following types of charts: **line**, **bar**, **horizontalBar**, **bubble** & **scatter**.
+This section only applies to the following types of charts: **line**, **bar**, **bubble** & **scatter**.
 :::
 
-Axes that follow a cartesian grid are known as 'Cartesian Axes'. **Cartesian axes are used for line, bar, and bubble charts**. To configure your axes, you'll have to use the `'scales'` option and the `'xAxes'` and `'yAxes'` sub-options.
+Axes that follow a cartesian grid are known as 'Cartesian Axes'. To configure your axes, you'll have to use the `'scales'` option and the `'x'` and `'y'` sub-options.
 
 The following options are available:
 
 ```py
 options = {
   'scales': {
-    'xAxes': [{
+    'x': {
 
       'type': str # Among 'category', 'linear', 'logarithmic', 'time' | Default: ''
       'position': str # Among 'top', 'left', 'bottom', 'right' | Default: ''
       'offset': bool # Add extra space to the both edges | Default: False
       'id': str # Used to link datasets and scale axis together | Default: ''
+      'min': int or str # Minimum value for the scale
+                        # str if for category axis | Default: None
+      'max': int or str # Maximum value for the scale
+                        # str if for category axis | Default: None
+      'reverse': bool # Reverses order of tick labels | Default: False
+      'suggestedMax': int # Adjustment used when calculating the 
+                          # maximum data value | Default: None
+      'suggestedMin': int # Adjustment used when calculating the 
+                          # minimum data value | Default: None
 
       # Nested options
-      'gridLines': dict # See GridLines Argument below | Default: {}
-      'scaleLabel': dict # See ScaleLabel Argument below | Default: {}
+      'grid': dict # See Grid Argument below | Default: {}
+      'title': dict # See title Argument below | Default: {}
       'ticks': dict # See Ticks Argument below | Default: {}
       'time': dict # See Time Argument below | Default: {}
 	
       # Only for time cartesian scales & only when 'type' is set to 'time'
+      'beginAtZero': bool # Scale include 0 | Default: True
       'distribution': str # See below | Default: 'linear'
       'bounds': str # See below | Default: 'data'
       
-    }],
-    'yAxes': [{
+    },
+    'y': {
       # You can use the same arguments than above to configure the y axis.
-    }]
+    }
   }
 }
 ```
 
-::: tip
-`'xAxes'` and `'yAxes'` are lists, each element of the list corresponds to the scale of a dataset. Therefore, the length of the `'xAxes'` and `'yAxes'` lists must be equal to the number of datasets inputted to the chart.
-:::
+### Grid argument
 
-### GridLines argument
+As these nested options are common to both cartesian and radial scales, this argument is detailed [at the end of this section](/ipychart/user_guide/scales#grid-argument-3).
 
-As these nested options are common to both cartesian and radial scales, this argument is detailed [at the end of this section](/ipychart/user_guide/scales#gridlines-argument-3).
-
-### ScaleLabel argument
+### Title argument
 
 This argument allows us to configure the scale title of the Axis. Available options are:
 
 ```py
 options = {
   'scales': {
-    'xAxes': [{
-      'scaleLabel': {
+    'x': {
+      'title': {
 
         'display': bool # See below | Default: 'linear'
-        'labelString': str # See below | Default: 'linear'
-        'lineHeight': int or str # Height of an individual line of text
-                                 # ex: 2.4 or '100%' | Default: 1.2
-        'fontColor': str # Font color for scale title | Default: '#666'
-        'fontFamily': str # Font family for the scale title | Default: 'Helvetica'
-        'fontSize': int # Font size for scale title | Default: 12
-        'fontStyle': # Font style for the scale title ('normal', 'italic', 
-                     # 'oblique', 'initial', 'inherit') | Default: 'normal'
+        'text': str # See below | Default: 'linear'
+        'font': dict # Configure font (size, style, color, family ...)
         'padding': int or dict # Padding to apply around scale labels 
                                # ex: {'top':10, 'bottom': 20}| Default: 4
                                # Only 'top' and 'bottom' are implemented
 
       }
-    }],
-    'yAxes': [{
-      'scaleLabel': {
+    },
+    'y': {
+      'title': {
         # You can use the same arguments than above to configure the y axis.
       }
-    }]
+    }
   }
 }
 ```
@@ -110,14 +110,14 @@ dataset = {
 
 options = {
   'scales': {
-    'xAxes': [{'scaleLabel': {
+    'x': {'title': {
       'display': True, 
-      'labelString': 'This is the x Axis', 
-      'fontSize': 20}}],
-    'yAxes': [{'scaleLabel': {
+      'text': 'This is the x Axis', 
+      'font': {'size': 20}}},
+    'y': {'title': {
       'display': True, 
-      'labelString': 'This is the y Axis', 
-      'fontSize': 20}}]
+      'text': 'This is the y Axis', 
+      'font': {'size': 20}}}
   }
 }
 
@@ -136,28 +136,17 @@ This argument allows us to configure the scale of the Axis. Available options ar
 ```py
 options = {
   'scales': {
-    'xAxes': [{
+    'x': {
       'ticks': {
 
         # Styling options
         'display': bool # Show tick labels | Default: True
-        'fontColor': str # Font color for tick labels | Default: '#666'
-        'fontFamily': str # Font family for the tick labels | Default: 'Helvetica'
-        'fontSize': int # Font size for the tick labels | Default: 12
-        'fontStyle': str # Font style for the tick labels ('normal', 'italic', 
-                         # 'oblique', 'initial', 'inherit') | Default: 'normal'
-        'lineHeight': int or str # Height of an individual line of text
-                                 # ex: 2.4 or '100%' | Default: 1.2
-        'reverse': bool # Reverses order of tick labels | Default: False
+        'font': dict # Configure font (size, style, color, family ...)
         'padding': int # Sets the offset of the tick labels | Default: 0
         'z': int # z-index of tick layer. Values <= 0 are
                  # drawn under datasets, > 0 on top | Default: 0
         
         # Functionnal options
-        'min': int or str # Minimum value for the scale
-                          # str if for category axis | Default: None
-        'max': int or str # Maximum value for the scale
-                          # str if for category axis | Default: None
         'sampleSize': int # The number of ticks to examine when deciding
                           # how many labels will fit | Default: Number of ticks
         'autoSkip': bool # If true, automatically calculates how many labels can
@@ -172,10 +161,6 @@ options = {
         'padding': int # Padding between the tick label and the axis | Default: 0
                        # Vertical axis: this applies in the horizontal direction 
                        # Horizontal axis: this applies in the vertical direction
-                
-        # Nested options
-        'minor': str # See below | Default: {}
-        'major': str # See below | Default: {}
 
         # Callbacks functions
         'callback': str # Callback function (see below) | Default: ''
@@ -188,31 +173,22 @@ options = {
         
         # Only for numeric cartesian scales 
         # (work if 'type' is 'linear' or 'logarithmic')
-        'beginAtZero': bool # Scale include 0 | Default: True
         'maxTicksLimit': int # Maximum number of ticks and gridlines to show
                              # Default: 11
         'precision': int # If defined and stepSize is not specified, the step size
                          # is rounded to this many decimal places | Default: None
         'stepSize': int # Fixed step size for the scale | Default: None
-        'suggestedMax': int # Adjustment used when calculating the 
-                            # maximum data value | Default: None
-        'suggestedMin': int # Adjustment used when calculating the 
-                            # minimum data value | Default: None
 
       }
-    }],
-    'yAxes': [{
+    },
+    'y': {
       'ticks': {
         # You can use the same arguments than above to configure the y axis.
       }
-    }]
+    }
   }
 }
 ```
-
-#### Minor and Major subarguments (`'ticks'` options)
-
-The minor and major tick configurations are nested under the tick's configuration in the respective `'minor'` and `'major'` keys. As these nested options are common to both cartesian and radial scales, these options are detailed [at the end of this section](/ipychart/user_guide/scales#ticks-argument-3).
 
 #### Callback subargument (`'ticks'` option)
 
@@ -238,28 +214,23 @@ dataset = {
   'labels': ['Data 1', 'Data 2', 'Data 3', 'Data 4', 'Data 5'],
   'datasets': [
     {'data': [500, 114, 106, 420, 107],
-     'label': "Africa",
-     'fill': False}, 
+     'label': "Africa"}, 
     {'data': [282, 350, 411, 350, 220],
-     'label': "Asia",
-      'fill': False}, 
+     'label': "Asia"}, 
     {'data': [168, 170, 250, 380, 480],
-     'label': "Europe",
-      'fill': False}, 
+     'label': "Europe"}, 
     {'data': [450, 270, 10, 100, 24],
-     'label': "Latin America",
-     'fill': False}, 
+     'label': "Latin America"}, 
     {'data': [6, 40, 200, 300, 350],
-     'label': "North America",
-     'fill': False}
+     'label': "North America"}
   ]
 }
 
 options = {
-  'scales': {'xAxes': [{'ticks': {'fontSize': 15, 'fontStyle': 'italic'}}],
-             'yAxes': [{'ticks': {
-                'min': 0, 'max': 500, 'fontSize': 15, 'fontStyle': 'italic', 
-                'stepSize': 50, 'minRotation': 45, 'padding': 20}}]}
+  'scales': {'x': {'ticks': {'font': {'size': 15, 'style': 'italic'}}},
+             'y': {'ticks': {'font': {'size': 15, 'style': 'italic'}, 
+                             'stepSize': 100, 'minRotation': 45, 'padding': 20}}
+  }
 }
 
 mychart = Chart(dataset, 'line', options=options, colorscheme='office.Composite6')
@@ -281,7 +252,7 @@ The axis data points may additionally be specified via the 't' or 'x' attribute 
 ```py
 options = {
   'scales': {
-    'xAxes': [{
+    'x': {
       'time': {
 
         'isoWeekday': bool # If True and 'unit' is 'week', then the 
@@ -299,12 +270,12 @@ options = {
         'displayFormats': dict # See below | Default: {}
 
       }
-    }],
-    'yAxes': [{
+    },
+    'y': {
       'time': {
         # You can use the same arguments than above to configure the y axis.
       }
-    }]
+    }
   }
 }
 ```
@@ -327,7 +298,7 @@ You have to change the DisplayFormats dictionary key corresponding to the value 
 ```py
 'options': {
   'scales': {
-    'xAxes': [{
+    'x': {
       'type': 'time',
       'time': {
         'displayFormats': {
@@ -344,7 +315,7 @@ You have to change the DisplayFormats dictionary key corresponding to the value 
 
         }
       }
-    }]
+    }
   }
 }
 ```
@@ -373,7 +344,7 @@ data = {"datasets": [
             {'x': "04/01/2020", 'y': 182}, 
             {'x': "10/01/2020", 'y': 192},
             {'x': "12/01/2020", 'y': 200}],
-   'fill': False},
+   'lineTension': 0.3},
   {'label': "UK",
    'data':  [{'x': "01/01/2019", 'y': 175},
              {'x': "04/01/2019", 'y': 177},
@@ -383,13 +354,12 @@ data = {"datasets": [
              {'x': "04/01/2020", 'y': 192}, 
              {'x': "10/01/2020", 'y': 188},
              {'x': "12/01/2020", 'y': 210}],
-   'fill':  False}]
+   'lineTension': 0.3}]
 }
 
 options = {'scales': {
-  'xAxes': [{
-      
-    'type': "time",
+  'x': {      
+    'type': 'time',
     'time': {
       'tooltipFormat': 'll',
       'unit': 'week', # change unit from month to week
@@ -398,13 +368,14 @@ options = {'scales': {
       'stepSize': 2,# one tick each 2 weeks
       # Change display format
       # see: https://momentjs.com/docs/#/displaying/format/
-      'displayFormats': {'week': 'ddd D MMM YYYY'}}, # one tick each 2 weeks
+      'displayFormats': {'week': 'ddd D MMM YYYY'}
+    }, # one tick each 2 weeks
       
-    'scaleLabel': {'display': True,
-                   'labelString': 'Date'}}],
-  'yAxes': [{
-    'scaleLabel': {'display': True,
-                   'labelString': 'Value'}}]
+    'title': {'display': True, 'text': 'Date'}
+  },
+  'y': {
+    'title': {'display': True, 'text': 'Value'}
+  }
 }}
 
 mychart = Chart(data, 'line', options, colorscheme='tableau.Tableau10')
@@ -436,45 +407,49 @@ The `'bounds'` argument controls, **only for time scales** (i.e `type` argument 
 This section only applies to the following types of charts: **radar** & **polarArea**.
 :::
 
-**Radial axes are used specifically for the radar and polar area chart types**. These axes overlay the chart area, rather than being positioned on one of the edges. To configure it, you need to use the `'scale'` option (without 's', as radar and polarArea charts only have one axis).
+**Radial axes are used specifically for the radar and polar area chart types**. These axes overlay the chart area, rather than being positioned on one of the edges. To configure it, you need to use the `'r'` option.
 
 ```py
 options = {
-  'scale': {
-  
-    # Nested options
-    'angleLines': dict # See AngleLines Argument below | Default: {}
-    'gridLines': dict # See GridLines Argument below | Default: {}
-    'pointLabels': dict # See PointLabels Argument below | Default: {}
-    'ticks': dict # See Ticks Argument below | Default: {}
+  'scales': {
+    'r': {
     
+      # Nested options
+      'angleLines': dict # See AngleLines Argument below | Default: {}
+      'grid': dict # See Grid Argument below | Default: {}
+      'pointLabels': dict # See PointLabels Argument below | Default: {}
+      'ticks': dict # See Ticks Argument below | Default: {}
+
+    }
   }
 }
 ```
 
 ### AngleLines argument
 
-The following options are used to configure angled lines that radiate from the center of the chart to the point labels. They can be found in the `'angleLines'` sub options of the `'xAxes'` or `'yAxes'` options.
+The following options are used to configure angled lines that radiate from the center of the chart to the point labels. They can be found in the `'angleLines'` sub options of the `'x'` or `'y'` options.
 
 ```py
 options = {
-  'scale': {
-    'angleLines': {
+  'scales': {
+    'r': {
+      'angleLines': {
+  
+        'display': bool # Show angled lines | Default: True
+        'color': str # Color of angled lines | Default: True
+        'lineWidth': int # Width of angled lines | Default: 1
+        'borderDash': list # Spacing of dashes on angled lines | Default: []
+        'borderDashOffset': float # Offset for line dashes | Default: 0.0
 
-      'display': bool # Show angled lines | Default: True
-      'color': str # Color of angled lines | Default: True
-      'lineWidth': int # Width of angled lines | Default: 1
-      'borderDash': list # Spacing of dashes on angled lines | Default: []
-      'borderDashOffset': float # Offset for line dashes | Default: 0.0
-      
+      }
     }
   }
 }
 ```
 
-### GridLines argument
+### Grid argument
 
-As this nested options are common to both cartesian and radial scales, this argument is detailed [at the end of this section](/ipychart/user_guide/scales#gridlines-argument-3).
+As this nested options are common to both cartesian and radial scales, this argument is detailed [at the end of this section](/ipychart/user_guide/scales#grid-argument-3).
 
 ### PointLabels argument
 
@@ -482,22 +457,18 @@ The following options are used to configure the point labels that are shown on t
 
 ```py
 options = {
-  'scale': {
-    'pointLabels': {
+  'scales': {
+    'r': {
+      'pointLabels': {
+  
+        'display': bool # Show point labels | Default: True
+        'font': dict # Configure font (size, style, color, family ...)
+          
+        # Callbacks functions
+        'callback': str # Callback function to convert data labels to point labels.
+                        # Default implementation simply returns the current string.
 
-      'display': bool # Show point labels | Default: True
-      'fontColor': str # Font color for point labels | Default: '#666'
-      'fontFamily': str # Font family for the point labels | Default: 'Helvetica'
-      'fontSize': int # Font size for the point labels | Default: 12
-      'fontStyle': str # Font style for the point labels ('normal', 'italic', 
-                       # 'oblique', 'initial', 'inherit') | Default: 'normal'
-      'lineHeight': int or str # Height of an individual line of text
-                               # ex: 2.4 or '100%' | Default: 1.2
-        
-      # Callbacks functions
-      'callback': str # Callback function to convert data labels to point labels.
-                      # Default implementation simply returns the current string.
-
+      }
     }
   }
 }
@@ -509,59 +480,46 @@ This argument allows us to configure the scale of the Axis. Available options ar
 
 ```py
 options = {
-  'scale': {
-    'ticks': {
+  'scales': {
+    'r': {
+      'ticks': {
+  
+        # Styling options
+        'backdropColor': str # Color of label backdrops 
+                             # Default: 'rgba(255, 255, 255, 0.75)'
+        'backdropPaddingX': int # Horizontal padding of label backdrop | Default: 2
+        'backdropPaddingY': int # Vertical padding of label backdrop | Default: 2
+        'display': bool # Show tick labels | Default: True
+        'font': dict # Configure font (size, style, color, family ...)
+        'reverse': bool # Reverses order of tick labels | Default: False
+        'padding': int # Sets the offset of the tick labels | Default: 0
+        'z': int # z-index of tick layer. Values <= 0 are
+                 # drawn under datasets, > 0 on top | Default: 0
+            
+        # Functionnal options
+        'min': int or str # Minimum value for the scale
+                          # str if for category axis | Default: None
+        'max': int or str # Maximum value for the scale
+                          # str if for category axis | Default: None
+        'maxTicksLimit': int # Maximum number of ticks and gridlines to show
+                             # Default: 11
+        'precision': int # If defined and stepSize is not specified, the step size 
+                         # is rounded to this many decimal places | Default: None
+        'stepSize': int # Fixed step size for the scale | Default: None
+        'suggestedMax': int # Adjustment used when calculating the 
+                            # maximum data value | Default: None
+        'suggestedMin': int # Adjustment used when calculating the 
+                            # minimum data value | Default: None
+        'showLabelBackdrop': bool # Scale include 0 | Default: True
+  
+        # Callbacks functions
+        'callback': str # Callback function (see below) | Default: ''
 
-      # Styling options
-      'backdropColor': str # Color of label backdrops 
-                           # Default: 'rgba(255, 255, 255, 0.75)'
-      'backdropPaddingX': int # Horizontal padding of label backdrop | Default: 2
-      'backdropPaddingY': int # Vertical padding of label backdrop | Default: 2
-      'display': bool # Show tick labels | Default: True
-      'fontColor': str # Font color for tick labels | Default: '#666'
-      'fontFamily': str # Font family for the tick labels | Default: 'Helvetica'
-      'fontSize': int # Font size for the tick labels | Default: 12
-      'fontStyle': str # Font style for the tick labels ('normal', 'italic', 
-                       # 'oblique', 'initial', 'inherit') | Default: 'normal'
-      'lineHeight': int or str # Height of an individual line of text
-                               # ex: 2.4 or '100%' | Default: 1.2
-      'reverse': bool # Reverses order of tick labels | Default: False
-      'padding': int # Sets the offset of the tick labels | Default: 0
-      'z': int # z-index of tick layer. Values <= 0 are
-               # drawn under datasets, > 0 on top | Default: 0
-          
-      # Functionnal options
-      'beginAtZero': bool # Scale include 0 | Default: True
-      'min': int or str # Minimum value for the scale
-                        # str if for category axis | Default: None
-      'max': int or str # Maximum value for the scale
-                        # str if for category axis | Default: None
-      'maxTicksLimit': int # Maximum number of ticks and gridlines to show
-                           # Default: 11
-      'precision': int # If defined and stepSize is not specified, the step size 
-                       # is rounded to this many decimal places | Default: None
-      'stepSize': int # Fixed step size for the scale | Default: None
-      'suggestedMax': int # Adjustment used when calculating the 
-                          # maximum data value | Default: None
-      'suggestedMin': int # Adjustment used when calculating the 
-                          # minimum data value | Default: None
-      'showLabelBackdrop': bool # Scale include 0 | Default: True
-        
-      # Nested options
-      'minor': str # Same as for cartesion scale, see above | Default: {}
-      'major': str # Same as for cartesion scale, see above | Default: {}
-
-      # Callbacks functions
-      'callback': str # Callback function (see below) | Default: ''
-      
+      }
     }
   }
 }
 ```
-
-#### Minor and Major subarguments (`'ticks'` options)
-
-The minor and major tick configurations are nested under the tick's configuration in the respective `'minor'` and `'major'` keys. As this nested options are common to both cartesian and radial scales, these options are detailed [at the end of this section](/ipychart/user_guide/scales#ticks-argument-3).
 
 #### Callback subargument (`'ticks'` option)
 
@@ -569,7 +527,7 @@ The ticks can be customized with a callback function. A Callback function is a J
 
 ### Example
 
-Here is an example of a radial scale with custom angleLines, gridLines, pointLabels and ticks options:
+Here is an example of a radial scale with custom angleLines, grid, pointLabels and ticks options:
 
 :::details Click to show the code used to generate the Chart.
 <br>
@@ -590,28 +548,31 @@ dataset = {
 }
 
 options = {
-  'scale': {
-    'angleLines': {
+  'scales': {
+    'r': {
       'display': True,
       'color': 'black',
       'lineWidth': 1.5,
-      'borderDashOffset': 10
-    },
-    'gridLines': {
-      'color': 'black',
-      'lineWidth': 1.5,
-      'circular': True
-    },
-    'pointLabels': {
-      'display': True,
-      'fontColor': 'black',
-      'fontSize': 14,
-      'fontStyle': 'italic',
-    },
-    'ticks': {
-      'fontSize': 18,
-      'fontColor': 'black',
-      'stepSize': 30
+      'borderDashOffset': 10,
+      'angleLines': {
+        'display': True,
+        'color': 'black',
+        'lineWidth': 1.5,
+        'borderDashOffset': 10
+      },
+      'grid': {
+        'color': 'black',
+        'lineWidth': 1.5,
+        'circular': True
+      },
+      'pointLabels': {
+        'display': True,
+        'font': {'size': 14, 'color': 'black', 'style': 'italic'},
+      },
+      'ticks': {
+        'font': {'size': 18, 'color': 'black'},
+        'stepSize': 30
+      }
     }
   }
 }
@@ -625,12 +586,9 @@ mychart
 
 ## Common options
 
-### GridLines argument
+### Grid argument
 
-The gridLines argument is common to both scales. Therefore, for reasons of clarity and readability of the documentation, the detailed description of its options was placed here, at the end of this section. The only difference is where to input the gridlines configuration:
-
-- For the cartesian axis, you can use the `'scales'` option
-- For the radial axis, you can use the `'scale'` option
+The grid argument is common to all scales. Therefore, for reasons of clarity and readability of the documentation, the detailed description of its options was placed here, at the end of this section.
 
 This argument defines options for the grid lines that run perpendicular to the axis. Available options are:
 
@@ -638,8 +596,8 @@ This argument defines options for the grid lines that run perpendicular to the a
 options = {
   # CARTESIAN AXIS
   'scales': {
-    'xAxes': [{
-      'gridLines': {
+    'x': {
+      'grid': {
 
         'display': bool # Display grid lines for this axis | Default: True
         'circular': str # Circular gridlines (radar chart only) | Default: False
@@ -651,29 +609,21 @@ options = {
         'drawOnChartArea': bool # Draw lines inside the axis lines | Default: True
         'drawTicks': bool # Draw lines beside the ticks | Default: True
         'tickMarkLength': int # Length of tick marks | Default: 10
-        'zeroLineWidth': int # Stroke width of the first grid line | Default: 1
-        'zeroLineColor': str # Color of the first grid line
-                             # Default: 'rgba(0, 0, 0, 0.25)'
-        'zeroLineBorderDash': list # Spacing of dash of the first grid line
-                                   # Default: []
-        'zeroLineBorderDashOffset': float # Offset of the first grid line dash
-                                          # Default: 0.0
         'offsetGridLines': bool # Shift grid lines between labels | Default: False
         'z': int # z-index of gridline layer. Values <= 0 are
                  # drawn under datasets, > 0 on top | Default: 0
 
       }
-    }],
-    'yAxes': [{
-      'gridLines': {
+    },
+    'y': {
+      'grid': {
         # You can use the same arguments than above to configure the y axis.
       }
-    }]
-  }
-  # RADIAL AXIS
-  'scale': {
-    'gridLines': {
-	  # For radial axis, use the 'scale' option instead of 'scales'
+    },
+    'r': {
+      'grid': {
+        # You can use the same arguments than above to configure the radial axis.
+      }
     }
   }
 }
@@ -681,7 +631,7 @@ options = {
 
 #### Example
 
-Here is an example of a scale with custom gridLines options:
+Here is an example of a scale with custom grid options:
 
 :::details Click to show the code used to generate the Chart.
 <br>
@@ -690,22 +640,24 @@ Here is an example of a scale with custom gridLines options:
 dataset = {
   'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 'Poland', 
              'Portugal', 'Sweden', 'Ireland'],
-  'datasets': [{'data': [14, 106, 16, 107, 45, 133, 19, 109, 60, 107], 'label': 'Dataset 1'},
-               {'data': [95, 28, 56, 82, 37, 155, 120, 132, 74, 85], 'label': 'Dataset 2'}]
+  'datasets': [{'data': [14, 106, 16, 107, 45, 133, 19, 109, 60, 107],
+                'label': 'Dataset 1', 'fill': True},
+               {'data': [95, 28, 56, 82, 37, 155, 120, 132, 74, 85],
+                'label': 'Dataset 2', 'fill': True}]
 }
 
 options = {
   'scales': {
-    'xAxes': [{
-      'gridLines': {
+    'x': {
+      'grid': {
       'display': True,
       'color': 'black',
-      'z': -1}}],
-    'yAxes': [{
-      'gridLines': {
+      'z': -1}},
+    'y': {
+      'grid': {
       'display': True,
       'color': 'black',
-      'z': -1}}]
+      'z': -1}}
   }
 }
 
@@ -716,101 +668,3 @@ mychart
 :::
 
 <scales-gridlines/>
-
-### Ticks argument
-
-The minor and major tick's options are common to both scales. Therefore, for reasons of clarity and readability of the documentation, the detailed description of these options was placed here, at the end of this section.
-
-#### Minor subarguments (`'ticks'` options)
-
-The minor tick configuration is nested under the tick's configuration in the `'minor'` key. It defines options for the minor tick marks that are generated by the axis (omitted options are inherited from tick's configuration):
-
-```py
-options = {
-  'scales': {
-    'xAxes': [{
-      'ticks': {
-        'minor': {
-
-          'fontColor': str # Font color for tick labels | Default: '#666'
-          'fontFamily': str # Font family for the tick labels | Default: 'Helvetica'
-          'fontSize': int # Font size for the tick labels | Default: 12
-          'fontStyle': str # Font style for the tick labels ('normal', 'italic', 
-                           # 'oblique', 'initial', 'inherit') | Default: 'normal'
-          'lineHeight': int or str # Height of an individual line of text
-                                   # ex: 2.4 or '100%' | Default: 1.2
-                
-          # Callbacks functions
-          'callback': str # Callback function which returns the string 
-                          # representation of the tick value as it should 
-                          # be displayed on the chart. | Default: ''
-
-        }
-      }
-    }],
-    'yAxes': [{
-      'ticks': {
-        'minor': {
-          # You can use the same arguments than above to configure the y axis.
-        }
-      }
-    }]
-  }
-  # RADIAL AXIS
-  'scale': {
-    'ticks': {
-      'minor': {
-	  # For radial axis, use the 'scale' option instead of 'scales'
-      }
-    }
-  }
-}
-```
-
-#### Major subarguments (`'ticks'` options)
-
-The major tick configuration is nested under the tick's configuration in the `'major'` key. It defines options — these options are disabled by default — for the major tick marks that are generated by the axis (omitted options are inherited from tick's configuration): 
-
-```py
-options = {
-  'scales': {
-    'xAxes': [{
-      'ticks': {
-        'major': {
-
-          'enabled': bool # If True, major tick options are used
-                          # to show major ticks | Default: False
-          'fontColor': str # Font color for tick labels | Default: '#666'
-          'fontFamily': str # Font family for the tick labels | Default: 'Helvetica'
-          'fontSize': int # Font size for the tick labels | Default: 12
-          'fontStyle': str # Font style for the tick labels ('normal', 'italic', 
-                           # 'oblique', 'initial', 'inherit') | Default: 'normal'
-          'lineHeight': int or str # Height of an individual line of text
-                                   # ex: 2.4 or '100%' | Default: 1.2
-                
-          # Callbacks functions
-          'callback': str # Callback function which returns the string 
-                          # representation of the tick value as it should 
-                          # be displayed on the chart. | Default: ''
-
-        }
-      }
-    }],
-    'yAxes': [{
-      'ticks': {
-        'major': {
-          # You can use the same arguments than above to configure the y axis.
-        }
-      }
-    }]
-  }
-  # RADIAL AXIS
-  'scale': {
-    'ticks': {
-      'major': {
-	      # For radial axis, use the 'scale' option instead of 'scales'
-      }
-    }
-  }
-}
-```

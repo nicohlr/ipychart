@@ -1,6 +1,6 @@
 ---
 home: true
-description: 'The power of Chart.js in Jupyter Notebooks'
+description: 'The power of Chart.js with Python'
 heroImage: '/ipychart-logo.png'
 heroText: 'ipychart'
 actionText: Get Started →
