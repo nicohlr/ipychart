@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IPyWidget export</title>
+</head>
+<body>
+
+
+<!-- Load require.js. Delete this if your page already loads require.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+<script type="application/vnd.jupyter.widget-state+json">
+{
+  "version_major": 2,
+  "version_minor": 0,
+  "state": {
+    "0699d54f43e84a8d8e524f184a162bd6": {
+      "model_name": "ChartModel",
+      "model_module": "ipychart",
+      "model_module_version": "^0.3.3",
+      "state": {
+        "_colorscheme_sync": null,
+        "_data_sync": {
+          "datasets": [
+            {
+              "data": [
+                636,
+                156,
+                77
+              ],
+              "backgroundColor": [
+                "rgba(54, 163, 235, 0.2)",
+                "rgba(254, 119, 124, 0.2)",
+                "rgba(255, 206, 87, 0.2)"
+              ],
+              "borderColor": [
+                "rgba(54, 163, 235, 1)",
+                "rgba(254, 119, 124, 1)",
+                "rgba(255, 206, 87, 1)"
+              ],
+              "borderWidth": 1
+            }
+          ],
+          "labels": [
+            "S",
+            "C",
+            "Q"
+          ]
+        },
+        "_dom_classes": [],
+        "_kind_sync": "bar",
+        "_options_sync": {
+          "scales": {
+            "yAxes": [
+              {
+                "display": true,
+                "ticks": {
+                  "beginAtZero": true,
+                  "display": true
+                },
+                "scaleLabel": {
+                  "display": true,
+                  "labelString": "Count"
+                }
+              }
+            ],
+            "xAxes": [
+              {
+                "display": true,
+                "ticks": {
+                  "beginAtZero": true,
+                  "display": true
+                },
+                "scaleLabel": {
+                  "display": true,
+                  "labelString": "Embarked"
+                }
+              }
+            ]
+          },
+          "legend": false,
+          "tooltips": {
+            "enabled": true,
+            "callbacks": {
+              "title": "function(tooltipItem, data) {return 'Embarked = ' + tooltipItem[0].xLabel;};",
+              "label": "function(tooltipItem, data) {return 'Count = ' + tooltipItem.yLabel;};"
+            }
+          }
+        },
+        "_zoom_sync": true,
+        "layout": "IPY_MODEL_d81895622a164e4181303e91355d0c9e"
+      }
+    },
+    "d81895622a164e4181303e91355d0c9e": {
+      "model_name": "LayoutModel",
+      "model_module": "@jupyter-widgets/base",
+      "model_module_version": "1.2.0",
+      "state": {
+        "align_self": "stretch",
+        "height": "auto"
+      }
+    }
+  }
+}
+</script>
+<script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "0699d54f43e84a8d8e524f184a162bd6"}
+</script>
+
+</body>
+</html>

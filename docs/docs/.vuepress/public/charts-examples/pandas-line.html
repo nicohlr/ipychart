@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IPyWidget export</title>
+</head>
+<body>
+
+
+<!-- Load require.js. Delete this if your page already loads require.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+<script type="application/vnd.jupyter.widget-state+json">
+{
+  "version_major": 2,
+  "version_minor": 0,
+  "state": {
+    "b92c0970c0da4633a878c0673ed3d067": {
+      "model_name": "ChartModel",
+      "model_module": "ipychart",
+      "model_module_version": "^0.3.3",
+      "state": {
+        "_colorscheme_sync": "office.Parallax6",
+        "_data_sync": {
+          "datasets": [
+            {
+              "data": [
+                34.6098,
+                28.7039,
+                23.5729
+              ],
+              "label": "female",
+              "fill": false,
+              "datalabels": {
+                "display": true,
+                "borderWidth": 1,
+                "anchor": "end",
+                "align": "end",
+                "borderRadius": 5,
+                "color": "#fff"
+              }
+            },
+            {
+              "data": [
+                39.4423,
+                30.5123,
+                26.9119
+              ],
+              "label": "male",
+              "fill": false,
+              "datalabels": {
+                "display": true,
+                "borderWidth": 1,
+                "anchor": "end",
+                "align": "end",
+                "borderRadius": 5,
+                "color": "#fff"
+              }
+            }
+          ],
+          "labels": [
+            3,
+            1,
+            2
+          ]
+        },
+        "_dom_classes": [],
+        "_kind_sync": "line",
+        "_options_sync": {
+          "scales": {
+            "yAxes": [
+              {
+                "display": true,
+                "ticks": {
+                  "beginAtZero": true,
+                  "display": true
+                },
+                "scaleLabel": {
+                  "display": true,
+                  "labelString": "Age (mean)"
+                }
+              }
+            ],
+            "xAxes": [
+              {
+                "display": true,
+                "ticks": {
+                  "beginAtZero": true,
+                  "display": true
+                },
+                "scaleLabel": {
+                  "display": true,
+                  "labelString": "Pclass"
+                }
+              }
+            ]
+          },
+          "tooltips": {
+            "enabled": true,
+            "callbacks": {
+              "title": "function(tooltipItem, data) {return 'Pclass = ' + tooltipItem[0].xLabel + ' & ' + 'Sex = ' + data.datasets[tooltipItem[0].datasetIndex].label;};",
+              "label": "function(tooltipItem, data) {return 'Age (mean) = ' + tooltipItem.yLabel;};"
+            }
+          },
+          "legend": {
+            "labels": {
+              "generateLabels": "function(chart) {let labels = Chart.defaults.global.legend.labels.generateLabels(chart);labels.map(label => {label['text'] = \"Sex\" + \" = \" + label['text']; return label});return labels;};"
+            }
+          }
+        },
+        "_zoom_sync": true,
+        "layout": "IPY_MODEL_83a0628b0b4645dabf0c14d4e055d722"
+      }
+    },
+    "83a0628b0b4645dabf0c14d4e055d722": {
+      "model_name": "LayoutModel",
+      "model_module": "@jupyter-widgets/base",
+      "model_module_version": "1.2.0",
+      "state": {
+        "align_self": "stretch",
+        "height": "auto"
+      }
+    }
+  }
+}
+</script>
+<script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "b92c0970c0da4633a878c0673ed3d067"}
+</script>
+
+</body>
+</html>

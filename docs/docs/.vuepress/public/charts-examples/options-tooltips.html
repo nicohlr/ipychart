@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IPyWidget export</title>
+</head>
+<body>
+
+
+<!-- Load require.js. Delete this if your page already loads require.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+<script type="application/vnd.jupyter.widget-state+json">
+{
+  "version_major": 2,
+  "version_minor": 0,
+  "state": {
+    "c90e66c98e5c4885ac152dd8dab9c8ee": {
+      "model_name": "ChartModel",
+      "model_module": "ipychart",
+      "model_module_version": "^0.3.3",
+      "state": {
+        "_colorscheme_sync": null,
+        "_data_sync": {
+          "labels": [
+            "Germany",
+            "Spain",
+            "UK",
+            "Italy",
+            "Norway",
+            "France",
+            "Poland",
+            "Portugal",
+            "Sweden",
+            "Ireland"
+          ],
+          "datasets": [
+            {
+              "data": [
+                86,
+                114,
+                106,
+                106,
+                107,
+                111,
+                133,
+                221,
+                121,
+                142
+              ],
+              "label": "First Dataset",
+              "fill": false,
+              "type": "line",
+              "pointRadius": 7,
+              "pointHoverRadius": 7,
+              "backgroundColor": "rgba(54, 163, 235, 0.2)",
+              "borderColor": "rgba(54, 163, 235, 1)",
+              "borderWidth": 1,
+              "pointBackgroundColor": "rgba(54, 163, 235, 0.2)",
+              "pointBorderColor": "rgba(54, 163, 235, 1)"
+            },
+            {
+              "data": [
+                99,
+                130,
+                64,
+                100,
+                73,
+                22,
+                88,
+                198,
+                144,
+                64
+              ],
+              "label": "Second Dataset",
+              "backgroundColor": "rgba(254, 119, 124, 0.2)",
+              "borderColor": "rgba(254, 119, 124, 1)",
+              "borderWidth": 1
+            },
+            {
+              "data": [
+                40,
+                20,
+                10,
+                16,
+                24,
+                38,
+                74,
+                167,
+                80,
+                150
+              ],
+              "label": "Third Dataset",
+              "backgroundColor": "rgba(255, 206, 87, 0.2)",
+              "borderColor": "rgba(255, 206, 87, 1)",
+              "borderWidth": 1
+            },
+            {
+              "data": [
+                56,
+                95,
+                44,
+                112,
+                215,
+                35,
+                95,
+                74,
+                64,
+                78
+              ],
+              "label": "Fourth Dataset",
+              "backgroundColor": "rgba(11, 255, 238, 0.2)",
+              "borderColor": "rgba(11, 255, 238, 1)",
+              "borderWidth": 1
+            }
+          ]
+        },
+        "_dom_classes": [],
+        "_kind_sync": "bar",
+        "_options_sync": {
+          "scales": {
+            "yAxes": [
+              {
+                "display": true,
+                "ticks": {
+                  "beginAtZero": true,
+                  "display": true
+                }
+              }
+            ],
+            "xAxes": [
+              {
+                "display": true,
+                "ticks": {
+                  "beginAtZero": true,
+                  "display": true
+                }
+              }
+            ]
+          },
+          "tooltips": {
+            "displayColors": false,
+            "titleFontSize": 14,
+            "bodyFontSize": 14,
+            "enabled": true,
+            "callbacks": {
+              "title": "function(tooltipItem, data) {\n        return \"This is a custom tooltip !\";};",
+              "label": "function(tooltipItem, data) {\n        let flags = {'Germany': '\ud83c\udde9\ud83c\uddea', 'Spain': '\ud83c\uddea\ud83c\uddf8', 'UK': '\ud83c\uddec\ud83c\udde7', \n                     'Norway': '\ud83c\uddf3\ud83c\uddf4', 'France': '\ud83c\uddeb\ud83c\uddf7', 'Poland': '\ud83c\uddf5\ud83c\uddf1', \n                     'Portugal': '\ud83c\uddf5\ud83c\uddf9', 'Sweden': '\ud83c\uddf8\ud83c\uddea', \n                     'Ireland': '\ud83c\uddee\ud83c\uddea', 'Italy': '\ud83c\uddee\ud83c\uddf9'};\n        if (data.datasets[tooltipItem.datasetIndex].type == 'line') {\n          return [\"This POINT corresponds to the country \" + \n                  data.labels[tooltipItem.index].toUpperCase() + ' ' + \n                  flags[data.labels[tooltipItem.index]],\n                  \"and the y axis value for this POINT is: \" + \n                  data.datasets[tooltipItem.datasetIndex].data[\n                    tooltipItem.index].toString()];\n        }\n        else {\n          return [\"This BAR corresponds to the country \" + \n                  data.labels[tooltipItem.index].toUpperCase() + ' ' + \n                  flags[data.labels[tooltipItem.index]],\n                  \"and the y axis value for this BAR is: \" + \n                  data.datasets[tooltipItem.datasetIndex].data[\n                    tooltipItem.index].toString()];\n        }\n      };"
+            }
+          }
+        },
+        "_zoom_sync": true,
+        "layout": "IPY_MODEL_76fbf6965fa8459a98760f57121a3719"
+      }
+    },
+    "76fbf6965fa8459a98760f57121a3719": {
+      "model_name": "LayoutModel",
+      "model_module": "@jupyter-widgets/base",
+      "model_module_version": "1.2.0",
+      "state": {
+        "align_self": "stretch",
+        "height": "auto"
+      }
+    }
+  }
+}
+</script>
+<script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "c90e66c98e5c4885ac152dd8dab9c8ee"}
+</script>
+
+</body>
+</html>
