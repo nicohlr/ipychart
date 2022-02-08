@@ -4,8 +4,8 @@
     "vuepress-plugin-flexsearch": "^0.3.0"
   },
   "scripts": {
-    "docs:dev": "export NODE_OPTIONS=--openssl-legacy-provider && vuepress dev docs",
-    "docs:build": "export NODE_OPTIONS=--openssl-legacy-provider && vuepress build docs"
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "dependencies": {
     "chart.js": "^2.9.3"

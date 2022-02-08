@@ -14,14 +14,14 @@ from .values import KINDS, COLORSCHEMES
 
 MSG_FORMAT = (
     'Wrong input format for {} argument. See '
-    'https://nicohlr.gitlab.io/ipychart/user_guide/usage.html '
+    'https://nicohlr.github.io/ipychart/user_guide/usage.html '
     'for more details'
 )
 
 MSG_KIND = (
     'Chart kind must be one of : line, bar, radar, doughnut,'
     'polarArea, bubble, pie, scatter. See '
-    'https://nicohlr.gitlab.io/ipychart/user_guide/charts.html '
+    'https://nicohlr.github.io/ipychart/user_guide/charts.html '
     'for more details'
 )
 
@@ -38,7 +38,7 @@ class Chart(widgets.DOMWidget):
     A Jupyter - Chart.js bridge enabling interactive data visualization in
     the Jupyter notebook.
 
-    Official documentation : https://nicohlr.gitlab.io/ipychart/
+    Official documentation : https://nicohlr.github.io/ipychart/
 
     Args:
         data (dict): Data to draw. This dictionary corresponds to the "data"
@@ -158,7 +158,7 @@ class Chart(widgets.DOMWidget):
         errors if they are not valid. To match Chart.js format, arguments must
         follow a specific structure. To see more details about this structure,
         please check the documentation:
-        https://nicohlr.gitlab.io/ipychart/user_guide/usage.html
+        https://nicohlr.github.io/ipychart/user_guide/usage.html
         """
 
         # Validate data argument
@@ -231,7 +231,7 @@ class Chart(widgets.DOMWidget):
         This function set some default inputs for the chart. To see more
         details about options in ipychart, please check the official
         documentation:
-        https://nicohlr.gitlab.io/ipychart/user_guide/configuration.html
+        https://nicohlr.github.io/ipychart/user_guide/configuration.html
         """
 
         # Disable cartesian axis by default for some charts
@@ -259,7 +259,7 @@ class Chart(widgets.DOMWidget):
         good looking chart with ipychart without having to input some styling
         options. To see more details about styling in ipychart, please check
         the official documentation:
-        https://nicohlr.gitlab.io/ipychart/user_guide/charts.html
+        https://nicohlr.github.io/ipychart/user_guide/charts.html
         """
 
         random_colors = [

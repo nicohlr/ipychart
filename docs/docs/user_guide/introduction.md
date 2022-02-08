@@ -44,7 +44,7 @@ You can now open your browser and go to http://localhost:5000/. Authenticate you
 - [**Chart.js Datalabels**](https://github.com/chartjs/chartjs-plugin-datalabels)
 - [**Chart.js Colorschemes**](https://github.com/nagix/chartjs-plugin-colorschemes)
 - [**Vuepress**](https://vuepress.vuejs.org/)
-- [**GitLab Pages**](https://docs.gitlab.com/ee/user/project/pages/)
+- [**GitHub Pages**](https://pages.github.com/)
 
 <p style="font-size:1.65rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;padding-bottom:.3rem;margin-top:-3.1rem;border-bottom:1px solid #eaecef;">License</p>
 
