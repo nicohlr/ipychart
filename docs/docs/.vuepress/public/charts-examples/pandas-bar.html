@@ -16,7 +16,7 @@
   "version_major": 2,
   "version_minor": 0,
   "state": {
-    "24c9bfdf20744c3987f23e5f8865b3f6": {
+    "e9cb37f5f2bb48d88510046fe19a7416": {
       "model_name": "ChartModel",
       "model_module": "ipychart",
       "model_module_version": "^0.3.3",
@@ -50,52 +50,40 @@
         "_dom_classes": [],
         "_kind_sync": "bar",
         "_options_sync": {
-          "scales": {
-            "yAxes": [
-              {
-                "display": true,
-                "ticks": {
-                  "beginAtZero": true,
-                  "display": true
-                },
-                "scaleLabel": {
-                  "display": true,
-                  "labelString": "Fare (mean)"
-                }
+          "plugins": {
+            "tooltip": {
+              "enabled": true,
+              "callbacks": {
+                "title": "function(tooltipItem) {return 'Pclass = ' + tooltipItem[0].label + ' & ' + 'Sex = ' + tooltipItem[0].dataset.label;};",
+                "label": "function(tooltipItem) {return 'Fare (mean) = ' + tooltipItem.formattedValue;};"
               }
-            ],
-            "xAxes": [
-              {
-                "display": true,
-                "ticks": {
-                  "beginAtZero": true,
-                  "display": true
-                },
-                "scaleLabel": {
-                  "display": true,
-                  "labelString": "Pclass"
-                }
+            },
+            "legend": {
+              "labels": {
+                "generateLabels": "function(chart) {const labels = Chart.defaults.plugins.legend.labels.generateLabels(chart);labels.map(label => {label['text'] = \"Sex\" + \" = \" + label['text']; return label});return labels;};"
               }
-            ]
-          },
-          "tooltips": {
-            "enabled": true,
-            "callbacks": {
-              "title": "function(tooltipItem, data) {return 'Pclass = ' + tooltipItem[0].xLabel + ' & ' + 'Sex = ' + data.datasets[tooltipItem[0].datasetIndex].label;};",
-              "label": "function(tooltipItem, data) {return 'Fare (mean) = ' + tooltipItem.yLabel;};"
             }
           },
-          "legend": {
-            "labels": {
-              "generateLabels": "function(chart) {let labels = Chart.defaults.global.legend.labels.generateLabels(chart);labels.map(label => {label['text'] = \"Sex\" + \" = \" + label['text']; return label});return labels;};"
+          "scales": {
+            "x": {
+              "title": {
+                "display": true,
+                "text": "Pclass"
+              }
+            },
+            "y": {
+              "title": {
+                "display": true,
+                "text": "Fare (mean)"
+              }
             }
           }
         },
         "_zoom_sync": true,
-        "layout": "IPY_MODEL_19efd84784f04490808636e554a8757c"
+        "layout": "IPY_MODEL_d84051d9e0b04364b2534ba65005db46"
       }
     },
-    "19efd84784f04490808636e554a8757c": {
+    "d84051d9e0b04364b2534ba65005db46": {
       "model_name": "LayoutModel",
       "model_module": "@jupyter-widgets/base",
       "model_module_version": "1.2.0",
@@ -108,7 +96,7 @@
 }
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "24c9bfdf20744c3987f23e5f8865b3f6"}
+{"version_major": 2, "version_minor": 0, "model_id": "e9cb37f5f2bb48d88510046fe19a7416"}
 </script>
 
 </body>

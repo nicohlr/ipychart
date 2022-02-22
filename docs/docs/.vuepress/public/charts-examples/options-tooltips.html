@@ -16,7 +16,7 @@
   "version_major": 2,
   "version_minor": 0,
   "state": {
-    "c90e66c98e5c4885ac152dd8dab9c8ee": {
+    "f117bf4e90094a3198a9659a6dbd20fa": {
       "model_name": "ChartModel",
       "model_module": "ipychart",
       "model_module_version": "^0.3.3",
@@ -119,42 +119,24 @@
         "_dom_classes": [],
         "_kind_sync": "bar",
         "_options_sync": {
-          "scales": {
-            "yAxes": [
-              {
-                "display": true,
-                "ticks": {
-                  "beginAtZero": true,
-                  "display": true
-                }
+          "plugins": {
+            "tooltips": {
+              "displayColors": false,
+              "titleFontSize": 14,
+              "bodyFontSize": 14,
+              "enabled": true,
+              "callbacks": {
+                "title": "function(tooltipItem, data) {\n        return \"This is a custom tooltip !\";};",
+                "label": "function(tooltipItem, data) {\n        let flags = {'Germany': '\ud83c\udde9\ud83c\uddea', 'Spain': '\ud83c\uddea\ud83c\uddf8', 'UK': '\ud83c\uddec\ud83c\udde7', \n                     'Norway': '\ud83c\uddf3\ud83c\uddf4', 'France': '\ud83c\uddeb\ud83c\uddf7', 'Poland': '\ud83c\uddf5\ud83c\uddf1', \n                     'Portugal': '\ud83c\uddf5\ud83c\uddf9', 'Sweden': '\ud83c\uddf8\ud83c\uddea', \n                     'Ireland': '\ud83c\uddee\ud83c\uddea', 'Italy': '\ud83c\uddee\ud83c\uddf9'};\n        if (data.datasets[tooltipItem.datasetIndex].type == 'line') {\n          return [\"This POINT corresponds to the country \" + \n                  data.labels[tooltipItem.index].toUpperCase() + ' ' + \n                  flags[data.labels[tooltipItem.index]],\n                  \"and the y axis value for this POINT is: \" + \n                  data.datasets[tooltipItem.datasetIndex].data[\n                    tooltipItem.index].toString()];\n        }\n        else {\n          return [\"This BAR corresponds to the country \" + \n                  data.labels[tooltipItem.index].toUpperCase() + ' ' + \n                  flags[data.labels[tooltipItem.index]],\n                  \"and the y axis value for this BAR is: \" + \n                  data.datasets[tooltipItem.datasetIndex].data[\n                    tooltipItem.index].toString()];\n        }\n      };"
               }
-            ],
-            "xAxes": [
-              {
-                "display": true,
-                "ticks": {
-                  "beginAtZero": true,
-                  "display": true
-                }
-              }
-            ]
-          },
-          "tooltips": {
-            "displayColors": false,
-            "titleFontSize": 14,
-            "bodyFontSize": 14,
-            "enabled": true,
-            "callbacks": {
-              "title": "function(tooltipItem, data) {\n        return \"This is a custom tooltip !\";};",
-              "label": "function(tooltipItem, data) {\n        let flags = {'Germany': '\ud83c\udde9\ud83c\uddea', 'Spain': '\ud83c\uddea\ud83c\uddf8', 'UK': '\ud83c\uddec\ud83c\udde7', \n                     'Norway': '\ud83c\uddf3\ud83c\uddf4', 'France': '\ud83c\uddeb\ud83c\uddf7', 'Poland': '\ud83c\uddf5\ud83c\uddf1', \n                     'Portugal': '\ud83c\uddf5\ud83c\uddf9', 'Sweden': '\ud83c\uddf8\ud83c\uddea', \n                     'Ireland': '\ud83c\uddee\ud83c\uddea', 'Italy': '\ud83c\uddee\ud83c\uddf9'};\n        if (data.datasets[tooltipItem.datasetIndex].type == 'line') {\n          return [\"This POINT corresponds to the country \" + \n                  data.labels[tooltipItem.index].toUpperCase() + ' ' + \n                  flags[data.labels[tooltipItem.index]],\n                  \"and the y axis value for this POINT is: \" + \n                  data.datasets[tooltipItem.datasetIndex].data[\n                    tooltipItem.index].toString()];\n        }\n        else {\n          return [\"This BAR corresponds to the country \" + \n                  data.labels[tooltipItem.index].toUpperCase() + ' ' + \n                  flags[data.labels[tooltipItem.index]],\n                  \"and the y axis value for this BAR is: \" + \n                  data.datasets[tooltipItem.datasetIndex].data[\n                    tooltipItem.index].toString()];\n        }\n      };"
             }
           }
         },
         "_zoom_sync": true,
-        "layout": "IPY_MODEL_76fbf6965fa8459a98760f57121a3719"
+        "layout": "IPY_MODEL_af2c34d7cd874f089c65f6b7adff3133"
       }
     },
-    "76fbf6965fa8459a98760f57121a3719": {
+    "af2c34d7cd874f089c65f6b7adff3133": {
       "model_name": "LayoutModel",
       "model_module": "@jupyter-widgets/base",
       "model_module_version": "1.2.0",
@@ -167,7 +149,7 @@
 }
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "c90e66c98e5c4885ac152dd8dab9c8ee"}
+{"version_major": 2, "version_minor": 0, "model_id": "f117bf4e90094a3198a9659a6dbd20fa"}
 </script>
 
 </body>

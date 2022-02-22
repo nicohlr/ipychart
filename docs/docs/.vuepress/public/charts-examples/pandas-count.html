@@ -16,7 +16,7 @@
   "version_major": 2,
   "version_minor": 0,
   "state": {
-    "0699d54f43e84a8d8e524f184a162bd6": {
+    "b75f75af7b454165af927b894e2c2cb5": {
       "model_name": "ChartModel",
       "model_module": "ipychart",
       "model_module_version": "^0.3.3",
@@ -52,48 +52,36 @@
         "_dom_classes": [],
         "_kind_sync": "bar",
         "_options_sync": {
-          "scales": {
-            "yAxes": [
-              {
-                "display": true,
-                "ticks": {
-                  "beginAtZero": true,
-                  "display": true
-                },
-                "scaleLabel": {
-                  "display": true,
-                  "labelString": "Count"
-                }
+          "plugins": {
+            "legend": false,
+            "tooltip": {
+              "enabled": true,
+              "callbacks": {
+                "title": "function(tooltipItem) {return 'Embarked = ' + tooltipItem[0].label;};",
+                "label": "function(tooltipItem) {return 'Count = ' + tooltipItem.formattedValue;};"
               }
-            ],
-            "xAxes": [
-              {
-                "display": true,
-                "ticks": {
-                  "beginAtZero": true,
-                  "display": true
-                },
-                "scaleLabel": {
-                  "display": true,
-                  "labelString": "Embarked"
-                }
-              }
-            ]
+            }
           },
-          "legend": false,
-          "tooltips": {
-            "enabled": true,
-            "callbacks": {
-              "title": "function(tooltipItem, data) {return 'Embarked = ' + tooltipItem[0].xLabel;};",
-              "label": "function(tooltipItem, data) {return 'Count = ' + tooltipItem.yLabel;};"
+          "scales": {
+            "x": {
+              "title": {
+                "display": true,
+                "text": "Embarked"
+              }
+            },
+            "y": {
+              "title": {
+                "display": true,
+                "text": "Count"
+              }
             }
           }
         },
         "_zoom_sync": true,
-        "layout": "IPY_MODEL_d81895622a164e4181303e91355d0c9e"
+        "layout": "IPY_MODEL_b6b00b903f2046e6bf6fd9994046e26d"
       }
     },
-    "d81895622a164e4181303e91355d0c9e": {
+    "b6b00b903f2046e6bf6fd9994046e26d": {
       "model_name": "LayoutModel",
       "model_module": "@jupyter-widgets/base",
       "model_module_version": "1.2.0",
@@ -106,7 +94,7 @@
 }
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "0699d54f43e84a8d8e524f184a162bd6"}
+{"version_major": 2, "version_minor": 0, "model_id": "b75f75af7b454165af927b894e2c2cb5"}
 </script>
 
 </body>

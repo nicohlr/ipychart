@@ -16,7 +16,7 @@
   "version_major": 2,
   "version_minor": 0,
   "state": {
-    "8b0db6e0ddbe47fb9c7acd726ceadacb": {
+    "5d5cd89078d24bb390806f63e33447f8": {
       "model_name": "ChartModel",
       "model_module": "ipychart",
       "model_module_version": "^0.3.3",
@@ -60,7 +60,7 @@
                   "y": 200
                 }
               ],
-              "fill": false
+              "lineTension": 0.3
             },
             {
               "label": "UK",
@@ -98,7 +98,7 @@
                   "y": 210
                 }
               ],
-              "fill": false
+              "lineTension": 0.3
             }
           ]
         },
@@ -106,50 +106,36 @@
         "_kind_sync": "line",
         "_options_sync": {
           "scales": {
-            "yAxes": [
-              {
-                "display": true,
-                "ticks": {
-                  "beginAtZero": true,
-                  "display": true
-                },
-                "scaleLabel": {
-                  "display": true,
-                  "labelString": "Value"
+            "x": {
+              "type": "time",
+              "time": {
+                "tooltipFormat": "ll",
+                "unit": "week",
+                "round": "week",
+                "isoWeekday": true,
+                "stepSize": 2,
+                "displayFormats": {
+                  "week": "ddd D MMM YYYY"
                 }
-              }
-            ],
-            "xAxes": [
-              {
+              },
+              "title": {
                 "display": true,
-                "ticks": {
-                  "beginAtZero": true,
-                  "display": true
-                },
-                "type": "time",
-                "time": {
-                  "tooltipFormat": "ll",
-                  "unit": "week",
-                  "round": "week",
-                  "isoWeekday": true,
-                  "stepSize": 2,
-                  "displayFormats": {
-                    "week": "ddd D MMM YYYY"
-                  }
-                },
-                "scaleLabel": {
-                  "display": true,
-                  "labelString": "Date"
-                }
+                "text": "Date"
               }
-            ]
+            },
+            "y": {
+              "title": {
+                "display": true,
+                "text": "Value"
+              }
+            }
           }
         },
         "_zoom_sync": true,
-        "layout": "IPY_MODEL_9a16187f18da4e78a25f2eb297ca4eaa"
+        "layout": "IPY_MODEL_f1be5ad52cf34ab299ed2ed9f3c1dcb4"
       }
     },
-    "9a16187f18da4e78a25f2eb297ca4eaa": {
+    "f1be5ad52cf34ab299ed2ed9f3c1dcb4": {
       "model_name": "LayoutModel",
       "model_module": "@jupyter-widgets/base",
       "model_module_version": "1.2.0",
@@ -162,7 +148,7 @@
 }
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "8b0db6e0ddbe47fb9c7acd726ceadacb"}
+{"version_major": 2, "version_minor": 0, "model_id": "5d5cd89078d24bb390806f63e33447f8"}
 </script>
 
 </body>

@@ -16,7 +16,7 @@
   "version_major": 2,
   "version_minor": 0,
   "state": {
-    "51bd396d113d4248b2216ba486900b29": {
+    "37dedd8434b84d0da80b9c44c7da269a": {
       "model_name": "ChartModel",
       "model_module": "ipychart",
       "model_module_version": "^0.3.3",
@@ -46,26 +46,23 @@
         "_dom_classes": [],
         "_kind_sync": "polarArea",
         "_options_sync": {
-          "scale": {
-            "ticks": {
-              "beginAtZero": true
-            }
-          },
-          "legend": {
-            "display": true
-          },
-          "tooltips": {
-            "enabled": true,
-            "callbacks": {
-              "title": "function(tooltipItem, data) {return 'Title = ' + data.labels[tooltipItem[0].index];};",
-              "label": "function(tooltipItem, data) {return 'Fare (mean) = ' + data.datasets[0].data[tooltipItem.index];};"
+          "plugins": {
+            "tooltip": {
+              "enabled": true,
+              "callbacks": {
+                "title": "function(tooltipItem) {return 'Title = ' + tooltipItem[0].label;};",
+                "label": "function(tooltipItem) {return 'Fare (mean) = ' + tooltipItem.formattedValue;};"
+              }
+            },
+            "legend": {
+              "display": true
             }
           }
         },
-        "layout": "IPY_MODEL_f92157f163b4482aa17cd2c8251f1e81"
+        "layout": "IPY_MODEL_9ca857f3e30041ad8981e6a68ce66ea7"
       }
     },
-    "f92157f163b4482aa17cd2c8251f1e81": {
+    "9ca857f3e30041ad8981e6a68ce66ea7": {
       "model_name": "LayoutModel",
       "model_module": "@jupyter-widgets/base",
       "model_module_version": "1.2.0",
@@ -78,7 +75,7 @@
 }
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "51bd396d113d4248b2216ba486900b29"}
+{"version_major": 2, "version_minor": 0, "model_id": "37dedd8434b84d0da80b9c44c7da269a"}
 </script>
 
 </body>
