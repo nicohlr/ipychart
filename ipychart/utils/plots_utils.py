@@ -43,78 +43,55 @@ def _create_chart_options(kind: str,
     agg_label = '' if not agg else ' (' + agg + ')'
     radials = ['radar', 'pie', 'polarArea', 'doughnut']
 
-    if kind not in radials:
-
+    if hue:
         title_cb = (
-            "function(tooltipItem, data) {"
-            "return '%s = ' + tooltipItem[0].xLabel;};"
+            "function(tooltipItem) {"
+            "return '%s = ' + tooltipItem[0].label + ' & ' + '%s = '"
+            " + tooltipItem[0].dataset.label;};"
+        ) % (x, hue)
+    else:
+        title_cb = (
+            "function(tooltipItem) {"
+            "return '%s = ' + tooltipItem[0].label;};"
         ) % x
 
-        label_cb = (
-            "function(tooltipItem, data) {"
-            "return '%s = ' + tooltipItem.yLabel;};"
-        ) % (y + agg_label)
+    suffix_bubble = '' if kind != 'bubble' else ".split(',')[1]"
+    label_cb = (
+        "function(tooltipItem) {"
+        "return '%s = ' + tooltipItem.formattedValue%s;};"
+    ) % (y + agg_label, suffix_bubble)
 
-        default_options = {
-            'scales': {
-                'xAxes': [{'scaleLabel': {'display': True,
-                                          'labelString': x}}],
-                'yAxes': [{'scaleLabel': {'display': True,
-                                          'labelString': y + agg_label}}]
-            },
-            'tooltips': {
+    default_options = {
+        'plugins': {
+            'tooltip': {
                 'enabled': True,
                 'callbacks': {'title': title_cb, 'label': label_cb}
             }
         }
+    }
 
+    if kind not in radials:
+        scales_opt = {
+            'x': {'title': {'display': True, 'text': x}},
+            'y': {'title': {'display': True, 'text': y + agg_label}}
+        }
+        default_options = set_(default_options, 'scales', scales_opt)
     else:
-
-        y_value = (
-            'tooltipItem.yLabel' if kind == 'radar' else
-            'data.datasets[0].data[tooltipItem.index]'
-        )
-
-        title_cb = (
-            "function(tooltipItem, data) {"
-            "return '%s = ' + data.labels[tooltipItem[0].index];};" % x
-        )
-
-        label_cb = (
-            "function(tooltipItem, data) {"
-            "return '%s = ' + %s;};" % (y + agg_label, y_value)
-        )
-
-        default_options = {
-            'legend': {'display': True},
-            'tooltips': {
-                'enabled': True,
-                'callbacks': {'title': title_cb, 'label': label_cb}
-            }
-        }
+        legend_opt = {'display': True}
+        default_options = set_(default_options, 'plugins.legend', legend_opt)
 
     # Set legend prefix if "hue" if activated
     if hue:
         hue_label_cb = (
-            "function(chart) {let labels = Chart.defaults.global."
+            "function(chart) {const labels = Chart.defaults.plugins."
             "legend.labels.generateLabels(chart);labels.map(label "
             """=> {label['text'] = "%s" + " = " + label['text']; """
             "return label});return labels;};"
         ) % hue
 
-        hue_title_cb = (
-            "function(tooltipItem, data) {return '%s = '"
-            " + tooltipItem[0].xLabel + ' & ' + '%s = '"
-            " + data.datasets[tooltipItem[0].datasetIndex].label;};"
-        ) % (x, hue)
-
         default_options = set_(default_options,
-                               'legend.labels.generateLabels',
+                               'plugins.legend.labels.generateLabels',
                                hue_label_cb)
-
-        default_options = set_(default_options,
-                               'tooltips.callbacks.title',
-                               hue_title_cb)
 
     options = merge(default_options, options)
 
@@ -124,7 +101,7 @@ def _create_chart_options(kind: str,
 def _create_counted_data_dict(data: pd.DataFrame,
                               x: str,
                               dataset_options: dict,
-                              label: str = None) -> dict:
+                              label: Union[str, None] = None) -> dict:
     """
     This function will prepare an ipychart dataset with counted data from
     a pandas dataframe.
@@ -166,8 +143,8 @@ def _create_counted_data_dict(data: pd.DataFrame,
 
 def _create_chart_data_count(data: pd.DataFrame,
                              x: str,
-                             hue: str = None,
-                             dataset_options: Union[dict, list] = None
+                             hue: Union[str, None] = None,
+                             dataset_options: Union[dict, list, None] = None
                              ) -> dict:
     """
     This function will prepare all the arguments to create a chart from the
@@ -254,10 +231,10 @@ def _create_chart_data_agg(data: pd.DataFrame,
                            kind: str,
                            x: str,
                            y: str,
-                           r: str = None,
-                           hue: str = None,
-                           agg: str = None,
-                           dataset_options: Union[dict, list] = None
+                           r: Union[str, None] = None,
+                           hue: Union[str, None] = None,
+                           agg: Union[str, None] = None,
+                           dataset_options: Union[dict, list, None] = None
                            ) -> dict:
     """
     This function will prepare all the arguments to create a chart from
@@ -294,18 +271,6 @@ def _create_chart_data_agg(data: pd.DataFrame,
     assert x in data.columns, f'{x} not found in dataframe'
     assert y in data.columns, f'{y} not found in dataframe'
     assert is_numeric_dtype(data[y]), 'y must be a numeric column'
-
-    msg_kind = (
-        'Chart kind must be one of : line, bar, radar, doughnut,'
-        'polarArea, bubble, horizontalBar, pie, scatter. See '
-        'https://nicohlr.gitlab.io/ipychart/user_guide/charts.html '
-        'for more details'
-    )
-
-    kinds = ['line', 'bar', 'horizontalBar', 'radar', 'doughnut',
-             'polarArea', 'bubble', 'pie', 'scatter']
-
-    assert kind in kinds, msg_kind
 
     if dataset_options is None:
         dataset_options = {}

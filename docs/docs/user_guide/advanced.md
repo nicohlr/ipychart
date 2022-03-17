@@ -76,13 +76,19 @@ As ipychart is an [ipywidget](https://ipywidgets.readthedocs.io/en/latest/), you
 ```py
 import ipywidgets as wd
 
-dataset = {'labels': ['D' + str(i) for i in range(10)],
-           'datasets': [{'data': [random.randint(0, 100) for _ in range(10)]}]}
+dataset1 = {'labels': ['D' + str(i) for i in range(10)],
+            'datasets': [{'data': [random.randint(0, 100) for _ in range(10)]}]}
+dataset2 = {'labels': ['D' + str(i) for i in range(10)],
+            'datasets': [{'data': [random.randint(0, 100) for _ in range(10)]}]}
+dataset3 = {'labels': ['D' + str(i) for i in range(10)],
+            'datasets': [{'data': [random.randint(0, 100) for _ in range(10)]}]}
+dataset4 = {'labels': ['D' + str(i) for i in range(10)],
+            'datasets': [{'data': [random.randint(0, 100) for _ in range(10)]}]}
 
-mychart1 = Chart(dataset, 'bar', colorscheme='tableau.Tableau10')
-mychart2 = Chart(dataset, 'bar', colorscheme='brewer.Accent5')
-mychart3 = Chart(dataset, 'bar', colorscheme='brewer.PuOr3')
-mychart4 = Chart(dataset, 'bar', colorscheme='office.Celestial6')
+mychart1 = Chart(dataset1, 'bar', colorscheme='tableau.Tableau10')
+mychart2 = Chart(dataset2, 'bar', colorscheme='brewer.Accent5')
+mychart3 = Chart(dataset3, 'bar', colorscheme='brewer.PuOr3')
+mychart4 = Chart(dataset4, 'bar', colorscheme='office.Celestial6')
 
 grid = wd.TwoByTwoLayout(top_left=mychart1, top_right=mychart2, 
                          bottom_left=mychart3, bottom_right=mychart4)
@@ -109,14 +115,14 @@ var chart = new Chart(ctx, {
     data: data,
     options: {
         scales: {
-            yAxes: [{
+            y: {
                 ticks: {
                     // Include a dollar sign in the ticks
                     callback: function(value, index, values) {
                         return '$' + value;
                     }
                 }
-            }]
+            }
         }
     }
 });
@@ -130,17 +136,17 @@ chart = Chart(
     data=data,
     options= {
         'scales': {
-            'yAxes': [{
+            'y': {
                 'ticks': {
                     # Include a dollar sign in the ticks
                     'callback': '''function(value, index, values) {
                         return '$' + value;
                     }'''
                 }
-            }]
+            }
         }
     }
-})
+)
 ```
 
 ## Export & embedding

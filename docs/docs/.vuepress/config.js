@@ -1,7 +1,7 @@
 module.exports = ctx => ({
 
     title: 'ipychart',
-    description: 'A Jupyter - Chart.js bridge enabling interactive data visualization in the Jupyter notebook.',
+    description: 'A Jupyter - Chart.js bridge enabling interactive data visualization with Python.',
     base: '/ipychart/',
     dest: '../public',
     head: [
@@ -15,6 +15,9 @@ module.exports = ctx => ({
         ['meta', {name: 'msapplication-TileColor', content: '#2b5797'}],
         ['meta', {name: 'theme-color', content: '#ffffff'}],
     ],
+	plugins: [
+		['flexsearch', {maxSuggestions: 8}]
+	],
 
     themeConfig: {
 
@@ -22,11 +25,6 @@ module.exports = ctx => ({
         editLinks: false,
         docsDir: 'docs',
         logo: '/ipychart-logo.png',
-
-        algolia: ctx.isProd ? ({
-            apiKey: '',
-            indexName: ''
-        }) : null,
 
         smoothScroll: true,
         nav: [

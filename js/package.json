@@ -1,9 +1,9 @@
 {
   "name": "ipychart",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "description": "A Jupyter - Chart.js bridge enabling interactive data visualization in the Jupyter notebook.",
   "author": "Nicolas Houlier",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
     "jupyterlab-extension"
   ],
   "files": [
-    "lib/**/*.js",
+    "src/**/*.js",
     "dist/*.js"
   ],
   "scripts": {
@@ -32,19 +32,24 @@
   },
   "devDependencies": {
     "@jupyterlab/builder": "^3.0.0",
+    "eslint": "^8.6.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4",
+    "prettier": "^1.18.2",
     "rimraf": "^2.6.1",
     "webpack": "^5"
   },
   "dependencies": {
     "@jupyter-widgets/base": "^1.1 || ^2 || ^3 || ^4",
-    "chart.js": "^2.8.0",
-    "chartjs-plugin-colorschemes": "^0.4.0",
-    "chartjs-plugin-datalabels": "^0.7.0",
-    "chartjs-plugin-zoom": "^0.7.7",
-    "lodash": "^4.17.4"
+    "chart.js": "^3.7.0",
+    "chartjs-adapter-moment": "^1.0.0",
+    "chartjs-plugin-datalabels": "^2.0.0",
+    "chartjs-plugin-zoom": "^1.2.0",
+    "lodash": "^4.17.4",
+    "moment": "^2.29.1"
   },
   "jupyterlab": {
-    "extension": "lib/labplugin",
+    "extension": "src/labplugin",
     "outputDir": "../ipychart/labextension",
     "sharedPackages": {
       "@jupyter-widgets/base": {

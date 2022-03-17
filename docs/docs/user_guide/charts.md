@@ -17,7 +17,8 @@ A line chart is a way of plotting data points on a line. Often, it is used to sh
 dataset = {
   'labels': ['Germany','Spain', 'UK', 'Italy', 'Norway', 'France', 'Poland', 
              'Portugal', 'Sweden', 'Ireland'],
-  'datasets': [{'data': [14, 106, 16, 107, 45, 133, 19, 109, 60, 107]}]
+  'datasets': [{'data': [14, 106, 16, 107, 45, 133, 19, 109, 60, 107],
+                'lineTension': 0.3}]
 }
 
 mychart = Chart(dataset, 'line')
@@ -117,7 +118,7 @@ For all types of chart, you can also give a **Pandas series** to the data argume
 
 ## Bar 
 
-A bar chart provides a way of showing data values represented as vertical bars. It is sometimes used to show a trend in the data, and the comparison of multiple data sets side by side.
+A bar chart provides a way of showing data values represented as vertical or horizontal bars. It is sometimes used to show a trend in the data, and the comparison of multiple data sets side by side.
 
 :::details Click to show the code used to generate the Chart.
 <br>
@@ -135,7 +136,7 @@ mychart
 
 <charts-bar/>
 
-You can choose this type of chart by setting the `kind` argument to `'bar'` or `'horizontalBar'`.
+You can choose this type of chart by setting the `kind` argument to `'bar'`.
 
 <p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Dataset properties</p>
 
@@ -222,7 +223,7 @@ data = {
 
 <p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Horizontal Bar chart</p>
 
-You can rotate your bar chart by setting the `kind` argument of your chart to `'horizontalBar'`:
+You can rotate your bar chart by setting the `indexAxis` key to `'y'` in the options of your chart:
 
 :::details Click to show the code used to generate the Chart.
 <br>
@@ -233,7 +234,7 @@ dataset = {
              'Portugal', 'Sweden', 'Ireland'],
   'datasets': [{'data': [14, 106, 16, 107, 45, 133, 19, 109, 60, 107]}]}
 
-mychart = Chart(dataset, 'horizontalBar')
+mychart = Chart(dataset, 'bar', options={'indexAxis': "y"})
 mychart
 ```
 :::
@@ -422,15 +423,15 @@ Polar area charts are similar to pie charts, but each segment has the same angle
 
 ``` py
 dataset = {
-    'labels': ['Red','Blue', 'Yellow', 'Green', 'Purple'],
-    'datasets': [{'data': [140, 106, 160, 107, 45],
-                  'backgroundColor': ['rgba(255, 99, 132, 1)', 
-                                      'rgba(54, 162, 235, 1)',
-                                      'rgba(255, 206, 86, 1)',
-                                      'rgba(75, 192, 192, 1)',
-                                      'rgba(153, 102, 255, 1)'],
-                  'borderColor': ['#fff']*5,
-                  'borderWidth': 2.5
+  'labels': ['Red','Blue', 'Yellow', 'Green', 'Purple'],
+  'datasets': [{'data': [140, 106, 160, 107, 45],
+                'backgroundColor': ['rgba(255, 99, 132, 1)', 
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)'],
+                'borderColor': ['#fff']*5,
+                'borderWidth': 2.5
 }]}
 
 mychart = Chart(dataset, 'polarArea')
@@ -495,8 +496,7 @@ Scatter charts are based on basic line charts with the x axis changed to a linea
 dataset = {
   'datasets': [{'data': [
     {'x': random.randint(0, 100), 
-     'y': random.randint(0, 100), 
-     'r': random.randint(0, 100)} for _ in range(100)
+     'y': random.randint(0, 100)} for _ in range(100)
   ]}]
 }
 
@@ -511,7 +511,7 @@ You can choose this type of chart by setting the `kind` argument to `'scatter
 
 <p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Dataset properties</p>
 
-The scatter chart supports all of the same properties as the [line chart]().
+The scatter chart supports all of the same properties as the [line chart](/ipychart/user_guide/charts#line).
 
 <p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Data structures</p>
 
@@ -535,16 +535,16 @@ A bubble chart is used to display three-dimension data. The location of the bubb
 
 ``` py
 dataset = {
-  'datasets': [{'data': [{'x': 20, 'y': 30, 'r': 20}, 
-                         {'x': 10, 'y': 20, 'r': 40}, 
-                         {'x': 15, 'y': 40, 'r': 90}, 
-                         {'x': 5, 'y': 10, 'r': 50}],
+  'datasets': [{'data': [{'x': 20, 'y': 30, 'r': 5}, 
+                         {'x': 10, 'y': 20, 'r': 50}, 
+                         {'x': 15, 'y': 40, 'r': 20}, 
+                         {'x': 5, 'y': 10, 'r': 10}],
                 'borderWidth': 4}]
 }
 
 options = {
-  'scales': {'xAxes': [{'ticks': {'min': 0, 'max': 25}}],
-             'yAxes': [{'ticks': {'min': 0, 'max': 60}}]}
+  'scales': {'x': {'min': 0, 'max': 25},
+             'y': {'min': 0, 'max': 60}}
 }
 
 mychart = Chart(dataset, 'bubble', options=options)
@@ -616,7 +616,7 @@ Here is an example of a stacked bar chart :
 dataset = {
   'labels': ['Label 1', 'Label 2', 'Label 3'],
   'datasets': [
-    { 'data': [221, 783, 2478], 'label': "Africa",
+    {'data': [221, 783, 2478], 'label': "Africa",
     'fill': False}, 
     {'data': [1402, 3700, 5267], 'label': "Asia",
      'fill': False}, 
@@ -630,11 +630,11 @@ dataset = {
 }
 
 options = {
-  'scales': {'xAxes': [{'stacked': True}],
-             'yAxes': [{'stacked': True}]}
+  'scales': {'x': {'stacked': True}, 'y': {'stacked': True}}
 }
 
-mychart = Chart(dataset, 'bar', options=options, colorscheme='tableau.Tableau20')
+mychart = Chart(dataset, 'bar', options=options,
+                colorscheme='tableau.Tableau20')
 mychart
 ```
 :::
@@ -668,7 +668,7 @@ dataset = {
              'Portugal', 'Sweden', 'Ireland'],
   'datasets': [{ 
     'data': [14, 106, 16, 107, 45, 133, 109, 109, 108, 107],
-    'fill': True
+    'fill': True, 'lineTension': 0.3
 }]}
 
 mychart = Chart(dataset, 'line', colorscheme='brewer.PuOr3')
@@ -693,20 +693,20 @@ dataset = {
   'datasets': [{ 
     'data': [86, 114, 106, 106, 107, 111, 133, 221, 121, 142],
     'label': "Africa", 'fill': False, 'type': 'line', # Change the type
-    'pointRadius': 5, 'pointHoverRadius': 10
+    'pointRadius': 5, 'pointHoverRadius': 10, 'lineTension': 0.3
     }, { 
     'data': [99, 130, 64, 100, 73, 22, 88, 198, 144, 64],
-    'label': "Asia",
+    'label': "Asia"
     }, { 
     'data': [168, 170, 178, 190, 203, 200, 164, 100, 72, 85],
     'label': "Europe", 'fill': False, 'type': 'line', # Change the type
-    'pointRadius': 5, 'pointHoverRadius': 10
+    'pointRadius': 5, 'pointHoverRadius': 10, 'lineTension': 0.3
     }, {
     'data': [40, 20, 10, 16, 24, 38, 74, 167, 80, 150],
-    'label': "Latin America",
+    'label': "Latin America"
     }, { 
     'data': [56, 95, 44, 112, 215, 35, 95, 74, 64, 78],
-    'label': "North America",
+    'label': "North America"
     }
   ]
 }

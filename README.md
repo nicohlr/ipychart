@@ -31,15 +31,15 @@ $ conda install -c conda-forge ipychart
 Documentation
 ------------
 
-- [**Introduction**](https://nicohlr.gitlab.io/ipychart/user_guide/introduction.html)
-- [**Getting Started**](https://nicohlr.gitlab.io/ipychart/user_guide/getting_started.html)
-- [**Usage**](https://nicohlr.gitlab.io/ipychart/user_guide/usage.html)
-- [**Charts**](https://nicohlr.gitlab.io/ipychart/user_guide/charts.html)
-- [**Configuration**](https://nicohlr.gitlab.io/ipychart/user_guide/configuration.html)
-- [**Scales**](https://nicohlr.gitlab.io/ipychart/user_guide/scales.html)
-- [**Pandas Interface**](https://nicohlr.gitlab.io/ipychart/user_guide/pandas.html)
-- [**Advanced Features**](https://nicohlr.gitlab.io/ipychart/user_guide/advanced.html)
-- [**Developers**](https://nicohlr.gitlab.io/ipychart/developer_guide/development_installation.html)
+- [**Introduction**](https://nicohlr.github.io/ipychart/user_guide/introduction.html)
+- [**Getting Started**](https://nicohlr.github.io/ipychart/user_guide/getting_started.html)
+- [**Usage**](https://nicohlr.github.io/ipychart/user_guide/usage.html)
+- [**Charts**](https://nicohlr.github.io/ipychart/user_guide/charts.html)
+- [**Configuration**](https://nicohlr.github.io/ipychart/user_guide/configuration.html)
+- [**Scales**](https://nicohlr.github.io/ipychart/user_guide/scales.html)
+- [**Pandas Interface**](https://nicohlr.github.io/ipychart/user_guide/pandas.html)
+- [**Advanced Features**](https://nicohlr.github.io/ipychart/user_guide/advanced.html)
+- [**Developers**](https://nicohlr.github.io/ipychart/developer_guide/development_installation.html)
 
 Usage
 ------------
@@ -48,7 +48,7 @@ Create charts with Python in a very similar way to creating charts using Chart.j
 
 ![](./docs/docs/.vuepress/public/ipychart-demo.gif)
 
-You can also create charts directly from a pandas dataframe. See the [**Pandas Interface**](https://nicohlr.gitlab.io/ipychart/user_guide/pandas.html) section of the documentation for more details.
+You can also create charts directly from a pandas dataframe. See the [**Pandas Interface**](https://nicohlr.github.io/ipychart/user_guide/pandas.html) section of the documentation for more details.
 
 Development Installation 
 ------------
@@ -75,7 +75,7 @@ References
 - [**Chart.js Datalabels**](https://github.com/chartjs/chartjs-plugin-datalabels)
 - [**Chart.js Colorschemes**](https://github.com/nagix/chartjs-plugin-colorschemes)
 - [**Vuepress**](https://vuepress.vuejs.org/)
-- [**GitLab Pages**](https://docs.gitlab.com/ee/user/project/pages/)
+- [**GitHub Pages**](https://pages.github.com/)
 
 License
 ------------
