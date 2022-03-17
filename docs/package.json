@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "vuepress": "^1.9.5",
+    "vuepress": "^1.9.7",
     "vuepress-plugin-flexsearch": "^0.3.0"
   },
   "scripts": {
@@ -8,6 +8,8 @@
     "docs:build": "vuepress build docs"
   },
   "dependencies": {
-    "chart.js": "^2.9.3"
+    "chart.js": "^2.9.3",
+    "vue2-perfect-scrollbar": "^1.5.5",
+    "yarn": "^1.22.17"
   }
 }
