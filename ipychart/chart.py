@@ -4,6 +4,7 @@ import json
 import numpy as np
 import ipywidgets as widgets
 
+from typing import Union
 from pydash import has, set_, merge
 from traitlets import Unicode, default, Dict, Bool
 from ipywidgets.embed import embed_minimal_html, dependency_state, embed_data
@@ -77,8 +78,8 @@ class Chart(widgets.DOMWidget):
     def __init__(self,
                  data: dict,
                  kind: str,
-                 options: dict | None = None,
-                 colorscheme: str | None = None,
+                 options: Union[dict, None] = None,
+                 colorscheme: Union[str, None] = None,
                  zoom: bool = True):
 
         super().__init__()

@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 
+from typing import Union
 from pandas.api.types import is_numeric_dtype
 from sklearn.neighbors import KernelDensity
 from sklearn.model_selection import GridSearchCV
@@ -13,10 +14,10 @@ from .utils.plots_utils import (_create_chart_options,
 
 def countplot(data: pd.DataFrame,
               x: str,
-              hue: str | None = None,
-              dataset_options: dict | None = None,
-              options: dict | None = None,
-              colorscheme: str | None = None,
+              hue: Union[str, None] = None,
+              dataset_options: Union[dict, None] = None,
+              options: Union[dict, None] = None,
+              colorscheme: Union[str, None] = None,
               zoom: bool = True) -> Chart:
     """
     Show the counts of observations in each categorical bin using bars.
@@ -75,11 +76,11 @@ def countplot(data: pd.DataFrame,
 
 def distplot(data: pd.DataFrame,
              x: str,
-             bandwidth: float | str = 'auto',
+             bandwidth: Union[float, str] = 'auto',
              gridsize: int = 1000,
-             dataset_options: dict | None = None,
-             options: dict | None = None,
-             colorscheme: str | None = None,
+             dataset_options: Union[dict, None] = None,
+             options: Union[dict, None] = None,
+             colorscheme: Union[str, None] = None,
              zoom: bool = True,
              **kwargs) -> Chart:
     """
@@ -202,11 +203,11 @@ def distplot(data: pd.DataFrame,
 def lineplot(data: pd.DataFrame,
              x: str,
              y: str,
-             hue: str | None = None,
+             hue: Union[str, None] = None,
              agg: str = 'mean',
-             dataset_options: dict | list | None = None,
-             options: dict | None = None,
-             colorscheme: str | None = None,
+             dataset_options: Union[dict, list, None] = None,
+             options: Union[dict, None] = None,
+             colorscheme: Union[str, None] = None,
              zoom: bool = True) -> Chart:
     """
     A line chart is a way of plotting data points on a line. Often, it is
@@ -276,11 +277,11 @@ def lineplot(data: pd.DataFrame,
 def barplot(data: pd.DataFrame,
             x: str,
             y: str,
-            hue: str | None = None,
+            hue: Union[str, None] = None,
             agg: str = 'mean',
-            dataset_options: dict | list | None = None,
-            options: dict | None = None,
-            colorscheme: str | None = None,
+            dataset_options: Union[dict, list, None] = None,
+            options: Union[dict, None] = None,
+            colorscheme: Union[str, None] = None,
             zoom: bool = True) -> Chart:
     """
     A bar chart provides a way of showing data values represented as
@@ -351,11 +352,11 @@ def barplot(data: pd.DataFrame,
 def radarplot(data: pd.DataFrame,
               x: str,
               y: str,
-              hue: str | None = None,
+              hue: Union[str, None] = None,
               agg: str = 'mean',
-              dataset_options: dict | list | None = None,
-              options: dict | None = None,
-              colorscheme: str | None = None) -> Chart:
+              dataset_options: Union[dict, list, None] = None,
+              options: Union[dict, None] = None,
+              colorscheme: Union[str, None] = None) -> Chart:
     """
     A radar chart is a way of showing multiple data points and the
     variation between them. They are often useful for comparing the
@@ -422,9 +423,9 @@ def doughnutplot(data: pd.DataFrame,
                  x: str,
                  y: str,
                  agg: str = 'mean',
-                 dataset_options: dict | None = None,
-                 options: dict | None = None,
-                 colorscheme: str | None = None) -> Chart:
+                 dataset_options: Union[dict, None] = None,
+                 options: Union[dict, None] = None,
+                 colorscheme: Union[str, None] = None) -> Chart:
     """
     Pie and doughnut charts are excellent at showing the relational
     proportions between data.
@@ -494,9 +495,9 @@ def pieplot(data: pd.DataFrame,
             x: str,
             y: str = None,
             agg: str = 'mean',
-            dataset_options: dict | None = None,
-            options: dict | None = None,
-            colorscheme: str | None = None) -> Chart:
+            dataset_options: Union[dict, None] = None,
+            options: Union[dict, None] = None,
+            colorscheme: Union[str, None] = None) -> Chart:
     """
     Pie and doughnut charts are excellent at showing the relational
     proportions between data.
@@ -567,9 +568,9 @@ def polarplot(data: pd.DataFrame,
               x: str,
               y: str = None,
               agg: str = 'mean',
-              dataset_options: dict | None = None,
-              options: dict | None = None,
-              colorscheme: str | None = None) -> Chart:
+              dataset_options: Union[dict, None] = None,
+              options: Union[dict, None] = None,
+              colorscheme: Union[str, None] = None) -> Chart:
     """
     Polar area charts are similar to pie charts, but each segment has the
     same angle - the radius of the segment differs depending on the value.
@@ -638,10 +639,10 @@ def polarplot(data: pd.DataFrame,
 def scatterplot(data: pd.DataFrame,
                 x: str,
                 y: str,
-                hue: str | None = None,
-                dataset_options: dict | list | None = None,
-                options: dict | None = None,
-                colorscheme: str | None = None,
+                hue: Union[str, None] = None,
+                dataset_options: Union[dict, list, None] = None,
+                options: Union[dict, None] = None,
+                colorscheme: Union[str, None] = None,
                 zoom: bool = True) -> Chart:
     """
     Scatter charts are based on basic line charts with the x axis changed
@@ -707,10 +708,10 @@ def bubbleplot(data: pd.DataFrame,
                x: str,
                y: str,
                r: str,
-               hue: str | None = None,
-               dataset_options: dict | list | None = None,
-               options: dict | None = None,
-               colorscheme: str | None = None,
+               hue: Union[str, None] = None,
+               dataset_options: Union[dict, list, None] = None,
+               options: Union[dict, None] = None,
+               colorscheme: Union[str, None] = None,
                zoom: bool = True) -> Chart:
     """
     A bubble chart is used to display three-dimension data.
