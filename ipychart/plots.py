@@ -48,7 +48,7 @@ def countplot(
             is created. Defaults to True.
 
     Returns:
-        [ipychart.Chart]: A chart which display the data using ipychart.
+        ipychart.Chart: A chart which display the data using ipychart.
     """
     if dataset_options is None:
         dataset_options = {}
@@ -116,7 +116,7 @@ def distplot(
             scikit-learn's KernelDensity class.
 
     Returns:
-        [ipychart.Chart]: A chart which display the data using ipychart.
+        ipychart.Chart: A chart which display the data using ipychart.
     """
     assert is_numeric_dtype(data[x]), "x must be a numeric column"
     if isinstance(bandwidth, str):
@@ -254,7 +254,7 @@ def lineplot(
             created. Defaults to True.
 
     Returns:
-        [ipychart.Chart]: A chart which display the data using ipychart.
+        ipychart.Chart: A chart which display the data using ipychart.
     """
     if dataset_options is None:
         dataset_options = {}
@@ -327,7 +327,7 @@ def barplot(
             created. Defaults to True.
 
     Returns:
-        [ipychart.Chart]: A chart which display the data using ipychart.
+        ipychart.Chart: A chart which display the data using ipychart.
     """
     if dataset_options is None:
         dataset_options = {}
@@ -396,7 +396,7 @@ def radarplot(
             Defaults to None.
 
     Returns:
-        [ipychart.Chart]: A chart which display the data using ipychart.
+        ipychart.Chart: A chart which display the data using ipychart.
     """
     if dataset_options is None:
         dataset_options = {}
@@ -456,7 +456,7 @@ def doughnutplot(
             Defaults to None.
 
     Returns:
-        [ipychart.Chart]: A chart which display the data using ipychart.
+        ipychart.Chart: A chart which display the data using ipychart.
     """
     if dataset_options is None:
         dataset_options = {}
@@ -522,7 +522,7 @@ def pieplot(
             Defaults to None.
 
     Returns:
-        [ipychart.Chart]: A chart which display the data using ipychart.
+        ipychart.Chart: A chart which display the data using ipychart.
     """
     if dataset_options is None:
         dataset_options = {}
@@ -587,7 +587,7 @@ def polarplot(
             Defaults to None.
 
     Returns:
-        [ipychart.Chart]: A chart which display the data using ipychart.
+        ipychart.Chart: A chart which display the data using ipychart.
     """
     if dataset_options is None:
         dataset_options = {}
@@ -656,7 +656,7 @@ def scatterplot(
             created. Defaults to True.
 
     Returns:
-        [ipychart.Chart]: A chart which display the data using ipychart.
+        ipychart.Chart: A chart which display the data using ipychart.
     """
     if dataset_options is None:
         dataset_options = {}
@@ -731,7 +731,7 @@ def bubbleplot(
             created. Defaults to True.
 
     Returns:
-        [ipychart.Chart]: A chart which display the data using ipychart.
+        ipychart.Chart: A chart which display the data using ipychart.
     """
     if dataset_options is None:
         dataset_options = {}

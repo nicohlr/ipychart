@@ -1,5 +1,5 @@
-import random
 import json
+import random
 
 import numpy as np
 import ipywidgets as widgets
@@ -59,6 +59,24 @@ class Chart(widgets.DOMWidget):
         zoom (bool, optional): Allow the user to zoom on the Chart once it is
             created. Disabled for Doughnut, Pie, PolarArea and Radar Charts.
             Defaults to True.
+
+    Raises:
+        ValueError: This exception is raised when the Chart reveive an
+            unexpected argument.
+
+    Examples:
+        Here's a basic example of how to use the `Chart` class:
+
+        ```python
+        dataset = {
+            'labels': ['Data 1', 'Data 2', 'Data 3', 'Data 4',
+                       'Data 5', 'Data 6', 'Data 7', 'Data 8'],
+            'datasets': [{'data': [14, 22, 36, 48, 60, 90, 28, 12]}]
+        }
+
+        mychart = Chart(data=dataset, kind='bar')
+        mychart
+        ```
     """
 
     _view_name = Unicode("ChartView").tag(sync=True)
@@ -147,7 +165,7 @@ class Chart(widgets.DOMWidget):
         Refresh chart data and sync it with JS.
 
         It checks inputted values, set some default options and style, and sync
-        the chart with the Javascript part.
+        the chart with the JS part.
         """
         self._validate_current_arguments()
         self._set_default_inputs()
@@ -155,12 +173,12 @@ class Chart(widgets.DOMWidget):
 
     def _validate_current_arguments(self):
         """
-        Check all current arguments of the chart.
+        Validate chart arguments for Chart.js format compatibility.
 
-        This function will break the code if they are not valid. To match
-        Chart.js format, arguments must follow a specific structure. To see
-        more details about this structure, please check the official
-        documentation:
+        Ensures chart arguments adhere to the structure required by Chart.js.
+        Raises an exception if any argument is invalid, halting execution.
+
+        For details on the expected structure, see:
 
         https://nicohlr.github.io/ipychart/user_guide/usage.html
         """
@@ -201,7 +219,7 @@ class Chart(widgets.DOMWidget):
         if not isinstance(self._options, dict):
             raise ValueError(MSG_FORMAT.format("options"))
 
-        # TODO: Adapt
+        # Allowed options
         all_options = [
             "legend",
             "title",
@@ -231,7 +249,14 @@ class Chart(widgets.DOMWidget):
             raise ValueError(MSG_FORMAT.format("zoom"))
 
     def _set_synced_attributes(self):
-        """Use chart attributes to update JS synced variables."""
+        """
+        Update JavaScript-synchronized variables based on chart attributes.
+
+        This method ensures that the attributes of the chart are synchronized
+        with their corresponding JavaScript counterparts. Whenever these
+        "_sync" variables are updated, their new values are automatically
+        propagated to the JavaScript side of the implementation.
+        """
         self._options_sync = self._options
         self._data_sync = self._data
         self._kind_sync = self._kind
@@ -268,11 +293,10 @@ class Chart(widgets.DOMWidget):
 
     def _set_default_style(self):
         """
-        Set a default style to the chart.
+        Apply a default style to the chart.
 
-        The style allows to get a good looking chart with ipychart without
-        having to input some styling options. To see more details about
-        styling in ipychart, please check the official documentation:
+        Provides an aesthetically pleasing chart in ipychart without requiring
+        explicit styling options. For details on styling in ipychart, see:
 
         https://nicohlr.github.io/ipychart/user_guide/charts.html
         """
@@ -377,10 +401,9 @@ class Chart(widgets.DOMWidget):
 
     def to_html(self, path):
         """
-        Embed the chart widget into an HTML file.
+        Embed the chart widget into an HTML file at the specified path.
 
-        The file is dumped at the inputted path location. To see more details
-        about embeding an ipywidget see:
+        For details on embedding an ipywidget, refer to:
 
         https://ipywidgets.readthedocs.io/en/latest/embedding.html
         """
@@ -388,14 +411,13 @@ class Chart(widgets.DOMWidget):
 
     def get_html_template(self) -> str:
         """
-        Return HTML code to embed the chart widget.
+        Generate HTML code to embed the chart widget.
 
-        To see more details about embeding an ipywidget see:
-
+        For details on embedding an ipywidget, refer to:
         https://ipywidgets.readthedocs.io/en/latest/embedding.html
 
         Returns:
-            [str]: HTML code to embed the chart.
+            str: HTML code for embedding the chart.
         """
         html_template = (
             """<script src="https://cdnjs.cloudflare.com/ajax/libs/require."""
@@ -426,10 +448,10 @@ class Chart(widgets.DOMWidget):
 
     def get_python_template(self) -> str:
         """
-        Return the python code to run in order to reproduce this chart.
+        Produce the Python code needed to recreate this chart.
 
         Returns:
-            [str]: Python code as a string.
+            str: Python code as a string.
         """
         python_template = (
             f"data = {self._data}\n\n"

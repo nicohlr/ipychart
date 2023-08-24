@@ -21,20 +21,19 @@ def _create_chart_options(
 
         y (str): Column of the dataframe used as datapoints for y Axis.
 
-        hue (str, optional): Grouping variable that will produce points
-                                with different colors. Defaults to None.
+        hue (str, optional): Grouping variable that will produce points with
+            different colors. Defaults to None.
 
-        options (dict, optional): All options to configure the chart.
-                                    This dictionary corresponds to the
-                                    "options" argument of Chart.js.
-                                    Defaults to None.
+        options (dict, optional): All options to configure the chart. This
+            dictionary corresponds to the "options" argument of Chart.js.
+            Defaults to None.
 
         agg (str, optional): The aggregator used to gather data (ex:
-                                'median' or 'mean'). Defaults to None.
+            'median' or 'mean'). Defaults to None.
 
     Returns:
-        options (dict): options dictionary ready to be inputted into a
-                        Chart class (i.e. match ipychart options format).
+        dict: options dictionary ready to be inputted into a Chart class (i.e.
+            match ipychart options format).
     """
     agg_label = "" if not agg else " (" + agg + ")"
     radials = ["radar", "pie", "polarArea", "doughnut"]
@@ -110,15 +109,14 @@ def _create_counted_data_dict(
 
         x (str): Column of the dataframe used as datapoints for x Axis.
 
-        dataset_options (dict, optional):
-            These are options related to the dataset object (i.e. options
-            concerning your data). Defaults to {}.
+        dataset_options (dict, optional): These are options related to the
+            dataset object (i.e. options concerning your data). Defaults to {}.
 
         label (str, optional): The label of the dataset. Defaults to None.
 
     Returns:
-        data (dict): data dictionary ready to be inputted into a Chart
-                        class (i.e. match ipychart data format).
+        dict: data dictionary ready to be inputted into a Chart class (i.e.
+            match ipychart data format).
     """
     if is_numeric_dtype(data[x]):
         dataset = {
@@ -159,16 +157,16 @@ def _create_chart_data_count(
 
         x (str): Column of the dataframe used as datapoints for x Axis.
 
-        hue (str, optional): Grouping variable that will produce points
-                                with different colors. Defaults to None.
+        hue (str, optional): Grouping variable that will produce points with
+            different colors. Defaults to None.
 
-        dataset_options ([dict, list], optional):
-            These are options related to the dataset object
-            (i.e. options concerning your data). Defaults to {}.
+        dataset_options ([dict, list], optional): These are options related to
+            the dataset object (i.e. options concerning your data). Defaults
+            to {}.
 
     Returns:
-        data (dict): data dictionary ready to be inputted into a Chart
-                        class (i.e. match ipychart data format).
+        dict: data dictionary ready to be inputted into a Chart class (i.e.
+            match ipychart data format).
     """
     assert x in data.columns, f"Column {x} not found in dataframe"
 
@@ -252,21 +250,21 @@ def _create_chart_data_agg(
         y (str): Column of the dataframe used as datapoints for y Axis.
 
         r (str, optional): Column used to define the radius of the bubbles
-                            (only for bubble chart). Defaults to None.
+            (only for bubble chart). Defaults to None.
 
-        hue (str, optional): Grouping variable that will produce points
-                                with different colors. Defaults to None.
+        hue (str, optional): Grouping variable that will produce points with
+            different colors. Defaults to None.
 
-        agg (str, optional): The aggregator used to gather data
-                                (ex: 'median' or 'mean'). Defaults to None.
+        agg (str, optional): The aggregator used to gather data (ex: 'median'
+            or 'mean'). Defaults to None.
 
-        dataset_options ([dict, list], optional):
-            These are options related to the dataset object (i.e. options
-            concerning your data). Defaults to {}.
+        dataset_options ([dict, list], optional): These are options related to
+            the dataset object (i.e. options concerning your data). Defaults
+            to {}.
 
     Returns:
-        data (dict): data dictionary ready to be inputted into a Chart
-                        class (i.e. match ipychart data format).
+        dict: data dictionary ready to be inputted into a Chart class (i.e.
+         match ipychart data format).
     """
     assert x in data.columns, f"{x} not found in dataframe"
     assert y in data.columns, f"{y} not found in dataframe"
