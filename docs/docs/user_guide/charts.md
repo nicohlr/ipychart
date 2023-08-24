@@ -239,7 +239,7 @@ mychart
 ```
 :::
 
-<charts-horizontalbar/>
+<charts-bar-horizontal/>
 
 ## Radar
 
