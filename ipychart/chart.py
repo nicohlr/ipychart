@@ -213,6 +213,7 @@ class Chart(widgets.DOMWidget):
             "legendCallback",
             "indexAxis",
             "aspectRatio",
+            "maintainAspectRatio",
         ]
 
         if not set(self._options.keys()).issubset(set(all_options)):
