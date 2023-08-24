@@ -7,18 +7,22 @@ from sklearn.neighbors import KernelDensity
 from sklearn.model_selection import GridSearchCV
 
 from .chart import Chart
-from .utils.plots_utils import (_create_chart_options,
-                                _create_chart_data_agg,
-                                _create_chart_data_count)
+from .utils.plots_utils import (
+    _create_chart_options,
+    _create_chart_data_agg,
+    _create_chart_data_count,
+)
 
 
-def countplot(data: pd.DataFrame,
-              x: str,
-              hue: Union[str, None] = None,
-              dataset_options: Union[dict, None] = None,
-              options: Union[dict, None] = None,
-              colorscheme: Union[str, None] = None,
-              zoom: bool = True) -> Chart:
+def countplot(
+    data: pd.DataFrame,
+    x: str,
+    hue: Union[str, None] = None,
+    dataset_options: Union[dict, None] = None,
+    options: Union[dict, None] = None,
+    colorscheme: Union[str, None] = None,
+    zoom: bool = True,
+) -> Chart:
     """
     Show the counts of observations in each categorical bin using bars.
 
@@ -46,45 +50,40 @@ def countplot(data: pd.DataFrame,
     Returns:
         [ipychart.Chart]: A chart which display the data using ipychart.
     """
-
     if dataset_options is None:
         dataset_options = {}
 
     data = _create_chart_data_count(
-        data=data,
-        x=x,
-        hue=hue,
-        dataset_options=dataset_options
+        data=data, x=x, hue=hue, dataset_options=dataset_options
     )
 
     options = _create_chart_options(
-        kind='count',
-        options=options,
-        x=x,
-        y='Count',
-        hue=hue
+        kind="count", options=options, x=x, y="Count", hue=hue
     )
 
     return Chart(
         data=data,
-        kind='bar',
+        kind="bar",
         options=options,
         colorscheme=colorscheme,
-        zoom=zoom
+        zoom=zoom,
     )
 
 
-def distplot(data: pd.DataFrame,
-             x: str,
-             bandwidth: Union[float, str] = 'auto',
-             gridsize: int = 1000,
-             dataset_options: Union[dict, None] = None,
-             options: Union[dict, None] = None,
-             colorscheme: Union[str, None] = None,
-             zoom: bool = True,
-             **kwargs) -> Chart:
+def distplot(
+    data: pd.DataFrame,
+    x: str,
+    bandwidth: Union[float, str] = "auto",
+    gridsize: int = 1000,
+    dataset_options: Union[dict, None] = None,
+    options: Union[dict, None] = None,
+    colorscheme: Union[str, None] = None,
+    zoom: bool = True,
+    **kwargs,
+) -> Chart:
     """
     Fit and plot a univariate kernel density estimate on a line chart.
+
     This is useful to have a representation of the distribution of the
     data.
 
@@ -119,10 +118,9 @@ def distplot(data: pd.DataFrame,
     Returns:
         [ipychart.Chart]: A chart which display the data using ipychart.
     """
-
-    assert is_numeric_dtype(data[x]), 'x must be a numeric column'
+    assert is_numeric_dtype(data[x]), "x must be a numeric column"
     if isinstance(bandwidth, str):
-        assert bandwidth == 'auto', "bandwidth must be an int or 'auto'"
+        assert bandwidth == "auto", "bandwidth must be an int or 'auto'"
 
     if dataset_options is None:
         dataset_options = {}
@@ -131,43 +129,51 @@ def distplot(data: pd.DataFrame,
     iqr = data[x].quantile(0.95) - data[x].quantile(0.05)
 
     data_truncated = data[x][
-        ~((data[x] < (data[x].quantile(0.05) - 0.5 * iqr)) |
-            (data[x] > (data[x].quantile(0.95) + 0.5 * iqr)))
+        ~(
+            (data[x] < (data[x].quantile(0.05) - 0.5 * iqr))
+            | (data[x] > (data[x].quantile(0.95) + 0.5 * iqr))
+        )
     ]
 
-    max_val, min_val = (int(data_truncated.max()) + 1,
-                        int(data_truncated.min()))
+    max_val, min_val = (
+        int(data_truncated.max()) + 1,
+        int(data_truncated.min()),
+    )
 
-    max_val, min_val = (max_val + 0.05 * (max_val + abs(min_val)),
-                        min_val - 0.05 * (max_val + abs(min_val)))
+    max_val, min_val = (
+        max_val + 0.05 * (max_val + abs(min_val)),
+        min_val - 0.05 * (max_val + abs(min_val)),
+    )
 
     # Create grid which will be used to compute kde
     _, step = np.linspace(min_val, max_val, num=gridsize, retstep=True)
     x_grid = np.round(np.arange(min_val, max_val, step), 5)
 
     # If bandwidth is 'auto', find the best bandwidh using gridsearch
-    if bandwidth == 'auto':
-        grid = GridSearchCV(KernelDensity(),
-                            {'bandwidth': np.linspace(0.1, 2, 30)}, cv=5)
+    if bandwidth == "auto":
+        grid = GridSearchCV(
+            KernelDensity(), {"bandwidth": np.linspace(0.1, 2, 30)}, cv=5
+        )
         grid.fit(data[x].dropna().to_numpy()[:, None])
-        bandwidth = grid.best_params_['bandwidth']
+        bandwidth = grid.best_params_["bandwidth"]
 
     kde_skl = KernelDensity(bandwidth=bandwidth, **kwargs)
     kde_skl.fit(data[x].dropna().to_numpy()[:, np.newaxis])
     pdf = np.exp(kde_skl.score_samples(x_grid[:, np.newaxis]))
 
     data = {
-        'labels': x_grid.tolist(),
-        'datasets': [{'data': pdf.tolist(), 'pointRadius': 0,
-                      **dataset_options}]
+        "labels": x_grid.tolist(),
+        "datasets": [
+            {"data": pdf.tolist(), "pointRadius": 0, **dataset_options}
+        ],
     }
 
     options = _create_chart_options(
-        kind='count',
+        kind="count",
         options=options,
         x=x,
-        y=f'Density (bandwidth: {bandwidth.round(4)})',
-        hue=None
+        y=f"Density (bandwidth: {bandwidth.round(4)})",
+        hue=None,
     )
 
     # Add ticks formatting to options if not already set
@@ -179,37 +185,45 @@ def distplot(data: pd.DataFrame,
         "return Math.round(value);} else {return value.toFixed(3);}}"
     )
 
-    if 'ticks' not in options['scales']['x']:
-        options['scales']['x'].update(
-            {'ticks': {'maxTicksLimit': maxtickslimit,
-                       'callback': ticks_format_function}}
+    if "ticks" not in options["scales"]["x"]:
+        options["scales"]["x"].update(
+            {
+                "ticks": {
+                    "maxTicksLimit": maxtickslimit,
+                    "callback": ticks_format_function,
+                }
+            }
         )
     else:
-        ticks_options = options['scales']['x']['ticks']
-        if 'maxTicksLimit' not in ticks_options:
-            ticks_options['maxTicksLimit'] = maxtickslimit
-        if 'callback' not in ticks_options:
-            ticks_options['callback'] = ticks_format_function
+        ticks_options = options["scales"]["x"]["ticks"]
+        if "maxTicksLimit" not in ticks_options:
+            ticks_options["maxTicksLimit"] = maxtickslimit
+        if "callback" not in ticks_options:
+            ticks_options["callback"] = ticks_format_function
 
     return Chart(
         data=data,
-        kind='line',
+        kind="line",
         options=options,
         colorscheme=colorscheme,
-        zoom=zoom
+        zoom=zoom,
     )
 
 
-def lineplot(data: pd.DataFrame,
-             x: str,
-             y: str,
-             hue: Union[str, None] = None,
-             agg: str = 'mean',
-             dataset_options: Union[dict, list, None] = None,
-             options: Union[dict, None] = None,
-             colorscheme: Union[str, None] = None,
-             zoom: bool = True) -> Chart:
+def lineplot(
+    data: pd.DataFrame,
+    x: str,
+    y: str,
+    hue: Union[str, None] = None,
+    agg: str = "mean",
+    dataset_options: Union[dict, list, None] = None,
+    options: Union[dict, None] = None,
+    colorscheme: Union[str, None] = None,
+    zoom: bool = True,
+) -> Chart:
     """
+    Plot a line chart.
+
     A line chart is a way of plotting data points on a line. Often, it is
     used to show a trend in the data, or the comparison of two data sets.
 
@@ -242,48 +256,46 @@ def lineplot(data: pd.DataFrame,
     Returns:
         [ipychart.Chart]: A chart which display the data using ipychart.
     """
-
     if dataset_options is None:
         dataset_options = {}
 
     data = _create_chart_data_agg(
         data=data,
-        kind='line',
+        kind="line",
         x=x,
         y=y,
         hue=hue,
         agg=agg,
-        dataset_options=dataset_options
+        dataset_options=dataset_options,
     )
 
     options = _create_chart_options(
-        kind='line',
-        options=options,
-        x=x,
-        y=y,
-        hue=hue,
-        agg=agg
+        kind="line", options=options, x=x, y=y, hue=hue, agg=agg
     )
 
     return Chart(
         data=data,
-        kind='line',
+        kind="line",
         options=options,
         colorscheme=colorscheme,
-        zoom=zoom
+        zoom=zoom,
     )
 
 
-def barplot(data: pd.DataFrame,
-            x: str,
-            y: str,
-            hue: Union[str, None] = None,
-            agg: str = 'mean',
-            dataset_options: Union[dict, list, None] = None,
-            options: Union[dict, None] = None,
-            colorscheme: Union[str, None] = None,
-            zoom: bool = True) -> Chart:
+def barplot(
+    data: pd.DataFrame,
+    x: str,
+    y: str,
+    hue: Union[str, None] = None,
+    agg: str = "mean",
+    dataset_options: Union[dict, list, None] = None,
+    options: Union[dict, None] = None,
+    colorscheme: Union[str, None] = None,
+    zoom: bool = True,
+) -> Chart:
     """
+    Plot a bar chart.
+
     A bar chart provides a way of showing data values represented as
     vertical bars. It is sometimes used to show a trend in the data,
     and the comparison of multiple data sets side by side.
@@ -317,47 +329,45 @@ def barplot(data: pd.DataFrame,
     Returns:
         [ipychart.Chart]: A chart which display the data using ipychart.
     """
-
     if dataset_options is None:
         dataset_options = {}
 
     data = _create_chart_data_agg(
         data=data,
-        kind='bar',
+        kind="bar",
         x=x,
         y=y,
         hue=hue,
         agg=agg,
-        dataset_options=dataset_options
+        dataset_options=dataset_options,
     )
 
     options = _create_chart_options(
-        kind='bar',
-        options=options,
-        x=x,
-        y=y,
-        hue=hue,
-        agg=agg
+        kind="bar", options=options, x=x, y=y, hue=hue, agg=agg
     )
 
     return Chart(
         data=data,
-        kind='bar',
+        kind="bar",
         options=options,
         colorscheme=colorscheme,
-        zoom=zoom
+        zoom=zoom,
     )
 
 
-def radarplot(data: pd.DataFrame,
-              x: str,
-              y: str,
-              hue: Union[str, None] = None,
-              agg: str = 'mean',
-              dataset_options: Union[dict, list, None] = None,
-              options: Union[dict, None] = None,
-              colorscheme: Union[str, None] = None) -> Chart:
+def radarplot(
+    data: pd.DataFrame,
+    x: str,
+    y: str,
+    hue: Union[str, None] = None,
+    agg: str = "mean",
+    dataset_options: Union[dict, list, None] = None,
+    options: Union[dict, None] = None,
+    colorscheme: Union[str, None] = None,
+) -> Chart:
     """
+    Plot a radar chart.
+
     A radar chart is a way of showing multiple data points and the
     variation between them. They are often useful for comparing the
     points of two or more different data sets.
@@ -388,45 +398,40 @@ def radarplot(data: pd.DataFrame,
     Returns:
         [ipychart.Chart]: A chart which display the data using ipychart.
     """
-
     if dataset_options is None:
         dataset_options = {}
 
     data = _create_chart_data_agg(
         data=data,
-        kind='radar',
+        kind="radar",
         x=x,
         y=y,
         hue=hue,
         agg=agg,
-        dataset_options=dataset_options
+        dataset_options=dataset_options,
     )
 
     options = _create_chart_options(
-        kind='radar',
-        options=options,
-        x=x,
-        y=y,
-        hue=hue,
-        agg=agg
+        kind="radar", options=options, x=x, y=y, hue=hue, agg=agg
     )
 
     return Chart(
-        data=data,
-        kind='radar',
-        options=options,
-        colorscheme=colorscheme
+        data=data, kind="radar", options=options, colorscheme=colorscheme
     )
 
 
-def doughnutplot(data: pd.DataFrame,
-                 x: str,
-                 y: str,
-                 agg: str = 'mean',
-                 dataset_options: Union[dict, None] = None,
-                 options: Union[dict, None] = None,
-                 colorscheme: Union[str, None] = None) -> Chart:
+def doughnutplot(
+    data: pd.DataFrame,
+    x: str,
+    y: str,
+    agg: str = "mean",
+    dataset_options: Union[dict, None] = None,
+    options: Union[dict, None] = None,
+    colorscheme: Union[str, None] = None,
+) -> Chart:
     """
+    Plot a doughnut chart.
+
     Pie and doughnut charts are excellent at showing the relational
     proportions between data.
 
@@ -453,52 +458,45 @@ def doughnutplot(data: pd.DataFrame,
     Returns:
         [ipychart.Chart]: A chart which display the data using ipychart.
     """
-
     if dataset_options is None:
         dataset_options = {}
 
     if y:
         data = _create_chart_data_agg(
             data=data,
-            kind='doughnut',
+            kind="doughnut",
             x=x,
             y=y,
             agg=agg,
-            dataset_options=dataset_options
+            dataset_options=dataset_options,
         )
 
     else:
         data = _create_chart_data_count(
-            data=data,
-            x=x,
-            dataset_options=dataset_options
+            data=data, x=x, dataset_options=dataset_options
         )
 
     options = _create_chart_options(
-        kind='doughnut',
-        options=options,
-        x=x,
-        y=y,
-        hue=None,
-        agg=agg
+        kind="doughnut", options=options, x=x, y=y, hue=None, agg=agg
     )
 
     return Chart(
-        data=data,
-        kind='doughnut',
-        options=options,
-        colorscheme=colorscheme
+        data=data, kind="doughnut", options=options, colorscheme=colorscheme
     )
 
 
-def pieplot(data: pd.DataFrame,
-            x: str,
-            y: str = None,
-            agg: str = 'mean',
-            dataset_options: Union[dict, None] = None,
-            options: Union[dict, None] = None,
-            colorscheme: Union[str, None] = None) -> Chart:
+def pieplot(
+    data: pd.DataFrame,
+    x: str,
+    y: str = None,
+    agg: str = "mean",
+    dataset_options: Union[dict, None] = None,
+    options: Union[dict, None] = None,
+    colorscheme: Union[str, None] = None,
+) -> Chart:
     """
+    Plot a pie chart.
+
     Pie and doughnut charts are excellent at showing the relational
     proportions between data.
 
@@ -526,52 +524,45 @@ def pieplot(data: pd.DataFrame,
     Returns:
         [ipychart.Chart]: A chart which display the data using ipychart.
     """
-
     if dataset_options is None:
         dataset_options = {}
 
     if y:
         data = _create_chart_data_agg(
             data=data,
-            kind='pie',
+            kind="pie",
             x=x,
             y=y,
             agg=agg,
-            dataset_options=dataset_options
+            dataset_options=dataset_options,
         )
 
     else:
         data = _create_chart_data_count(
-            data=data,
-            x=x,
-            dataset_options=dataset_options
+            data=data, x=x, dataset_options=dataset_options
         )
 
     options = _create_chart_options(
-        kind='pie',
-        options=options,
-        x=x,
-        y=y,
-        hue=None,
-        agg=agg
+        kind="pie", options=options, x=x, y=y, hue=None, agg=agg
     )
 
     return Chart(
-        data=data,
-        kind='pie',
-        options=options,
-        colorscheme=colorscheme
+        data=data, kind="pie", options=options, colorscheme=colorscheme
     )
 
 
-def polarplot(data: pd.DataFrame,
-              x: str,
-              y: str = None,
-              agg: str = 'mean',
-              dataset_options: Union[dict, None] = None,
-              options: Union[dict, None] = None,
-              colorscheme: Union[str, None] = None) -> Chart:
+def polarplot(
+    data: pd.DataFrame,
+    x: str,
+    y: str = None,
+    agg: str = "mean",
+    dataset_options: Union[dict, None] = None,
+    options: Union[dict, None] = None,
+    colorscheme: Union[str, None] = None,
+) -> Chart:
     """
+    Plot a polar area chart.
+
     Polar area charts are similar to pie charts, but each segment has the
     same angle - the radius of the segment differs depending on the value.
 
@@ -598,53 +589,46 @@ def polarplot(data: pd.DataFrame,
     Returns:
         [ipychart.Chart]: A chart which display the data using ipychart.
     """
-
     if dataset_options is None:
         dataset_options = {}
 
     if y:
         data = _create_chart_data_agg(
             data=data,
-            kind='polarArea',
+            kind="polarArea",
             x=x,
             y=y,
             agg=agg,
-            dataset_options=dataset_options
+            dataset_options=dataset_options,
         )
 
     else:
         data = _create_chart_data_count(
-            data=data,
-            x=x,
-            dataset_options=dataset_options
+            data=data, x=x, dataset_options=dataset_options
         )
 
     options = _create_chart_options(
-        kind='polarArea',
-        options=options,
-        x=x,
-        y=y,
-        hue=None,
-        agg=agg
+        kind="polarArea", options=options, x=x, y=y, hue=None, agg=agg
     )
 
     return Chart(
-        data=data,
-        kind='polarArea',
-        options=options,
-        colorscheme=colorscheme
+        data=data, kind="polarArea", options=options, colorscheme=colorscheme
     )
 
 
-def scatterplot(data: pd.DataFrame,
-                x: str,
-                y: str,
-                hue: Union[str, None] = None,
-                dataset_options: Union[dict, list, None] = None,
-                options: Union[dict, None] = None,
-                colorscheme: Union[str, None] = None,
-                zoom: bool = True) -> Chart:
+def scatterplot(
+    data: pd.DataFrame,
+    x: str,
+    y: str,
+    hue: Union[str, None] = None,
+    dataset_options: Union[dict, list, None] = None,
+    options: Union[dict, None] = None,
+    colorscheme: Union[str, None] = None,
+    zoom: bool = True,
+) -> Chart:
     """
+    Plot a scatter chart.
+
     Scatter charts are based on basic line charts with the x axis changed
     to a linear axis.
 
@@ -674,46 +658,45 @@ def scatterplot(data: pd.DataFrame,
     Returns:
         [ipychart.Chart]: A chart which display the data using ipychart.
     """
-
     if dataset_options is None:
         dataset_options = {}
 
     data = _create_chart_data_agg(
         data=data,
-        kind='scatter',
+        kind="scatter",
         x=x,
         y=y,
         hue=hue,
-        dataset_options=dataset_options
+        dataset_options=dataset_options,
     )
 
     options = _create_chart_options(
-        kind='scatter',
-        options=options,
-        x=x,
-        y=y,
-        hue=hue
+        kind="scatter", options=options, x=x, y=y, hue=hue
     )
 
     return Chart(
         data=data,
-        kind='scatter',
+        kind="scatter",
         options=options,
         colorscheme=colorscheme,
-        zoom=zoom
+        zoom=zoom,
     )
 
 
-def bubbleplot(data: pd.DataFrame,
-               x: str,
-               y: str,
-               r: str,
-               hue: Union[str, None] = None,
-               dataset_options: Union[dict, list, None] = None,
-               options: Union[dict, None] = None,
-               colorscheme: Union[str, None] = None,
-               zoom: bool = True) -> Chart:
+def bubbleplot(
+    data: pd.DataFrame,
+    x: str,
+    y: str,
+    r: str,
+    hue: Union[str, None] = None,
+    dataset_options: Union[dict, list, None] = None,
+    options: Union[dict, None] = None,
+    colorscheme: Union[str, None] = None,
+    zoom: bool = True,
+) -> Chart:
     """
+    Plot a bubble chart.
+
     A bubble chart is used to display three-dimension data.
 
     The location of the bubble is determined by the first two dimensions
@@ -750,32 +733,27 @@ def bubbleplot(data: pd.DataFrame,
     Returns:
         [ipychart.Chart]: A chart which display the data using ipychart.
     """
-
     if dataset_options is None:
         dataset_options = {}
 
     data = _create_chart_data_agg(
         data=data,
-        kind='bubble',
+        kind="bubble",
         x=x,
         y=y,
         r=r,
         hue=hue,
-        dataset_options=dataset_options
+        dataset_options=dataset_options,
     )
 
     options = _create_chart_options(
-        kind='bubble',
-        options=options,
-        x=x,
-        y=y,
-        hue=hue
+        kind="bubble", options=options, x=x, y=y, hue=hue
     )
 
     return Chart(
         data=data,
-        kind='bubble',
+        kind="bubble",
         options=options,
         colorscheme=colorscheme,
-        zoom=zoom
+        zoom=zoom,
     )
