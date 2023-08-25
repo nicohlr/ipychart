@@ -668,7 +668,7 @@ dataset = {
              'Portugal', 'Sweden', 'Ireland'],
   'datasets': [{ 
     'data': [14, 106, 16, 107, 45, 133, 109, 109, 108, 107],
-    'fill': True, 'lineTension': 0.3
+    'fill': True, 'lineTension': 0.5
 }]}
 
 mychart = Chart(dataset, 'line', colorscheme='brewer.PuOr3')
