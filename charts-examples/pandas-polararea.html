@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IPyWidget export</title>
+</head>
+<body>
+
+
+<!-- Load require.js. Delete this if your page already loads require.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+<script type="application/vnd.jupyter.widget-state+json">
+{
+  "version_major": 2,
+  "version_minor": 0,
+  "state": {
+    "37dedd8434b84d0da80b9c44c7da269a": {
+      "model_name": "ChartModel",
+      "model_module": "ipychart",
+      "model_module_version": "^0.4.1",
+      "state": {
+        "_colorscheme_sync": "brewer.SetThree5",
+        "_data_sync": {
+          "datasets": [
+            {
+              "data": [
+                34.7031,
+                32.1717,
+                19.9947,
+                40.8556,
+                37.1697
+              ],
+              "label": "Fare"
+            }
+          ],
+          "labels": [
+            "Mr",
+            "Mrs",
+            "Miss",
+            "Master",
+            "Rare"
+          ]
+        },
+        "_dom_classes": [],
+        "_kind_sync": "polarArea",
+        "_options_sync": {
+          "plugins": {
+            "tooltip": {
+              "enabled": true,
+              "callbacks": {
+                "title": "function(tooltipItem) {return 'Title = ' + tooltipItem[0].label;};",
+                "label": "function(tooltipItem) {return 'Fare (mean) = ' + tooltipItem.formattedValue;};"
+              }
+            },
+            "legend": {
+              "display": true
+            }
+          }
+        },
+        "layout": "IPY_MODEL_9ca857f3e30041ad8981e6a68ce66ea7"
+      }
+    },
+    "9ca857f3e30041ad8981e6a68ce66ea7": {
+      "model_name": "LayoutModel",
+      "model_module": "@jupyter-widgets/base",
+      "model_module_version": "1.2.0",
+      "state": {
+        "align_self": "stretch",
+        "height": "auto"
+      }
+    }
+  }
+}
+</script>
+<script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "37dedd8434b84d0da80b9c44c7da269a"}
+</script>
+
+</body>
+</html>
