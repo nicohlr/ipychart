@@ -179,7 +179,7 @@ mychart
 You can hide or show datasets by clicking on each element of the legend.
 :::
 
-## Tooltips
+## Tooltip
 
 <p style="font-size:1.35rem;font-weight:600;line-height:1.25!important;margin-bottom:0;padding-top:4.6rem;margin-top:-3.1rem">Tooltips options</p>
 
@@ -189,59 +189,49 @@ With this argument, you can customize the tooltips of your chart. Tooltips are t
 options = {
   'plugins': {   
     'tooltip': {  
-       
+
       # General options
-      'enabled': bool # Are tooltips enabled | Default: True
-      'mode': str # Which elements appear in the tooltip | Default: 'nearest'
-      'intersect': bool # If True, the tooltip mode applies only when the mouse
-                        # position intersects with an element | Default: True
-      'position': str # See below) | Default: 'average'
-      'backgroundColor': str # Background color | Default: 'rgba(0, 0, 0, 0.8)'
-      'xPadding': int # Padding on left and right of tooltip | Default: 6
-      'yPadding': int # Padding on top and bottom of tooltip | Default: 6
-      'caretPadding': int # Extra distance to move the end of the tooltip
-                          # arrow away from the tooltip point | Default: 2
-      'caretSize': int # Size, in px, of the tooltip arrow | Default: 5
-      'cornerRadius': int # Radius of tooltip corner curves | Default: 6
-      'multiKeyBackground': str # Color to draw behind the colored boxes when
-                                # multiple items are in the tooltip | Default: '#fff'
-      'displayColors': bool # Show color boxes in the tooltip | Default: True
-      'borderColor': str # Color of the border | Default: 'rgba(0, 0, 0, 0)'
-      'borderWidth': int # Size of the border | Default: 0
-      'rtl': bool # Rendering the legends from right to left | Default: True   
-  
-      # Title options
-      'titleFontFamily': str # Title font | Default: 'Helvetica'
-      'titleFontSize': int # Title font size | Default: 12
-      'titleFontStyle': str # Title font style | Default: 'bold'
-      'titleFontColor': str # Title font color | Default: '#fff'
-      'titleAlign': str # Horizontal alignment of the title | Default: 'left'
-      'titleSpacing': int # Spacing on top and bottom of title lines | Default: 2
-      'titleMarginBottom': int # Margin on bottom of title section | Default: 6
-  
-      # Body options
-      'bodyFontFamily': str # Body line font | Default: 'Helvetica'
-      'bodyFontSize': int # Body font size | Default: 12
-      'bodyFontStyle': str # Body font style | Default: 'normal'
-      'bodyFontColor': str # Body font color | Default: '#fff'
-      'bodyAlign': str # Horizontal alignment of the body | Default: 'left'
-      'bodySpacing': int # Spacing on top and bottom of tooltip items | Default: 2
-  
-      # Footer options
-      'footerFontFamily': str # Footer font | Default: 'Helvetica'
-      'footerFontSize': int # Footer font size | Default: 12
-      'footerFontStyle': str # Footer font style | Default: 'bold'
-      'footerFontColor': str # Footer font color | Default: '#fff'
-      'footerAlign': str # Horizontal alignment of the footer | Default: 'left'
-      'footerSpacing': int # Spacing on top and bottom of footer lines | Default: 2
-      'footerMarginTop': int # Margin on bottom of footer section | Default: 6
-      
-      # Callbacks functions (see below)
-      'custom': str # Callback function (see below) | Default: ''
-      'itemSort': str # Callback function (see below) | Default: ''
-      'filter': str # Callback function (see below) | Default: ''
-      'callbacks': dict # See below | Default: {}
-  
+      'enabled': bool, # Are on-canvas tooltips enabled? | Default: True
+      'mode': str, # Sets which elements appear in the tooltip
+                   # Default: interaction.mode
+      'intersect': bool, # If True, the tooltip mode applies only when the mouse
+                         # position intersects with an element
+                         # Default: interaction.intersect
+      'position': str, # The mode for positioning the tooltip | Default: 'average'
+      'backgroundColor': str, # Background color | Default: 'rgba(0, 0, 0, 0.8)'
+      'titleColor': str, # Color of title text | Default: '#fff'
+      'titleFont': dict, # Font dict | Default: {weight: 'bold'}
+      'bodyColor': str, # Color of body text | Default: '#fff'
+      'bodyFont': dict, # Font dict | Default: {}
+      'footerColor': str, # Color of footer text | Default: '#fff'
+      'footerFont': dict, # Font dict | Default: {weight: 'bold'}
+      'padding': dict, # Padding inside the tooltip | Default: 6
+      'caretPadding': int, # Extra distance to move the end of the tooltip arrow
+                           # away from the tooltip point | Default: 2
+      'caretSize': int, # Size, in px, of the tooltip arrow | Default: 5
+      'cornerRadius': int, # Radius of tooltip corner curves | Default: 6
+      'multiKeyBackground': str, # Color to draw behind the colored boxes when
+                                 # multiple items are in the tooltip
+                                 # Default: '#fff'
+      'displayColors': bool, # If True, color boxes are shown in the tooltip
+                             # Default: True
+      'borderColor': str, # Color of the border | Default: 'rgba(0, 0, 0, 0)'
+      'borderWidth': int, # Size of the border | Default: 0
+      'rtl': bool, # True for rendering the tooltip from right to left
+                   # Default: True
+      'textDirection': str, # This will force the text direction 'rtl' or 'ltr'
+                            # on the canvas | Default: canvas' default
+      'xAlign': str, # Position of the tooltip caret in the X direction
+                     # Default: ''
+      'yAlign': str,  # Position of the tooltip caret in the Y direction
+                      # Default: ''
+
+      # Callbacks options
+      'callbacks': 'object',  # Callback function (see below) | Default: {}
+      'itemSort': str,  # Callback function (see below) | Default: ''
+      'filter': str  # Callback function (see below) | Default: ''
+      'external': str,  # Callback function (see below) | Default: ''
+
     }
   }
 }
@@ -273,7 +263,7 @@ All tooltip callback functions are called with the same arguments: a `tooltip` i
 ``` py
 options = {
   'plugins': { 
-    'tooltips': {   
+    'tooltip': {   
       'callbacks': {
   
         # All of the following arguments must be filled with 
@@ -291,6 +281,8 @@ options = {
         'labelColor': str # The colors to render for the tooltip item | Default: ''
         'labelTextColor': str # The colors for the text of the label for 
                               # the tooltip item | Default: ''
+        'labelPointStyle': str # Returns the point style to use instead of color
+                               # boxes if usePointStyle is true | Default: ''
         'afterLabel': str # Text to render after an individual label | Default: ''
         'afterBody': str # Text to render after the body section | Default: ''
         'beforeFooter': str # Text to render before the footer section | Default: ''
@@ -328,42 +320,45 @@ dataset = {
 }
 
 options = {
-  'tooltips': {
-    'displayColors': False,
-    'titleFontSize': 14,
-    'bodyFontSize': 14,
-    'enabled': True,
-    'callbacks': {
-
-      'title': """function(tooltipItem, data) {
-        return "This is a custom tooltip !";};""",
-
-      'label': """function(tooltipItem, data) {
-        let flags = {'Germany': '🇩🇪', 'Spain': '🇪🇸', 'UK': '🇬🇧', 
-                     'Norway': '🇳🇴', 'France': '🇫🇷', 'Poland': '🇵🇱', 
-                     'Portugal': '🇵🇹', 'Sweden': '🇸🇪', 
-                     'Ireland': '🇮🇪', 'Italy': '🇮🇹'};
-        if (data.datasets[tooltipItem.datasetIndex].type == 'line') {
-          return ["This POINT corresponds to the country " + 
-                  data.labels[tooltipItem.index].toUpperCase() + ' ' + 
-                  flags[data.labels[tooltipItem.index]],
-                  "and the y axis value for this POINT is: " + 
-                  data.datasets[tooltipItem.datasetIndex].data[
-                    tooltipItem.index].toString()];
-        }
-        else {
-          return ["This BAR corresponds to the country " + 
-                  data.labels[tooltipItem.index].toUpperCase() + ' ' + 
-                  flags[data.labels[tooltipItem.index]],
-                  "and the y axis value for this BAR is: " + 
-                  data.datasets[tooltipItem.datasetIndex].data[
-                    tooltipItem.index].toString()];
-        }
-      };"""
+  'plugins': {
+    'tooltip': {
+      'displayColors': False,
+      'titleFont': {'size': 14},
+      'bodyFont': {'size': 14},
+      'enabled': True,
+      'callbacks': {
+        'title': """function(context) {
+          return "This is a custom tooltip !";
+        };""",
+        'label': """function(context) {
+          let flags = {
+            'Germany': '🇩🇪', 'Spain': '🇪🇸', 'UK': '🇬🇧',
+            'Norway': '🇳🇴', 'France': '🇫🇷', 'Poland': '🇵🇱',
+            'Portugal': '🇵🇹', 'Sweden': '🇸🇪',
+            'Ireland': '🇮🇪', 'Italy': '🇮🇹'
+          };
+          if (context.dataset.type == 'line') {
+            return [
+              "This POINT corresponds to the country " + 
+              context.label.toUpperCase() + ' ' + 
+              flags[context.label],
+              "and the y axis value for this POINT is: " + 
+              context.parsed.y.toString()
+            ];
+          } else {
+            return [
+              "This BAR corresponds to the country " + 
+              context.label.toUpperCase() + ' ' + 
+              flags[context.label],
+              "and the y axis value for this BAR is: " + 
+              context.parsed.y.toString()
+            ];
+          }
+        };"""
+      }
     }
   }
 }
-
 
 mychart = Chart(dataset, 'bar', options=options)
 mychart
