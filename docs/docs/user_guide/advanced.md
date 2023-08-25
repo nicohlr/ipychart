@@ -85,10 +85,10 @@ dataset3 = {'labels': ['D' + str(i) for i in range(10)],
 dataset4 = {'labels': ['D' + str(i) for i in range(10)],
             'datasets': [{'data': [random.randint(0, 100) for _ in range(10)]}]}
 
-mychart1 = Chart(dataset1, 'bar', colorscheme='tableau.Tableau10')
+mychart1 = Chart(dataset1, 'line', colorscheme='tableau.Tableau10')
 mychart2 = Chart(dataset2, 'bar', colorscheme='brewer.Accent5')
 mychart3 = Chart(dataset3, 'bar', colorscheme='brewer.PuOr3')
-mychart4 = Chart(dataset4, 'bar', colorscheme='office.Celestial6')
+mychart4 = Chart(dataset4, 'line', colorscheme='office.Celestial6')
 
 grid = wd.TwoByTwoLayout(top_left=mychart1, top_right=mychart2, 
                          bottom_left=mychart3, bottom_right=mychart4)
