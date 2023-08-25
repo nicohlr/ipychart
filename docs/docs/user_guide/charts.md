@@ -535,9 +535,9 @@ A bubble chart is used to display three-dimension data. The location of the bubb
 
 ``` py
 dataset = {
-  'datasets': [{'data': [{'x': 20, 'y': 30, 'r': 45}, 
-                         {'x': 10, 'y': 20, 'r': 90}, 
-                         {'x': 15, 'y': 50, 'r': 20}, 
+  'datasets': [{'data': [{'x': 20, 'y': 30, 'r': 25}, 
+                         {'x': 10, 'y': 20, 'r': 30}, 
+                         {'x': 15, 'y': 50, 'r': 15}, 
                          {'x': 5, 'y': 10, 'r': 10}],
                 'borderWidth': 4}]
 }
@@ -668,7 +668,7 @@ dataset = {
              'Portugal', 'Sweden', 'Ireland'],
   'datasets': [{ 
     'data': [14, 106, 16, 107, 45, 133, 109, 109, 108, 107],
-    'fill': True, 'lineTension': 0.3
+    'fill': True, 'lineTension': 0.5
 }]}
 
 mychart = Chart(dataset, 'line', colorscheme='brewer.PuOr3')
