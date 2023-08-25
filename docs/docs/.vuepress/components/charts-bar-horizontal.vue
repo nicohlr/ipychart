@@ -5,7 +5,7 @@
 
 <script>
 export default {
-  name: 'chart-horizontalbar',
+  name: 'chart-bar-horizontal',
   data () {return {}},
   beforeMount: function () {
     this.$nextTick(function () {
