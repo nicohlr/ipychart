@@ -20,7 +20,7 @@ log.info('setup.py entered')
 log.info('$PATH=%s' % os.environ['PATH'])
 
 name = 'ipychart'
-LONG_DESCRIPTION = 'A Jupyter - Chart.js bridge enabling interactive data visualization in the Jupyter notebook.'
+LONG_DESCRIPTION = 'A Jupyter - Chart.js bridge enabling interactive data visualization with Python.'
 
 # Get ipychart version
 version = get_version(pjoin(name, '_version.py'))
