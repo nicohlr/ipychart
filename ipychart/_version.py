@@ -1,5 +1,5 @@
 # Must be synced with js package version in package.json
-version_info = (0, 4, 0, 'final', 0)
+version_info = (0, 4, 1, 'final', 0)
 
 _specifier_ = {'alpha': 'a', 'beta': 'b', 'candidate': 'rc', 'final': ''}
 
