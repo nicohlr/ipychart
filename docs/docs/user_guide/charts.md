@@ -535,9 +535,9 @@ A bubble chart is used to display three-dimension data. The location of the bubb
 
 ``` py
 dataset = {
-  'datasets': [{'data': [{'x': 20, 'y': 30, 'r': 5}, 
-                         {'x': 10, 'y': 20, 'r': 50}, 
-                         {'x': 15, 'y': 40, 'r': 20}, 
+  'datasets': [{'data': [{'x': 20, 'y': 30, 'r': 45}, 
+                         {'x': 10, 'y': 20, 'r': 90}, 
+                         {'x': 15, 'y': 50, 'r': 20}, 
                          {'x': 5, 'y': 10, 'r': 10}],
                 'borderWidth': 4}]
 }
