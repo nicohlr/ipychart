@@ -10,7 +10,7 @@ export default {
   beforeMount: function () {
     this.$nextTick(function () {
       var iframe = document.getElementById('chartframe_ce9eda43-7b98-421c-ba35-1c1225256cdc');
-      fetch('../charts-examples/chart-horizontalbar.html').then(response => response.text()).then(data => iframe.srcdoc = data);
+      fetch('../charts-examples/chart-bar-horizontal.html').then(response => response.text()).then(data => iframe.srcdoc = data);
     });
   }
 }
