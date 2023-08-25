@@ -1,7 +1,7 @@
 <p align="center">
     <img src="./docs/docs/.vuepress/public/ipychart.png#gh-light-mode-only" width="18%">
     <img src="./docs/docs/.vuepress/public/ipychart-dark.png#gh-dark-mode-only" width="18%"><br>
-    The power of Chart.js in Jupyter Notebooks
+    The power of Chart.js with Python
 </p>
 
 <p align="center">
