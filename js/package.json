@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@jupyter-widgets/base": "^1.1 || ^2 || ^3 || ^4 || ^6",
-    "chart.js": "^3.7.0",
+    "chart.js": "^4.4.0",
     "chartjs-adapter-moment": "^1.0.0",
     "chartjs-plugin-datalabels": "^2.0.0",
     "chartjs-plugin-zoom": "^1.2.0",
