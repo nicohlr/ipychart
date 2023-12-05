@@ -1,0 +1,22 @@
+name: Deploy ipychart to NPM
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '17.4.0'
+        registry-url: 'https://registry.npmjs.org'
+    - name: Install dependencies
+      run: cd js && npm install
+    - name: Build package
+      run: cd js && npm pack
+    - name: Publish
+      run: cd js && npm publish --access=public
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.NPM_API_TOKEN}}

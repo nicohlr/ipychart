@@ -2,7 +2,7 @@ name: Deploy ipychart's documentation
 on: 
   push:
     branches:
-        - 'master'    
+      - master    
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
